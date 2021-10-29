@@ -11,14 +11,21 @@ import 'package:pigment/pigment.dart';
 class AppColors {
   AppColors._();
 
-  static final Color lightSilver = Pigment.fromString('#ced9de');
-  static const Color TRANSPARENT = Colors.transparent;
-  static final Color white = Pigment.fromString("#ffffff");
-
   static final Color black = Pigment.fromString('#000000');
-  static final Color gray = Pigment.fromString('#969696');
+  static final Color grayDark = Pigment.fromString('#222222');
+  static final Color gray = Pigment.fromString('#666666');
+  static final Color lightgray = Pigment.fromString('#969696');
+  static final Color lightSliver = Pigment.fromString('#E8E8E8');
+  static final Color white = Pigment.fromString("#FFFFFF");
 
-  static final Color primary = Pigment.fromString('#225163');
-  static final Color primaryDark = Pigment.fromString('#002939');
-  static final Color primaryLight = Pigment.fromString('#517d91');
+  static final Color primary = Pigment.fromString('#4232B0');
+  static final Color primaryDark = Pigment.fromString('#1E1464');
+  static final Color primaryLight = Pigment.fromString('#9791c4');
+
+  static final Color secondary = Pigment.fromString('#FFB183');
+  static final Color secondaryDark = Pigment.fromString('#F2994A');
+  static final Color secondaryLight = Pigment.fromString('#FFEADD');
+
+  static final Color error = Pigment.fromString('#F64C4C');
+  static final Color success = Pigment.fromString('#007E33');
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/themes/colors.dart';
-import 'package:flutter_boilerplate/widgets/common/appBar/custom_app_bar.dart';
-import 'package:flutter_boilerplate/widgets/common/drawer/drawer.dart';
-// import 'package:flutter_boilerplate/utils/appbar/customAppBar.dart';
-// import 'package:flutter_boilerplate/themes/colors.dart';
-// import 'package:flutter_boilerplate/widgets/common/appBar/custom_app_bar.dart';
+import 'package:invent_chat/themes/colors.dart';
+import 'package:invent_chat/widgets/common/appBar/custom_app_bar.dart';
+import 'package:invent_chat/widgets/common/drawer/drawer.dart';
+// import 'package:invent_chat/utils/appbar/customAppBar.dart';
+// import 'package:invent_chat/themes/colors.dart';
+// import 'package:invent_chat/widgets/common/appBar/custom_app_bar.dart';
 
 /// [BaseLayout] maintains the basic App Skeleton.
 /// It Includes AppBar, Bottom Navigation and the routed Page.

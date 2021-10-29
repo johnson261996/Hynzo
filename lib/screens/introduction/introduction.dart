@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/resources/images.dart';
-import 'package:flutter_boilerplate/resources/strings.dart';
-import 'package:flutter_boilerplate/themes/colors.dart';
-import 'package:flutter_boilerplate/widgets/common/buttons/primary_button.dart';
+import 'package:invent_chat/resources/images.dart';
+import 'package:invent_chat/resources/strings.dart';
+import 'package:invent_chat/themes/colors.dart';
+import 'package:invent_chat/widgets/common/buttons/primary_button.dart';
 
 /// [IntroductionScreen] is the intro screen that loads into the app.
 /// it should load only once for new uesr
@@ -75,13 +75,13 @@ class IntroductionScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 50),
-                        child: PrimaryButton(
-                            text: Strings.GET_STARTED, onPressed: () => {}
-                            // Navigation.pushNamed(context, Routes.login),
-                            ),
-                      )
+                      // Container(
+                      //   margin: EdgeInsets.only(bottom: 50),
+                      //   child: PrimaryButton(
+                      //       text: Strings.GET_STARTED, onPressed: () => {}
+                      //       // Navigation.pushNamed(context, Routes.login),
+                      //       ),
+                      // )
                     ],
                   ),
                 )

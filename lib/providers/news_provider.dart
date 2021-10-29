@@ -1,7 +1,7 @@
 import 'dart:async' show Future;
 import 'package:flutter/foundation.dart';
-import 'package:flutter_boilerplate/core/models/news_model.dart';
-import 'package:flutter_boilerplate/core/services/news/news_services.dart';
+import 'package:invent_chat/core/models/news_model.dart';
+import 'package:invent_chat/core/services/news/news_services.dart';
 
 class NewsProvider extends ChangeNotifier {
   bool isLoading = true;

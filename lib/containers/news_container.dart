@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_boilerplate/providers/news_provider.dart';
-import 'package:flutter_boilerplate/themes/colors.dart';
-import 'package:flutter_boilerplate/widgets/common/loading_overlay/loading_overlay.dart';
-import 'package:flutter_boilerplate/widgets/news/news_widget.dart';
+import 'package:invent_chat/providers/news_provider.dart';
+import 'package:invent_chat/themes/colors.dart';
+import 'package:invent_chat/widgets/common/loading_overlay/loading_overlay.dart';
+import 'package:invent_chat/widgets/news/news_widget.dart';
 
 class NewsContainer extends StatelessWidget {
   static late NewsProvider _newsProvider;

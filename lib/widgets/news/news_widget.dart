@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/routes/routes.dart';
-import 'package:flutter_boilerplate/themes/colors.dart';
-import 'package:flutter_boilerplate/utils/navigations.dart';
+import 'package:invent_chat/routes/routes.dart';
+import 'package:invent_chat/themes/colors.dart';
+import 'package:invent_chat/utils/navigations.dart';
 
 class NewsWidget extends StatefulWidget {
   final data;

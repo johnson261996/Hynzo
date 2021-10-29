@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/themes/colors.dart';
-import 'package:flutter_boilerplate/utils/navigations.dart';
+import 'package:invent_chat/themes/colors.dart';
+import 'package:invent_chat/utils/navigations.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final Widget? title;
@@ -15,7 +15,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
     this.title,
     this.actions,
     this.centerTitle = true,
-    this.backgroundColor = AppColors.TRANSPARENT,
+    this.backgroundColor = Colors.black,
     this.iconSize = 24,
     this.icon = Icons.arrow_back,
     this.iconColor,

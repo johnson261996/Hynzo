@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:invent_chat/themes/colors.dart';
 
-/// Use [PrimaryButton] where in the places of common Raised Button.
+/// Use [SecondaryButton] where in the places of common Raised Button.
 /// Needs text, onPressed Function, disabled flag.
 /// Have Solid background with white or other color as text color.
-/// Use [PrimaryButton] like this:
+/// Use [SecondaryButton] like this:
 /// For child <Widget>
 ///
-///  PrimaryButton({
+///  SecondaryButton({
 ///    text: 'login',
 ///    onPressed: () => login(),
 ///    disabled: false,
 ///  });
 ///  ```
 
-class PrimaryButton extends StatelessWidget {
+class SecondaryButton extends StatelessWidget {
   final Function onPressed;
   final bool disabled;
   final Widget text;
 
-  const PrimaryButton({
+  const SecondaryButton({
     required this.onPressed,
     this.disabled = false,
     this.text = const Text(''),
@@ -33,20 +33,15 @@ class PrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         style: TextButton.styleFrom(
           padding: EdgeInsets.zero,
+          backgroundColor: AppColors.white,
         ),
         child: Container(
           padding: const EdgeInsets.all(0),
           alignment: Alignment.center,
           child: text,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                disabled ? AppColors.gray : AppColors.primaryLight,
-                disabled ? AppColors.gray : AppColors.primary,
-                disabled ? AppColors.gray : AppColors.primaryDark,
-              ],
+            border: Border.all(
+              color: disabled ? AppColors.gray : AppColors.primaryDark,
             ),
             borderRadius: BorderRadius.circular(6),
           ),

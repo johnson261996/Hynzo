@@ -1,4 +1,4 @@
-// import 'package:flutter_boilerplate/resources/strings.dart';
+// import 'package:invent_chat/resources/strings.dart';
 
 // ///Add all your validation codes here and call the methods as follows in your widgets :
 // ///```

@@ -1,7 +1,7 @@
 import 'dart:async' show Future;
 import 'dart:convert';
-import 'package:flutter_boilerplate/core/models/news_model.dart';
-import 'package:flutter_boilerplate/core/services/service_base.dart';
+import 'package:invent_chat/core/models/news_model.dart';
+import 'package:invent_chat/core/services/service_base.dart';
 
 class NewsService {
   Future<NewsModel> fetchNews(page) async {

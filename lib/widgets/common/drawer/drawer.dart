@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/routes/routes.dart';
-import 'package:flutter_boilerplate/themes/colors.dart';
+import 'package:invent_chat/routes/routes.dart';
+import 'package:invent_chat/themes/colors.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override

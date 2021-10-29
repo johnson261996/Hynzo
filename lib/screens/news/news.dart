@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/containers/news_container.dart';
-import 'package:flutter_boilerplate/themes/colors.dart';
+import 'package:invent_chat/containers/news_container.dart';
+import 'package:invent_chat/themes/colors.dart';
 
 class News extends StatelessWidget {
   final bool isLoading = false;

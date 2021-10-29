@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/providers/news_provider.dart';
-import 'package:flutter_boilerplate/routes/routes.dart';
-import 'package:flutter_boilerplate/themes/themes.dart';
+import 'package:invent_chat/providers/news_provider.dart';
+import 'package:invent_chat/routes/routes.dart';
+import 'package:invent_chat/themes/themes.dart';
 import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
         theme: Themes.buildLightTheme(),
         initialRoute: Routes.initialRoute,
         routes: Routes.buildRoutes,
-        onUnknownRoute: Routes.unknownRoute as Route<dynamic>? Function(RouteSettings)?,
+        onUnknownRoute:
+            Routes.unknownRoute as Route<dynamic>? Function(RouteSettings)?,
       ),
     );
   }

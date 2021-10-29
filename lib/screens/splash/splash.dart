@@ -1,13 +1,11 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/resources/images.dart';
-import 'package:flutter_boilerplate/resources/strings.dart';
-import 'package:flutter_boilerplate/routes/routes.dart';
-// import 'package:flutter_boilerplate/resources/images.dart';
-// import 'package:flutter_boilerplate/resources/strings.dart';
-// import 'package:flutter_boilerplate/routes/routes.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-
-// import '../../main.dart';
+import 'package:invent_chat/resources/images.dart';
+import 'package:invent_chat/resources/strings.dart';
+import 'package:invent_chat/routes/routes.dart';
+import 'package:invent_chat/themes/colors.dart';
+import 'package:invent_chat/widgets/common/buttons/primary_button.dart';
+import 'package:invent_chat/widgets/common/buttons/secondary_button.dart';
 
 /// [SplashScreen] is the initial screen that loads into the app.
 /// This screen will check whether the User is logged in already.
@@ -20,49 +18,93 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  bool isLogin = false;
   @override
   void initState() {
     super.initState();
-    checkLogin();
-  }
-
-  Future<void> checkLogin() async {
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    bool isLogin = true;
-
-    Future.delayed(const Duration(milliseconds: 1500), () {
-      if (isLogin) {
-        Navigator.pushReplacementNamed(context, Routes.introScreen);
-      } else {
-        Navigator.pushReplacementNamed(context, Routes.introScreen);
-        // Navigator.pushReplacementNamed(context, Routes.home);
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Image.asset(
-                Images.SPLASH_LOGO,
-                scale: 1,
-              ),
+      // backgroundColor: mainAnimation.value,
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.all(30),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Hero(
+                  tag: 'heroicon',
+                  child: Icon(
+                    Icons.textsms,
+                    size: 100,
+                    color: AppColors.primaryDark,
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                Hero(
+                  tag: 'HeroTitle',
+                  child: Text(
+                    'InventChat',
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
+                ),
+                SizedBox(
+                  child: DefaultTextStyle(
+                    style: Theme.of(context).textTheme.subtitle1!,
+                    child: AnimatedTextKit(
+                      isRepeatingAnimation: false,
+                      animatedTexts: [
+                        TyperAnimatedText(
+                            "Hyperlocal private chatting".toUpperCase()),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.15,
+                ),
+                Hero(
+                  tag: 'loginbutton',
+                  child: SecondaryButton(
+                    text: Text(
+                      'Login',
+                      style: Theme.of(context)
+                          .textTheme
+                          .button!
+                          .apply(color: AppColors.primaryDark),
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/login');
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Hero(
+                  tag: 'signupbutton',
+                  child: PrimaryButton(
+                    text: Text('Signup',
+                        style: Theme.of(context).textTheme.button!),
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/signup');
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Text(
-                Strings.SPLASH_TEXT,
-                style: Theme.of(context).textTheme.subtitle1,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
