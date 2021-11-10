@@ -1,3 +1,7 @@
+/// Contains service and logic related of login screen.
+///
+///
+
 import 'package:flutter/material.dart';
 import 'package:invent_chat/core/models/auth_model.dart';
 import 'package:invent_chat/providers/auth_provider.dart';
@@ -7,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginContainer extends StatelessWidget {
   static AuthProvider? _authProvider;
+
   const LoginContainer({Key? key}) : super(key: key);
 
   Future<GenerateOTPModel> _generateOTP(String mobile, String signature) async {
@@ -19,7 +24,6 @@ class LoginContainer extends StatelessWidget {
     pref.setString('otp_id', response.otpVerificationId.toString());
 
     return response;
-
   }
 
   @override

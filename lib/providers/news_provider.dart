@@ -5,6 +5,7 @@ import 'package:invent_chat/core/models/auth_model.dart';
 
 class NewsProvider extends ChangeNotifier {
   bool isLoading = true;
+
   // NewsModel? newsData;
 
   void changeLoadingStatus(bool loading) {

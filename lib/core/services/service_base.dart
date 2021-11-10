@@ -29,8 +29,6 @@ class ServiceBase {
     final response =
         await InterceptedHttp.build(interceptors: [AuthInterceptorHeader()])
             .post(Uri.parse(apiUrl), body: jsonEncode(data), headers: headers);
-    print(response.statusCode);
-    print(response.body);
     return response;
   }
 }

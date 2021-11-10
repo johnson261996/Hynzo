@@ -1,5 +1,6 @@
+///Otp verification screen for Authentication.
+
 import 'package:flutter/material.dart';
-import 'package:invent_chat/containers/login_container.dart';
 import 'package:invent_chat/containers/otp_verify_container.dart';
 
 class Otpverify extends StatelessWidget {
@@ -10,4 +11,3 @@ class Otpverify extends StatelessWidget {
     return const Scaffold(body: OtpVerifyContainer());
   }
 }
-

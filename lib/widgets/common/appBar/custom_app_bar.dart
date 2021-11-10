@@ -1,5 +1,7 @@
+///The custom Appbar widget created for Application.
+
+
 import 'package:flutter/material.dart';
-import 'package:invent_chat/themes/colors.dart';
 import 'package:invent_chat/utils/navigations.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {

@@ -3,6 +3,7 @@ import 'package:invent_chat/themes/colors.dart';
 
 class Themes {
   Themes._();
+
   static final ThemeData baseTheme = ThemeData.light();
 
   static ThemeData buildLightTheme() {

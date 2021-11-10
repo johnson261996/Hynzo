@@ -1,15 +1,17 @@
+///Contains all the widgets included in login screen.
+
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:invent_chat/core/models/auth_model.dart';
 import 'package:invent_chat/themes/colors.dart';
 import 'package:invent_chat/widgets/common/buttons/primary_button.dart';
 import 'package:invent_chat/widgets/common/error/error.dart';
 import 'package:invent_chat/widgets/common/input/input.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 class LoginWidget extends StatefulWidget {
   final Function generateOTP;
+
   const LoginWidget({Key? key, required this.generateOTP}) : super(key: key);
 
   @override
@@ -22,8 +24,6 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   _generateOTP() async {
     if (mobile.length == 10) {
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.setString('phone', mobile);
       String signature = '';
       SmsAutoFill().getAppSignature.then((signature) {
         signature = signature;
@@ -94,11 +94,10 @@ class _LoginWidgetState extends State<LoginWidget> {
               leading: Icons.phone,
               obscure: false,
               keyboard: TextInputType.number,
-              onchangeFunc: (val)  {
+              onchangeFunc: (val) {
                 setState(() {
                   mobile = val;
                   errorMgs = "";
-
                 });
               },
             ),
