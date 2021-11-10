@@ -22,7 +22,13 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
     return response;
   }
-
+Future<LoginModel> verifyOtp(String mobile,String code,String otp_id,String otp) async{
+  final LoginModel response =
+      await AuthService.verifyOTP(mobile,code,otp_id,otp);
+  isLoading = false;
+  notifyListeners();
+  return response;
+}
   // void generateOTP(mobile) async {
   // final NewsModel response = await NewsService().fetchNews(page);
   // if (newsData != null && newsData!.articles != null) {

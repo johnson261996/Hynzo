@@ -36,7 +36,7 @@ class Routes {
       login: (BuildContext context) =>
           BaseLayout(page: Login(), isAppBar: false),
       otp: (BuildContext context) =>
-          const BaseLayout(page: OTP(), isAppBar: false),
+          const BaseLayout(page: Otpverify(), isAppBar: false),
       about: (BuildContext context) =>
           BaseLayout(page: AboutScreen(), isAppBar: true)
     };
