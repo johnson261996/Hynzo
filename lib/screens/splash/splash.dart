@@ -1,10 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:invent_chat/resources/images.dart';
-import 'package:invent_chat/resources/strings.dart';
-import 'package:invent_chat/routes/routes.dart';
 import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/widgets/common/buttons/primary_button.dart';
 import 'package:invent_chat/widgets/common/buttons/secondary_button.dart';
 
 /// [SplashScreen] is the initial screen that loads into the app.
@@ -13,6 +9,8 @@ import 'package:invent_chat/widgets/common/buttons/secondary_button.dart';
 /// If already installed and already logged in then user will be navigated to dashboard else login
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -89,16 +87,16 @@ class _SplashScreenState extends State<SplashScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                Hero(
-                  tag: 'signupbutton',
-                  child: PrimaryButton(
-                    text: Text('Signup',
-                        style: Theme.of(context).textTheme.button!),
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/signup');
-                    },
-                  ),
-                ),
+                // Hero(
+                //   tag: 'signupbutton',
+                //   child: PrimaryButton(
+                //     text: Text('Signup',
+                //         style: Theme.of(context).textTheme.button!),
+                //     onPressed: () {
+                //       Navigator.pushReplacementNamed(context, '/signup');
+                //     },
+                //   ),
+                // ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                 ),

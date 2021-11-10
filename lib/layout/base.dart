@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invent_chat/themes/colors.dart';
 import 'package:invent_chat/widgets/common/appBar/custom_app_bar.dart';
-import 'package:invent_chat/widgets/common/drawer/drawer.dart';
 // import 'package:invent_chat/utils/appbar/customAppBar.dart';
 // import 'package:invent_chat/themes/colors.dart';
 // import 'package:invent_chat/widgets/common/appBar/custom_app_bar.dart';
@@ -42,7 +41,7 @@ class _BaseLayoutState extends State<BaseLayout> {
               backgroundColor: AppColors.primaryDark,
             )
           : null,
-      drawer: CustomDrawer(),
+      // drawer: CustomDrawer(),
       body: widget.page,
     );
   }

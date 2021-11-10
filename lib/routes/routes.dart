@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:invent_chat/layout/base.dart';
-import 'package:invent_chat/screens/about/about.dart';
+import 'package:invent_chat/screens/login/login.dart';
+import 'package:invent_chat/screens/login/otp.dart';
 import 'package:invent_chat/screens/splash/splash.dart';
-import 'package:invent_chat/screens/introduction/introduction.dart';
-import 'package:invent_chat/screens/news/news.dart';
-// import 'package:invent_chat/screens/webview/webViewScreen.dart';
+import 'package:invent_chat/screens/about/about.dart';
 
 /// [Routes] which contains common routing configuaration needed for the Application.
 /// This includes all pages and all routes mapped to each other.
@@ -24,8 +23,8 @@ class Routes {
 
   // routes
   static const splashScreen = '/splash-screen';
-  static const introScreen = '/intro-screen';
-  static const news = '/news';
+  static const login = '/login';
+  static const otp = '/otp';
   static const webViewScreen = '/webview';
   static const about = '/about';
 
@@ -33,13 +32,11 @@ class Routes {
   static Map<String, WidgetBuilder> get buildRoutes {
     return {
       splashScreen: (BuildContext context) =>
-          BaseLayout(page: SplashScreen(), isAppBar: false),
-      introScreen: (BuildContext context) =>
-          BaseLayout(page: IntroductionScreen(), isAppBar: false),
-      news: (BuildContext context) =>
-          BaseLayout(page: News(), isAppBar: true, text: 'News'),
-      // webViewScreen: (BuildContext context) =>
-      // BaseLayout(page: WebViewScreen(), isAppBar: false),
+          const BaseLayout(page: SplashScreen(), isAppBar: false),
+      login: (BuildContext context) =>
+          BaseLayout(page: Login(), isAppBar: false),
+      otp: (BuildContext context) =>
+          const BaseLayout(page: OTP(), isAppBar: false),
       about: (BuildContext context) =>
           BaseLayout(page: AboutScreen(), isAppBar: true)
     };
@@ -49,7 +46,7 @@ class Routes {
   static Function get unknownRoute {
     return (settings) {
       MaterialPageRoute(
-        builder: (ctx) => IntroductionScreen(),
+        builder: (ctx) => const SplashScreen(),
       );
     };
   }

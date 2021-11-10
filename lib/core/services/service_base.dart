@@ -1,26 +1,36 @@
 import 'dart:async' show Future;
+import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:http_interceptor/http/intercepted_http.dart';
+import 'package:invent_chat/core/services/auth/auth_interceptor.dart';
 
 class ServiceBase {
-  final String? apiBaseUrl;
-
-  static ServiceBase? _singleton;
-
-  factory ServiceBase({apiBaseUrl}) {
-    _singleton ??= ServiceBase._(apiBaseUrl: apiBaseUrl);
-    return _singleton!;
-  }
-
-  ServiceBase._({this.apiBaseUrl});
-
-  static String? getApiBaseUrl() {
-    return _singleton!.apiBaseUrl;
-  }
+  static String apiBaseUrl = 'http://api.inventchat.com/';
 
   static Future<http.Response> get({
-    required String url,
+    String? url,
+    String? baseUrl = '',
+    required Map<String, String> headers,
   }) async {
-    final response = await http.get(Uri.parse(url));
+    String apiUrl = apiBaseUrl + url!;
+    final response =
+        await InterceptedHttp.build(interceptors: [AuthInterceptorHeader()])
+            .get(Uri.parse(apiUrl), headers: headers);
+    return response;
+  }
+
+  static Future<http.Response> post({
+    String? url,
+    required Map data,
+    String baseUrl = '',
+    required Map<String, String> headers,
+  }) async {
+    String apiUrl = apiBaseUrl + url!;
+    final response =
+        await InterceptedHttp.build(interceptors: [AuthInterceptorHeader()])
+            .post(Uri.parse(apiUrl), body: jsonEncode(data), headers: headers);
+    print(response.statusCode);
+    print(response.body);
     return response;
   }
 }
