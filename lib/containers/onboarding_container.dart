@@ -15,8 +15,6 @@ class Onboardingcontainer extends StatefulWidget {
 
 class _Onboardingcontainer extends State<Onboardingcontainer> {
   next() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-   print(prefs.getString('token'));
     Navigator.pushNamed(context,Routes.home );
   }
 
