@@ -15,7 +15,7 @@ class Onboardingcontainer extends StatefulWidget {
 
 class _Onboardingcontainer extends State<Onboardingcontainer> {
   next() async {
-    Navigator.pushNamed(context,Routes.home );
+    Navigator.pushNamed(context,Routes.navScreen );
   }
 
   @override

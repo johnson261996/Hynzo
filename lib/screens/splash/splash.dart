@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
    if (pref.getString('token') == null) {
       Navigator.pushNamed(context, Routes.login);
     } else {
-      Navigator.pushNamed(context, Routes.home);
+      Navigator.pushNamed(context, Routes.navScreen);
     }
   }
 

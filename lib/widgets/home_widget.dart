@@ -1,6 +1,8 @@
 ///Widget created for home screen.
 
 import 'package:flutter/material.dart';
+import 'package:invent_chat/widgets/common/bottomNavBar/bottomNavBar.dart';
+
 
 class HomeWidget extends StatelessWidget {
   final Function logout;
@@ -27,7 +29,8 @@ class HomeWidget extends StatelessWidget {
           ),
         ),
       ),
-    ));
-    ;
+    ),
+    );
+
   }
 }
