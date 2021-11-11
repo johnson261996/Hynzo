@@ -19,10 +19,6 @@ class LoginContainer extends StatelessWidget {
     final GenerateOTPModel response =
         await _authProvider!.generateOTP(mobile, signature);
     _authProvider!.changeLoadingStatus(false); // change loading status to false
-
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString('otp_id', response.otpVerificationId.toString());
-
     return response;
   }
 

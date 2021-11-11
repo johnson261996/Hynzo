@@ -18,9 +18,10 @@ class OtpVerifyContainer extends StatelessWidget {
     _authProvider!.changeLoadingStatus(true); // change loading status to true
     final LoginModel response = await _authProvider!
         .verifyOtp(_authProvider!.userMobile, "91", _authProvider!.otpId, otp);
+    print("----------------- ${response.token}");
     _authProvider!.changeLoadingStatus(false); // change loading status to false
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString('token', response.token.toString());
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('token', response.token.toString());
     return response;
   }
 

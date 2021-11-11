@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invent_chat/layout/base.dart';
 import 'package:invent_chat/screens/login/login.dart';
 import 'package:invent_chat/screens/login/otp.dart';
+import 'package:invent_chat/screens/onboarding/onboarding.dart';
 import 'package:invent_chat/screens/splash/splash.dart';
 import 'package:invent_chat/screens/about/about.dart';
 import 'package:invent_chat/screens/home/home.dart';
@@ -29,6 +30,7 @@ class Routes {
   static const webViewScreen = '/webview';
   static const about = '/about';
   static const home = '/home';
+  static const onboarding = '/onboarding';
 
   /// Routing Table needed for the App.
   static Map<String, WidgetBuilder> get buildRoutes {
@@ -43,6 +45,8 @@ class Routes {
           BaseLayout(page: AboutScreen(), isAppBar: true),
       home: (BuildContext context) =>
           BaseLayout(page: HomeScreen(), isAppBar: false),
+      onboarding: (BuildContext context) =>
+          BaseLayout(page: Onbarding(), isAppBar: false),
     };
   }
 

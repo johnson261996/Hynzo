@@ -16,7 +16,10 @@ class HomeContainer extends StatefulWidget {
 
 class _HomeContainerState extends State<HomeContainer> {
   LogOut() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
     Navigator.pushNamed(context, Routes.login);
+
   }
 
   @override

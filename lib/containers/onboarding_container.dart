@@ -4,7 +4,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:invent_chat/widgets/onboarding_widget.dart';
-
+import 'package:invent_chat/routes/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class Onboardingcontainer extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -13,7 +14,11 @@ class Onboardingcontainer extends StatefulWidget {
 }
 
 class _Onboardingcontainer extends State<Onboardingcontainer> {
-  next() async {}
+  next() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+   print(prefs.getString('token'));
+    Navigator.pushNamed(context,Routes.home );
+  }
 
   @override
   Widget build(BuildContext context) {

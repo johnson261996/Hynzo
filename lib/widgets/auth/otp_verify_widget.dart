@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:invent_chat/themes/colors.dart';
 import 'package:invent_chat/widgets/common/buttons/primary_button.dart';
 import 'package:invent_chat/widgets/common/error/error.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import 'package:invent_chat/routes/routes.dart';
 
 class OtpWidget extends StatefulWidget {
   final Function verifyOTP;
@@ -33,16 +33,9 @@ class _OtpWidgetState extends State<OtpWidget> {
   }
 
   verifyOTP() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    setState(() {
-      phone = pref.getString('phone')!;
-
-      otpId = pref.getString('otp_id')!;
-    });
-
     if (otp.length == 6) {
       widget.verifyOTP(otp);
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushNamed(context,Routes.onboarding );
     } else {
       setState(() {
         errorMgs = 'Please enter valid mobile number';

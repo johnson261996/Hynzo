@@ -1,6 +1,7 @@
 ///Widget created for onboarding screen.
 
 import 'package:flutter/material.dart';
+import 'package:invent_chat/routes/routes.dart';
 
 class OnboardingWidget extends StatelessWidget {
   final Function next;
@@ -14,14 +15,17 @@ class OnboardingWidget extends StatelessWidget {
     return Scaffold(
         body: SafeArea(
       child: Container(
-        child: Column(
-          children: <Widget>[
-            Text(
-              'Options',
-              style: TextStyle(fontSize: 30),
-            ),
-            ElevatedButton(onPressed: () => next(), child: Text('Next'))
-          ],
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Padding(padding: const EdgeInsets.all(60)),
+              Text(
+                'Options',
+                style: TextStyle(fontSize: 30),
+              ),
+              ElevatedButton(onPressed: () => next(), child: Text('Next'))
+            ],
+          ),
         ),
       ),
     ));

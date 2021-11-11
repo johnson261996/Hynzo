@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invent_chat/themes/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
+import 'package:invent_chat/routes/routes.dart';
 
 /// [SplashScreen] is the initial screen that loads into the app.
 /// This screen will check whether the User is logged in already.
@@ -30,14 +31,13 @@ class _SplashScreenState extends State<SplashScreen> {
     return Timer(_duration, checkAuth);
   }
 
-  Future checkAuth() async {
+   checkAuth() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    String token = pref.getString('token').toString();
 
-    if (token != null) {
-      Navigator.pushNamed(context, '/home');
+   if (pref.getString('token') == null) {
+      Navigator.pushNamed(context, Routes.login);
     } else {
-      Navigator.pushNamed(context, '/logIn');
+      Navigator.pushNamed(context, Routes.home);
     }
   }
 

@@ -1,6 +1,5 @@
 ///Contains all the widgets included in login screen.
 
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:invent_chat/themes/colors.dart';
@@ -8,6 +7,7 @@ import 'package:invent_chat/widgets/common/buttons/primary_button.dart';
 import 'package:invent_chat/widgets/common/error/error.dart';
 import 'package:invent_chat/widgets/common/input/input.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import 'package:invent_chat/routes/routes.dart';
 
 class LoginWidget extends StatefulWidget {
   final Function generateOTP;
@@ -21,6 +21,7 @@ class LoginWidget extends StatefulWidget {
 class _LoginWidgetState extends State<LoginWidget> {
   late String mobile = '';
   late String errorMgs = '';
+  late String name = '';
 
   _generateOTP() async {
     if (mobile.length == 10) {
@@ -29,7 +30,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         signature = signature;
       });
       widget.generateOTP(mobile, signature);
-      Navigator.pushReplacementNamed(context, '/otp');
+      Navigator.pushNamed(context, Routes.otp);
     } else {
       setState(() {
         errorMgs = 'Please enter valid mobile number';
@@ -88,6 +89,18 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.15,
+            ),
+            Input(
+              hintText: 'Enter Name',
+              leading: Icons.account_circle,
+              obscure: false,
+              keyboard: TextInputType.text,
+              onchangeFunc: (val) {
+                setState(() {
+                  name = val;
+                  errorMgs = "";
+                });
+              },
             ),
             Input(
               hintText: 'Enter Mobile Number',

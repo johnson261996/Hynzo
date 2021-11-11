@@ -27,6 +27,7 @@ class AuthService {
     String url = 'api/v2/users/verify_otp';
     var response = await ServiceBase.post(
         url: url, data: data, headers: {"Content-Type": "application/json"});
+    print('>>>>>>>>>>>>> $response');
     return LoginModel.fromJson(jsonDecode(response.body), response.statusCode);
   }
 }
