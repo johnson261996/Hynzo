@@ -1,3 +1,5 @@
+///Game section for user.
+
 import 'package:flutter/material.dart';
 
 class GameScreen extends StatelessWidget {
@@ -5,9 +7,7 @@ class GameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-          child: Text("Games",style: TextStyle(fontSize: 30)),
-        )
-    );
-
+      child: Text("Games", style: TextStyle(fontSize: 30)),
+    ));
   }
 }

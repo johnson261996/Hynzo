@@ -1,3 +1,5 @@
+///Navigation screen after authentication
+
 import 'package:flutter/material.dart';
 import 'package:invent_chat/widgets/common/bottomNavBar/bottomNavBar.dart';
 

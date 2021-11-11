@@ -1,3 +1,5 @@
+///Custom created Bottom navigtaion bar for application
+
 import 'package:flutter/material.dart';
 import 'package:invent_chat/screens/chat/chat_screen.dart';
 import 'package:invent_chat/screens/games/games.dart';
