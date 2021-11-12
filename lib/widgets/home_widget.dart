@@ -1,6 +1,7 @@
 ///Widget created for home screen.
 
 import 'package:flutter/material.dart';
+import 'package:invent_chat/resources/strings.dart';
 
 class HomeWidget extends StatelessWidget {
   final Function logout;
@@ -19,10 +20,10 @@ class HomeWidget extends StatelessWidget {
             children: <Widget>[
               Padding(padding: const EdgeInsets.all(60)),
               Text(
-                'Home',
-                style: TextStyle(fontSize: 30),
+                Strings.HOME,
+                style: Theme.of(context).textTheme.subtitle1!,
               ),
-              ElevatedButton(onPressed: () => logout(), child: Text('LogOut'))
+              ElevatedButton(onPressed: () => logout(), child: Text(Strings.LOG_OUT))
             ],
           ),
         ),

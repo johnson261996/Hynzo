@@ -8,6 +8,7 @@ import 'package:invent_chat/widgets/common/error/error.dart';
 import 'package:invent_chat/widgets/common/input/input.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:invent_chat/routes/routes.dart';
+import 'package:invent_chat/resources/strings.dart';
 
 class LoginWidget extends StatefulWidget {
   final Function generateOTP;
@@ -68,7 +69,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             Hero(
               tag: 'HeroTitle',
               child: Text(
-                'InventChat',
+                Strings.TITLE_NAME,
                 style: Theme.of(context).textTheme.headline1,
               ),
             ),
@@ -82,7 +83,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   isRepeatingAnimation: false,
                   animatedTexts: [
                     TyperAnimatedText(
-                        "Hyperlocal private chatting".toUpperCase()),
+                        Strings.SPLASH_TEXT),
                   ],
                 ),
               ),
@@ -91,7 +92,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               height: MediaQuery.of(context).size.height * 0.15,
             ),
             Input(
-              hintText: 'Enter Name',
+              hintText: Strings.LOGIN_USER_NAME,
               leading: Icons.account_circle,
               obscure: false,
               keyboard: TextInputType.text,
@@ -103,7 +104,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               },
             ),
             Input(
-              hintText: 'Enter Mobile Number',
+              hintText: Strings.LOGIN_USER_NUMBER,
               leading: Icons.phone,
               obscure: false,
               keyboard: TextInputType.number,
@@ -121,7 +122,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             Hero(
               tag: 'loginbutton',
               child: PrimaryButton(
-                text: const Text('login'),
+                text: const Text(Strings.LOGIN_BUTTON),
                 onPressed: () {
                   _generateOTP();
                 },

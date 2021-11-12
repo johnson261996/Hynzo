@@ -4,6 +4,7 @@ import 'package:invent_chat/themes/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'package:invent_chat/routes/routes.dart';
+import 'package:invent_chat/resources/strings.dart';
 
 /// [SplashScreen] is the initial screen that loads into the app.
 /// This screen will check whether the User is logged in already.
@@ -67,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 Hero(
                   tag: 'HeroTitle',
                   child: Text(
-                    'InventChat',
+                    Strings.TITLE_NAME,
                     style: Theme.of(context).textTheme.headline1,
                   ),
                 ),
@@ -81,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       isRepeatingAnimation: false,
                       animatedTexts: [
                         TyperAnimatedText(
-                            "Hyperlocal private chatting".toUpperCase()),
+                           Strings.SPLASH_TEXT),
                       ],
                     ),
                   ),
