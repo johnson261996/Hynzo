@@ -20,19 +20,16 @@ class GenerateOTPModel {
 }
 
 class LoginModel {
-  final String? status;
   final String? token;
-  final List? user;
+  final Map? user;
 
   const LoginModel({
-    this.status,
     this.token,
     this.user,
   });
 
   factory LoginModel.fromJson(Map<String, dynamic> json, int code) {
     return LoginModel(
-      status: json['status'],
       token: json['token'],
       user: json['user'],
     );

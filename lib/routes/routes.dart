@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:invent_chat/layout/base.dart';
 import 'package:invent_chat/screens/login/login.dart';
 import 'package:invent_chat/screens/login/otp.dart';
+import 'package:invent_chat/screens/onboarding/onboarding.dart';
 import 'package:invent_chat/screens/splash/splash.dart';
 import 'package:invent_chat/screens/about/about.dart';
+import 'package:invent_chat/screens/home/home.dart';
 
 /// [Routes] which contains common routing configuaration needed for the Application.
 /// This includes all pages and all routes mapped to each other.
@@ -27,6 +29,8 @@ class Routes {
   static const otp = '/otp';
   static const webViewScreen = '/webview';
   static const about = '/about';
+  static const home = '/home';
+  static const onboarding = '/onboarding';
 
   /// Routing Table needed for the App.
   static Map<String, WidgetBuilder> get buildRoutes {
@@ -36,9 +40,13 @@ class Routes {
       login: (BuildContext context) =>
           BaseLayout(page: Login(), isAppBar: false),
       otp: (BuildContext context) =>
-          const BaseLayout(page: OTP(), isAppBar: false),
+          const BaseLayout(page: Otpverify(), isAppBar: false),
       about: (BuildContext context) =>
-          BaseLayout(page: AboutScreen(), isAppBar: true)
+          BaseLayout(page: AboutScreen(), isAppBar: true),
+      home: (BuildContext context) =>
+          BaseLayout(page: HomeScreen(), isAppBar: false),
+      onboarding: (BuildContext context) =>
+          BaseLayout(page: Onbarding(), isAppBar: false),
     };
   }
 

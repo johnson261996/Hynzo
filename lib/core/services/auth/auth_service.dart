@@ -17,11 +17,16 @@ class AuthService {
         jsonDecode(response.body), response.statusCode);
   }
 
-  static Future<GenerateOTPModel> verifyOTP(body) async {
-    String url = '/api/v2/users/verify_otp';
+  static Future<LoginModel> verifyOTP(mobile, code, otp_id, otp) async {
+    Map data = {
+      'contact_number': mobile,
+      'phone_code': '91',
+      'otp_verification_id': otp_id,
+      'otp': otp,
+    };
+    String url = 'api/v2/users/verify_otp';
     var response = await ServiceBase.post(
-        url: url, data: body, headers: {"Content-Type": "application/json"});
-    return GenerateOTPModel.fromJson(
-        jsonDecode(response.body), response.statusCode);
+        url: url, data: data, headers: {"Content-Type": "application/json"});
+    return LoginModel.fromJson(jsonDecode(response.body), response.statusCode);
   }
 }

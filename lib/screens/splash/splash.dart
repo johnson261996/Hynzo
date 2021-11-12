@@ -1,7 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/widgets/common/buttons/secondary_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
+import 'package:invent_chat/routes/routes.dart';
+import 'package:invent_chat/resources/strings.dart';
 
 /// [SplashScreen] is the initial screen that loads into the app.
 /// This screen will check whether the User is logged in already.
@@ -16,9 +19,27 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final splashDelay = 3;
+
   @override
   void initState() {
     super.initState();
+    _loadWidget();
+  }
+
+  _loadWidget() async {
+    var _duration = Duration(seconds: splashDelay);
+    return Timer(_duration, checkAuth);
+  }
+
+   checkAuth() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+   if (pref.getString('token') == null) {
+      Navigator.pushNamed(context, Routes.login);
+    } else {
+      Navigator.pushNamed(context, Routes.home);
+    }
   }
 
   @override
@@ -47,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 Hero(
                   tag: 'HeroTitle',
                   child: Text(
-                    'InventChat',
+                    Strings.TITLE_NAME,
                     style: Theme.of(context).textTheme.headline1,
                   ),
                 ),
@@ -61,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       isRepeatingAnimation: false,
                       animatedTexts: [
                         TyperAnimatedText(
-                            "Hyperlocal private chatting".toUpperCase()),
+                           Strings.SPLASH_TEXT),
                       ],
                     ),
                   ),
@@ -69,34 +90,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.15,
                 ),
-                Hero(
-                  tag: 'loginbutton',
-                  child: SecondaryButton(
-                    text: Text(
-                      'Login',
-                      style: Theme.of(context)
-                          .textTheme
-                          .button!
-                          .apply(color: AppColors.primaryDark),
-                    ),
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/login');
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                // Hero(
-                //   tag: 'signupbutton',
-                //   child: PrimaryButton(
-                //     text: Text('Signup',
-                //         style: Theme.of(context).textTheme.button!),
-                //     onPressed: () {
-                //       Navigator.pushReplacementNamed(context, '/signup');
-                //     },
-                //   ),
-                // ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                 ),
