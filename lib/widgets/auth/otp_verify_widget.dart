@@ -1,6 +1,5 @@
 ///Contains all the widgets added in Otp verification screen.
 
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:invent_chat/themes/colors.dart';
@@ -36,7 +35,7 @@ class _OtpWidgetState extends State<OtpWidget> {
   verifyOTP() async {
     if (otp.length == 6) {
       widget.verifyOTP(otp);
-      Navigator.pushNamed(context,Routes.onboarding );
+      Navigator.pushNamed(context, Routes.onboarding);
     } else {
       setState(() {
         errorMgs = Strings.PHONE_NUMBER_VALIDATION;
@@ -88,8 +87,7 @@ class _OtpWidgetState extends State<OtpWidget> {
                   child: AnimatedTextKit(
                     isRepeatingAnimation: false,
                     animatedTexts: [
-                      TyperAnimatedText(
-                         Strings.SPLASH_TEXT),
+                      TyperAnimatedText(Strings.SPLASH_TEXT),
                     ],
                   ),
                 ),

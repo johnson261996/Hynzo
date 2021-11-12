@@ -16,4 +16,7 @@ class Images {
   static const String ORDERS = 'assets/images/orders.png';
   static const String LOGOUT = 'assets/images/logout.png';
   static const String HELP = 'assets/images/help_outline.png';
+
+
+  static const  List UsersImages = ['https://picsum.photos/200/300','https://picsum.photos/200/300','https://picsum.photos/200/300'];
 }

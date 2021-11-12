@@ -9,6 +9,7 @@ import 'package:invent_chat/widgets/common/input/input.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:invent_chat/routes/routes.dart';
 import 'package:invent_chat/resources/strings.dart';
+
 class LoginWidget extends StatefulWidget {
   final Function generateOTP;
 
@@ -81,8 +82,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 child: AnimatedTextKit(
                   isRepeatingAnimation: false,
                   animatedTexts: [
-                    TyperAnimatedText(
-                        Strings.SPLASH_TEXT),
+                    TyperAnimatedText(Strings.SPLASH_TEXT),
                   ],
                 ),
               ),

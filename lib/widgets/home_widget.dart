@@ -23,7 +23,8 @@ class HomeWidget extends StatelessWidget {
                   Strings.HOME,
                   style: Theme.of(context).textTheme.headline1,
                 ),
-                ElevatedButton(onPressed: () => logout(), child: Text(Strings.LOG_OUT))
+                ElevatedButton(
+                    onPressed: () => logout(), child: Text(Strings.LOG_OUT))
               ],
             ),
           ),

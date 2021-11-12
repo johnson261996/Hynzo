@@ -16,12 +16,14 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int currentIndex = 0;
   PageController pageController = PageController();
+
   void onTapped(int index) {
     setState(() {
       currentIndex = index;
     });
     pageController.jumpToPage(index);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +31,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
         physics: NeverScrollableScrollPhysics(),
         controller: pageController,
         children: <Widget>[
-HomeScreen(),GameScreen(),ChatScreen(),ProfileScreen()
+          HomeScreen(),
+          GameScreen(),
+          ChatScreen(),
+          ProfileScreen()
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

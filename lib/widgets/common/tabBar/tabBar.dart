@@ -1,6 +1,10 @@
 ///Custom created tab bar for aplication
 
 import 'package:flutter/material.dart';
+import 'package:invent_chat/containers/chat/connected_container.dart';
+import 'package:invent_chat/containers/chat/recieved_container.dart';
+import 'package:invent_chat/containers/chat/suggested_container.dart';
+import 'package:invent_chat/screens/home/home.dart';
 import 'package:invent_chat/themes/colors.dart';
 import 'package:invent_chat/resources/strings.dart';
 
@@ -39,16 +43,10 @@ class _TabBarState extends State<CustomTabBar>
             ),
             Expanded(
                 child: TabBarView(
-              children: [
-                Center(
-                    child: Text(Strings.Connected,
-                        style: Theme.of(context).textTheme.headline1)),
-                Center(
-                    child: Text(Strings.Received,
-                        style: Theme.of(context).textTheme.headline1)),
-                Center(
-                    child: Text(Strings.Suggested,
-                        style: Theme.of(context).textTheme.headline1))
+              children: <Widget>[
+               ConnectedContainer(),
+                ReceivedContainer(),
+                SuggestedContainer()
               ],
               controller: _tabController,
             ))

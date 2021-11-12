@@ -9,7 +9,7 @@ class GameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: Text(Strings.GAMES, style:Theme.of(context).textTheme.headline1),
+      child: Text(Strings.GAMES, style: Theme.of(context).textTheme.headline1),
     ));
   }
 }
