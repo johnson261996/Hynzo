@@ -8,6 +8,7 @@ import 'package:invent_chat/widgets/common/buttons/primary_button.dart';
 import 'package:invent_chat/widgets/common/error/error.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:invent_chat/routes/routes.dart';
+import 'package:invent_chat/resources/strings.dart';
 
 class OtpWidget extends StatefulWidget {
   final Function verifyOTP;
@@ -38,7 +39,7 @@ class _OtpWidgetState extends State<OtpWidget> {
       Navigator.pushNamed(context,Routes.onboarding );
     } else {
       setState(() {
-        errorMgs = 'Please enter valid mobile number';
+        errorMgs = Strings.PHONE_NUMBER_VALIDATION;
       });
     }
   }
@@ -74,7 +75,7 @@ class _OtpWidgetState extends State<OtpWidget> {
               Hero(
                 tag: 'HeroTitle',
                 child: Text(
-                  'InventChat',
+                  Strings.TITLE_NAME,
                   style: Theme.of(context).textTheme.headline1,
                 ),
               ),
@@ -88,7 +89,7 @@ class _OtpWidgetState extends State<OtpWidget> {
                     isRepeatingAnimation: false,
                     animatedTexts: [
                       TyperAnimatedText(
-                          "Hyperlocal private chatting".toUpperCase()),
+                         Strings.SPLASH_TEXT),
                     ],
                   ),
                 ),
@@ -132,7 +133,7 @@ class _OtpWidgetState extends State<OtpWidget> {
               Hero(
                 tag: 'verifyOTP',
                 child: PrimaryButton(
-                  text: const Text('Submit'),
+                  text: const Text(Strings.OTP_BUTTON),
                   onPressed: () {
                     verifyOTP();
                   },

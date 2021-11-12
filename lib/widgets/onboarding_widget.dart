@@ -1,7 +1,7 @@
 ///Widget created for onboarding screen.
 
 import 'package:flutter/material.dart';
-
+import 'package:invent_chat/resources/strings.dart';
 
 class OnboardingWidget extends StatelessWidget {
   final Function next;
@@ -20,10 +20,10 @@ class OnboardingWidget extends StatelessWidget {
             children: <Widget>[
               Padding(padding: const EdgeInsets.all(60)),
               Text(
-                'Options',
-                style: TextStyle(fontSize: 30),
+                Strings.ON_BOARDING,
+                style: Theme.of(context).textTheme.headline1,
               ),
-              ElevatedButton(onPressed: () => next(), child: Text('Next'))
+              ElevatedButton(onPressed: () => next(), child: Text(Strings.NEXT))
             ],
           ),
         ),

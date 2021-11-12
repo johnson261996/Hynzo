@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:invent_chat/themes/colors.dart';
+import 'package:invent_chat/resources/strings.dart';
 
 class CustomTabBar extends StatefulWidget {
   @override
@@ -27,9 +28,9 @@ class _TabBarState extends State<CustomTabBar>
               child: TabBar(
                 labelColor: Colors.black,
                 tabs: const [
-                  Tab(text: 'Connected'),
-                  Tab(text: 'Received'),
-                  Tab(text: 'Suggested')
+                  Tab(text: Strings.Connected),
+                  Tab(text: Strings.Received),
+                  Tab(text: Strings.Suggested)
                 ],
                 controller: _tabController,
                 indicatorSize: TabBarIndicatorSize.tab,
@@ -38,11 +39,16 @@ class _TabBarState extends State<CustomTabBar>
             ),
             Expanded(
                 child: TabBarView(
-              children: const [
+              children: [
                 Center(
-                    child: Text('Connected', style: TextStyle(fontSize: 20))),
-                Center(child: Text('Received', style: TextStyle(fontSize: 20))),
-                Center(child: Text('Suggested', style: TextStyle(fontSize: 20)))
+                    child: Text(Strings.Connected,
+                        style: Theme.of(context).textTheme.headline1)),
+                Center(
+                    child: Text(Strings.Received,
+                        style: Theme.of(context).textTheme.headline1)),
+                Center(
+                    child: Text(Strings.Suggested,
+                        style: Theme.of(context).textTheme.headline1))
               ],
               controller: _tabController,
             ))

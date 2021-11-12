@@ -6,6 +6,7 @@ import 'package:invent_chat/screens/games/games.dart';
 import 'package:invent_chat/screens/home/home.dart';
 import 'package:invent_chat/screens/profile/profile_settings.dart';
 import 'package:invent_chat/themes/colors.dart';
+import 'package:invent_chat/resources/strings.dart';
 
 class BottomNavBar extends StatefulWidget {
   @override
@@ -25,6 +26,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        physics: NeverScrollableScrollPhysics(),
         controller: pageController,
         children: <Widget>[
 HomeScreen(),GameScreen(),ChatScreen(),ProfileScreen()
@@ -37,19 +39,19 @@ HomeScreen(),GameScreen(),ChatScreen(),ProfileScreen()
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(
-            label: 'Home',
+            label: Strings.HOME,
             icon: Icon(Icons.home),
           ),
           BottomNavigationBarItem(
-            label: 'Games',
+            label: Strings.GAMES,
             icon: Icon(Icons.games),
           ),
           BottomNavigationBarItem(
-            label: 'Chat',
+            label: Strings.CHAT,
             icon: Icon(Icons.chat),
           ),
           BottomNavigationBarItem(
-            label: 'Profile',
+            label: Strings.PROFILE,
             icon: Icon(Icons.account_circle),
           ),
         ],
