@@ -80,19 +80,10 @@ class Strings {
   static const Suggested = 'Suggested';
 
   //chat
-  static const USER_NAMES = [
-    'Anusree',
-    'John',
-    'Neha'
-  ];
+  static const USER_NAMES = ['Anusree', 'John', 'Neha'];
 
-  static const MESSAGES = [
-    'Welcome',
-    'Welcome',
-    'Welcome'
-  ];
-static const SEARCH = 'Search New Connection';
-
+  static const MESSAGES = ['Welcome', 'Welcome', 'Welcome'];
+  static const SEARCH = 'Search New Connection';
 
   // it will return the dynamic string
   static String demo(amount) {

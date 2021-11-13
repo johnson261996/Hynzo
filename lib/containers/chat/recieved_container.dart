@@ -22,7 +22,7 @@ class _ReceivedContainerState extends State<ReceivedContainer> {
               TextField(
                 decoration: InputDecoration(
                     icon: Icon(Icons.search),
-                    iconColor: AppColors.primaryLight,
+                    fillColor: AppColors.primaryLight,
                     border: InputBorder.none,
                     hintText: Strings.SEARCH,
                     hintStyle: Theme.of(context).textTheme.bodyText1),
