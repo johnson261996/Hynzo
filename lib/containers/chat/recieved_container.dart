@@ -43,23 +43,6 @@ class _ReceivedContainerState extends State<ReceivedContainer> {
                 ),
               )
             ],
-          )),
-
-      // Container(
-      //   child:
-      //   ListView.separated(
-      //     itemCount: 3,
-      //     itemBuilder: (contex, index) => UserData(
-      //         name: Strings.USER_NAMES[index],
-      //         userImage: Images.UsersImages[index],
-      //         message: ''),
-      //     separatorBuilder: (BuildContext context, int index) {
-      //       return SizedBox(
-      //         height: 15,
-      //       );
-      //     },
-      //   ),
-      // ),
-    );
+          )),);
   }
 }
