@@ -9,7 +9,8 @@ class Strings {
 
   // splash screen
   static const SPLASH_TEXT = '"HYPERLOCAL PRIVATE CHATTING"';
-   static const TITLE_NAME = 'InventChat';
+  static const TITLE_NAME = 'InventChat';
+
   // intro screen
   static const INTRO_TITLE = 'School Owner App';
   static const INTRO_LIST_TITLE = 'What’s in it for me?';
@@ -62,16 +63,27 @@ class Strings {
   static const DESCRIPTION =
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s';
   static const GAMES = "Games";
-  static const PROFILE = "Profile & Settings";
+  static const PROFILE_SETTINGS = "Profile & Settings";
+  static const PROFILE = 'Profile';
   static const HOME = "Home";
   static const CHAT = "Chat";
-static const LOG_OUT = 'LogOut';
+  static const LOG_OUT = 'LogOut';
 
-//Onboarding
+  //Onboarding
 
   static const ON_BOARDING = 'Onboarding';
   static const NEXT = 'Next';
 
+  //tab_Bar
+  static const Connected = 'Connected';
+  static const Received = 'Received';
+  static const Suggested = 'Suggested';
+
+  //chat
+  static const USER_NAMES = ['Anusree', 'John', 'Neha'];
+
+  static const MESSAGES = ['Welcome', 'Welcome', 'Welcome'];
+  static const SEARCH = 'Search New Connection';
 
   // it will return the dynamic string
   static String demo(amount) {

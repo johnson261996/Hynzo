@@ -34,7 +34,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       Navigator.pushNamed(context, Routes.otp);
     } else {
       setState(() {
-        errorMgs = 'Please enter valid mobile number';
+        errorMgs = Strings.PHONE_NUMBER_VALIDATION;
       });
     }
   }
@@ -82,8 +82,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 child: AnimatedTextKit(
                   isRepeatingAnimation: false,
                   animatedTexts: [
-                    TyperAnimatedText(
-                        Strings.SPLASH_TEXT),
+                    TyperAnimatedText(Strings.SPLASH_TEXT),
                   ],
                 ),
               ),

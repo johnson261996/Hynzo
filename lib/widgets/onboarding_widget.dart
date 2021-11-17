@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:invent_chat/resources/strings.dart';
-import 'package:invent_chat/routes/routes.dart';
 
 class OnboardingWidget extends StatelessWidget {
   final Function next;
@@ -22,7 +21,7 @@ class OnboardingWidget extends StatelessWidget {
               Padding(padding: const EdgeInsets.all(60)),
               Text(
                 Strings.ON_BOARDING,
-                style: Theme.of(context).textTheme.subtitle1!,
+                style: Theme.of(context).textTheme.headline1,
               ),
               ElevatedButton(onPressed: () => next(), child: Text(Strings.NEXT))
             ],

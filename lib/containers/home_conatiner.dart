@@ -19,7 +19,6 @@ class _HomeContainerState extends State<HomeContainer> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.clear();
     Navigator.pushNamed(context, Routes.login);
-
   }
 
   @override

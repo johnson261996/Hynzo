@@ -7,7 +7,6 @@ import 'package:invent_chat/core/models/auth_model.dart';
 import 'package:invent_chat/providers/auth_provider.dart';
 import 'package:invent_chat/widgets/auth/login_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginContainer extends StatelessWidget {
   static AuthProvider? _authProvider;

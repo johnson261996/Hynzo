@@ -32,13 +32,13 @@ class _SplashScreenState extends State<SplashScreen> {
     return Timer(_duration, checkAuth);
   }
 
-   checkAuth() async {
+  checkAuth() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
-   if (pref.getString('token') == null) {
+    if (pref.getString('token') == null) {
       Navigator.pushNamed(context, Routes.login);
     } else {
-      Navigator.pushNamed(context, Routes.home);
+      Navigator.pushNamed(context, Routes.navScreen);
     }
   }
 
@@ -81,8 +81,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: AnimatedTextKit(
                       isRepeatingAnimation: false,
                       animatedTexts: [
-                        TyperAnimatedText(
-                           Strings.SPLASH_TEXT),
+                        TyperAnimatedText(Strings.SPLASH_TEXT),
                       ],
                     ),
                   ),
