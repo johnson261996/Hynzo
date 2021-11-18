@@ -92,7 +92,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
             Input(
               hintText: Strings.LOGIN_USER_NAME,
-              leading: Icons.account_circle,
+              leading: Icons.account_circle_outlined,
               obscure: false,
               keyboard: TextInputType.text,
               onchangeFunc: (val) {
@@ -104,7 +104,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
             Input(
               hintText: Strings.LOGIN_USER_NUMBER,
-              leading: Icons.phone,
+              leading: Icons.phone_outlined,
               obscure: false,
               keyboard: TextInputType.number,
               onchangeFunc: (val) {

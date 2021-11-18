@@ -22,9 +22,9 @@ class Input extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 15),
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(color: AppColors.primaryLight)),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
       padding: const EdgeInsets.only(left: 10),
       width: MediaQuery.of(context).size.width,
       child: TextField(
@@ -36,7 +36,7 @@ class Input extends StatelessWidget {
         decoration: InputDecoration(
             icon: Icon(
               leading,
-              color: Colors.deepPurple,
+              color: Colors.grey,
             ),
             border: InputBorder.none,
             hintText: hintText,

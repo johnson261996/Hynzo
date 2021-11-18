@@ -31,11 +31,19 @@ class Strings {
   static const GET_STARTED = 'Get Started';
   static const LOADING = 'loading...';
 
+  //SignUp Screen
+  static const HI_TEXT="Hi there!";
+  static const LETS_STARTED="Let's Get Started";
+  static const SIGN_UP_BUTTON="Create An Account";
+  static const ALREADY_LOGIN="Already have an account ?";
+  static const SIGNUP = 'Signup';
+
   //Login Screem
-  static const LOGIN_TITLE = 'Hello school owner,';
+  static const ACCOUNT="Don't have an account ?";
+  static const LOGIN = 'Login';
   static const LOGIN_SUBTITLE = 'sign in to continue';
   static const LOGIN_INPUT_TITLE = '10 Digit Registered Mobile Number';
-  static const LOGIN_BUTTON = 'LOGIN';
+  static const LOGIN_BUTTON = 'Continue';
   static const LOGIN_TERMS =
       'By continuing, you accept the Terms and Condition';
   static const LOGIN_MOBILE_NOT_REGISTRED =
@@ -44,8 +52,8 @@ class Strings {
       ' Please reach out to your LEAD SPOC or contact customer support @ ';
   static const LOGIN_SUPPORT_MOBILE = '+91-8682833333';
   static const LOGIN_SUPPORT_EMAIL = 'product.support@leadschool.in';
-  static const LOGIN_USER_NAME = 'Enter Name';
-  static const LOGIN_USER_NUMBER = 'Enter Mobile Number';
+  static const LOGIN_USER_NAME = 'Full name';
+  static const LOGIN_USER_NUMBER = 'Mobile Number';
 
   // Validations
   static const PHONE_NUMBER_VALIDATION = 'Please enter a valid phone number';

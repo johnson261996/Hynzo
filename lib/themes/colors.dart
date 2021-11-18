@@ -17,6 +17,8 @@ class AppColors {
   static final Color lightgray = Pigment.fromString('#969696');
   static final Color lightSliver = Pigment.fromString('#E8E8E8');
   static final Color white = Pigment.fromString("#FFFFFF");
+  static final Color blue = Pigment.fromString("#3498DB");
+  static final Color lightblue = Pigment.fromString("#AED6F1");
 
   static final Color primary = Pigment.fromString('#4232B0');
   static final Color primaryDark = Pigment.fromString('#1E1464');
