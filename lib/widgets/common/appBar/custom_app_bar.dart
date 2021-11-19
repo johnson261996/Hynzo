@@ -40,7 +40,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       //       size: iconSize,
       //     ),
       //   )
-      // ],
+       //],
       backgroundColor: backgroundColor,
       centerTitle: centerTitle,
     );

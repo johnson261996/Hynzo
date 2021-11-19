@@ -3,7 +3,8 @@ import 'package:invent_chat/themes/colors.dart';
 
 class Input extends StatelessWidget {
   final String? hintText;
-  final IconData? leading;
+  final Image? leading;
+  final TextInputAction? textInputAction;
   final Function onchangeFunc;
   final bool obscure;
   final TextInputType? keyboard;
@@ -12,6 +13,7 @@ class Input extends StatelessWidget {
     Key? key,
     this.hintText,
     this.leading,
+    this.textInputAction,
     this.obscure = true,
     this.keyboard,
     required this.onchangeFunc,
@@ -28,19 +30,18 @@ class Input extends StatelessWidget {
       padding: const EdgeInsets.only(left: 10),
       width: MediaQuery.of(context).size.width,
       child: TextField(
+        style: Theme.of(context).textTheme.bodyText2,
+        textInputAction: textInputAction,
         onChanged: (val) => onchangeFunc(val),
         keyboardType: keyboard,
         onSubmitted: (value) {},
         autofocus: false,
         obscureText: obscure,
         decoration: InputDecoration(
-            icon: Icon(
-              leading,
-              color: Colors.grey,
-            ),
+            icon: leading,
             border: InputBorder.none,
             hintText: hintText,
-            hintStyle: Theme.of(context).textTheme.subtitle2),
+            hintStyle: Theme.of(context).textTheme.bodyText2),
       ),
     );
   }

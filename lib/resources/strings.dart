@@ -9,7 +9,7 @@ class Strings {
 
   // splash screen
   static const SPLASH_TEXT = '"HYPERLOCAL PRIVATE CHATTING"';
-  static const TITLE_NAME = 'InventChat';
+  static const TITLE_NAME = 'NGZO';
 
   // intro screen
   static const INTRO_TITLE = 'School Owner App';
@@ -41,9 +41,9 @@ class Strings {
   //Login Screem
   static const ACCOUNT="Don't have an account ?";
   static const LOGIN = 'Login';
-  static const LOGIN_SUBTITLE = 'sign in to continue';
-  static const LOGIN_INPUT_TITLE = '10 Digit Registered Mobile Number';
-  static const LOGIN_BUTTON = 'Continue';
+  static const LOGIN_SUBTITLE = 'Please, Log In.';
+  static const LOGIN_TITLE = 'Welcome Back!';
+  static const LOGIN_BUTTON = 'Continue >';
   static const LOGIN_TERMS =
       'By continuing, you accept the Terms and Condition';
   static const LOGIN_MOBILE_NOT_REGISTRED =
@@ -56,13 +56,17 @@ class Strings {
   static const LOGIN_USER_NUMBER = 'Mobile Number';
 
   // Validations
-  static const PHONE_NUMBER_VALIDATION = 'Please enter a valid phone number';
+  static const PHONE_NUMBER_VALIDATION = 'Please enter a valid mobile number!';
+  static const PHONE_EMPTY_VALIDATION = 'Mobile Number cannot be blank!';
+  static const NAME_VALIDATION = 'Please enter a valid name!';
+  static const NAME_EMPTY_VALIDATION = 'Name cannot be blank!';
 
   //Otp Screen
   static const OTP_TITLE = 'Enter OTP';
   static const OTP_SENT_NO = '4 digit OTP has been sent to ';
   static const OTP_BUTTON = 'Submit';
   static const OTP_RESEND = 'Resend OTP ';
+  static const OTP_HEADING = 'We sent you an OTP';
 
   //Home
   static const HOME_SELECT = 'Select School';

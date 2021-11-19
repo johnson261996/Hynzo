@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     if (pref.getString('token') == null) {
-      Navigator.pushNamed(context, Routes.signin);
+      Navigator.pushNamed(context, Routes.login);
     } else {
       Navigator.pushNamed(context, Routes.navScreen); 
     }

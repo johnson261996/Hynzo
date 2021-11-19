@@ -5,7 +5,6 @@ import 'package:invent_chat/screens/login/login.dart';
 import 'package:invent_chat/screens/login/otp.dart';
 import 'package:invent_chat/screens/navigationScreen/navigationScreen.dart';
 import 'package:invent_chat/screens/onboarding/onboarding.dart';
-import 'package:invent_chat/screens/signin/signup.dart';
 import 'package:invent_chat/screens/splash/splash.dart';
 import 'package:invent_chat/screens/about/about.dart';
 import 'package:invent_chat/screens/home/home.dart';
@@ -28,7 +27,6 @@ class Routes {
 
   // routes
   static const splashScreen = '/splash-screen';
-  static const signin= '/sign-in';
   static const login = '/login';
   static const otp = '/otp';
   static const webViewScreen = '/webview';
@@ -42,8 +40,6 @@ class Routes {
     return {
       splashScreen: (BuildContext context) =>
           const BaseLayout(page: SplashScreen(), isAppBar: false),
-      signin: (BuildContext context) =>
-          const BaseLayout(page: Signup(), isAppBar:  false),
       login: (BuildContext context) =>
           BaseLayout(page: Login(), isAppBar: false),
       otp: (BuildContext context) =>
