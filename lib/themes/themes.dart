@@ -49,13 +49,13 @@ class Themes {
           ),
           headline2: baseTheme.textTheme.headline2!.copyWith(
             color: AppColors.white,
-            fontSize: 25,
+            fontSize: 34,
             fontWeight: FontWeight.w800,
           ),
           headline3: baseTheme.textTheme.headline3!.copyWith(
             color: AppColors.gray,
-            fontSize: 18,
-            fontWeight: FontWeight.w800,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
           ),
           headline4: baseTheme.textTheme.headline4!.copyWith(
             color: AppColors.grayDark,
@@ -80,8 +80,8 @@ class Themes {
           ),
           subtitle2: baseTheme.textTheme.subtitle2!.copyWith(
             color: AppColors.white,
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
           ),
           bodyText1: baseTheme.textTheme.bodyText1!.copyWith(
             color: AppColors.primaryDark,
@@ -90,14 +90,14 @@ class Themes {
             fontWeight: FontWeight.w300,
           ),
           bodyText2: baseTheme.textTheme.bodyText2!.copyWith(
-            color: AppColors.black,
-            fontSize: 13,
-            fontWeight: FontWeight.w200,
+            color: AppColors.gray,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
           ),
           button: baseTheme.textTheme.button!.copyWith(
             color: AppColors.white,
             fontSize: 16,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
           caption: baseTheme.textTheme.subtitle1!.copyWith(
             color: AppColors.blueDark,

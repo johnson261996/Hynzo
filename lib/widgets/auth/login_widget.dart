@@ -60,8 +60,8 @@ class _LoginWidgetState extends State<LoginWidget> {
             Expanded(
               child: Column(
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.10,
+                  const SizedBox(
+                    height:110,
                   ),
                   Hero(
                     tag: 'HeroTitle',
@@ -70,12 +70,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                       style: Theme.of(context).textTheme.headline3,
                     ),
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
+                  const SizedBox(
+                    height: 20,
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.42,
+                    height: 220,
                     child: Image.asset('assets/images/registration.png',fit: BoxFit.contain,),
                   ),
                 ],
@@ -83,7 +83,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.40,
+              height: 400,
               child: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -99,7 +99,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 child: Column(
                   children: [
                     const SizedBox(
-                      height: 20,
+                      height: 45,
                     ),
                     Text(Strings.LOGIN_TITLE,
                       style: Theme.of(context).textTheme.subtitle2,
@@ -110,7 +110,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 25,
                     ),
                     Container(
                       padding: const EdgeInsets.only(
@@ -140,7 +140,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         child: ErrorText(errorMgs: errorMgs),
                       ),
                     const SizedBox(
-                      height: 20,
+                      height: 30,
                     ),
                     Container(
                       padding: const EdgeInsets.only(

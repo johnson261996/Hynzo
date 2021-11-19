@@ -41,8 +41,8 @@ class Strings {
   //Login Screem
   static const ACCOUNT="Don't have an account ?";
   static const LOGIN = 'Login';
-  static const LOGIN_SUBTITLE = 'Please, Log In.';
-  static const LOGIN_TITLE = 'Welcome Back!';
+  static const LOGIN_SUBTITLE = 'Let\'s get started.';
+  static const LOGIN_TITLE = 'Hi  there!';
   static const LOGIN_BUTTON = 'Continue >';
   static const LOGIN_TERMS =
       'By continuing, you accept the Terms and Condition';
