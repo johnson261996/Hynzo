@@ -81,7 +81,9 @@ flutter:
     - assets/images/tree.png
     - assets/images/right_white_arrow.png
     - assets/images/mobile.png
-    - assets/images/otp.png
+    - assets/images/first_button.png
+    - assets/images/second_button.png
+    - assets/images/third_button.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:invent_chat/themes/colors.dart';
+import 'package:invent_chat/utils/localStorage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'package:invent_chat/routes/routes.dart';
@@ -20,6 +21,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final splashDelay = 3;
+  late bool introStatus;
 
   @override
   void initState() {
@@ -34,11 +36,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   checkAuth() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-
-    if (pref.getString('token') == null) {
-      Navigator.pushNamed(context, Routes.login);
+    await LocalStorage.getIntroStatus().then((value) => introStatus = value!);
+    if(introStatus){
+      Navigator.pushNamed(context, Routes.intro);
     } else {
-      Navigator.pushNamed(context, Routes.navScreen); 
+      if (pref.getString('token') == null) {
+        Navigator.pushNamed(context, Routes.login);
+      } else {
+        Navigator.pushNamed(context, Routes.navScreen);
+      }
     }
   }
 

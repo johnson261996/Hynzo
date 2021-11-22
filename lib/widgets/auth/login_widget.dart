@@ -67,7 +67,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     tag: 'HeroTitle',
                     child: Text(
                       Strings.TITLE_NAME,
-                      style: Theme.of(context).textTheme.headline3,
+                      style: Theme.of(context).textTheme.button!.apply(color:AppColors.grayDark,),
                     ),
                   ),
                   const SizedBox(
@@ -102,11 +102,11 @@ class _LoginWidgetState extends State<LoginWidget> {
                       height: 45,
                     ),
                     Text(Strings.LOGIN_TITLE,
-                      style: Theme.of(context).textTheme.subtitle2,
+                      style: Theme.of(context).textTheme.caption!.apply(color: AppColors.white),
                       textAlign: TextAlign.center,
                     ),
                     Text(Strings.LOGIN_SUBTITLE,
-                      style: Theme.of(context).textTheme.headline2,
+                      style: Theme.of(context).textTheme.headline1!.apply(color: AppColors.white),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(

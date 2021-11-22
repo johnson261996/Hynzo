@@ -2,14 +2,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorage {
 
-  static void setInstalledStatus(bool status) async {
+  static void setIntroStatus(bool status) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('installedStatus', status);
+    prefs.setBool('introStatus', status);
   }
 
-  static Future<bool?> getInstalledStatus() async {
+  static Future<bool?> getIntroStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('installedStatus') ?? false;
+    return prefs.getBool('introStatus') ?? true;
   }
 
   static void setMobileNumber(String number) async {

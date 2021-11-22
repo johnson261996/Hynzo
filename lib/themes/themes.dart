@@ -19,9 +19,6 @@ class Themes {
   static AppBarTheme _buildAppBarTheme() {
     return AppBarTheme(
       elevation: 0,
-      iconTheme: IconThemeData(
-        color: AppColors.gray,
-      )
     );
   }
 
@@ -42,71 +39,69 @@ class Themes {
   static TextTheme _buildLightTextTheme() {
     return baseTheme.textTheme
         .copyWith(
-          headline1: baseTheme.textTheme.headline1!.copyWith(
-            color: AppColors.gray,
-            fontSize: 25,
-            fontWeight: FontWeight.w800,
-          ),
-          headline2: baseTheme.textTheme.headline2!.copyWith(
-            color: AppColors.white,
-            fontSize: 34,
-            fontWeight: FontWeight.w800,
-          ),
-          headline3: baseTheme.textTheme.headline3!.copyWith(
-            color: AppColors.gray,
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
-          headline4: baseTheme.textTheme.headline4!.copyWith(
-            color: AppColors.grayDark,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-          headline5: baseTheme.textTheme.headline5!.copyWith(
-            color: AppColors.grayDark,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          headline6: baseTheme.textTheme.headline6!.copyWith(
-            color: AppColors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
-          subtitle1: baseTheme.textTheme.subtitle1!.copyWith(
-            color: AppColors.primaryLight,
-            height: 1.5,
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
-          subtitle2: baseTheme.textTheme.subtitle2!.copyWith(
-            color: AppColors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
-          bodyText1: baseTheme.textTheme.bodyText1!.copyWith(
-            color: AppColors.primaryDark,
-            height: 1.5,
-            fontSize: 16,
-            fontWeight: FontWeight.w300,
-          ),
-          bodyText2: baseTheme.textTheme.bodyText2!.copyWith(
-            color: AppColors.gray,
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-          ),
-          button: baseTheme.textTheme.button!.copyWith(
-            color: AppColors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
-          caption: baseTheme.textTheme.subtitle1!.copyWith(
-            color: AppColors.blueDark,
-            fontSize: 13,
-            fontWeight: FontWeight.w300,
-          ),
-        )
+        headline1: baseTheme.textTheme.headline1!.copyWith(
+          color: AppColors.primaryDark,
+          fontSize: 34,
+          fontWeight: FontWeight.w800,
+        ),
+        headline2: baseTheme.textTheme.headline2!.copyWith(
+          color: AppColors.grayDark,
+          fontSize: 27,
+          fontWeight: FontWeight.w700,
+        ),
+        headline3: baseTheme.textTheme.headline3!.copyWith(
+          color: AppColors.grayDark,
+          height: 1.3,
+          fontSize: 24,
+          fontWeight: FontWeight.w700,
+        ),
+        headline4: baseTheme.textTheme.headline4!.copyWith(
+          color: AppColors.grayDark,
+          fontSize: 22,
+          fontWeight: FontWeight.w600,
+        ),
+        headline5: baseTheme.textTheme.headline5!.copyWith(
+          color: AppColors.grayDark,
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+        ),
+        headline6: baseTheme.textTheme.headline6!.copyWith(
+          color: AppColors.grayDark,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+        subtitle1: baseTheme.textTheme.subtitle1!.copyWith(
+          color: AppColors.primaryLight,
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+        ),
+        subtitle2: baseTheme.textTheme.subtitle2!.copyWith(
+          color: AppColors.grayDark,
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+        ),
+        bodyText1: baseTheme.textTheme.bodyText1!.copyWith(
+          color: AppColors.primaryDark,
+          fontSize: 15,
+          fontWeight: FontWeight.w300,
+        ),
+        bodyText2: baseTheme.textTheme.bodyText2!.copyWith(
+          color: AppColors.grayDark,
+          fontSize: 15,
+          fontWeight: FontWeight.w600,
+        ),
+        button: baseTheme.textTheme.button!.copyWith(
+          color: AppColors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+        ),
+        caption: baseTheme.textTheme.subtitle1!.copyWith(
+          color: AppColors.primaryDark,
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+        ))
         .apply(
-          fontFamily: 'sf_pro_display',
-        );
+      fontFamily: 'sf_pro_display',
+    );
   }
 }

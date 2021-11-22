@@ -34,7 +34,7 @@ class _OtpWidgetState extends State<OtpWidget> {
   String time = '';
   int _start = 60;
   bool isTimerStarted = false;
-  bool isTimerFinished=false;
+  bool isTimerFinished = false;
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _OtpWidgetState extends State<OtpWidget> {
       (Timer timer) {
         if (_start == 0) {
           setState(() {
-            isTimerFinished=true;
+            isTimerFinished = true;
             timer.cancel();
           });
         } else {
@@ -67,9 +67,9 @@ class _OtpWidgetState extends State<OtpWidget> {
 
   String getTimeFormat(int time) {
     if (time < 10) {
-      return '00:0$time';
+      return '0${time}s';
     }
-    return '00:$time';
+    return '${time}s';
   }
 
   @override
@@ -102,50 +102,43 @@ class _OtpWidgetState extends State<OtpWidget> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.08,
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.35,
-            width: MediaQuery.of(context).size.width,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: (){
-                    Navigator.of(context).pop();
-                  },
-                  child: Icon(Icons.arrow_back,size: 25,color: AppColors.gray,),
-                ),
-                Expanded(child: Image.asset('assets/images/otp.png',fit: BoxFit.contain,width: 500,height: 500,),),
-              ],
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Icon(
+                Icons.arrow_back,
+                size: 25,
+                color: AppColors.gray,
+              ),
             ),
           ),
-          Text(Strings.OTP_HEADING,
-            style: Theme.of(context).textTheme.headline1,
-            textAlign: TextAlign.center,
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.06,
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              Strings.OTP_HEADING,
+              style: Theme.of(context).textTheme.headline2,
+              textAlign: TextAlign.center,
+            ),
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.01,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('On number',style: Theme.of(context).textTheme.bodyText2 ,),
-              Text(' $phone',style: Theme.of(context).textTheme.caption,),
-              if(isTimerFinished)...[
-                GestureDetector(
-                  onTap: (){
-                    setState(() {
-                      isTimerStarted=false;
-                      isTimerFinished=false;
-                      _start = 60;
-                    });
-                  },
-                  child: Text(' Resend',style: Theme.of(context).textTheme.caption,),
-                )
-              ] else...[
-                Text(' Resend Code in ',style: Theme.of(context).textTheme.bodyText2 ,),
-                Text(' $time',style: Theme.of(context).textTheme.caption,),
-              ],
+              Text(
+                'A verification code has been sent to',
+                style: Theme.of(context).textTheme.subtitle2,
+              ),
+              Text(
+                ' $phone',
+                style: Theme.of(context).textTheme.subtitle2,
+              ),
             ],
           ),
           SizedBox(
@@ -173,13 +166,43 @@ class _OtpWidgetState extends State<OtpWidget> {
                     errorMgs = "";
                   });
                 }
-                if(code.length == 6) {
+                if (code.length == 6) {
                   verifyOTP();
                 }
               },
               codeLength: 6 //code length, default 6
               ),
           if (errorMgs.isNotEmpty) ErrorText(errorMgs: errorMgs),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.05,
+          ),
+          if (isTimerFinished) ...[
+            Align(
+              alignment: Alignment.topLeft,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isTimerStarted = false;
+                    isTimerFinished = false;
+                    _start = 60;
+                  });
+                  startTimer();
+                },
+                child: Text(
+                  ' Resend',
+                  style: Theme.of(context).textTheme.subtitle2!.apply(color: AppColors.lightblue),
+                ),
+              ),
+            )
+          ] else ...[
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                ' Resend in $time',
+                style: Theme.of(context).textTheme.subtitle2,
+              ),
+            ),
+          ],
         ],
       ),
     );

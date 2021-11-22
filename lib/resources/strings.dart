@@ -66,7 +66,14 @@ class Strings {
   static const OTP_SENT_NO = '4 digit OTP has been sent to ';
   static const OTP_BUTTON = 'Submit';
   static const OTP_RESEND = 'Resend OTP ';
-  static const OTP_HEADING = 'We sent you an OTP';
+  static const OTP_HEADING = 'Verification Code';
+
+  //INTRO
+  static const CONNECT_FRIENDS="Connect Friends";
+  static const PLAY_GAMES="Play Games";
+  static const EXPLORE_LOCALITY="Explore Locality";
+  static const DUMMY_TEXT="Lorem Ipsum dummy text is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's dummy text";
+
 
   //Home
   static const HOME_SELECT = 'Select School';

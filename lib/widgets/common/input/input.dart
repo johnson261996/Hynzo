@@ -41,7 +41,7 @@ class Input extends StatelessWidget {
             icon: leading,
             border: InputBorder.none,
             hintText: hintText,
-            hintStyle: Theme.of(context).textTheme.bodyText2),
+            hintStyle: Theme.of(context).textTheme.bodyText2!.apply(color: AppColors.lightgray,),),
       ),
     );
   }
