@@ -12,14 +12,18 @@ class AppColors {
   AppColors._();
 
   static final Color black = Pigment.fromString('#000000');
-  static final Color grayDark = Pigment.fromString('#222222');
+  static final Color grayDark = Pigment.fromString('#7A7A7A');
   static final Color gray = Pigment.fromString('#666666');
-  static final Color lightgray = Pigment.fromString('#969696');
+  static final Color lightgray = Pigment.fromString('#C4C4C4');
   static final Color lightSliver = Pigment.fromString('#E8E8E8');
   static final Color white = Pigment.fromString("#FFFFFF");
+  static final Color blue = Pigment.fromString("#839CDE");
+  static final Color lightblue = Pigment.fromString("#94BDE3");
+  static final Color blueDark = Pigment.fromString("#414BA5");
+  static final Color pink = Pigment.fromString("#E39494");
 
   static final Color primary = Pigment.fromString('#4232B0');
-  static final Color primaryDark = Pigment.fromString('#1E1464');
+  static final Color primaryDark = Pigment.fromString('#414BA5');
   static final Color primaryLight = Pigment.fromString('#9791c4');
 
   static final Color secondary = Pigment.fromString('#FFB183');

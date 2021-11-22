@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invent_chat/layout/base.dart';
 import 'package:invent_chat/screens/games/games.dart';
+import 'package:invent_chat/screens/intro/intro.dart';
 import 'package:invent_chat/screens/login/login.dart';
 import 'package:invent_chat/screens/login/otp.dart';
 import 'package:invent_chat/screens/navigationScreen/navigationScreen.dart';
@@ -28,6 +29,7 @@ class Routes {
   // routes
   static const splashScreen = '/splash-screen';
   static const login = '/login';
+  static const intro = '/intro';
   static const otp = '/otp';
   static const webViewScreen = '/webview';
   static const about = '/about';
@@ -42,6 +44,8 @@ class Routes {
           const BaseLayout(page: SplashScreen(), isAppBar: false),
       login: (BuildContext context) =>
           BaseLayout(page: Login(), isAppBar: false),
+      intro: (BuildContext context) =>
+          BaseLayout(page: Intro(), isAppBar: false),
       otp: (BuildContext context) =>
           const BaseLayout(page: Otpverify(), isAppBar: false),
       about: (BuildContext context) =>
