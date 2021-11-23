@@ -12,6 +12,17 @@ class LocalStorage {
     return prefs.getBool('introStatus') ?? true;
   }
 
+
+  static void setLoginToken(String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('token', token);
+  }
+
+  static Future<String?> getLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token') ?? "";
+  }
+
   static void setMobileNumber(String number) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('mobile', number);
@@ -19,11 +30,22 @@ class LocalStorage {
 
   static Future<String?> getMobileNumber() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('mobile') ?? '';
+    return prefs.getString('mobile') ?? "";
   }
 
   static void clearPreference() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
   }
+
+  static void clearToken() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+  }
+
+  static void clearMobileNumber() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('mobile');
+  }
+
 }

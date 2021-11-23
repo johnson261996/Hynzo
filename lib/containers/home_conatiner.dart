@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:invent_chat/routes/routes.dart';
+import 'package:invent_chat/utils/localStorage.dart';
 import 'package:invent_chat/widgets/home_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,17 +16,16 @@ class HomeContainer extends StatefulWidget {
 }
 
 class _HomeContainerState extends State<HomeContainer> {
-  LogOut() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.clear();
-    Navigator.pushNamed(context, Routes.login);
+  logOut() async {
+    LocalStorage.clearToken();
+    Navigator.pushReplacementNamed(context, Routes.login);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: HomeWidget(
-      logout: LogOut,
+      logout: logOut,
     ));
   }
 }
