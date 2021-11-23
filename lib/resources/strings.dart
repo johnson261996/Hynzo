@@ -93,6 +93,8 @@ class Strings {
   static const TITLE = 'Hello school owner,';
   static const DESCRIPTION =
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s';
+
+  //Games
   static const GAMES = "Games";
   static const PROFILE_SETTINGS = "Profile & Settings";
   static const PROFILE = 'More';
@@ -100,6 +102,18 @@ class Strings {
   static const CHAT = "Messages";
   static const EVENTS = "Events";
   static const LOG_OUT = 'LogOut';
+
+  //More
+  static const Menu="Menu";
+  static const DUMMY_PROFILE_NAME="Kumar KD";
+  static const VIEW_PROFILE="view profile";
+  static const NEWS="News";
+  static const SUBSCRIPTION="Subscription";
+  static const EDIT_HOME_SCREEN="Edit home screen";
+  static const WALLET="Wallet";
+  static const SEETINGS="Settings";
+  static const ABOUT_US="About us";
+  static const HELP_SUPPORT="Help & Support";
 
   //Onboarding
 
@@ -110,6 +124,12 @@ class Strings {
   static const Connected = 'Connected';
   static const Received = 'Received';
   static const Suggested = 'Suggested';
+
+  //game
+  static const RECENTLY_PLAYED="Recently Played";
+  static const ALL_GAMES="All games";
+  static const SUGGESTED_GAMES="Suggested for you";
+  static const NEW="New";
 
   //chat
   static const USER_NAMES = ['Anusree', 'John', 'Neha'];

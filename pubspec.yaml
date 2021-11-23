@@ -119,6 +119,16 @@ flutter:
     - assets/images/message_inactive.png
     - assets/images/more_active.png
     - assets/images/more_inactive.png
+    - assets/images/profile_image.png
+    - assets/images/profile_image_background.png
+    - assets/images/profile_star.png
+    - assets/images/help.png
+    - assets/images/news.png
+    - assets/images/wallet.png
+    - assets/images/subscription.png
+    - assets/images/edit.png
+    - assets/images/about.png
+    - assets/images/settings.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
