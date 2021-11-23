@@ -1,9 +1,9 @@
-///Edit profile and settings screen for user
+///Edit more and settings screen for user
 
 import 'package:flutter/material.dart';
 import 'package:invent_chat/resources/strings.dart';
 
-class ProfileScreen extends StatelessWidget {
+class MoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -25,15 +25,22 @@ class _LoginWidgetState extends State<LoginWidget> {
   late String mobile = '';
   late String errorMgs = '';
   late String name = '';
+  bool isLoading =false;
 
   _generateOTP() async {
     if (mobile.length == 10) {
+      setState(() {
+        isLoading = true;
+      });
       String signature = '';
       SmsAutoFill().getAppSignature.then((signature) {
         signature = signature;
       });
       widget.generateOTP(mobile, signature);
       LocalStorage.setMobileNumber(mobile);
+      setState(() {
+        isLoading = false;
+      });
       Navigator.pushNamed(context, Routes.otp);
     } else {
       setState(() {
@@ -52,6 +59,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
+        color: AppColors.white,
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Column(
@@ -60,8 +68,8 @@ class _LoginWidgetState extends State<LoginWidget> {
             Expanded(
               child: Column(
                 children: [
-                  const SizedBox(
-                    height:110,
+                  SizedBox(
+                    height:MediaQuery.of(context).size.height*0.12,
                   ),
                   Hero(
                     tag: 'HeroTitle',
@@ -70,8 +78,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                       style: Theme.of(context).textTheme.button!.apply(color:AppColors.grayDark,),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height*0.03,
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
@@ -83,7 +91,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: 400,
+              height: MediaQuery.of(context).size.height*0.52,
               child: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -92,14 +100,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                     colors: [AppColors.blue, AppColors.lightblue],
                   ),
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25),
+                    topLeft: Radius.circular(35),
+                    topRight: Radius.circular(35),
                   ),
                 ),
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 45,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height*0.06,
                     ),
                     Text(Strings.LOGIN_TITLE,
                       style: Theme.of(context).textTheme.caption!.apply(color: AppColors.white),
@@ -109,8 +117,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                       style: Theme.of(context).textTheme.headline1!.apply(color: AppColors.white),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(
-                      height: 25,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height*0.04,
                     ),
                     Container(
                       padding: const EdgeInsets.only(

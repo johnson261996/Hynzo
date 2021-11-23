@@ -22,6 +22,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   final splashDelay = 3;
   late bool introStatus;
+  late String token;
 
   @override
   void initState() {
@@ -35,15 +36,15 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   checkAuth() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
     await LocalStorage.getIntroStatus().then((value) => introStatus = value!);
+    await LocalStorage.getLoginStatus().then((value) => token = value!);
     if(introStatus){
-      Navigator.pushNamed(context, Routes.intro);
+      Navigator.pushReplacementNamed(context, Routes.intro);
     } else {
-      if (pref.getString('token') == null) {
-        Navigator.pushNamed(context, Routes.login);
+      if (token == "") {
+        Navigator.pushReplacementNamed(context, Routes.login);
       } else {
-        Navigator.pushNamed(context, Routes.navScreen);
+        Navigator.pushReplacementNamed(context, Routes.navScreen);
       }
     }
   }

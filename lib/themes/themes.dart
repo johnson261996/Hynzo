@@ -51,7 +51,6 @@ class Themes {
         ),
         headline3: baseTheme.textTheme.headline3!.copyWith(
           color: AppColors.grayDark,
-          height: 1.3,
           fontSize: 24,
           fontWeight: FontWeight.w700,
         ),

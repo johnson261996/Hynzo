@@ -82,7 +82,8 @@ class _OtpWidgetState extends State<OtpWidget> {
   verifyOTP() async {
     if (otp.length == 6) {
       widget.verifyOTP(otp);
-      Navigator.pushNamed(context, Routes.onboarding);
+      LocalStorage.clearMobileNumber();
+      Navigator.pushReplacementNamed(context, Routes.interest);
     } else {
       setState(() {
         errorMgs = Strings.PHONE_NUMBER_VALIDATION;
@@ -93,6 +94,7 @@ class _OtpWidgetState extends State<OtpWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: AppColors.white,
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.all(30),
       height: MediaQuery.of(context).size.height,
@@ -100,7 +102,7 @@ class _OtpWidgetState extends State<OtpWidget> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.08,
+            height: MediaQuery.of(context).size.height * 0.06,
           ),
           GestureDetector(
             onTap: () {

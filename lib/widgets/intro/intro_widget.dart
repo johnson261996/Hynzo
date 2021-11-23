@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invent_chat/resources/strings.dart';
 import 'package:invent_chat/routes/routes.dart';
 import 'package:invent_chat/themes/colors.dart';
+import 'package:invent_chat/utils/localStorage.dart';
 
 class IntroWidget extends StatefulWidget {
   const IntroWidget({Key? key}) : super(key: key);
@@ -64,6 +65,7 @@ class _IntroWidgetState extends State<IntroWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: AppColors.white,
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: Column(
@@ -107,6 +109,7 @@ class _IntroWidgetState extends State<IntroWidget> {
                 } else if (state == 1) {
                   state = 2;
                 } else {
+                  LocalStorage.setIntroStatus(false);
                   Navigator.pushReplacementNamed(context, Routes.login);
                 }
               });

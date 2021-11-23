@@ -9,7 +9,7 @@ class Strings {
 
   // splash screen
   static const SPLASH_TEXT = '"HYPERLOCAL PRIVATE CHATTING"';
-  static const TITLE_NAME = 'NGZO';
+  static const TITLE_NAME = 'HYNZO';
 
   // intro screen
   static const INTRO_TITLE = 'School Owner App';
@@ -74,6 +74,18 @@ class Strings {
   static const EXPLORE_LOCALITY="Explore Locality";
   static const DUMMY_TEXT="Lorem Ipsum dummy text is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's dummy text";
 
+  //Interest
+  static const INTEREST_TITLE="What are \n your interests ?";
+
+  //Suggetion
+  static const SUGGESTION_TITLE="Suggested people near you";
+  static const ADD="Add";
+  static const ADDED="Added";
+
+  //Location
+  static const LOCATION_Title="Allow access to your location";
+  static const LOCATION_SUBTITLE="Your location will be used to show potential suggestions near you";
+  static const LOCATION_BUTTON="Ok, let's do it";
 
   //Home
   static const HOME_SELECT = 'Select School';
@@ -83,9 +95,10 @@ class Strings {
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s';
   static const GAMES = "Games";
   static const PROFILE_SETTINGS = "Profile & Settings";
-  static const PROFILE = 'Profile';
+  static const PROFILE = 'More';
   static const HOME = "Home";
-  static const CHAT = "Chat";
+  static const CHAT = "Messages";
+  static const EVENTS = "Events";
   static const LOG_OUT = 'LogOut';
 
   //Onboarding

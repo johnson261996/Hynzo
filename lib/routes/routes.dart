@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:invent_chat/layout/base.dart';
 import 'package:invent_chat/screens/games/games.dart';
+import 'package:invent_chat/screens/interest/interest.dart';
 import 'package:invent_chat/screens/intro/intro.dart';
+import 'package:invent_chat/screens/location/location.dart';
 import 'package:invent_chat/screens/login/login.dart';
 import 'package:invent_chat/screens/login/otp.dart';
 import 'package:invent_chat/screens/navigationScreen/navigationScreen.dart';
@@ -9,6 +11,7 @@ import 'package:invent_chat/screens/onboarding/onboarding.dart';
 import 'package:invent_chat/screens/splash/splash.dart';
 import 'package:invent_chat/screens/about/about.dart';
 import 'package:invent_chat/screens/home/home.dart';
+import 'package:invent_chat/screens/suggestion/suggetion.dart';
 
 /// [Routes] which contains common routing configuaration needed for the Application.
 /// This includes all pages and all routes mapped to each other.
@@ -34,6 +37,9 @@ class Routes {
   static const webViewScreen = '/webview';
   static const about = '/about';
   static const home = '/home';
+  static const interest = '/interest';
+  static const location = '/location';
+  static const suggetion = '/suggetion';
   static const onboarding = '/onboarding';
   static const navScreen = '/navScreen';
 
@@ -46,6 +52,12 @@ class Routes {
           BaseLayout(page: Login(), isAppBar: false),
       intro: (BuildContext context) =>
           BaseLayout(page: Intro(), isAppBar: false),
+      interest: (BuildContext context) =>
+          BaseLayout(page: Interest(), isAppBar: false),
+      location: (BuildContext context) =>
+          BaseLayout(page: Location(), isAppBar: false),
+      suggetion: (BuildContext context) =>
+          BaseLayout(page: Suggetion(), isAppBar: false),
       otp: (BuildContext context) =>
           const BaseLayout(page: Otpverify(), isAppBar: false),
       about: (BuildContext context) =>
