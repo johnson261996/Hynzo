@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AdventureGames extends StatelessWidget {
-  const AdventureGames({Key? key}) : super(key: key);
+class BoardGames extends StatelessWidget {
+  const BoardGames({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +9,7 @@ class AdventureGames extends StatelessWidget {
       height: MediaQuery.of(context).size.height,
       child: Center(
         child: Text(
-          'Adventure Games',
+          'Board Games',
           style: Theme.of(context).textTheme.headline1,
         ),
       ),

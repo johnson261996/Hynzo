@@ -32,14 +32,14 @@ class Strings {
   static const LOADING = 'loading...';
 
   //SignUp Screen
-  static const HI_TEXT="Hi there!";
-  static const LETS_STARTED="Let's Get Started";
-  static const SIGN_UP_BUTTON="Create An Account";
-  static const ALREADY_LOGIN="Already have an account ?";
+  static const HI_TEXT = "Hi there!";
+  static const LETS_STARTED = "Let's Get Started";
+  static const SIGN_UP_BUTTON = "Create An Account";
+  static const ALREADY_LOGIN = "Already have an account ?";
   static const SIGNUP = 'Signup';
 
   //Login Screem
-  static const ACCOUNT="Don't have an account ?";
+  static const ACCOUNT = "Don't have an account ?";
   static const LOGIN = 'Login';
   static const LOGIN_SUBTITLE = 'Let\'s get started.';
   static const LOGIN_TITLE = 'Hi  there!';
@@ -69,23 +69,25 @@ class Strings {
   static const OTP_HEADING = 'Verification Code';
 
   //INTRO
-  static const CONNECT_FRIENDS="Connect Friends";
-  static const PLAY_GAMES="Play Games";
-  static const EXPLORE_LOCALITY="Explore Locality";
-  static const DUMMY_TEXT="Lorem Ipsum dummy text is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's dummy text";
+  static const CONNECT_FRIENDS = "Connect Friends";
+  static const PLAY_GAMES = "Play Games";
+  static const EXPLORE_LOCALITY = "Explore Locality";
+  static const DUMMY_TEXT =
+      "Lorem Ipsum dummy text is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's dummy text";
 
   //Interest
-  static const INTEREST_TITLE="What are \n your interests ?";
+  static const INTEREST_TITLE = "What are \n your interests ?";
 
   //Suggetion
-  static const SUGGESTION_TITLE="Suggested people near you";
-  static const ADD="Add";
-  static const ADDED="Added";
+  static const SUGGESTION_TITLE = "Suggested people near you";
+  static const ADD = "Add";
+  static const ADDED = "Added";
 
   //Location
-  static const LOCATION_Title="Allow access to your location";
-  static const LOCATION_SUBTITLE="Your location will be used to show potential suggestions near you";
-  static const LOCATION_BUTTON="Ok, let's do it";
+  static const LOCATION_Title = "Allow access to your location";
+  static const LOCATION_SUBTITLE =
+      "Your location will be used to show potential suggestions near you";
+  static const LOCATION_BUTTON = "Ok, let's do it";
 
   //Home
   static const HOME_SELECT = 'Select School';
@@ -104,25 +106,26 @@ class Strings {
   static const LOG_OUT = 'LogOut';
 
   //Events
-  static const CATEGORIES_TITLE="Categories";
-  static const CATEGORIES_SUBTITLE="Step out and exprience special events";
-  static const WORKSHOPS="Workshops";
-  static const KIDS="Kids Zone";
-  static const MUSIC="Music";
-  static const COMEDY="Comedy";
-  static const FIT="Stay fit";
+  static const CATEGORIES_TITLE = "Categories";
+  static const CATEGORIES_SUBTITLE = "Step out and exprience special events";
+  static const KIDS = "Kids Zone";
+  static const MUSIC = "Music";
+  static const COMEDY = "Comedy";
+  static const FIT = "Stay fit";
 
   //More
-  static const Menu="Menu";
-  static const DUMMY_PROFILE_NAME="Kumar KD";
-  static const VIEW_PROFILE="view profile";
-  static const NEWS="News";
-  static const SUBSCRIPTION="Subscription";
-  static const EDIT_HOME_SCREEN="Edit home screen";
-  static const WALLET="Wallet";
-  static const SEETINGS="Settings";
-  static const ABOUT_US="About us";
-  static const HELP_SUPPORT="Help & Support";
+  static const Menu = "Menu";
+  static const DUMMY_PROFILE_NAME = "Kumar KD";
+  static const VIEW_PROFILE = "view profile";
+  static const NEWS = "News";
+  static const SUBSCRIPTION = "Subscription";
+  static const EDIT_HOME_SCREEN = "Edit home screen";
+  static const WALLET = "Wallet";
+  static const SEETINGS = "Settings";
+  static const ABOUT_US = "About us";
+  static const HELP_SUPPORT = "Help & Support";
+
+  static const WORKSHOPS = "Workshops";
 
   //Onboarding
 
@@ -135,10 +138,10 @@ class Strings {
   static const Suggested = 'Suggested';
 
   //game
-  static const RECENTLY_PLAYED="Recently Played";
-  static const ALL_GAMES="All games";
-  static const SUGGESTED_GAMES="Suggested for you";
-  static const NEW="New";
+  static const RECENTLY_PLAYED = "Recently Played";
+  static const ALL_GAMES = "All games";
+  static const SUGGESTED_GAMES = "Suggested for you";
+  static const NEW = "New";
 
   //chat
   static const USER_NAMES = ['Anusree', 'John', 'Neha'];

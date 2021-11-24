@@ -27,10 +27,11 @@ class MoreWidget extends StatelessWidget {
               children: [
                 Text(
                   Strings.Menu,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1!
-                      .copyWith(color: AppColors.greyBlack,fontSize: 23,fontWeight: FontWeight.w500,),
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        color: AppColors.greyBlack,
+                        fontSize: 23,
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
                 const Spacer(),
                 IconButton(
@@ -121,9 +122,9 @@ class MoreWidget extends StatelessWidget {
                                   .textTheme
                                   .bodyText1!
                                   .copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.offgrey,
-                              ),
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offgrey,
+                                  ),
                             ),
                             const Spacer(),
                             Icon(
@@ -164,9 +165,9 @@ class MoreWidget extends StatelessWidget {
                                   .textTheme
                                   .bodyText1!
                                   .copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.offgrey,
-                              ),
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offgrey,
+                                  ),
                             ),
                             const Spacer(),
                             Icon(
@@ -207,9 +208,9 @@ class MoreWidget extends StatelessWidget {
                                   .textTheme
                                   .bodyText1!
                                   .copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.offgrey,
-                              ),
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offgrey,
+                                  ),
                             ),
                             const Spacer(),
                             Icon(
@@ -250,9 +251,9 @@ class MoreWidget extends StatelessWidget {
                                   .textTheme
                                   .bodyText1!
                                   .copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.offgrey,
-                              ),
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offgrey,
+                                  ),
                             ),
                             const Spacer(),
                             Icon(
@@ -293,9 +294,9 @@ class MoreWidget extends StatelessWidget {
                                   .textTheme
                                   .bodyText1!
                                   .copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.offgrey,
-                              ),
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offgrey,
+                                  ),
                             ),
                             const Spacer(),
                             Icon(
@@ -336,9 +337,9 @@ class MoreWidget extends StatelessWidget {
                                   .textTheme
                                   .bodyText1!
                                   .copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.offgrey,
-                              ),
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offgrey,
+                                  ),
                             ),
                             const Spacer(),
                             Icon(
