@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AdventureGames extends StatelessWidget {
-  const AdventureGames({Key? key}) : super(key: key);
+class SuggestedWidget extends StatelessWidget{
+  const SuggestedWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -9,10 +9,11 @@ class AdventureGames extends StatelessWidget {
       height: MediaQuery.of(context).size.height,
       child: Center(
         child: Text(
-          'Adventure Games',
+          'Suggested',
           style: Theme.of(context).textTheme.headline1,
         ),
       ),
     );
   }
+
 }

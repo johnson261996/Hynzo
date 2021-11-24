@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hynzo/core/models/game_tab_header_model.dart';
+import 'package:hynzo/core/models/tab_header_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/widgets/game/action.dart';
 import 'package:hynzo/widgets/game/adventure.dart';
 import 'package:hynzo/widgets/game/all_games.dart';
-import 'package:hynzo/widgets/game/board.dart';
 import 'package:hynzo/widgets/game/card.dart';
 import 'package:hynzo/widgets/game/top_charts.dart';
 
@@ -18,30 +17,37 @@ class GameWidget extends StatefulWidget {
 }
 
 class _GameWidgetState extends State<GameWidget> {
-  List<GameTabHeaderModel> allGameHeader = [];
+  List<TabHeaderModel> allTabHeader = [];
   int selectedIndexValue = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    allGameHeader.add(
-      GameTabHeaderModel(tabName: 'All games', isSelected: true),
+    allTabHeader.add(
+      TabHeaderModel(
+        tabName: 'All games',
+      ),
     );
-    allGameHeader.add(
-      GameTabHeaderModel(tabName: 'Top charts', isSelected: false),
+    allTabHeader.add(
+      TabHeaderModel(
+        tabName: 'Top charts',
+      ),
     );
-    allGameHeader.add(
-      GameTabHeaderModel(tabName: 'Actions', isSelected: false),
+    allTabHeader.add(
+      TabHeaderModel(
+        tabName: 'Actions',
+      ),
     );
-    allGameHeader.add(
-      GameTabHeaderModel(tabName: 'Cards', isSelected: false),
+    allTabHeader.add(
+      TabHeaderModel(
+        tabName: 'Cards',
+      ),
     );
-    allGameHeader.add(
-      GameTabHeaderModel(tabName: 'Adventure', isSelected: false),
-    );
-    allGameHeader.add(
-      GameTabHeaderModel(tabName: 'Board', isSelected: false),
+    allTabHeader.add(
+      TabHeaderModel(
+        tabName: 'Adventure',
+      ),
     );
   }
 
@@ -57,8 +63,6 @@ class _GameWidgetState extends State<GameWidget> {
         return CardGames();
       case 4:
         return AdventureGames();
-      case 5:
-        return BoardGames();
       default:
         return AllGames();
     }
@@ -85,10 +89,11 @@ class _GameWidgetState extends State<GameWidget> {
               children: [
                 Text(
                   Strings.GAMES,
-                  style: Theme.of(context)
-                      .textTheme
-                      .caption!
-                      .apply(color: AppColors.greyBlack),
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        color: AppColors.greyBlack,
+                        fontSize: 23,
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
                 const Spacer(),
                 IconButton(
@@ -96,7 +101,7 @@ class _GameWidgetState extends State<GameWidget> {
                   icon: Icon(
                     Icons.search,
                     size: 20,
-                    color: AppColors.greyBlackTypeTwo,
+                    color: AppColors.offBlack,
                   ),
                 ),
               ],
@@ -115,32 +120,25 @@ class _GameWidgetState extends State<GameWidget> {
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () {
-                    for (int i = 0; i < allGameHeader.length; i++) {
-                      if (i == index) {
-                        allGameHeader[i].isSelected = true;
-                      } else {
-                        allGameHeader[i].isSelected = false;
-                      }
-                    }
                     setState(() {
                       selectedIndexValue = index;
                     });
                   },
                   child: Container(
-                    width: 70.0,
+                    width: 80.0,
                     height: 25.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5.0),
-                      color: allGameHeader[index].isSelected
+                      color: index == selectedIndexValue
                           ? AppColors.blueDark
                           : AppColors.white,
                     ),
                     child: Center(
                       child: Text(
-                        allGameHeader[index].tabName!,
+                        allTabHeader[index].tabName!,
                         style: Theme.of(context).textTheme.subtitle2!.copyWith(
                               fontSize: 12,
-                              color: allGameHeader[index].isSelected
+                              color: index == selectedIndexValue
                                   ? AppColors.white
                                   : AppColors.greyBlack,
                               fontWeight: FontWeight.w400,
@@ -150,16 +148,16 @@ class _GameWidgetState extends State<GameWidget> {
                   ),
                 );
               },
-              itemCount: allGameHeader.length,
+              itemCount: allTabHeader.length,
               scrollDirection: Axis.horizontal,
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
+            height: MediaQuery.of(context).size.height * 0.015,
           ),
           Divider(
-            color: AppColors.lightergray,
-            height: 2.0,
+            color: AppColors.offgrey,
+            height: 1.0,
           ),
           Expanded(
             child: SingleChildScrollView(

@@ -2,21 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/tab_header_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/widgets/events/today.dart';
-import 'package:hynzo/widgets/events/tommorrow.dart';
-import 'package:hynzo/widgets/events/week.dart';
-import 'package:hynzo/widgets/events/year.dart';
+import 'package:hynzo/widgets/chat/all_chats_widget.dart';
+import 'package:hynzo/widgets/chat/requested_widget.dart';
+import 'package:hynzo/widgets/chat/suggested_widget.dart';
 
-import 'month.dart';
+import 'calls_widget.dart';
 
-class EventWidget extends StatefulWidget {
-  const EventWidget({Key? key}) : super(key: key);
+class ChatWidget extends StatefulWidget {
+  const ChatWidget({Key? key}) : super(key: key);
 
   @override
-  State<EventWidget> createState() => _EventWidgetState();
+  State<ChatWidget> createState() => _ChatWidgetState();
 }
 
-class _EventWidgetState extends State<EventWidget> {
+class _ChatWidgetState extends State<ChatWidget> {
   List<TabHeaderModel> allTabHeader = [];
   int selectedIndexValue = 0;
 
@@ -26,27 +25,22 @@ class _EventWidgetState extends State<EventWidget> {
     super.initState();
     allTabHeader.add(
       TabHeaderModel(
-        tabName: 'Today',
+        tabName: 'All chats',
       ),
     );
     allTabHeader.add(
       TabHeaderModel(
-        tabName: 'Tommorrow',
+        tabName: 'Requested',
       ),
     );
     allTabHeader.add(
       TabHeaderModel(
-        tabName: 'This Week',
+        tabName: 'Calls',
       ),
     );
     allTabHeader.add(
       TabHeaderModel(
-        tabName: 'This Month',
-      ),
-    );
-    allTabHeader.add(
-      TabHeaderModel(
-        tabName: 'This Year',
+        tabName: 'Suggested',
       ),
     );
   }
@@ -54,17 +48,15 @@ class _EventWidgetState extends State<EventWidget> {
   Widget _getSelectedWidget(int index) {
     switch (index) {
       case 0:
-        return TodayWidget();
+        return AllChatsWidget();
       case 1:
-        return TommorrowWidget();
+        return RequestedWidget();
       case 2:
-        return WeeekWidget();
+        return CallsWidget();
       case 3:
-        return MonthWidget();
-      case 4:
-        return YearWidget();
+        return SuggestedWidget();
       default:
-        return TodayWidget();
+        return AllChatsWidget();
     }
   }
 
@@ -88,7 +80,7 @@ class _EventWidgetState extends State<EventWidget> {
             child: Row(
               children: [
                 Text(
-                  Strings.EVENTS,
+                  Strings.CHAT,
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         color: AppColors.greyBlack,
                         fontSize: 23,
@@ -162,9 +154,6 @@ class _EventWidgetState extends State<EventWidget> {
           Expanded(
             child: SingleChildScrollView(
               child: Container(
-                padding: const EdgeInsets.only(
-                  left: 15.0,
-                ),
                 child: _getSelectedWidget(selectedIndexValue),
               ),
             ),

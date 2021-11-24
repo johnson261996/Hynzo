@@ -2,14 +2,15 @@
 ///Shows all the connected users, received requests and suggested users.
 
 import 'package:flutter/material.dart';
-import 'package:hynzo/widgets/common/tabBar/tabBar.dart';
+import 'package:hynzo/containers/chat/chat_container.dart';
 
 class ChatScreen extends StatelessWidget {
+  const ChatScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 24),
-      child: CustomTabBar(),
+    return Scaffold(
+      body: ChatContainer(),
     );
   }
 }

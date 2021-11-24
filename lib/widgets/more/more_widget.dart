@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/common/profile_image/profile_image.dart';
 
 class MoreWidget extends StatelessWidget {
   const MoreWidget({Key? key}) : super(key: key);
@@ -26,10 +27,11 @@ class MoreWidget extends StatelessWidget {
               children: [
                 Text(
                   Strings.Menu,
-                  style: Theme.of(context)
-                      .textTheme
-                      .caption!
-                      .apply(color: AppColors.greyBlack),
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        color: AppColors.greyBlack,
+                        fontSize: 23,
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
                 const Spacer(),
                 IconButton(
@@ -37,7 +39,7 @@ class MoreWidget extends StatelessWidget {
                   icon: Icon(
                     Icons.search,
                     size: 20,
-                    color: AppColors.greyBlackTypeTwo,
+                    color: AppColors.offBlack,
                   ),
                 ),
               ],
@@ -53,60 +55,7 @@ class MoreWidget extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Stack(
-                  children: [
-                    Container(
-                      width: 70.0,
-                      height: 70.0,
-                      child: Image.asset(
-                        'assets/images/profile_image_background.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Positioned(
-                      top: 4.0,
-                      bottom: 4.0,
-                      right: 4.0,
-                      left: 4.0,
-                      child: Container(
-                        width: 65.0,
-                        height: 65.0,
-                        child: Image.asset(
-                          'assets/images/profile_image.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 45.0,
-                      bottom: 5.0,
-                      right: 5.0,
-                      left: 45.0,
-                      child: Container(
-                        width: 8.0,
-                        height: 8.0,
-                        child: Image.asset(
-                          'assets/images/profile_star.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 50.0,
-                      bottom: 5.0,
-                      right: 5.0,
-                      left: 52.0,
-                      child: Text(
-                        '2',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
-                              fontSize: 9,
-                              color: AppColors.yellowDark,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                    ),
-                  ],
-                ),
+                ProfileImageWidget(),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.03,
                 ),
@@ -174,7 +123,7 @@ class MoreWidget extends StatelessWidget {
                                   .bodyText1!
                                   .copyWith(
                                     fontWeight: FontWeight.w400,
-                                    color: AppColors.lightgrayTypeTwo,
+                                    color: AppColors.offgrey,
                                   ),
                             ),
                             const Spacer(),
@@ -217,7 +166,7 @@ class MoreWidget extends StatelessWidget {
                                   .bodyText1!
                                   .copyWith(
                                     fontWeight: FontWeight.w400,
-                                    color: AppColors.lightgrayTypeTwo,
+                                    color: AppColors.offgrey,
                                   ),
                             ),
                             const Spacer(),
@@ -260,7 +209,7 @@ class MoreWidget extends StatelessWidget {
                                   .bodyText1!
                                   .copyWith(
                                     fontWeight: FontWeight.w400,
-                                    color: AppColors.lightgrayTypeTwo,
+                                    color: AppColors.offgrey,
                                   ),
                             ),
                             const Spacer(),
@@ -303,7 +252,7 @@ class MoreWidget extends StatelessWidget {
                                   .bodyText1!
                                   .copyWith(
                                     fontWeight: FontWeight.w400,
-                                    color: AppColors.lightgrayTypeTwo,
+                                    color: AppColors.offgrey,
                                   ),
                             ),
                             const Spacer(),
@@ -346,7 +295,7 @@ class MoreWidget extends StatelessWidget {
                                   .bodyText1!
                                   .copyWith(
                                     fontWeight: FontWeight.w400,
-                                    color: AppColors.lightgrayTypeTwo,
+                                    color: AppColors.offgrey,
                                   ),
                             ),
                             const Spacer(),
@@ -389,7 +338,7 @@ class MoreWidget extends StatelessWidget {
                                   .bodyText1!
                                   .copyWith(
                                     fontWeight: FontWeight.w400,
-                                    color: AppColors.lightgrayTypeTwo,
+                                    color: AppColors.offgrey,
                                   ),
                             ),
                             const Spacer(),
@@ -404,8 +353,8 @@ class MoreWidget extends StatelessWidget {
                       ),
                     ),
                     Divider(
-                      color: AppColors.lightergray,
-                      height: 2.0,
+                      color: AppColors.offgrey,
+                      height: 1.0,
                     ),
                     Container(
                       padding: const EdgeInsets.only(
@@ -432,7 +381,7 @@ class MoreWidget extends StatelessWidget {
                                   .bodyText1!
                                   .copyWith(
                                     fontWeight: FontWeight.w400,
-                                    color: AppColors.lightgrayTypeTwo,
+                                    color: AppColors.offgrey,
                                   ),
                             ),
                             const Spacer(),
