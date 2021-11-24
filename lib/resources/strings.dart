@@ -94,7 +94,7 @@ class Strings {
   static const DESCRIPTION =
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s';
 
-  //Games
+  //Nav Bar
   static const GAMES = "Games";
   static const PROFILE_SETTINGS = "Profile & Settings";
   static const PROFILE = 'More';
@@ -102,6 +102,15 @@ class Strings {
   static const CHAT = "Messages";
   static const EVENTS = "Events";
   static const LOG_OUT = 'LogOut';
+
+  //Events
+  static const CATEGORIES_TITLE="Categories";
+  static const CATEGORIES_SUBTITLE="Step out and exprience special events";
+  static const WORKSHOPS="Workshops";
+  static const KIDS="Kids Zone";
+  static const MUSIC="Music";
+  static const COMEDY="Comedy";
+  static const FIT="Stay fit";
 
   //More
   static const Menu="Menu";
