@@ -28,12 +28,15 @@ class AppColors {
   static final Color yellow = Pigment.fromString("#FAFF00");
   static final Color yellowDark = Pigment.fromString("#B5680E");
   static final Color offyellow = Pigment.fromString("#FAF48A");
+  static final Color geryYellow = Pigment.fromString("#F2C94C");
+  static final Color offline = Pigment.fromString("#BDBDBD");
   static final Color darkyellow = Pigment.fromString("#FFC900");
   static final Color blue = Pigment.fromString("#839CDE");
   static final Color offblue = Pigment.fromString("#4F5E7B");
   static final Color lightblue = Pigment.fromString("#94BDE3");
   static final Color lighterblue = Pigment.fromString("#2F80ED");
   static final Color blueDark = Pigment.fromString("#414BA5");
+  static final Color green = Pigment.fromString("#4CE417");
   static final Color pink = Pigment.fromString("#E39494");
 
   static final Color primary = Pigment.fromString('#4232B0');
