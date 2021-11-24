@@ -2,7 +2,7 @@
 ///Shows all the connected users, received requests and suggested users.
 
 import 'package:flutter/material.dart';
-import 'package:invent_chat/widgets/common/tabBar/tabBar.dart';
+import 'package:hynzo/widgets/common/tabBar/tabBar.dart';
 
 class ChatScreen extends StatelessWidget {
   @override

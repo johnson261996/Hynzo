@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/themes/colors.dart';
+import 'package:hynzo/themes/colors.dart';
 
 /// Use [PrimaryButton] where in the places of common Raised Button.
 /// Needs text, onPressed Function, disabled flag.

@@ -1,4 +1,4 @@
-# invent_chat
+# hynzo
 
 A new Flutter project.
 

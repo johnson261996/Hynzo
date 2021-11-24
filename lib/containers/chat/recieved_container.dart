@@ -1,10 +1,10 @@
 ///shows connection requests received by user
 
 import 'package:flutter/material.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/widgets/userData/userData.dart';
-import 'package:invent_chat/resources/strings.dart';
-import 'package:invent_chat/resources/images.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/userData/userData.dart';
+import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/resources/images.dart';
 
 class ReceivedContainer extends StatefulWidget {
   @override
@@ -43,6 +43,7 @@ class _ReceivedContainerState extends State<ReceivedContainer> {
                 ),
               )
             ],
-          )),);
+          )),
+    );
   }
 }

@@ -1,8 +1,8 @@
 // import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
-// import 'package:invent_chat/providers/news_provider.dart';
-// import 'package:invent_chat/themes/colors.dart';
-// import 'package:invent_chat/widgets/common/loading_overlay/loading_overlay.dart';
+// import 'package:hynzo/providers/news_provider.dart';
+// import 'package:hynzo/themes/colors.dart';
+// import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
 
 // class NewsContainer extends StatelessWidget {
 //   static late NewsProvider _newsProvider;

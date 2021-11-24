@@ -1,9 +1,9 @@
 ///Shows connected users for the user
 
 import 'package:flutter/material.dart';
-import 'package:invent_chat/widgets/userData/userData.dart';
-import 'package:invent_chat/resources/strings.dart';
-import 'package:invent_chat/resources/images.dart';
+import 'package:hynzo/widgets/userData/userData.dart';
+import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/resources/images.dart';
 
 class ConnectedContainer extends StatefulWidget {
   @override

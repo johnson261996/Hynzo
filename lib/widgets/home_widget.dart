@@ -1,7 +1,7 @@
 ///Widget created for home screen.
 
 import 'package:flutter/material.dart';
-import 'package:invent_chat/resources/strings.dart';
+import 'package:hynzo/resources/strings.dart';
 
 class HomeWidget extends StatelessWidget {
   final Function logout;

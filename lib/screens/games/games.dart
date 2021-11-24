@@ -1,8 +1,7 @@
 ///Game section for user.
 
 import 'package:flutter/material.dart';
-import 'package:invent_chat/resources/strings.dart';
-
+import 'package:hynzo/resources/strings.dart';
 
 class GameScreen extends StatelessWidget {
   @override

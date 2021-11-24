@@ -1,12 +1,12 @@
 ///Custom created Bottom navigtaion bar for application
 
 import 'package:flutter/material.dart';
-import 'package:invent_chat/screens/chat/chat_screen.dart';
-import 'package:invent_chat/screens/games/games.dart';
-import 'package:invent_chat/screens/home/home.dart';
-import 'package:invent_chat/screens/profile/profile_settings.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/resources/strings.dart';
+import 'package:hynzo/screens/chat/chat_screen.dart';
+import 'package:hynzo/screens/games/games.dart';
+import 'package:hynzo/screens/home/home.dart';
+import 'package:hynzo/screens/profile/profile_settings.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/resources/strings.dart';
 
 class BottomNavBar extends StatefulWidget {
   @override

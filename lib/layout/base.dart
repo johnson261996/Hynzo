@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/widgets/common/appBar/custom_app_bar.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/common/appBar/custom_app_bar.dart';
 
 /// [BaseLayout] maintains the basic App Skeleton.
 /// It Includes AppBar, Bottom Navigation and the routed Page.

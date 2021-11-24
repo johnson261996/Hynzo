@@ -3,8 +3,8 @@
 ///
 
 import 'package:flutter/material.dart';
-import 'package:invent_chat/routes/routes.dart';
-import 'package:invent_chat/widgets/home_widget.dart';
+import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/widgets/home_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeContainer extends StatefulWidget {

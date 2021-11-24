@@ -1,4 +1,4 @@
-// import 'package:invent_chat/resources/strings.dart';
+// import 'package:hynzo/resources/strings.dart';
 
 // ///Add all your validation codes here and call the methods as follows in your widgets :
 // ///```

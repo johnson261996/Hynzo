@@ -1,7 +1,7 @@
 ///Edit profile and settings screen for user
 
 import 'package:flutter/material.dart';
-import 'package:invent_chat/resources/strings.dart';
+import 'package:hynzo/resources/strings.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override

@@ -4,8 +4,8 @@
 
 import 'dart:async' show Future;
 import 'package:flutter/foundation.dart';
-import 'package:invent_chat/core/models/auth_model.dart';
-import 'package:invent_chat/core/services/auth/auth_service.dart';
+import 'package:hynzo/core/models/auth_model.dart';
+import 'package:hynzo/core/services/auth/auth_service.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool isLoading = true;

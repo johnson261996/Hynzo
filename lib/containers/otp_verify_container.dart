@@ -3,9 +3,9 @@
 ///
 
 import 'package:flutter/material.dart';
-import 'package:invent_chat/core/models/auth_model.dart';
-import 'package:invent_chat/providers/auth_provider.dart';
-import 'package:invent_chat/widgets/auth/otp_verify_widget.dart';
+import 'package:hynzo/core/models/auth_model.dart';
+import 'package:hynzo/providers/auth_provider.dart';
+import 'package:hynzo/widgets/auth/otp_verify_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
