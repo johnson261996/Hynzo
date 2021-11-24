@@ -9,7 +9,7 @@ class Strings {
 
   // splash screen
   static const SPLASH_TEXT = '"HYPERLOCAL PRIVATE CHATTING"';
-  static const TITLE_NAME = 'NGZO';
+  static const TITLE_NAME = 'HYNZO';
 
   // intro screen
   static const INTRO_TITLE = 'School Owner App';
@@ -74,6 +74,18 @@ class Strings {
   static const EXPLORE_LOCALITY="Explore Locality";
   static const DUMMY_TEXT="Lorem Ipsum dummy text is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's dummy text";
 
+  //Interest
+  static const INTEREST_TITLE="What are \n your interests ?";
+
+  //Suggetion
+  static const SUGGESTION_TITLE="Suggested people near you";
+  static const ADD="Add";
+  static const ADDED="Added";
+
+  //Location
+  static const LOCATION_Title="Allow access to your location";
+  static const LOCATION_SUBTITLE="Your location will be used to show potential suggestions near you";
+  static const LOCATION_BUTTON="Ok, let's do it";
 
   //Home
   static const HOME_SELECT = 'Select School';
@@ -81,12 +93,27 @@ class Strings {
   static const TITLE = 'Hello school owner,';
   static const DESCRIPTION =
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s';
+
+  //Games
   static const GAMES = "Games";
   static const PROFILE_SETTINGS = "Profile & Settings";
-  static const PROFILE = 'Profile';
+  static const PROFILE = 'More';
   static const HOME = "Home";
-  static const CHAT = "Chat";
+  static const CHAT = "Messages";
+  static const EVENTS = "Events";
   static const LOG_OUT = 'LogOut';
+
+  //More
+  static const Menu="Menu";
+  static const DUMMY_PROFILE_NAME="Kumar KD";
+  static const VIEW_PROFILE="view profile";
+  static const NEWS="News";
+  static const SUBSCRIPTION="Subscription";
+  static const EDIT_HOME_SCREEN="Edit home screen";
+  static const WALLET="Wallet";
+  static const SEETINGS="Settings";
+  static const ABOUT_US="About us";
+  static const HELP_SUPPORT="Help & Support";
 
   //Onboarding
 
@@ -97,6 +124,12 @@ class Strings {
   static const Connected = 'Connected';
   static const Received = 'Received';
   static const Suggested = 'Suggested';
+
+  //game
+  static const RECENTLY_PLAYED="Recently Played";
+  static const ALL_GAMES="All games";
+  static const SUGGESTED_GAMES="Suggested for you";
+  static const NEW="New";
 
   //chat
   static const USER_NAMES = ['Anusree', 'John', 'Neha'];
