@@ -9,7 +9,7 @@ class Strings {
 
   // splash screen
   static const SPLASH_TEXT = '"HYPERLOCAL PRIVATE CHATTING"';
-  static const TITLE_NAME = 'InventChat';
+  static const TITLE_NAME = 'HYNZO';
 
   // intro screen
   static const INTRO_TITLE = 'School Owner App';
@@ -31,11 +31,19 @@ class Strings {
   static const GET_STARTED = 'Get Started';
   static const LOADING = 'loading...';
 
+  //SignUp Screen
+  static const HI_TEXT="Hi there!";
+  static const LETS_STARTED="Let's Get Started";
+  static const SIGN_UP_BUTTON="Create An Account";
+  static const ALREADY_LOGIN="Already have an account ?";
+  static const SIGNUP = 'Signup';
+
   //Login Screem
-  static const LOGIN_TITLE = 'Hello school owner,';
-  static const LOGIN_SUBTITLE = 'sign in to continue';
-  static const LOGIN_INPUT_TITLE = '10 Digit Registered Mobile Number';
-  static const LOGIN_BUTTON = 'LOGIN';
+  static const ACCOUNT="Don't have an account ?";
+  static const LOGIN = 'Login';
+  static const LOGIN_SUBTITLE = 'Let\'s get started.';
+  static const LOGIN_TITLE = 'Hi  there!';
+  static const LOGIN_BUTTON = 'Continue >';
   static const LOGIN_TERMS =
       'By continuing, you accept the Terms and Condition';
   static const LOGIN_MOBILE_NOT_REGISTRED =
@@ -44,17 +52,40 @@ class Strings {
       ' Please reach out to your LEAD SPOC or contact customer support @ ';
   static const LOGIN_SUPPORT_MOBILE = '+91-8682833333';
   static const LOGIN_SUPPORT_EMAIL = 'product.support@leadschool.in';
-  static const LOGIN_USER_NAME = 'Enter Name';
-  static const LOGIN_USER_NUMBER = 'Enter Mobile Number';
+  static const LOGIN_USER_NAME = 'Full name';
+  static const LOGIN_USER_NUMBER = 'Mobile Number';
 
   // Validations
-  static const PHONE_NUMBER_VALIDATION = 'Please enter a valid phone number';
+  static const PHONE_NUMBER_VALIDATION = 'Please enter a valid mobile number!';
+  static const PHONE_EMPTY_VALIDATION = 'Mobile Number cannot be blank!';
+  static const NAME_VALIDATION = 'Please enter a valid name!';
+  static const NAME_EMPTY_VALIDATION = 'Name cannot be blank!';
 
   //Otp Screen
   static const OTP_TITLE = 'Enter OTP';
   static const OTP_SENT_NO = '4 digit OTP has been sent to ';
   static const OTP_BUTTON = 'Submit';
   static const OTP_RESEND = 'Resend OTP ';
+  static const OTP_HEADING = 'Verification Code';
+
+  //INTRO
+  static const CONNECT_FRIENDS="Connect Friends";
+  static const PLAY_GAMES="Play Games";
+  static const EXPLORE_LOCALITY="Explore Locality";
+  static const DUMMY_TEXT="Lorem Ipsum dummy text is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's dummy text";
+
+  //Interest
+  static const INTEREST_TITLE="What are \n your interests ?";
+
+  //Suggetion
+  static const SUGGESTION_TITLE="Suggested people near you";
+  static const ADD="Add";
+  static const ADDED="Added";
+
+  //Location
+  static const LOCATION_Title="Allow access to your location";
+  static const LOCATION_SUBTITLE="Your location will be used to show potential suggestions near you";
+  static const LOCATION_BUTTON="Ok, let's do it";
 
   //Home
   static const HOME_SELECT = 'Select School';
@@ -62,12 +93,27 @@ class Strings {
   static const TITLE = 'Hello school owner,';
   static const DESCRIPTION =
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s';
+
+  //Games
   static const GAMES = "Games";
   static const PROFILE_SETTINGS = "Profile & Settings";
-  static const PROFILE = 'Profile';
+  static const PROFILE = 'More';
   static const HOME = "Home";
-  static const CHAT = "Chat";
+  static const CHAT = "Messages";
+  static const EVENTS = "Events";
   static const LOG_OUT = 'LogOut';
+
+  //More
+  static const Menu="Menu";
+  static const DUMMY_PROFILE_NAME="Kumar KD";
+  static const VIEW_PROFILE="view profile";
+  static const NEWS="News";
+  static const SUBSCRIPTION="Subscription";
+  static const EDIT_HOME_SCREEN="Edit home screen";
+  static const WALLET="Wallet";
+  static const SEETINGS="Settings";
+  static const ABOUT_US="About us";
+  static const HELP_SUPPORT="Help & Support";
 
   //Onboarding
 
@@ -78,6 +124,12 @@ class Strings {
   static const Connected = 'Connected';
   static const Received = 'Received';
   static const Suggested = 'Suggested';
+
+  //game
+  static const RECENTLY_PLAYED="Recently Played";
+  static const ALL_GAMES="All games";
+  static const SUGGESTED_GAMES="Suggested for you";
+  static const NEW="New";
 
   //chat
   static const USER_NAMES = ['Anusree', 'John', 'Neha'];

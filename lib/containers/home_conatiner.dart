@@ -4,10 +4,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/utils/localStorage.dart';
 import 'package:hynzo/widgets/home_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeContainer extends StatefulWidget {
+  const HomeContainer({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _HomeContainerState();
@@ -15,17 +17,16 @@ class HomeContainer extends StatefulWidget {
 }
 
 class _HomeContainerState extends State<HomeContainer> {
-  LogOut() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.clear();
-    Navigator.pushNamed(context, Routes.login);
+  logOut() async {
+    LocalStorage.clearToken();
+    Navigator.pushReplacementNamed(context, Routes.login);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: HomeWidget(
-      logout: LogOut,
+      logout: logOut,
     ));
   }
 }

@@ -39,15 +39,7 @@ class PrimaryButton extends StatelessWidget {
           alignment: Alignment.center,
           child: text,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                disabled ? AppColors.gray : AppColors.primaryLight,
-                disabled ? AppColors.gray : AppColors.primary,
-                disabled ? AppColors.gray : AppColors.primaryDark,
-              ],
-            ),
+            color: AppColors.primaryDark,
             borderRadius: BorderRadius.circular(6),
           ),
         ),

@@ -1,14 +1,15 @@
 ///Game section for user.
 
 import 'package:flutter/material.dart';
-import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/containers/game_container.dart';
 
 class GameScreen extends StatelessWidget {
+  const GameScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-      child: Text(Strings.GAMES, style: Theme.of(context).textTheme.headline1),
-    ));
+    return const Scaffold(
+      body: GameContainer(),
+    );
   }
 }

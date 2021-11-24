@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/localStorage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'package:hynzo/routes/routes.dart';
@@ -20,6 +21,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final splashDelay = 3;
+  late bool introStatus;
+  late String token;
 
   @override
   void initState() {
@@ -33,12 +36,16 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   checkAuth() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-
-    if (pref.getString('token') == null) {
-      Navigator.pushNamed(context, Routes.login);
+    await LocalStorage.getIntroStatus().then((value) => introStatus = value!);
+    await LocalStorage.getLoginStatus().then((value) => token = value!);
+    if (introStatus) {
+      Navigator.pushReplacementNamed(context, Routes.intro);
     } else {
-      Navigator.pushNamed(context, Routes.navScreen);
+      if (token == "") {
+        Navigator.pushReplacementNamed(context, Routes.login);
+      } else {
+        Navigator.pushReplacementNamed(context, Routes.navScreen);
+      }
     }
   }
 
