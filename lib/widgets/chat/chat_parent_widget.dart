@@ -83,7 +83,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                   Strings.CHAT,
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         color: AppColors.greyBlack,
-                        fontSize: 23,
+                        fontSize: 25,
                         fontWeight: FontWeight.w500,
                       ),
                 ),

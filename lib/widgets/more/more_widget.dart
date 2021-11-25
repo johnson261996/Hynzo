@@ -29,7 +29,7 @@ class MoreWidget extends StatelessWidget {
                   Strings.Menu,
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         color: AppColors.greyBlack,
-                        fontSize: 23,
+                        fontSize: 25,
                         fontWeight: FontWeight.w500,
                       ),
                 ),
@@ -64,7 +64,7 @@ class MoreWidget extends StatelessWidget {
                   children: [
                     Text(
                       Strings.DUMMY_PROFILE_NAME,
-                      style: Theme.of(context).textTheme.caption!.apply(
+                      style: Theme.of(context).textTheme.headline5!.apply(
                             color: AppColors.greyBlack,
                           ),
                     ),
@@ -72,15 +72,17 @@ class MoreWidget extends StatelessWidget {
                       onTap: () {},
                       child: Row(
                         children: [
-                          Text(Strings.VIEW_PROFILE,
-                              style:
-                                  Theme.of(context).textTheme.caption!.copyWith(
-                                        fontSize: 12,
-                                        color: AppColors.greyBlack,
-                                      )),
+                          Text(
+                            Strings.VIEW_PROFILE,
+                            style:
+                                Theme.of(context).textTheme.caption!.copyWith(
+                                      fontSize: 12,
+                                      color: AppColors.greyBlack,
+                                    ),
+                          ),
                           const Icon(
                             Icons.arrow_forward_ios_outlined,
-                            size: 12,
+                            size: 10,
                           ),
                         ],
                       ),

@@ -91,7 +91,7 @@ class _EventWidgetState extends State<EventWidget> {
                   Strings.EVENTS,
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         color: AppColors.greyBlack,
-                        fontSize: 23,
+                        fontSize: 25,
                         fontWeight: FontWeight.w500,
                       ),
                 ),
@@ -137,7 +137,7 @@ class _EventWidgetState extends State<EventWidget> {
                       child: Text(
                         allTabHeader[index].tabName!,
                         style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                              fontSize: 12,
+                              fontSize: 13,
                               color: index == selectedIndexValue
                                   ? AppColors.white
                                   : AppColors.greyBlack,

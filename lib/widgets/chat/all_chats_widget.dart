@@ -151,7 +151,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
               ),
               title: Text(
                 allChats[index].name!,
-                style: Theme.of(context).textTheme.subtitle2!.apply(
+                style: Theme.of(context).textTheme.headline6!.apply(
                       color: AppColors.greyBlack,
                     ),
               ),
@@ -165,7 +165,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                     allChats[index].content!,
                     style: Theme.of(context).textTheme.subtitle2!.copyWith(
                       fontWeight: FontWeight.w400,
-                      fontSize: 12,
+                      fontSize: 13,
                       color: AppColors.offblue,
                     ),
                   ),
@@ -174,7 +174,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                 allChats[index].content!,
                 style: Theme.of(context).textTheme.subtitle2!.copyWith(
                       fontWeight: FontWeight.w400,
-                      fontSize: 12,
+                      fontSize: 13,
                       color: AppColors.offblue,
                     ),
               ),
@@ -187,7 +187,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                           style:
                               Theme.of(context).textTheme.subtitle2!.copyWith(
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 12,
+                                    fontSize: 13,
                                     color: AppColors.greishBlack,
                                   ),
                         ),
@@ -218,7 +218,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                       allChats[index].dateTime!,
                       style: Theme.of(context).textTheme.subtitle2!.copyWith(
                             fontWeight: FontWeight.w400,
-                            fontSize: 12,
+                            fontSize: 13,
                             color: AppColors.greishBlack,
                           ),
                     ),

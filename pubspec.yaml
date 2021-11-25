@@ -146,6 +146,17 @@ flutter:
     - assets/images/message_image_four.png
     - assets/images/message_image_five.png
     - assets/images/read.png
+    - assets/images/social_media.png
+    - assets/images/news_two.png
+    - assets/images/news_one.png
+    - assets/images/home_rectangle.png
+    - assets/images/computer.png
+    - assets/images/chess_home.png
+    - assets/images/blue_add.png
+    - assets/images/blue_circle_outline.png
+    - assets/images/coin.png
+    - assets/images/search.png
+    - assets/images/right_arrow.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -167,3 +178,6 @@ flutter:
     - family : sf_pro_display
       fonts:
         - asset: assets/fonts/sf_pro_display.ttf
+    - family : open_sans
+      fonts:
+          - asset: assets/fonts/open_sans.ttf

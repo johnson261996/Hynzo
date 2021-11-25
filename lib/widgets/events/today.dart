@@ -298,22 +298,22 @@ class _TodayWidgetState extends State<TodayWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var mediaQuery=MediaQuery.of(context).size;
     return Container(
-      //height: MediaQuery.of(context).size.height,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
+            height: mediaQuery.height * 0.02,
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.28,
+            width: mediaQuery.width,
+            height: mediaQuery.height * 0.27,
             child: ListView.builder(
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   padding: const EdgeInsets.only(
-                    right: 8.0,
+                    right: 12.0,
                   ),
                   child: EventContainerWidget(
                     imagePath: allEvents[index].imagePath!,
@@ -322,7 +322,6 @@ class _TodayWidgetState extends State<TodayWidget> {
                     dateTime: allEvents[index].dateTime!,
                     showDate: true,
                     showSubTitle: true,
-                    forEvents: true,
                   ),
                 );
               },
@@ -331,28 +330,28 @@ class _TodayWidgetState extends State<TodayWidget> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.04,
+            height: mediaQuery.height * 0.04,
           ),
           Text(
             Strings.CATEGORIES_TITLE,
-            style: Theme.of(context).textTheme.caption!.apply(
+            style: Theme.of(context).textTheme.headline6!.apply(
                   color: AppColors.greyBlack,
                 ),
           ),
           Text(
             Strings.CATEGORIES_SUBTITLE,
-            style: Theme.of(context).textTheme.caption!.copyWith(
+            style: Theme.of(context).textTheme.subtitle2!.copyWith(
                   color: AppColors.offwhite,
                   fontSize: 11,
                   fontWeight: FontWeight.w400,
                 ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.015,
+            height: mediaQuery.height * 0.015,
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.3,
+            width: mediaQuery.width,
+            height: mediaQuery.height * 0.3,
             child: GridView.builder(
               physics: NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.only(
@@ -360,7 +359,7 @@ class _TodayWidgetState extends State<TodayWidget> {
               ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
-                crossAxisSpacing: 5,
+                crossAxisSpacing: 10,
                 mainAxisSpacing: 5,
                 childAspectRatio: 1.1,
               ),
@@ -372,14 +371,13 @@ class _TodayWidgetState extends State<TodayWidget> {
                   dateTime: allCategories[index].dateTime!,
                   showDate: false,
                   showSubTitle: false,
-                  forEvents: false,
                 );
               },
               itemCount: allCategories.length,
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.03,
+            height: mediaQuery.height * 0.03,
           ),
           Text(
             Strings.WORKSHOPS,
@@ -389,19 +387,19 @@ class _TodayWidgetState extends State<TodayWidget> {
                 ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
+            height: mediaQuery.height * 0.01,
           ),
           Container(
             padding: const EdgeInsets.only(
               right: 10.0,
             ),
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.50,
+            width: mediaQuery.width,
+            height: mediaQuery.height * 0.50,
             child: GridView.builder(
               physics: NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
-                crossAxisSpacing: 5,
+                crossAxisSpacing: 10,
                 mainAxisSpacing: 5,
                 childAspectRatio: 0.6,
               ),
@@ -413,14 +411,13 @@ class _TodayWidgetState extends State<TodayWidget> {
                   dateTime: allWorkshops[index].dateTime!,
                   showDate: true,
                   showSubTitle: false,
-                  forEvents: false,
                 );
               },
               itemCount: allWorkshops.length,
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.03,
+            height: mediaQuery.height * 0.03,
           ),
           Text(
             Strings.KIDS,
@@ -430,11 +427,11 @@ class _TodayWidgetState extends State<TodayWidget> {
                 ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
+            height: mediaQuery.height * 0.01,
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.50,
+            width: mediaQuery.width,
+            height: mediaQuery.height * 0.50,
             child: GridView.builder(
               physics: NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.only(
@@ -442,7 +439,7 @@ class _TodayWidgetState extends State<TodayWidget> {
               ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
-                crossAxisSpacing: 5,
+                crossAxisSpacing: 10,
                 mainAxisSpacing: 5,
                 childAspectRatio: 0.6,
               ),
@@ -454,14 +451,13 @@ class _TodayWidgetState extends State<TodayWidget> {
                   dateTime: allKids[index].dateTime!,
                   showDate: true,
                   showSubTitle: false,
-                  forEvents: false,
                 );
               },
               itemCount: allWorkshops.length,
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.03,
+            height: mediaQuery.height * 0.03,
           ),
           Text(
             Strings.MUSIC,
@@ -471,11 +467,11 @@ class _TodayWidgetState extends State<TodayWidget> {
                 ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
+            height: mediaQuery.height * 0.01,
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.50,
+            width: mediaQuery.width,
+            height: mediaQuery.height * 0.50,
             child: GridView.builder(
               physics: NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.only(
@@ -483,7 +479,7 @@ class _TodayWidgetState extends State<TodayWidget> {
               ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
-                crossAxisSpacing: 5,
+                crossAxisSpacing: 10,
                 mainAxisSpacing: 5,
                 childAspectRatio: 0.6,
               ),
@@ -495,14 +491,13 @@ class _TodayWidgetState extends State<TodayWidget> {
                   dateTime: allMusic[index].dateTime!,
                   showDate: true,
                   showSubTitle: false,
-                  forEvents: false,
                 );
               },
               itemCount: allMusic.length,
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.03,
+            height: mediaQuery.height * 0.03,
           ),
           Text(
             Strings.COMEDY,
@@ -512,11 +507,11 @@ class _TodayWidgetState extends State<TodayWidget> {
                 ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
+            height: mediaQuery.height * 0.01,
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.50,
+            width: mediaQuery.width,
+            height: mediaQuery.height * 0.50,
             child: GridView.builder(
               physics: NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.only(
@@ -524,7 +519,7 @@ class _TodayWidgetState extends State<TodayWidget> {
               ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
-                crossAxisSpacing: 5,
+                crossAxisSpacing: 10,
                 mainAxisSpacing: 5,
                 childAspectRatio: 0.6,
               ),
@@ -536,14 +531,13 @@ class _TodayWidgetState extends State<TodayWidget> {
                   dateTime: allComedy[index].dateTime!,
                   showDate: true,
                   showSubTitle: false,
-                  forEvents: false,
                 );
               },
               itemCount: allComedy.length,
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.03,
+            height: mediaQuery.height * 0.03,
           ),
           Text(
             Strings.FIT,
@@ -553,11 +547,11 @@ class _TodayWidgetState extends State<TodayWidget> {
                 ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
+            height: mediaQuery.height * 0.01,
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.50,
+            width: mediaQuery.width,
+            height: mediaQuery.height * 0.50,
             child: GridView.builder(
               physics: NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.only(
@@ -565,7 +559,7 @@ class _TodayWidgetState extends State<TodayWidget> {
               ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
-                crossAxisSpacing: 5,
+                crossAxisSpacing: 10,
                 mainAxisSpacing: 5,
                 childAspectRatio: 0.6,
               ),
@@ -577,7 +571,6 @@ class _TodayWidgetState extends State<TodayWidget> {
                   dateTime: allFit[index].dateTime!,
                   showDate: true,
                   showSubTitle: false,
-                  forEvents: false,
                 );
               },
               itemCount: allFit.length,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/games_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/common/game_recent/recently_game_widget.dart';
 import 'package:hynzo/widgets/common/image/square_image_widget.dart';
 import 'package:hynzo/widgets/common/view/game_view_widget.dart';
 import 'package:hynzo/widgets/game/game.dart';
@@ -120,12 +121,10 @@ class _AllGamesState extends State<AllGames> {
       ),
     );
   }
-  
-  
 
   @override
   Widget build(BuildContext context) {
-    var mediaQuery=MediaQuery.of(context).size;
+    var mediaQuery = MediaQuery.of(context).size;
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,50 +151,11 @@ class _AllGamesState extends State<AllGames> {
                   padding: const EdgeInsets.only(
                     right: 12.0,
                   ),
-                  child: Column(
-                    children: [
-                      Stack(
-                        children: [
-                          SquareViewWidget(
-                            imagePath: allRecent[index].imagePath!,
-                          ),
-                          if (index == 0) ...[
-                            Positioned(
-                              top: 15.0,
-                              child: Container(
-                                color: AppColors.yellow,
-                                width: 35.0,
-                                height: 13.0,
-                                child: Center(
-                                  child: Text(
-                                    Strings.NEW,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle2!
-                                        .copyWith(
-                                          fontSize: 7,
-                                          fontWeight: FontWeight.w400,
-                                          color: AppColors.black,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ]
-                        ],
-                      ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.01,
-                      ),
-                      Text(
-                        allRecent[index].gameName!,
-                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.black,
-                            ),
-                      )
-                    ],
+                  child: RecentGameWidget(
+                    mediaQuery: mediaQuery,
+                    imagePath: allRecent[index].imagePath!,
+                    index: index,
+                    name: allRecent[index].gameName!,
                   ),
                 );
               },
