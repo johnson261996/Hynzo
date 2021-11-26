@@ -137,7 +137,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: mediaQuery.height * 0.09,
+              height: mediaQuery.height * 0.08,
             ),
             Padding(
               padding: const EdgeInsets.only(

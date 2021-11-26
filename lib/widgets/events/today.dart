@@ -299,284 +299,286 @@ class _TodayWidgetState extends State<TodayWidget> {
   @override
   Widget build(BuildContext context) {
     var mediaQuery=MediaQuery.of(context).size;
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: mediaQuery.height * 0.02,
-          ),
-          Container(
-            width: mediaQuery.width,
-            height: mediaQuery.height * 0.27,
-            child: ListView.builder(
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  padding: const EdgeInsets.only(
-                    right: 12.0,
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: mediaQuery.height * 0.02,
+            ),
+            Container(
+              width: mediaQuery.width,
+              height: mediaQuery.height * 0.30,
+              child: ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    padding: const EdgeInsets.only(
+                      right: 12.0,
+                    ),
+                    child: EventContainerWidget(
+                      imagePath: allEvents[index].imagePath!,
+                      title: allEvents[index].title!,
+                      subTitle: allEvents[index].subTitle!,
+                      dateTime: allEvents[index].dateTime!,
+                      showDate: true,
+                      showSubTitle: true,
+                    ),
+                  );
+                },
+                itemCount: allEvents.length,
+                scrollDirection: Axis.horizontal,
+              ),
+            ),
+            SizedBox(
+              height: mediaQuery.height * 0.04,
+            ),
+            Text(
+              Strings.CATEGORIES_TITLE,
+              style: Theme.of(context).textTheme.headline6!.apply(
+                    color: AppColors.greyBlack,
                   ),
-                  child: EventContainerWidget(
-                    imagePath: allEvents[index].imagePath!,
-                    title: allEvents[index].title!,
-                    subTitle: allEvents[index].subTitle!,
-                    dateTime: allEvents[index].dateTime!,
+            ),
+            Text(
+              Strings.CATEGORIES_SUBTITLE,
+              style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                    color: AppColors.offwhite,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w400,
+                  ),
+            ),
+            SizedBox(
+              height: mediaQuery.height * 0.015,
+            ),
+            Container(
+              width: mediaQuery.width,
+              height: mediaQuery.height * 0.3,
+              child: GridView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(
+                  right: 10.0,
+                ),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 5,
+                  childAspectRatio: 1.1,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return EventContainerWidget(
+                    imagePath: allCategories[index].imagePath!,
+                    title: allCategories[index].title!,
+                    subTitle: allCategories[index].subTitle!,
+                    dateTime: allCategories[index].dateTime!,
+                    showDate: false,
+                    showSubTitle: false,
+                  );
+                },
+                itemCount: allCategories.length,
+              ),
+            ),
+            SizedBox(
+              height: mediaQuery.height * 0.03,
+            ),
+            Text(
+              Strings.WORKSHOPS,
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+            SizedBox(
+              height: mediaQuery.height * 0.01,
+            ),
+            Container(
+              padding: const EdgeInsets.only(
+                right: 10.0,
+              ),
+              width: mediaQuery.width,
+              height: mediaQuery.height * 0.50,
+              child: GridView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 5,
+                  childAspectRatio: 0.6,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return EventContainerWidget(
+                    imagePath: allWorkshops[index].imagePath!,
+                    title: allWorkshops[index].title!,
+                    subTitle: allWorkshops[index].subTitle!,
+                    dateTime: allWorkshops[index].dateTime!,
                     showDate: true,
-                    showSubTitle: true,
+                    showSubTitle: false,
+                  );
+                },
+                itemCount: allWorkshops.length,
+              ),
+            ),
+            SizedBox(
+              height: mediaQuery.height * 0.03,
+            ),
+            Text(
+              Strings.KIDS,
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w600,
                   ),
-                );
-              },
-              itemCount: allEvents.length,
-              scrollDirection: Axis.horizontal,
             ),
-          ),
-          SizedBox(
-            height: mediaQuery.height * 0.04,
-          ),
-          Text(
-            Strings.CATEGORIES_TITLE,
-            style: Theme.of(context).textTheme.headline6!.apply(
-                  color: AppColors.greyBlack,
+            SizedBox(
+              height: mediaQuery.height * 0.01,
+            ),
+            Container(
+              width: mediaQuery.width,
+              height: mediaQuery.height * 0.50,
+              child: GridView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(
+                  right: 10.0,
                 ),
-          ),
-          Text(
-            Strings.CATEGORIES_SUBTITLE,
-            style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                  color: AppColors.offwhite,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w400,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 5,
+                  childAspectRatio: 0.6,
                 ),
-          ),
-          SizedBox(
-            height: mediaQuery.height * 0.015,
-          ),
-          Container(
-            width: mediaQuery.width,
-            height: mediaQuery.height * 0.3,
-            child: GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.only(
-                right: 10.0,
+                itemBuilder: (BuildContext context, int index) {
+                  return EventContainerWidget(
+                    imagePath: allKids[index].imagePath!,
+                    title: allKids[index].title!,
+                    subTitle: allKids[index].subTitle!,
+                    dateTime: allKids[index].dateTime!,
+                    showDate: true,
+                    showSubTitle: false,
+                  );
+                },
+                itemCount: allWorkshops.length,
               ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 5,
-                childAspectRatio: 1.1,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return EventContainerWidget(
-                  imagePath: allCategories[index].imagePath!,
-                  title: allCategories[index].title!,
-                  subTitle: allCategories[index].subTitle!,
-                  dateTime: allCategories[index].dateTime!,
-                  showDate: false,
-                  showSubTitle: false,
-                );
-              },
-              itemCount: allCategories.length,
             ),
-          ),
-          SizedBox(
-            height: mediaQuery.height * 0.03,
-          ),
-          Text(
-            Strings.WORKSHOPS,
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.w600,
+            SizedBox(
+              height: mediaQuery.height * 0.03,
+            ),
+            Text(
+              Strings.MUSIC,
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+            SizedBox(
+              height: mediaQuery.height * 0.01,
+            ),
+            Container(
+              width: mediaQuery.width,
+              height: mediaQuery.height * 0.50,
+              child: GridView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(
+                  right: 10.0,
                 ),
-          ),
-          SizedBox(
-            height: mediaQuery.height * 0.01,
-          ),
-          Container(
-            padding: const EdgeInsets.only(
-              right: 10.0,
-            ),
-            width: mediaQuery.width,
-            height: mediaQuery.height * 0.50,
-            child: GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 5,
-                childAspectRatio: 0.6,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return EventContainerWidget(
-                  imagePath: allWorkshops[index].imagePath!,
-                  title: allWorkshops[index].title!,
-                  subTitle: allWorkshops[index].subTitle!,
-                  dateTime: allWorkshops[index].dateTime!,
-                  showDate: true,
-                  showSubTitle: false,
-                );
-              },
-              itemCount: allWorkshops.length,
-            ),
-          ),
-          SizedBox(
-            height: mediaQuery.height * 0.03,
-          ),
-          Text(
-            Strings.KIDS,
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.w600,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 5,
+                  childAspectRatio: 0.6,
                 ),
-          ),
-          SizedBox(
-            height: mediaQuery.height * 0.01,
-          ),
-          Container(
-            width: mediaQuery.width,
-            height: mediaQuery.height * 0.50,
-            child: GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.only(
-                right: 10.0,
+                itemBuilder: (BuildContext context, int index) {
+                  return EventContainerWidget(
+                    imagePath: allMusic[index].imagePath!,
+                    title: allMusic[index].title!,
+                    subTitle: allMusic[index].subTitle!,
+                    dateTime: allMusic[index].dateTime!,
+                    showDate: true,
+                    showSubTitle: false,
+                  );
+                },
+                itemCount: allMusic.length,
               ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 5,
-                childAspectRatio: 0.6,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return EventContainerWidget(
-                  imagePath: allKids[index].imagePath!,
-                  title: allKids[index].title!,
-                  subTitle: allKids[index].subTitle!,
-                  dateTime: allKids[index].dateTime!,
-                  showDate: true,
-                  showSubTitle: false,
-                );
-              },
-              itemCount: allWorkshops.length,
             ),
-          ),
-          SizedBox(
-            height: mediaQuery.height * 0.03,
-          ),
-          Text(
-            Strings.MUSIC,
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.w600,
+            SizedBox(
+              height: mediaQuery.height * 0.03,
+            ),
+            Text(
+              Strings.COMEDY,
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+            SizedBox(
+              height: mediaQuery.height * 0.01,
+            ),
+            Container(
+              width: mediaQuery.width,
+              height: mediaQuery.height * 0.50,
+              child: GridView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(
+                  right: 10.0,
                 ),
-          ),
-          SizedBox(
-            height: mediaQuery.height * 0.01,
-          ),
-          Container(
-            width: mediaQuery.width,
-            height: mediaQuery.height * 0.50,
-            child: GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.only(
-                right: 10.0,
-              ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 5,
-                childAspectRatio: 0.6,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return EventContainerWidget(
-                  imagePath: allMusic[index].imagePath!,
-                  title: allMusic[index].title!,
-                  subTitle: allMusic[index].subTitle!,
-                  dateTime: allMusic[index].dateTime!,
-                  showDate: true,
-                  showSubTitle: false,
-                );
-              },
-              itemCount: allMusic.length,
-            ),
-          ),
-          SizedBox(
-            height: mediaQuery.height * 0.03,
-          ),
-          Text(
-            Strings.COMEDY,
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.w600,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 5,
+                  childAspectRatio: 0.6,
                 ),
-          ),
-          SizedBox(
-            height: mediaQuery.height * 0.01,
-          ),
-          Container(
-            width: mediaQuery.width,
-            height: mediaQuery.height * 0.50,
-            child: GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.only(
-                right: 10.0,
+                itemBuilder: (BuildContext context, int index) {
+                  return EventContainerWidget(
+                    imagePath: allComedy[index].imagePath!,
+                    title: allComedy[index].title!,
+                    subTitle: allComedy[index].subTitle!,
+                    dateTime: allComedy[index].dateTime!,
+                    showDate: true,
+                    showSubTitle: false,
+                  );
+                },
+                itemCount: allComedy.length,
               ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 5,
-                childAspectRatio: 0.6,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return EventContainerWidget(
-                  imagePath: allComedy[index].imagePath!,
-                  title: allComedy[index].title!,
-                  subTitle: allComedy[index].subTitle!,
-                  dateTime: allComedy[index].dateTime!,
-                  showDate: true,
-                  showSubTitle: false,
-                );
-              },
-              itemCount: allComedy.length,
             ),
-          ),
-          SizedBox(
-            height: mediaQuery.height * 0.03,
-          ),
-          Text(
-            Strings.FIT,
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.w600,
+            SizedBox(
+              height: mediaQuery.height * 0.03,
+            ),
+            Text(
+              Strings.FIT,
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+            SizedBox(
+              height: mediaQuery.height * 0.01,
+            ),
+            Container(
+              width: mediaQuery.width,
+              height: mediaQuery.height * 0.50,
+              child: GridView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(
+                  right: 10.0,
                 ),
-          ),
-          SizedBox(
-            height: mediaQuery.height * 0.01,
-          ),
-          Container(
-            width: mediaQuery.width,
-            height: mediaQuery.height * 0.50,
-            child: GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.only(
-                right: 10.0,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 5,
+                  childAspectRatio: 0.6,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return EventContainerWidget(
+                    imagePath: allFit[index].imagePath!,
+                    title: allFit[index].title!,
+                    subTitle: allFit[index].subTitle!,
+                    dateTime: allFit[index].dateTime!,
+                    showDate: true,
+                    showSubTitle: false,
+                  );
+                },
+                itemCount: allFit.length,
               ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 5,
-                childAspectRatio: 0.6,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return EventContainerWidget(
-                  imagePath: allFit[index].imagePath!,
-                  title: allFit[index].title!,
-                  subTitle: allFit[index].subTitle!,
-                  dateTime: allFit[index].dateTime!,
-                  showDate: true,
-                  showSubTitle: false,
-                );
-              },
-              itemCount: allFit.length,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
