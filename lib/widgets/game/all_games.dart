@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:invent_chat/core/models/all_games_model.dart';
+import 'package:invent_chat/core/models/games_model.dart';
 import 'package:invent_chat/resources/strings.dart';
 import 'package:invent_chat/themes/colors.dart';
+import 'package:invent_chat/widgets/common/image/square_image_widget.dart';
+import 'package:invent_chat/widgets/common/view/game_view_widget.dart';
+import 'package:invent_chat/widgets/game/game.dart';
 
 class AllGames extends StatefulWidget {
   const AllGames({Key? key}) : super(key: key);
@@ -151,12 +154,8 @@ class _AllGamesState extends State<AllGames> {
                     children: [
                       Stack(
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset(
-                              allRecent[index].imagePath!,
-                              fit: BoxFit.contain,
-                            ),
+                          SquareViewWidget(
+                            imagePath: allRecent[index].imagePath!,
                           ),
                           if (index == 0) ...[
                             Positioned(
@@ -221,36 +220,13 @@ class _AllGamesState extends State<AllGames> {
             child: ListView.builder(
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  padding: const EdgeInsets.only(
-                    right: 8.0,
-                  ),
-                  child: Column(
-                    children: [
-                      Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset(
-                              allSuggested[index].imagePath!,
-                              fit: BoxFit.contain,
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.01,
-                      ),
-                      Text(
-                        allSuggested[index].gameName!,
-                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.black,
-                            ),
-                      )
-                    ],
-                  ),
-                );
+                    padding: const EdgeInsets.only(
+                      right: 8.0,
+                    ),
+                    child: GameContainerWidget(
+                      imagePath: allSuggested[index].imagePath!,
+                      name: allSuggested[index].gameName!,
+                    ));
               },
               itemCount: allSuggested.length,
               scrollDirection: Axis.horizontal,
@@ -271,7 +247,10 @@ class _AllGamesState extends State<AllGames> {
           ),
           Expanded(
             child: GridView.builder(
-              padding: const EdgeInsets.only(right: 15.0,),
+              physics: NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.only(
+                right: 15.0,
+              ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
                 crossAxisSpacing: 5,
@@ -279,31 +258,9 @@ class _AllGamesState extends State<AllGames> {
                 childAspectRatio: 0.9,
               ),
               itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  children: [
-                    Stack(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Image.asset(
-                            allGames[index].imagePath!,
-                            fit: BoxFit.contain,
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.01,
-                    ),
-                    Text(
-                      allGames[index].gameName!,
-                      style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.black,
-                          ),
-                    )
-                  ],
+                return GameContainerWidget(
+                  imagePath: allGames[index].imagePath!,
+                  name: allGames[index].gameName!,
                 );
               },
               itemCount: allGames.length,

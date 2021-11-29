@@ -129,6 +129,23 @@ flutter:
     - assets/images/edit.png
     - assets/images/about.png
     - assets/images/settings.png
+    - assets/images/event_category_five.png
+    - assets/images/event_category_four.png
+    - assets/images/event_category_three.png
+    - assets/images/event_category_two.png
+    - assets/images/event_category_one.png
+    - assets/images/events_dummy_five.png
+    - assets/images/events_dummy_four.png
+    - assets/images/events_dummy_three.png
+    - assets/images/events_dummy_two.png
+    - assets/images/events_dummy_one.png
+    - assets/images/black_rectangle.png
+    - assets/images/message_image_one.png
+    - assets/images/message_image_two.png
+    - assets/images/message_image_three.png
+    - assets/images/message_image_four.png
+    - assets/images/message_image_five.png
+    - assets/images/read.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
