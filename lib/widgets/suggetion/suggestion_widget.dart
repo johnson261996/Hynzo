@@ -16,7 +16,6 @@ class SuggetionWidget extends StatefulWidget {
 
 class _SuggetionWidgetState extends State<SuggetionWidget> {
   List<SuggestionModel> allSuggestionList = [];
-  bool isSelected = false;
 
   @override
   void initState() {
@@ -146,20 +145,6 @@ class _SuggetionWidgetState extends State<SuggetionWidget> {
                                 allSuggestionList[index].isAdded =
                                     !allSuggestionList[index].isAdded;
                               });
-                              bool isAdded = false;
-                              for (int i = 0;
-                                  i < allSuggestionList.length;
-                                  i++) {
-                                if (allSuggestionList[i].isAdded) {
-                                  isAdded = true;
-                                  break;
-                                }
-                              }
-                              if (isAdded) {
-                                isSelected = true;
-                              } else {
-                                isSelected = false;
-                              }
                             },
                             style: ElevatedButton.styleFrom(
                               primary: AppColors.white,
@@ -185,20 +170,6 @@ class _SuggetionWidgetState extends State<SuggetionWidget> {
                                 allSuggestionList[index].isAdded =
                                     !allSuggestionList[index].isAdded;
                               });
-                              bool isAdded = false;
-                              for (int i = 0;
-                                  i < allSuggestionList.length;
-                                  i++) {
-                                if (allSuggestionList[i].isAdded) {
-                                  isAdded = true;
-                                  break;
-                                }
-                              }
-                              if (isAdded) {
-                                isSelected = true;
-                              } else {
-                                isSelected = false;
-                              }
                             },
                             style: ElevatedButton.styleFrom(
                               primary: AppColors.blueDark,
@@ -227,21 +198,9 @@ class _SuggetionWidgetState extends State<SuggetionWidget> {
           Align(
             alignment: Alignment.bottomRight,
             child: GestureDetector(
-              onTap: isSelected
-                  ? () {
-                      Navigator.pushReplacementNamed(context, Routes.navScreen);
-                    }
-                  : () {
-                      var snackBar = SnackBar(
-                        content: Text(
-                          'You need to select one of them from above',
-                          style: Theme.of(context).textTheme.subtitle2!.apply(
-                                color: AppColors.white,
-                              ),
-                        ),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    },
+              onTap: () {
+                Navigator.pushReplacementNamed(context, Routes.navScreen);
+              },
               child: Container(
                 color: Colors.transparent,
                 padding: const EdgeInsets.only(

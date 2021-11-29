@@ -34,3 +34,12 @@ class AllGamesModel{
 
 }
 
+class GamesCategoryModel{
+  final String? imagePath;
+
+  GamesCategoryModel({
+    this.imagePath,
+  });
+
+}
+

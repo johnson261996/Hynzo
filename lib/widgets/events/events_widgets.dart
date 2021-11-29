@@ -16,14 +16,25 @@ class EventWidget extends StatefulWidget {
   State<EventWidget> createState() => _EventWidgetState();
 }
 
-class _EventWidgetState extends State<EventWidget> {
+class _EventWidgetState extends State<EventWidget> with TickerProviderStateMixin{
   List<TabHeaderModel> allTabHeader = [];
   int selectedIndexValue = 0;
+  late TabController tabController;
+  late PageController _pageController;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _pageController.dispose();
+    tabController.dispose();
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _pageController=PageController();
     allTabHeader.add(
       TabHeaderModel(
         tabName: 'Today',
@@ -49,36 +60,25 @@ class _EventWidgetState extends State<EventWidget> {
         tabName: 'This Year',
       ),
     );
-  }
-
-  Widget _getSelectedWidget(int index) {
-    switch (index) {
-      case 0:
-        return TodayWidget();
-      case 1:
-        return TommorrowWidget();
-      case 2:
-        return WeeekWidget();
-      case 3:
-        return MonthWidget();
-      case 4:
-        return YearWidget();
-      default:
-        return TodayWidget();
-    }
+    tabController = TabController(
+      initialIndex: selectedIndexValue,
+      length: allTabHeader.length,
+      vsync: this,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    var mediaQuery = MediaQuery.of(context).size;
     return Container(
       color: AppColors.white,
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
+      width: mediaQuery.width,
+      height: mediaQuery.height,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.06,
+            height: mediaQuery.height * 0.06,
           ),
           Padding(
             padding: const EdgeInsets.only(
@@ -91,7 +91,7 @@ class _EventWidgetState extends State<EventWidget> {
                   Strings.EVENTS,
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         color: AppColors.greyBlack,
-                        fontSize: 23,
+                        fontSize: 25,
                         fontWeight: FontWeight.w500,
                       ),
                 ),
@@ -108,64 +108,73 @@ class _EventWidgetState extends State<EventWidget> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
+            height: mediaQuery.height * 0.02,
           ),
           Container(
-            padding: const EdgeInsets.only(
-              left: 15.0,
-            ),
-            width: MediaQuery.of(context).size.width,
             height: 25.0,
-            child: ListView.builder(
-              itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedIndexValue = index;
-                    });
-                  },
-                  child: Container(
-                    width: 80.0,
-                    height: 25.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      color: index == selectedIndexValue
-                          ? AppColors.blueDark
-                          : AppColors.white,
-                    ),
-                    child: Center(
-                      child: Text(
-                        allTabHeader[index].tabName!,
-                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                              fontSize: 12,
-                              color: index == selectedIndexValue
-                                  ? AppColors.white
-                                  : AppColors.greyBlack,
-                              fontWeight: FontWeight.w400,
-                            ),
+            child: TabBar(
+              padding: EdgeInsets.zero,
+              onTap: (index){
+                setState(() {
+                  selectedIndexValue = index;
+                  _pageController.animateToPage(selectedIndexValue, duration: const Duration(milliseconds: 500), curve: Curves.fastLinearToSlowEaseIn);
+                });
+              },
+              controller: tabController,
+              indicatorColor: Colors.transparent,
+              tabs:  List<Widget>.generate(allTabHeader.length, (int index){
+                return Container(
+                  padding: const EdgeInsets.only(left: 3.0,right: 3.0,),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    color: index == selectedIndexValue
+                        ? AppColors.blueDark
+                        : AppColors.white,
+                  ),
+                  child: Center(
+                    child: Text(
+                      allTabHeader[index].tabName!,
+                      style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                        fontSize: 12,
+                        color: index == selectedIndexValue
+                            ? AppColors.white
+                            : AppColors.greyBlack,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                   ),
                 );
-              },
-              itemCount: allTabHeader.length,
-              scrollDirection: Axis.horizontal,
+              }),
+              isScrollable:true,
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.015,
+            height: mediaQuery.height * 0.015,
           ),
           Divider(
             color: AppColors.offgrey,
             height: 1.0,
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: Container(
-                padding: const EdgeInsets.only(
-                  left: 15.0,
-                ),
-                child: _getSelectedWidget(selectedIndexValue),
+            child: Container(
+              padding: const EdgeInsets.only(
+                left: 15.0,
+              ),
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: (page) {
+                  setState(() {
+                    selectedIndexValue = page;
+                    tabController.animateTo(selectedIndexValue, duration: const Duration(milliseconds: 500), curve: Curves.fastLinearToSlowEaseIn);
+                  });
+                },
+                children: const [
+                  TodayWidget(),
+                  TommorrowWidget(),
+                  WeeekWidget(),
+                  MonthWidget(),
+                  YearWidget(),
+                ],
               ),
             ),
           ),

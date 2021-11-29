@@ -10,7 +10,6 @@ class EventContainerWidget extends StatelessWidget {
   final bool showDate;
   final String dateTime;
   final bool showSubTitle;
-  final bool forEvents;
 
   const EventContainerWidget({
     required this.imagePath,
@@ -19,7 +18,6 @@ class EventContainerWidget extends StatelessWidget {
     required this.showDate,
     required this.dateTime,
     required this.showSubTitle,
-    required this.forEvents,
     Key? key,
   }) : super(key: key);
 
@@ -34,14 +32,14 @@ class EventContainerWidget extends StatelessWidget {
               imagePath: imagePath,
             ),
             if (showDate) ...[
-              Positioned(
-                top: forEvents
-                    ? mediaQuery.height * 0.192
-                    : mediaQuery.height * 0.172,
-                child: ClipRRect(
-                  child: Image.asset(
-                    'assets/images/black_rectangle.png',
-                    fit: BoxFit.contain,
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: ClipRRect(
+                    child: Image.asset(
+                      'assets/images/black_rectangle.png',
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
               ),
@@ -67,7 +65,7 @@ class EventContainerWidget extends StatelessWidget {
                   child: Text(
                     title,
                     style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontSize: 12,
+                          fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: AppColors.white,
                         ),
@@ -84,8 +82,8 @@ class EventContainerWidget extends StatelessWidget {
           Text(
             title,
             style: Theme.of(context).textTheme.headline1!.copyWith(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
                   color: AppColors.black,
                 ),
           ),
@@ -96,7 +94,7 @@ class EventContainerWidget extends StatelessWidget {
             Text(
               subTitle,
               style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                    fontSize: 8,
+                    fontSize: 10,
                     fontWeight: FontWeight.w400,
                     color: AppColors.offgreylight,
                   ),

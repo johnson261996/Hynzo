@@ -17,16 +17,13 @@ class HomeContainer extends StatefulWidget {
 }
 
 class _HomeContainerState extends State<HomeContainer> {
-  logOut() async {
+  /*logOut() async {
     LocalStorage.clearToken();
     Navigator.pushReplacementNamed(context, Routes.login);
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: HomeWidget(
-      logout: logOut,
-    ));
+    return HomeWidget(/*logout: logOut,*/);
   }
 }
