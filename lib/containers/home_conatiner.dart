@@ -8,7 +8,8 @@ import 'package:hynzo/utils/localStorage.dart';
 import 'package:hynzo/widgets/home_widget.dart';
 
 class HomeContainer extends StatefulWidget {
-  const HomeContainer({Key? key}) : super(key: key);
+  final Function _onTapped;
+  const HomeContainer(this._onTapped,{Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -24,6 +25,6 @@ class _HomeContainerState extends State<HomeContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return HomeWidget(/*logout: logOut,*/);
+    return HomeWidget(widget._onTapped);
   }
 }

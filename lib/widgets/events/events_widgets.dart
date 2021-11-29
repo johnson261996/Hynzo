@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/tab_header_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/common/search_bar/search_bar.dart';
 import 'package:hynzo/widgets/events/today.dart';
 import 'package:hynzo/widgets/events/tommorrow.dart';
 import 'package:hynzo/widgets/events/week.dart';
@@ -17,6 +18,8 @@ class EventWidget extends StatefulWidget {
 }
 
 class _EventWidgetState extends State<EventWidget> with TickerProviderStateMixin{
+  String search = '';
+  bool showSearchBar = false;
   List<TabHeaderModel> allTabHeader = [];
   int selectedIndexValue = 0;
   late TabController tabController;
@@ -97,7 +100,11 @@ class _EventWidgetState extends State<EventWidget> with TickerProviderStateMixin
                 ),
                 const Spacer(),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      showSearchBar = !showSearchBar;
+                    });
+                  },
                   icon: Icon(
                     Icons.search,
                     size: 20,
@@ -107,6 +114,20 @@ class _EventWidgetState extends State<EventWidget> with TickerProviderStateMixin
               ],
             ),
           ),
+          SizedBox(
+            height: mediaQuery.height * 0.005,
+          ),
+          if(showSearchBar)...[
+            SearchBar(
+              hintText: Strings.SEARCH_EVENTS,
+              onchangeFunc: (val) {
+                setState(() {
+                  search = val;
+                });
+              },
+              padding: const EdgeInsets.only(left: 15.0,right: 15.0,),
+            ),
+          ],
           SizedBox(
             height: mediaQuery.height * 0.02,
           ),

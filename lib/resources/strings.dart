@@ -114,6 +114,8 @@ class Strings {
   static const TODAY_NEWS="Today's News";
   static const GAMES_BY_CATEGORIES="Games by Categories";
   static const SEARCH_GAMES="Search Games here";
+  static const SEARCH_CHATS="Search Chats here";
+  static const SEARCH_EVENTS="Search Events here";
   static const MORE_NEWS="More news";
   static const ALL_GAMES_HOME="All Games";
 

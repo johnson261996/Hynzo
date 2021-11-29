@@ -5,6 +5,7 @@ import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/widgets/chat/all_chats_widget.dart';
 import 'package:hynzo/widgets/chat/requested_widget.dart';
 import 'package:hynzo/widgets/chat/suggested_widget.dart';
+import 'package:hynzo/widgets/common/search_bar/search_bar.dart';
 
 import 'calls_widget.dart';
 
@@ -16,6 +17,8 @@ class ChatWidget extends StatefulWidget {
 }
 
 class _ChatWidgetState extends State<ChatWidget> with TickerProviderStateMixin {
+  String search = '';
+  bool showSearchBar = false;
   List<TabHeaderModel> allTabHeader = [];
   int selectedIndexValue = 0;
   late TabController tabController;
@@ -91,7 +94,11 @@ class _ChatWidgetState extends State<ChatWidget> with TickerProviderStateMixin {
                 ),
                 const Spacer(),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      showSearchBar = !showSearchBar;
+                    });
+                  },
                   icon: Icon(
                     Icons.search,
                     size: 20,
@@ -101,6 +108,23 @@ class _ChatWidgetState extends State<ChatWidget> with TickerProviderStateMixin {
               ],
             ),
           ),
+          SizedBox(
+            height: mediaQuery.height * 0.005,
+          ),
+          if (showSearchBar) ...[
+            SearchBar(
+              hintText: Strings.SEARCH_CHATS,
+              onchangeFunc: (val) {
+                setState(() {
+                  search = val;
+                });
+              },
+              padding: const EdgeInsets.only(
+                left: 15.0,
+                right: 15.0,
+              ),
+            ),
+          ],
           SizedBox(
             height: mediaQuery.height * 0.02,
           ),

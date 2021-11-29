@@ -76,155 +76,157 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
   @override
   Widget build(BuildContext context) {
     var mediaQuery=MediaQuery.of(context).size;
-    return Container(
-      height: mediaQuery.height,
-      padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-      child: ListView.builder(
-        padding: EdgeInsets.zero,
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: allChats.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            width: mediaQuery.width,
-            height: 80,
-            margin: const EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
-              bottom: 10.0,
-            ),
-            decoration: BoxDecoration(
-              color: allChats[index].unreadCount! > 0
-                  ? AppColors.lighterblue.withOpacity(0.3)
-                  : AppColors.white,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: ListTile(
-              leading: Stack(
-                children: [
-                  Image.asset(
-                    allChats[index].imagePath!,
-                    fit: BoxFit.contain,
-                    width: 50.0,
-                    height: 50.0,
-                  ),
-                  if(allChats[index].status == "active")...[
-                    Positioned(
-                      top: 35.0,
-                      left: 40.0,
-                      child: Container(
-                        width: 10.0,
-                        height: 10.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: AppColors.green,
-                        ),
-                      ),
-                    )
-                  ] else if(allChats[index].status == "inactive")...[
-                    Positioned(
-                      top: 35.0,
-                      left: 40.0,
-                      child: Container(
-                        width: 10.0,
-                        height: 10.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: AppColors.offline,
-                        ),
-                      ),
-                    )
-                  ] else if(allChats[index].status == "unread")...[
-                    Positioned(
-                      top: 35.0,
-                      left: 40.0,
-                      child: Container(
-                        width: 10.0,
-                        height: 10.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: AppColors.geryYellow,
-                        ),
-                      ),
-                    )
-                  ]
-                ],
+    return SingleChildScrollView(
+      child: Container(
+        height: mediaQuery.height,
+        padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
+        child: ListView.builder(
+          padding: EdgeInsets.zero,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: allChats.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              width: mediaQuery.width,
+              height: 80,
+              margin: const EdgeInsets.only(
+                left: 8.0,
+                right: 8.0,
+                bottom: 10.0,
               ),
-              title: Text(
-                allChats[index].name!,
-                style: Theme.of(context).textTheme.headline6!.apply(
-                      color: AppColors.greyBlack,
-                    ),
+              decoration: BoxDecoration(
+                color: allChats[index].unreadCount! > 0
+                    ? AppColors.lighterblue.withOpacity(0.3)
+                    : AppColors.white,
+                borderRadius: BorderRadius.circular(10.0),
               ),
-              subtitle: allChats[index].isRead! ?
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Image.asset('assets/images/read.png',width: 10.0,height: 10.0,),
-                  const SizedBox(width: 2.0,),
-                  Text(
-                    allChats[index].content!,
-                    style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 13,
-                      color: AppColors.offblue,
+              child: ListTile(
+                leading: Stack(
+                  children: [
+                    Image.asset(
+                      allChats[index].imagePath!,
+                      fit: BoxFit.contain,
+                      width: 50.0,
+                      height: 50.0,
                     ),
-                  ),
-                ],
-              ):Text(
-                allChats[index].content!,
-                style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 13,
-                      color: AppColors.offblue,
-                    ),
-              ),
-              trailing: allChats[index].unreadCount! > 0
-                  ? Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          allChats[index].dateTime!,
-                          style:
-                              Theme.of(context).textTheme.subtitle2!.copyWith(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 13,
-                                    color: AppColors.greishBlack,
-                                  ),
-                        ),
-                        const SizedBox(
-                          height: 2.0,
-                        ),
-                        Container(
-                          width: 20.0,
-                          height: 20.0,
+                    if(allChats[index].status == "active")...[
+                      Positioned(
+                        top: 35.0,
+                        left: 40.0,
+                        child: Container(
+                          width: 10.0,
+                          height: 10.0,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15.0),
-                            color: AppColors.blueDark,
+                            color: AppColors.green,
                           ),
-                          child: Center(
-                            child: Text(
-                              allChats[index].unreadCount!.toString(),
-                              style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12,
+                        ),
+                      )
+                    ] else if(allChats[index].status == "inactive")...[
+                      Positioned(
+                        top: 35.0,
+                        left: 40.0,
+                        child: Container(
+                          width: 10.0,
+                          height: 10.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            color: AppColors.offline,
+                          ),
+                        ),
+                      )
+                    ] else if(allChats[index].status == "unread")...[
+                      Positioned(
+                        top: 35.0,
+                        left: 40.0,
+                        child: Container(
+                          width: 10.0,
+                          height: 10.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            color: AppColors.geryYellow,
+                          ),
+                        ),
+                      )
+                    ]
+                  ],
+                ),
+                title: Text(
+                  allChats[index].name!,
+                  style: Theme.of(context).textTheme.headline6!.apply(
+                        color: AppColors.greyBlack,
+                      ),
+                ),
+                subtitle: allChats[index].isRead! ?
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Image.asset('assets/images/read.png',width: 10.0,height: 10.0,),
+                    const SizedBox(width: 2.0,),
+                    Text(
+                      allChats[index].content!,
+                      style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 13,
+                        color: AppColors.offblue,
+                      ),
+                    ),
+                  ],
+                ):Text(
+                  allChats[index].content!,
+                  style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 13,
+                        color: AppColors.offblue,
+                      ),
+                ),
+                trailing: allChats[index].unreadCount! > 0
+                    ? Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            allChats[index].dateTime!,
+                            style:
+                                Theme.of(context).textTheme.subtitle2!.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 13,
+                                      color: AppColors.greishBlack,
+                                    ),
+                          ),
+                          const SizedBox(
+                            height: 2.0,
+                          ),
+                          Container(
+                            width: 20.0,
+                            height: 20.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              color: AppColors.blueDark,
+                            ),
+                            child: Center(
+                              child: Text(
+                                allChats[index].unreadCount!.toString(),
+                                style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                                  color: AppColors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 12,
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                      ],
-                    )
-                  : Text(
-                      allChats[index].dateTime!,
-                      style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13,
-                            color: AppColors.greishBlack,
-                          ),
-                    ),
-            ),
-          );
-        },
+                          )
+                        ],
+                      )
+                    : Text(
+                        allChats[index].dateTime!,
+                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13,
+                              color: AppColors.greishBlack,
+                            ),
+                      ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

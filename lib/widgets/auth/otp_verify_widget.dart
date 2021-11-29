@@ -16,10 +16,13 @@ import 'package:hynzo/resources/strings.dart';
 
 class OtpWidget extends StatefulWidget {
   final Function verifyOTP;
-  final authProvider;
+  final Function resendOTP;
 
-  const OtpWidget({Key? key, required this.verifyOTP, this.authProvider})
-      : super(key: key);
+  const OtpWidget({
+    Key? key,
+    required this.verifyOTP,
+    required this.resendOTP,
+  }) : super(key: key);
 
   @override
   State<OtpWidget> createState() => _OtpWidgetState();
@@ -81,9 +84,8 @@ class _OtpWidgetState extends State<OtpWidget> {
 
   verifyOTP() async {
     if (otp.length == 6) {
+      FocusScope.of(context).unfocus();
       widget.verifyOTP(otp);
-      LocalStorage.clearMobileNumber();
-      Navigator.pushReplacementNamed(context, Routes.interest);
     } else {
       setState(() {
         errorMgs = Strings.PHONE_NUMBER_VALIDATION;
@@ -91,18 +93,28 @@ class _OtpWidgetState extends State<OtpWidget> {
     }
   }
 
+  resendOTP() async {
+    FocusScope.of(context).unfocus();
+    String signature = '';
+    SmsAutoFill().getAppSignature.then((signature) {
+      signature = signature;
+    });
+    widget.resendOTP(phone, signature);
+  }
+
   @override
   Widget build(BuildContext context) {
+    var mediaQuery= MediaQuery.of(context).size;
     return Container(
       color: AppColors.white,
-      width: MediaQuery.of(context).size.width,
+      width: mediaQuery.width,
       padding: const EdgeInsets.all(30),
-      height: MediaQuery.of(context).size.height,
+      height: mediaQuery.height,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.06,
+            height: mediaQuery.height * 0.06,
           ),
           GestureDetector(
             onTap: () {
@@ -118,7 +130,7 @@ class _OtpWidgetState extends State<OtpWidget> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.06,
+            height: mediaQuery.height * 0.06,
           ),
           Align(
             alignment: Alignment.topLeft,
@@ -129,7 +141,7 @@ class _OtpWidgetState extends State<OtpWidget> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
+            height: mediaQuery.height * 0.01,
           ),
           Row(
             children: [
@@ -144,7 +156,7 @@ class _OtpWidgetState extends State<OtpWidget> {
             ],
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
+            height: mediaQuery.height * 0.05,
           ),
           PinFieldAutoFill(
               keyboardType: const TextInputType.numberWithOptions(),
@@ -176,13 +188,14 @@ class _OtpWidgetState extends State<OtpWidget> {
               ),
           if (errorMgs.isNotEmpty) ErrorText(errorMgs: errorMgs),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
+            height: mediaQuery.height * 0.05,
           ),
           if (isTimerFinished) ...[
             Align(
               alignment: Alignment.topLeft,
               child: GestureDetector(
                 onTap: () {
+                  resendOTP();
                   setState(() {
                     isTimerStarted = false;
                     isTimerFinished = false;
