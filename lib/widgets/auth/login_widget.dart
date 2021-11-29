@@ -2,15 +2,15 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:invent_chat/containers/chat/connected_container.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/utils/localStorage.dart';
-import 'package:invent_chat/widgets/common/buttons/primary_button.dart';
-import 'package:invent_chat/widgets/common/error/error.dart';
-import 'package:invent_chat/widgets/common/input/input.dart';
+import 'package:hynzo/containers/chat/connected_container.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/widgets/common/buttons/primary_button.dart';
+import 'package:hynzo/widgets/common/error/error.dart';
+import 'package:hynzo/widgets/common/input/input.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-import 'package:invent_chat/routes/routes.dart';
-import 'package:invent_chat/resources/strings.dart';
+import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/resources/strings.dart';
 
 class LoginWidget extends StatefulWidget {
   final Function generateOTP;
@@ -25,7 +25,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   late String mobile = '';
   late String errorMgs = '';
   late String name = '';
-  bool isLoading =false;
+  bool isLoading = false;
 
   _generateOTP() async {
     if (mobile.length == 10) {
@@ -69,29 +69,34 @@ class _LoginWidgetState extends State<LoginWidget> {
               child: Column(
                 children: [
                   SizedBox(
-                    height:MediaQuery.of(context).size.height*0.12,
+                    height: MediaQuery.of(context).size.height * 0.12,
                   ),
                   Hero(
                     tag: 'HeroTitle',
                     child: Text(
                       Strings.TITLE_NAME,
-                      style: Theme.of(context).textTheme.button!.apply(color:AppColors.grayDark,),
+                      style: Theme.of(context).textTheme.button!.apply(
+                            color: AppColors.grayDark,
+                          ),
                     ),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height*0.03,
+                    height: MediaQuery.of(context).size.height * 0.03,
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: 220,
-                    child: Image.asset('assets/images/registration.png',fit: BoxFit.contain,),
+                    child: Image.asset(
+                      'assets/images/registration.png',
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ],
               ),
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.52,
+              height: MediaQuery.of(context).size.height * 0.52,
               child: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -107,18 +112,26 @@ class _LoginWidgetState extends State<LoginWidget> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height*0.06,
+                      height: MediaQuery.of(context).size.height * 0.06,
                     ),
-                    Text(Strings.LOGIN_TITLE,
-                      style: Theme.of(context).textTheme.caption!.apply(color: AppColors.white),
+                    Text(
+                      Strings.LOGIN_TITLE,
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption!
+                          .apply(color: AppColors.white),
                       textAlign: TextAlign.center,
                     ),
-                    Text(Strings.LOGIN_SUBTITLE,
-                      style: Theme.of(context).textTheme.headline1!.apply(color: AppColors.white),
+                    Text(
+                      Strings.LOGIN_SUBTITLE,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .apply(color: AppColors.white),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height*0.04,
+                      height: MediaQuery.of(context).size.height * 0.04,
                     ),
                     Container(
                       padding: const EdgeInsets.only(

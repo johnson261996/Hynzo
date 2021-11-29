@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:invent_chat/core/models/tab_header_model.dart';
-import 'package:invent_chat/resources/strings.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/widgets/game/action.dart';
-import 'package:invent_chat/widgets/game/adventure.dart';
-import 'package:invent_chat/widgets/game/all_games.dart';
-import 'package:invent_chat/widgets/game/card.dart';
-import 'package:invent_chat/widgets/game/top_charts.dart';
+import 'package:hynzo/core/models/tab_header_model.dart';
+import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/game/action.dart';
+import 'package:hynzo/widgets/game/adventure.dart';
+import 'package:hynzo/widgets/game/all_games.dart';
+import 'package:hynzo/widgets/game/card.dart';
+import 'package:hynzo/widgets/game/top_charts.dart';
 
 class GameWidget extends StatefulWidget {
   const GameWidget({Key? key}) : super(key: key);

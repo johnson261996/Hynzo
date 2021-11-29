@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/resources/strings.dart';
-import 'package:invent_chat/routes/routes.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/widgets/common/buttons/primary_button.dart';
+import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/common/buttons/primary_button.dart';
 
 class LocationWidget extends StatelessWidget {
   const LocationWidget({Key? key}) : super(key: key);
@@ -25,21 +25,27 @@ class LocationWidget extends StatelessWidget {
                   height: 250,
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height*0.02,
+                  height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 Text(
                   Strings.LOCATION_Title,
-                  style: Theme.of(context).textTheme.headline4!.copyWith(color: AppColors.gray,fontWeight: FontWeight.w500),
+                  style: Theme.of(context).textTheme.headline4!.copyWith(
+                      color: AppColors.gray, fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0,right: 20.0,),
+                  padding: const EdgeInsets.only(
+                    left: 20.0,
+                    right: 20.0,
+                  ),
                   child: Text(
                     Strings.LOCATION_SUBTITLE,
-                    style: Theme.of(context).textTheme.headline6!.copyWith(color: AppColors.lightergray,fontWeight: FontWeight.w400),
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                        color: AppColors.lightergray,
+                        fontWeight: FontWeight.w400),
                     textAlign: TextAlign.center,
                   ),
                 ),

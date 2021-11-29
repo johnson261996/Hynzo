@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/containers/suggestion_container.dart';
+import 'package:hynzo/containers/suggestion_container.dart';
 
-class Suggetion extends StatelessWidget{
+class Suggetion extends StatelessWidget {
   const Suggetion({Key? key}) : super(key: key);
 
   @override
@@ -10,5 +10,4 @@ class Suggetion extends StatelessWidget{
       body: SuggetionConatiner(),
     );
   }
-
 }

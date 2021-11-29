@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/themes/colors.dart';
+import 'package:hynzo/themes/colors.dart';
 
 /// wrapper around any widget that makes an async call to show a modal progress
 /// indicator while the async call is in progress.

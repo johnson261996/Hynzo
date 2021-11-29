@@ -1,12 +1,12 @@
 ///Custom created tab bar for aplication
 
 import 'package:flutter/material.dart';
-import 'package:invent_chat/containers/chat/connected_container.dart';
-import 'package:invent_chat/containers/chat/recieved_container.dart';
-import 'package:invent_chat/containers/chat/suggested_container.dart';
-import 'package:invent_chat/screens/home/home.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/resources/strings.dart';
+import 'package:hynzo/containers/chat/connected_container.dart';
+import 'package:hynzo/containers/chat/recieved_container.dart';
+import 'package:hynzo/containers/chat/suggested_container.dart';
+import 'package:hynzo/screens/home/home.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/resources/strings.dart';
 
 class CustomTabBar extends StatefulWidget {
   @override
@@ -44,7 +44,7 @@ class _TabBarState extends State<CustomTabBar>
             Expanded(
                 child: TabBarView(
               children: <Widget>[
-               ConnectedContainer(),
+                ConnectedContainer(),
                 ReceivedContainer(),
                 SuggestedContainer()
               ],

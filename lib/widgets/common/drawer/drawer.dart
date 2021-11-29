@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
-// import 'package:invent_chat/routes/routes.dart';
-// import 'package:invent_chat/themes/colors.dart';
+// import 'package:hynzo/routes/routes.dart';
+// import 'package:hynzo/themes/colors.dart';
 
 // class CustomDrawer extends StatelessWidget {
 //   @override

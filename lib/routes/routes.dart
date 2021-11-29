@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/layout/base.dart';
-import 'package:invent_chat/screens/games/games.dart';
-import 'package:invent_chat/screens/interest/interest.dart';
-import 'package:invent_chat/screens/intro/intro.dart';
-import 'package:invent_chat/screens/location/location.dart';
-import 'package:invent_chat/screens/login/login.dart';
-import 'package:invent_chat/screens/login/otp.dart';
-import 'package:invent_chat/screens/navigationScreen/navigationScreen.dart';
-import 'package:invent_chat/screens/onboarding/onboarding.dart';
-import 'package:invent_chat/screens/splash/splash.dart';
-import 'package:invent_chat/screens/about/about.dart';
-import 'package:invent_chat/screens/home/home.dart';
-import 'package:invent_chat/screens/suggestion/suggetion.dart';
+import 'package:hynzo/layout/base.dart';
+import 'package:hynzo/screens/interest/interest.dart';
+import 'package:hynzo/screens/intro/intro.dart';
+import 'package:hynzo/screens/location/location.dart';
+import 'package:hynzo/screens/login/login.dart';
+import 'package:hynzo/screens/login/otp.dart';
+import 'package:hynzo/screens/navigationScreen/navigationScreen.dart';
+import 'package:hynzo/screens/onboarding/onboarding.dart';
+import 'package:hynzo/screens/splash/splash.dart';
+import 'package:hynzo/screens/about/about.dart';
+import 'package:hynzo/screens/home/home.dart';
+import 'package:hynzo/screens/suggestion/suggetion.dart';
 
 /// [Routes] which contains common routing configuaration needed for the Application.
 /// This includes all pages and all routes mapped to each other.
@@ -68,7 +67,6 @@ class Routes {
           BaseLayout(page: Onbarding(), isAppBar: false),
       navScreen: (BuildContext context) =>
           BaseLayout(page: NavigationScreen(), isAppBar: false),
-
     };
   }
 

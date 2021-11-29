@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/containers/location_container.dart';
+import 'package:hynzo/containers/location_container.dart';
 
-class Location extends StatelessWidget{
+class Location extends StatelessWidget {
   const Location({Key? key}) : super(key: key);
 
   @override
@@ -10,5 +10,4 @@ class Location extends StatelessWidget{
       body: LocationContainer(),
     );
   }
-
 }

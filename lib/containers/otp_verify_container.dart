@@ -3,12 +3,11 @@
 ///
 
 import 'package:flutter/material.dart';
-import 'package:invent_chat/core/models/auth_model.dart';
-import 'package:invent_chat/providers/auth_provider.dart';
-import 'package:invent_chat/utils/localStorage.dart';
-import 'package:invent_chat/widgets/auth/otp_verify_widget.dart';
+import 'package:hynzo/core/models/auth_model.dart';
+import 'package:hynzo/providers/auth_provider.dart';
+import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/widgets/auth/otp_verify_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer' as devlog;
 
 class OtpVerifyContainer extends StatelessWidget {
@@ -22,7 +21,7 @@ class OtpVerifyContainer extends StatelessWidget {
         .verifyOtp(_authProvider!.userMobile, "91", _authProvider!.otpId, otp);
     _authProvider!.changeLoadingStatus(false); // change loading status to false
     LocalStorage.setLoginToken(response.token.toString());
-    devlog.log("$response",name:'MyLog');
+    devlog.log("$response", name: 'MyLog');
     return response;
   }
 

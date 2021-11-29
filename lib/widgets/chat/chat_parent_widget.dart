@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/core/models/tab_header_model.dart';
-import 'package:invent_chat/resources/strings.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/widgets/chat/all_chats_widget.dart';
-import 'package:invent_chat/widgets/chat/requested_widget.dart';
-import 'package:invent_chat/widgets/chat/suggested_widget.dart';
+import 'package:hynzo/core/models/tab_header_model.dart';
+import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/chat/all_chats_widget.dart';
+import 'package:hynzo/widgets/chat/requested_widget.dart';
+import 'package:hynzo/widgets/chat/suggested_widget.dart';
 
 import 'calls_widget.dart';
 
-class ChatWidget extends StatefulWidget{
+class ChatWidget extends StatefulWidget {
   const ChatWidget({Key? key}) : super(key: key);
-
-
 
   @override
   State<ChatWidget> createState() => _ChatWidgetState();
 }
 
 class _ChatWidgetState extends State<ChatWidget> {
-
   List<TabHeaderModel> allTabHeader = [];
   int selectedIndexValue = 0;
 
@@ -27,28 +24,36 @@ class _ChatWidgetState extends State<ChatWidget> {
     // TODO: implement initState
     super.initState();
     allTabHeader.add(
-      TabHeaderModel(tabName: 'All chats',),
+      TabHeaderModel(
+        tabName: 'All chats',
+      ),
     );
     allTabHeader.add(
-      TabHeaderModel(tabName: 'Requested',),
+      TabHeaderModel(
+        tabName: 'Requested',
+      ),
     );
     allTabHeader.add(
-      TabHeaderModel(tabName: 'Calls',),
+      TabHeaderModel(
+        tabName: 'Calls',
+      ),
     );
     allTabHeader.add(
-      TabHeaderModel(tabName: 'Suggested',),
+      TabHeaderModel(
+        tabName: 'Suggested',
+      ),
     );
   }
 
-  Widget _getSelectedWidget(int index){
-    switch(index){
-      case 0 :
+  Widget _getSelectedWidget(int index) {
+    switch (index) {
+      case 0:
         return AllChatsWidget();
-      case 1 :
+      case 1:
         return RequestedWidget();
-      case 2 :
+      case 2:
         return CallsWidget();
-      case 3 :
+      case 3:
         return SuggestedWidget();
       default:
         return AllChatsWidget();
@@ -76,10 +81,11 @@ class _ChatWidgetState extends State<ChatWidget> {
               children: [
                 Text(
                   Strings.CHAT,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1!
-                      .copyWith(color: AppColors.greyBlack,fontSize: 23,fontWeight: FontWeight.w500,),
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        color: AppColors.greyBlack,
+                        fontSize: 23,
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
                 const Spacer(),
                 IconButton(
@@ -105,9 +111,9 @@ class _ChatWidgetState extends State<ChatWidget> {
             child: ListView.builder(
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
-                      selectedIndexValue=index;
+                      selectedIndexValue = index;
                     });
                   },
                   child: Container(
@@ -123,12 +129,12 @@ class _ChatWidgetState extends State<ChatWidget> {
                       child: Text(
                         allTabHeader[index].tabName!,
                         style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                          fontSize: 12,
-                          color: index == selectedIndexValue
-                              ? AppColors.white
-                              : AppColors.greyBlack,
-                          fontWeight: FontWeight.w400,
-                        ),
+                              fontSize: 12,
+                              color: index == selectedIndexValue
+                                  ? AppColors.white
+                                  : AppColors.greyBlack,
+                              fontWeight: FontWeight.w400,
+                            ),
                       ),
                     ),
                   ),
@@ -138,7 +144,9 @@ class _ChatWidgetState extends State<ChatWidget> {
               scrollDirection: Axis.horizontal,
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.015,),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.015,
+          ),
           Divider(
             color: AppColors.offgrey,
             height: 1.0,

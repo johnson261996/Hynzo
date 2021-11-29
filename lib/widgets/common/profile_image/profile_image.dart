@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/themes/colors.dart';
+import 'package:hynzo/themes/colors.dart';
 
-class ProfileImageWidget extends StatelessWidget{
+class ProfileImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-     return Stack(
+    return Stack(
       children: [
         Container(
           width: 70.0,
@@ -50,14 +50,13 @@ class ProfileImageWidget extends StatelessWidget{
           child: Text(
             '2',
             style: Theme.of(context).textTheme.caption!.copyWith(
-              fontSize: 9,
-              color: AppColors.yellowDark,
-              fontWeight: FontWeight.w600,
-            ),
+                  fontSize: 9,
+                  color: AppColors.yellowDark,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
         ),
       ],
     );
   }
-
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class SquareViewWidget extends StatelessWidget{
+class RectangleImageView extends StatelessWidget{
 
   final String imagePath;
 
-  const SquareViewWidget({required this.imagePath, Key? key}) : super(key: key);
+  const RectangleImageView({required this.imagePath, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +12,7 @@ class SquareViewWidget extends StatelessWidget{
       borderRadius: BorderRadius.circular(10.0),
       child: Image.asset(
         imagePath,
-        fit: BoxFit.cover,
-        width: 110.0,
-        height: 110.0,
+        fit: BoxFit.contain,
       ),
     );
   }

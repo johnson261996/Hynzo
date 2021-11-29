@@ -1,11 +1,11 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/utils/localStorage.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/localStorage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
-import 'package:invent_chat/routes/routes.dart';
-import 'package:invent_chat/resources/strings.dart';
+import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/resources/strings.dart';
 
 /// [SplashScreen] is the initial screen that loads into the app.
 /// This screen will check whether the User is logged in already.
@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
   checkAuth() async {
     await LocalStorage.getIntroStatus().then((value) => introStatus = value!);
     await LocalStorage.getLoginStatus().then((value) => token = value!);
-    if(introStatus){
+    if (introStatus) {
       Navigator.pushReplacementNamed(context, Routes.intro);
     } else {
       if (token == "") {

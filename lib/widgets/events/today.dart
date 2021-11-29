@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/core/models/events_model.dart';
-import 'package:invent_chat/resources/strings.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/widgets/common/view/event_view_widget.dart';
+import 'package:hynzo/core/models/events_model.dart';
+import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/common/view/event_view_widget.dart';
 
 class TodayWidget extends StatefulWidget {
   const TodayWidget({Key? key}) : super(key: key);
@@ -26,26 +26,26 @@ class _TodayWidgetState extends State<TodayWidget> {
     super.initState();
     allEvents.add(
       EventsModel(
-          imagePath: 'assets/images/events_dummy_one.png',
-          title: 'Sunday Night Party',
-          subTitle: 'Badmash Louunge: Koramongala',
-          dateTime: 'Sat, 13 Nov',
+        imagePath: 'assets/images/events_dummy_one.png',
+        title: 'Sunday Night Party',
+        subTitle: 'Badmash Louunge: Koramongala',
+        dateTime: 'Sat, 13 Nov',
       ),
     );
     allEvents.add(
       EventsModel(
-          imagePath: 'assets/images/events_dummy_two.png',
-          title: 'Sunday Night Party',
-          subTitle: 'Badmash Louunge: Koramongala',
-          dateTime: 'Fri, 12 Nov',
+        imagePath: 'assets/images/events_dummy_two.png',
+        title: 'Sunday Night Party',
+        subTitle: 'Badmash Louunge: Koramongala',
+        dateTime: 'Fri, 12 Nov',
       ),
     );
     allEvents.add(
       EventsModel(
-          imagePath: 'assets/images/events_dummy_one.png',
-          title: 'Sunday Night Party',
-          subTitle: 'Badmash Louunge: Koramongala',
-          dateTime: 'Thu, 11 Nov',
+        imagePath: 'assets/images/events_dummy_one.png',
+        title: 'Sunday Night Party',
+        subTitle: 'Badmash Louunge: Koramongala',
+        dateTime: 'Thu, 11 Nov',
       ),
     );
     allCategories.add(
@@ -342,10 +342,10 @@ class _TodayWidgetState extends State<TodayWidget> {
           Text(
             Strings.CATEGORIES_SUBTITLE,
             style: Theme.of(context).textTheme.caption!.copyWith(
-              color: AppColors.offwhite,
-              fontSize: 11,
-              fontWeight: FontWeight.w400,
-            ),
+                  color: AppColors.offwhite,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w400,
+                ),
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.015,
@@ -425,9 +425,9 @@ class _TodayWidgetState extends State<TodayWidget> {
           Text(
             Strings.KIDS,
             style: Theme.of(context).textTheme.headline6!.copyWith(
-              color: AppColors.black,
-              fontWeight: FontWeight.w600,
-            ),
+                  color: AppColors.black,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.01,
@@ -466,9 +466,9 @@ class _TodayWidgetState extends State<TodayWidget> {
           Text(
             Strings.MUSIC,
             style: Theme.of(context).textTheme.headline6!.copyWith(
-              color: AppColors.black,
-              fontWeight: FontWeight.w600,
-            ),
+                  color: AppColors.black,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.01,
@@ -507,9 +507,9 @@ class _TodayWidgetState extends State<TodayWidget> {
           Text(
             Strings.COMEDY,
             style: Theme.of(context).textTheme.headline6!.copyWith(
-              color: AppColors.black,
-              fontWeight: FontWeight.w600,
-            ),
+                  color: AppColors.black,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.01,
@@ -548,9 +548,9 @@ class _TodayWidgetState extends State<TodayWidget> {
           Text(
             Strings.FIT,
             style: Theme.of(context).textTheme.headline6!.copyWith(
-              color: AppColors.black,
-              fontWeight: FontWeight.w600,
-            ),
+                  color: AppColors.black,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.01,

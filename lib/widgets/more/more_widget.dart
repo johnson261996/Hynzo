@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/resources/strings.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/widgets/common/profile_image/profile_image.dart';
+import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/common/profile_image/profile_image.dart';
 
 class MoreWidget extends StatelessWidget {
   const MoreWidget({Key? key}) : super(key: key);

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/core/models/suggestion_model.dart';
-import 'package:invent_chat/resources/strings.dart';
-import 'package:invent_chat/routes/routes.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/themes/themes.dart';
-import 'package:invent_chat/utils/localStorage.dart';
-import 'package:invent_chat/widgets/common/buttons/primary_button.dart';
+import 'package:hynzo/core/models/suggestion_model.dart';
+import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/themes/themes.dart';
+import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/widgets/common/buttons/primary_button.dart';
 
 class SuggetionWidget extends StatefulWidget {
   const SuggetionWidget({Key? key}) : super(key: key);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/themes/colors.dart';
+import 'package:hynzo/themes/colors.dart';
 
 class ErrorText extends StatelessWidget {
   final String errorMgs;

@@ -6,13 +6,13 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/utils/localStorage.dart';
-import 'package:invent_chat/widgets/common/buttons/primary_button.dart';
-import 'package:invent_chat/widgets/common/error/error.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/widgets/common/buttons/primary_button.dart';
+import 'package:hynzo/widgets/common/error/error.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-import 'package:invent_chat/routes/routes.dart';
-import 'package:invent_chat/resources/strings.dart';
+import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/resources/strings.dart';
 
 class OtpWidget extends StatefulWidget {
   final Function verifyOTP;
@@ -192,7 +192,10 @@ class _OtpWidgetState extends State<OtpWidget> {
                 },
                 child: Text(
                   ' Resend',
-                  style: Theme.of(context).textTheme.subtitle2!.apply(color: AppColors.lightblue),
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle2!
+                      .apply(color: AppColors.lightblue),
                 ),
               ),
             )

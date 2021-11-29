@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/providers/auth_provider.dart';
-import 'package:invent_chat/routes/routes.dart';
-import 'package:invent_chat/themes/themes.dart';
+import 'package:hynzo/providers/auth_provider.dart';
+import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/themes/themes.dart';
 import 'package:provider/provider.dart';
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

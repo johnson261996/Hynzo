@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:invent_chat/core/models/interest_model.dart';
-import 'package:invent_chat/resources/strings.dart';
-import 'package:invent_chat/routes/routes.dart';
-import 'package:invent_chat/themes/colors.dart';
+import 'package:hynzo/core/models/interest_model.dart';
+import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/themes/colors.dart';
 
 class InterestWidget extends StatefulWidget {
   const InterestWidget({Key? key}) : super(key: key);
@@ -105,7 +105,8 @@ class _InterestWidgetState extends State<InterestWidget> {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0,top: 180.0,bottom: 20.0),
+              padding: const EdgeInsets.only(
+                  left: 20.0, right: 20.0, top: 180.0, bottom: 20.0),
               child: GridView.builder(
                 padding: EdgeInsets.zero,
                 itemCount: allInterest.length,

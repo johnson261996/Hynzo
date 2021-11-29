@@ -1,9 +1,9 @@
 ///shows suggested users list according to user's interest
 
 import 'package:flutter/material.dart';
-import 'package:invent_chat/widgets/userData/userData.dart';
-import 'package:invent_chat/resources/strings.dart';
-import 'package:invent_chat/resources/images.dart';
+import 'package:hynzo/widgets/userData/userData.dart';
+import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/resources/images.dart';
 
 class SuggestedContainer extends StatefulWidget {
   @override

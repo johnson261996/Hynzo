@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:invent_chat/core/models/games_model.dart';
-import 'package:invent_chat/resources/strings.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/widgets/common/image/square_image_widget.dart';
-import 'package:invent_chat/widgets/common/view/game_view_widget.dart';
-import 'package:invent_chat/widgets/game/game.dart';
+import 'package:hynzo/core/models/games_model.dart';
+import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/common/image/square_image_widget.dart';
+import 'package:hynzo/widgets/common/view/game_view_widget.dart';
+import 'package:hynzo/widgets/game/game.dart';
 
 class AllGames extends StatefulWidget {
   const AllGames({Key? key}) : super(key: key);
@@ -120,16 +120,18 @@ class _AllGamesState extends State<AllGames> {
       ),
     );
   }
+  
+  
 
   @override
   Widget build(BuildContext context) {
+    var mediaQuery=MediaQuery.of(context).size;
     return Container(
-      height: MediaQuery.of(context).size.height,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.04,
+            height: mediaQuery.height * 0.04,
           ),
           Text(
             Strings.RECENTLY_PLAYED,
@@ -139,16 +141,16 @@ class _AllGamesState extends State<AllGames> {
                 ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
+            height: mediaQuery.height * 0.01,
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.15,
+            width: mediaQuery.width,
+            height: mediaQuery.height * 0.18,
             child: ListView.builder(
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   padding: const EdgeInsets.only(
-                    right: 8.0,
+                    right: 12.0,
                   ),
                   child: Column(
                     children: [
@@ -183,7 +185,7 @@ class _AllGamesState extends State<AllGames> {
                         ],
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.01,
+                        height: mediaQuery.height * 0.01,
                       ),
                       Text(
                         allRecent[index].gameName!,
@@ -202,7 +204,7 @@ class _AllGamesState extends State<AllGames> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
+            height: mediaQuery.height * 0.03,
           ),
           Text(
             Strings.SUGGESTED_GAMES,
@@ -212,16 +214,16 @@ class _AllGamesState extends State<AllGames> {
                 ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
+            height: mediaQuery.height * 0.01,
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.15,
+            width: mediaQuery.width,
+            height: mediaQuery.height * 0.18,
             child: ListView.builder(
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                     padding: const EdgeInsets.only(
-                      right: 8.0,
+                      right: 12.0,
                     ),
                     child: GameContainerWidget(
                       imagePath: allSuggested[index].imagePath!,
@@ -233,7 +235,7 @@ class _AllGamesState extends State<AllGames> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
+            height: mediaQuery.height * 0.03,
           ),
           Text(
             Strings.ALL_GAMES,
@@ -243,19 +245,21 @@ class _AllGamesState extends State<AllGames> {
                 ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
+            height: mediaQuery.height * 0.01,
           ),
-          Expanded(
+          Container(
+            width: mediaQuery.width,
+            height: mediaQuery.height * 0.55,
             child: GridView.builder(
               physics: NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.only(
                 right: 15.0,
               ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                crossAxisSpacing: 5,
+                crossAxisCount: 3,
+                crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                childAspectRatio: 0.9,
+                childAspectRatio: 0.8,
               ),
               itemBuilder: (BuildContext context, int index) {
                 return GameContainerWidget(

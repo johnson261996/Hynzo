@@ -1,4 +1,4 @@
-package com.example.invent_chat
+package com.gloify.hynzo
 
 import io.flutter.embedding.android.FlutterActivity
 

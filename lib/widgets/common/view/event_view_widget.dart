@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/widgets/common/image/square_image_widget.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/common/image/rectangle_image_view.dart';
+import 'package:hynzo/widgets/common/image/square_image_widget.dart';
 
 class EventContainerWidget extends StatelessWidget {
   final String imagePath;
@@ -24,16 +25,19 @@ class EventContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mediaQuery=MediaQuery.of(context).size;
     return Column(
       children: [
         Stack(
           children: [
-            SquareViewWidget(
+            RectangleImageView(
               imagePath: imagePath,
             ),
             if (showDate) ...[
               Positioned(
-                top: forEvents ? MediaQuery.of(context).size.height * 0.192 : MediaQuery.of(context).size.height * 0.172,
+                top: forEvents
+                    ? mediaQuery.height * 0.192
+                    : mediaQuery.height * 0.172,
                 child: ClipRRect(
                   child: Image.asset(
                     'assets/images/black_rectangle.png',
@@ -75,7 +79,7 @@ class EventContainerWidget extends StatelessWidget {
         ),
         if (showDate) ...[
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
+            height: mediaQuery.height * 0.01,
           ),
           Text(
             title,
@@ -87,7 +91,7 @@ class EventContainerWidget extends StatelessWidget {
           ),
           if (showSubTitle) ...[
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.005,
+              height: mediaQuery.height * 0.005,
             ),
             Text(
               subTitle,

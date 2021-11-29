@@ -3,9 +3,9 @@
 ///
 
 import 'package:flutter/material.dart';
-import 'package:invent_chat/core/models/auth_model.dart';
-import 'package:invent_chat/providers/auth_provider.dart';
-import 'package:invent_chat/widgets/auth/login_widget.dart';
+import 'package:hynzo/core/models/auth_model.dart';
+import 'package:hynzo/providers/auth_provider.dart';
+import 'package:hynzo/widgets/auth/login_widget.dart';
 import 'package:provider/provider.dart';
 
 class LoginContainer extends StatelessWidget {

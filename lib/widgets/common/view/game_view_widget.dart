@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/widgets/common/image/square_image_widget.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/common/image/square_image_widget.dart';
 
 class GameContainerWidget extends StatelessWidget {
   final String imagePath;
@@ -22,12 +22,13 @@ class GameContainerWidget extends StatelessWidget {
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.01,
         ),
-        Text(name,
+        Text(
+          name,
           style: Theme.of(context).textTheme.subtitle2!.copyWith(
-            fontSize: 11,
-            fontWeight: FontWeight.w400,
-            color: AppColors.black,
-          ),
+                fontSize: 11,
+                fontWeight: FontWeight.w400,
+                color: AppColors.black,
+              ),
         )
       ],
     );

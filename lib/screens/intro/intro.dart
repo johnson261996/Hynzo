@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/containers/intro_container.dart';
+import 'package:hynzo/containers/intro_container.dart';
 
-class Intro extends StatelessWidget{
+class Intro extends StatelessWidget {
   const Intro({Key? key}) : super(key: key);
 
   @override
@@ -10,5 +10,4 @@ class Intro extends StatelessWidget{
       body: IntroContainer(),
     );
   }
-
 }

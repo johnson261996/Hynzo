@@ -2,7 +2,7 @@ import 'dart:async' show Future;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http_interceptor/http/intercepted_http.dart';
-import 'package:invent_chat/core/services/auth/auth_interceptor.dart';
+import 'package:hynzo/core/services/auth/auth_interceptor.dart';
 
 class ServiceBase {
   static String apiBaseUrl = 'http://api.inventchat.com/';

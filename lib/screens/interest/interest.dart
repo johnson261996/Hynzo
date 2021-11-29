@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/containers/interest_container.dart';
+import 'package:hynzo/containers/interest_container.dart';
 
-class Interest extends StatelessWidget{
+class Interest extends StatelessWidget {
   const Interest({Key? key}) : super(key: key);
 
   @override
@@ -10,5 +10,4 @@ class Interest extends StatelessWidget{
       body: InterestContainer(),
     );
   }
-
 }

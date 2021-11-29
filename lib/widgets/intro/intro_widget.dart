@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:invent_chat/resources/strings.dart';
-import 'package:invent_chat/routes/routes.dart';
-import 'package:invent_chat/themes/colors.dart';
-import 'package:invent_chat/utils/localStorage.dart';
+import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/localStorage.dart';
 
 class IntroWidget extends StatefulWidget {
   const IntroWidget({Key? key}) : super(key: key);
@@ -84,14 +84,20 @@ class _IntroWidgetState extends State<IntroWidget> {
           ),
           Text(
             getText(state),
-            style: Theme.of(context).textTheme.headline3!.apply(color: AppColors.blueDark),
+            style: Theme.of(context)
+                .textTheme
+                .headline3!
+                .apply(color: AppColors.blueDark),
             textAlign: TextAlign.center,
           ),
           const SizedBox(
             height: 20,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 20.0,right: 20.0,),
+            padding: const EdgeInsets.only(
+              left: 20.0,
+              right: 20.0,
+            ),
             child: Text(
               Strings.DUMMY_TEXT,
               style: Theme.of(context).textTheme.headline6,
