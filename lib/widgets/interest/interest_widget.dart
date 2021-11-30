@@ -1,81 +1,76 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/interest_model.dart';
+import 'package:hynzo/providers/news_provider.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
 
 class InterestWidget extends StatefulWidget {
-  const InterestWidget({Key? key}) : super(key: key);
+  List<ResultsModel> allResults;
+  final Function? addInterest;
+  final Function? fetchInterest;
+
+  InterestWidget({
+    Key? key,
+    required this.allResults,
+    this.addInterest,
+    this.fetchInterest,
+  }) : super(key: key);
 
   @override
   State<InterestWidget> createState() => _InterestWidgetState();
 }
 
 class _InterestWidgetState extends State<InterestWidget> {
-  List<InterestModel> allInterest = [];
-  bool isSelected = false;
+  String interestIds='';
+  int offset=0;
+  ScrollController _sccontroller = new ScrollController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    allInterest.add(
-      InterestModel(
-        imagePath: 'assets/images/gym.png',
-        name: 'Cricket',
-        selectionStatus: false,
-      ),
-    );
-    allInterest.add(
-      InterestModel(
-        imagePath: 'assets/images/camera.png',
-        name: 'Photography',
-        selectionStatus: false,
-      ),
-    );
-    allInterest.add(
-      InterestModel(
-        imagePath: 'assets/images/burger.png',
-        name: 'Cooking',
-        selectionStatus: false,
-      ),
-    );
-    allInterest.add(
-      InterestModel(
-        imagePath: 'assets/images/books.png',
-        name: 'Books',
-        selectionStatus: false,
-      ),
-    );
-    allInterest.add(
-      InterestModel(
-        imagePath: 'assets/images/compass.png',
-        name: 'Travel',
-        selectionStatus: false,
-      ),
-    );
-    allInterest.add(
-      InterestModel(
-        imagePath: 'assets/images/paint.png',
-        name: 'Movies',
-        selectionStatus: false,
-      ),
-    );
-    allInterest.add(
-      InterestModel(
-        imagePath: 'assets/images/game.png',
-        name: 'Video Games',
-        selectionStatus: false,
-      ),
-    );
-    allInterest.add(
-      InterestModel(
-        imagePath: 'assets/images/tree.png',
-        name: 'Dance',
-        selectionStatus: false,
-      ),
-    );
+    _sccontroller.addListener(() {
+      if (_sccontroller.position.pixels == _sccontroller.position.maxScrollExtent) {
+        widget.fetchInterest!("10",(offset + 10).toString(),);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _sccontroller.dispose();
+    super.dispose();
+  }
+
+  _addInterest(){
+    widget.allResults.forEach((element) {
+      if(element.isSelected!){
+        if(interestIds == ''){
+          interestIds = element.id.toString();
+        } else {
+          interestIds = interestIds + element.id.toString();
+        }
+      }
+    });
+    if(interestIds == '') {
+      var snackBar = SnackBar(
+        content: Text(
+          'You need to select one of them from above',
+          style: Theme
+              .of(context)
+              .textTheme
+              .subtitle2!
+              .apply(
+            color: AppColors.white,
+          ),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }else{
+      widget.addInterest!(interestIds);
+    }
   }
 
   @override
@@ -108,8 +103,10 @@ class _InterestWidgetState extends State<InterestWidget> {
               padding: const EdgeInsets.only(
                   left: 20.0, right: 20.0, top: 180.0, bottom: 20.0),
               child: GridView.builder(
+                controller: _sccontroller,
+                physics: const AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
-                itemCount: allInterest.length,
+                itemCount: widget.allResults.length ,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 20,
@@ -120,21 +117,9 @@ class _InterestWidgetState extends State<InterestWidget> {
                   return GestureDetector(
                     onTap: () {
                       setState(() {
-                        allInterest[index].selectionStatus =
-                            !allInterest[index].selectionStatus;
+                        widget.allResults[index].isSelected =
+                            !widget.allResults[index].isSelected!;
                       });
-                      bool isAnySelected = false;
-                      for (int i = 0; i < allInterest.length; i++) {
-                        if (allInterest[i].selectionStatus) {
-                          isAnySelected = true;
-                          break;
-                        }
-                      }
-                      if (isAnySelected) {
-                        isSelected = true;
-                      } else {
-                        isSelected = false;
-                      }
                     },
                     child: Card(
                       elevation: 3,
@@ -148,7 +133,7 @@ class _InterestWidgetState extends State<InterestWidget> {
                           ),
                         ),
                         child: Container(
-                          decoration: allInterest[index].selectionStatus
+                          decoration: widget.allResults[index].isSelected!
                               ? BoxDecoration(
                                   border: Border.all(
                                     color: AppColors.pink,
@@ -159,14 +144,14 @@ class _InterestWidgetState extends State<InterestWidget> {
                           child: Stack(
                             children: [
                               Center(
-                                child: Image.asset(
-                                  allInterest[index].imagePath!,
+                                child: Image.network(
+                                  widget.allResults[index].interestImage!,
                                   fit: BoxFit.contain,
                                   width: 60,
                                   height: 80,
                                 ),
                               ),
-                              if (allInterest[index].selectionStatus) ...[
+                              if (widget.allResults[index].isSelected!) ...[
                                 Positioned(
                                   right: 20.0,
                                   left: 110.0,
@@ -186,8 +171,8 @@ class _InterestWidgetState extends State<InterestWidget> {
                                     bottom: 10.0,
                                   ),
                                   child: Text(
-                                    allInterest[index].name!,
-                                    style: !allInterest[index].selectionStatus
+                                    widget.allResults[index].interest!,
+                                    style: !widget.allResults[index].isSelected!
                                         ? Theme.of(context).textTheme.headline6
                                         : Theme.of(context)
                                             .textTheme
@@ -215,21 +200,9 @@ class _InterestWidgetState extends State<InterestWidget> {
           Align(
             alignment: Alignment.bottomRight,
             child: GestureDetector(
-              onTap: isSelected
-                  ? () {
-                      Navigator.pushReplacementNamed(context, Routes.location);
-                    }
-                  : () {
-                      var snackBar = SnackBar(
-                        content: Text(
-                          'You need to select one of them from above',
-                          style: Theme.of(context).textTheme.subtitle2!.apply(
-                                color: AppColors.white,
-                              ),
-                        ),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    },
+              onTap: (){
+                _addInterest();
+              },
               child: Container(
                 color: Colors.transparent,
                 padding: const EdgeInsets.only(

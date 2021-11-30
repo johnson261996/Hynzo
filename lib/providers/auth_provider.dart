@@ -29,6 +29,16 @@ class AuthProvider extends ChangeNotifier {
     return response;
   }
 
+  Future<GenerateOTPModel> resendOtp(String mobile, String signature) async {
+    final GenerateOTPModel response =
+    await AuthService.resendOtp(mobile, signature);
+    userMobile = mobile.toString();
+    otpId = response.otpVerificationId.toString();
+    isLoading = false;
+    notifyListeners();
+    return response;
+  }
+
   Future<LoginModel> verifyOtp(
       String mobile, String code, String otp_id, String otp) async {
     final LoginModel response =

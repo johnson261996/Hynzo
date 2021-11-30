@@ -7,7 +7,7 @@ import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/providers/auth_provider.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/auth/otp_verify_widget.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
@@ -15,7 +15,6 @@ import 'package:provider/provider.dart';
 import 'dart:developer' as devlog;
 
 class OtpVerifyContainer extends StatefulWidget {
-  static AuthProvider? _authProvider;
 
   const OtpVerifyContainer({Key? key}) : super(key: key);
 
@@ -25,16 +24,17 @@ class OtpVerifyContainer extends StatefulWidget {
 
 class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
   bool _isLoading = false;
+  static AuthProvider? _authProvider;
 
 
   Future<void> _verifyOtp(otp) async {
     setState(() {
       _isLoading = true;
     });
-    OtpVerifyContainer._authProvider!.changeLoadingStatus(true); // change loading status to true
-    final LoginModel response = await OtpVerifyContainer._authProvider!
-        .verifyOtp(OtpVerifyContainer._authProvider!.userMobile, "91", OtpVerifyContainer._authProvider!.otpId, otp);
-    OtpVerifyContainer._authProvider!.changeLoadingStatus(false); // change loading status to false
+    _authProvider!.changeLoadingStatus(true); // change loading status to true
+    final LoginModel response = await _authProvider!
+        .verifyOtp(_authProvider!.userMobile, "91", _authProvider!.otpId, otp);
+    _authProvider!.changeLoadingStatus(false); // change loading status to false
     devlog.log("$response", name: 'MyLog');
     setState(() {
       _isLoading = false;
@@ -52,11 +52,11 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
     setState(() {
       _isLoading = true;
     });
-    OtpVerifyContainer._authProvider!
+    _authProvider!
         .changeLoadingStatus(true); // change loading status to true
     final GenerateOTPModel response =
-    await OtpVerifyContainer._authProvider!.generateOTP(mobile, signature);
-    OtpVerifyContainer._authProvider!
+    await _authProvider!.resendOtp(mobile, signature);
+    _authProvider!
         .changeLoadingStatus(false); // change loading status to false
     setState(() {
       _isLoading = false;
@@ -70,7 +70,7 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
 
   @override
   Widget build(BuildContext context) {
-    OtpVerifyContainer._authProvider = Provider.of<AuthProvider>(context);
+    _authProvider = Provider.of<AuthProvider>(context);
     return LoadingOverlay(
       isLoading: _isLoading,
       color: AppColors.gray,

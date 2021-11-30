@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/widgets/common/buttons/primary_button.dart';
 import 'package:hynzo/widgets/common/error/error.dart';
 import 'package:sms_autofill/sms_autofill.dart';
@@ -82,7 +82,7 @@ class _OtpWidgetState extends State<OtpWidget> {
     super.dispose();
   }
 
-  verifyOTP() async {
+  verifyOTP() {
     if (otp.length == 6) {
       FocusScope.of(context).unfocus();
       widget.verifyOTP(otp);
@@ -93,7 +93,7 @@ class _OtpWidgetState extends State<OtpWidget> {
     }
   }
 
-  resendOTP() async {
+  resendOTP() {
     FocusScope.of(context).unfocus();
     String signature = '';
     SmsAutoFill().getAppSignature.then((signature) {
