@@ -3,29 +3,59 @@
 ///
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/providers/auth_provider.dart';
+import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/auth/login_widget.dart';
+import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 
-class LoginContainer extends StatelessWidget {
+class LoginContainer extends StatefulWidget {
   static AuthProvider? _authProvider;
 
   const LoginContainer({Key? key}) : super(key: key);
 
-  Future<GenerateOTPModel> _generateOTP(String mobile, String signature) async {
-    _authProvider!.changeLoadingStatus(true); // change loading status to true
+  @override
+  State<LoginContainer> createState() => _LoginContainerState();
+}
+
+class _LoginContainerState extends State<LoginContainer> {
+  bool _isLoading = false;
+
+  Future<void> _generateOTP(String mobile, String signature) async {
+    setState(() {
+      _isLoading = true;
+    });
+    LoginContainer._authProvider!
+        .changeLoadingStatus(true); // change loading status to true
     final GenerateOTPModel response =
-        await _authProvider!.generateOTP(mobile, signature);
-    _authProvider!.changeLoadingStatus(false); // change loading status to false
-    return response;
+        await LoginContainer._authProvider!.generateOTP(mobile, signature);
+    LoginContainer._authProvider!
+        .changeLoadingStatus(false); // change loading status to false
+    setState(() {
+      _isLoading = false;
+    });
+    if (response.statusCode == 200) {
+      LocalStorage.setMobileNumber(mobile);
+      Navigator.pushNamed(context, Routes.otp);
+    } else {
+     ToastUtil().showToast('Something went wrong!');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    _authProvider = Provider.of<AuthProvider>(context);
-    return LoginWidget(
-      generateOTP: _generateOTP,
+    LoginContainer._authProvider = Provider.of<AuthProvider>(context);
+    return LoadingOverlay(
+      isLoading: _isLoading,
+      color: AppColors.gray,
+      child: LoginWidget(
+        generateOTP: _generateOTP,
+      ),
     );
   }
 }

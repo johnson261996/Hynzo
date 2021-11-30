@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/localStorage.dart';
 import 'package:hynzo/widgets/common/profile_image/profile_image.dart';
 
 class MoreWidget extends StatelessWidget {
-  const MoreWidget({Key? key}) : super(key: key);
+
+  const MoreWidget({
+    Key? key
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,7 @@ class MoreWidget extends StatelessWidget {
                   Strings.Menu,
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         color: AppColors.greyBlack,
-                        fontSize: 23,
+                        fontSize: 25,
                         fontWeight: FontWeight.w500,
                       ),
                 ),
@@ -55,7 +60,7 @@ class MoreWidget extends StatelessWidget {
             ),
             child: Row(
               children: [
-                ProfileImageWidget(),
+                const ProfileImageWidget(),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.03,
                 ),
@@ -64,23 +69,25 @@ class MoreWidget extends StatelessWidget {
                   children: [
                     Text(
                       Strings.DUMMY_PROFILE_NAME,
-                      style: Theme.of(context).textTheme.caption!.apply(
+                      style: Theme.of(context).textTheme.headline5!.apply(
                             color: AppColors.greyBlack,
                           ),
                     ),
-                    GestureDetector(
+                    InkWell(
                       onTap: () {},
                       child: Row(
                         children: [
-                          Text(Strings.VIEW_PROFILE,
-                              style:
-                                  Theme.of(context).textTheme.caption!.copyWith(
-                                        fontSize: 12,
-                                        color: AppColors.greyBlack,
-                                      )),
+                          Text(
+                            Strings.VIEW_PROFILE,
+                            style:
+                                Theme.of(context).textTheme.caption!.copyWith(
+                                      fontSize: 12,
+                                      color: AppColors.greyBlack,
+                                    ),
+                          ),
                           const Icon(
                             Icons.arrow_forward_ios_outlined,
-                            size: 12,
+                            size: 10,
                           ),
                         ],
                       ),
@@ -98,13 +105,16 @@ class MoreWidget extends StatelessWidget {
               child: Container(
                 child: Column(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.only(
-                        left: 15.0,
-                        right: 15.0,
-                      ),
-                      height: 70.0,
-                      child: GestureDetector(
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, Routes.news);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          left: 15.0,
+                          right: 15.0,
+                        ),
+                        height: 70.0,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -134,20 +144,20 @@ class MoreWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                        onTap: () {},
                       ),
                     ),
                     Divider(
                       color: AppColors.lightergray,
                       height: 2.0,
                     ),
-                    Container(
-                      padding: const EdgeInsets.only(
-                        left: 15.0,
-                        right: 15.0,
-                      ),
-                      height: 70.0,
-                      child: GestureDetector(
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          left: 15.0,
+                          right: 15.0,
+                        ),
+                        height: 70.0,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -177,20 +187,20 @@ class MoreWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                        onTap: () {},
                       ),
                     ),
                     Divider(
                       color: AppColors.lightergray,
                       height: 2.0,
                     ),
-                    Container(
-                      padding: const EdgeInsets.only(
-                        left: 15.0,
-                        right: 15.0,
-                      ),
-                      height: 70.0,
-                      child: GestureDetector(
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          left: 15.0,
+                          right: 15.0,
+                        ),
+                        height: 70.0,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -220,20 +230,20 @@ class MoreWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                        onTap: () {},
                       ),
                     ),
                     Divider(
                       color: AppColors.lightergray,
                       height: 2.0,
                     ),
-                    Container(
-                      padding: const EdgeInsets.only(
-                        left: 15.0,
-                        right: 15.0,
-                      ),
-                      height: 70.0,
-                      child: GestureDetector(
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          left: 15.0,
+                          right: 15.0,
+                        ),
+                        height: 70.0,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -263,20 +273,23 @@ class MoreWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                        onTap: () {},
                       ),
                     ),
                     Divider(
                       color: AppColors.lightergray,
                       height: 2.0,
                     ),
-                    Container(
-                      padding: const EdgeInsets.only(
-                        left: 15.0,
-                        right: 15.0,
-                      ),
-                      height: 70.0,
-                      child: GestureDetector(
+                    InkWell(
+                      onTap: () {
+                        LocalStorage.clearToken();
+                        Navigator.pushReplacementNamed(context, Routes.login);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          left: 15.0,
+                          right: 15.0,
+                        ),
+                        height: 70.0,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -306,20 +319,20 @@ class MoreWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                        onTap: () {},
                       ),
                     ),
                     Divider(
                       color: AppColors.lightergray,
                       height: 2.0,
                     ),
-                    Container(
-                      padding: const EdgeInsets.only(
-                        left: 15.0,
-                        right: 15.0,
-                      ),
-                      height: 70.0,
-                      child: GestureDetector(
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          left: 15.0,
+                          right: 15.0,
+                        ),
+                        height: 70.0,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -349,20 +362,20 @@ class MoreWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                        onTap: () {},
                       ),
                     ),
                     Divider(
                       color: AppColors.offgrey,
                       height: 1.0,
                     ),
-                    Container(
-                      padding: const EdgeInsets.only(
-                        left: 15.0,
-                        right: 15.0,
-                      ),
-                      height: 70.0,
-                      child: GestureDetector(
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          left: 15.0,
+                          right: 15.0,
+                        ),
+                        height: 70.0,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -392,7 +405,6 @@ class MoreWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                        onTap: () {},
                       ),
                     ),
                   ],

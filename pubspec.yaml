@@ -36,6 +36,9 @@ dependencies:
   shared_preferences: ^2.0.8
   animated_text_kit: ^4.2.1
   sms_autofill: ^2.2.0
+  simple_gesture_detector: ^0.2.0
+  fluttertoast: ^8.0.8
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -146,6 +149,19 @@ flutter:
     - assets/images/message_image_four.png
     - assets/images/message_image_five.png
     - assets/images/read.png
+    - assets/images/news_two.png
+    - assets/images/news_one.png
+    - assets/images/home_rectangle.png
+    - assets/images/chess_home.png
+    - assets/images/blue_add.png
+    - assets/images/blue_circle_outline.png
+    - assets/images/coin.png
+    - assets/images/search.png
+    - assets/images/right_arrow.png
+    - assets/images/flip.png
+    - assets/images/top_back.png
+    - assets/images/news_big_image.png
+    - assets/images/flip_view.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -167,3 +183,6 @@ flutter:
     - family : sf_pro_display
       fonts:
         - asset: assets/fonts/sf_pro_display.ttf
+    - family : open_sans
+      fonts:
+          - asset: assets/fonts/open_sans.ttf

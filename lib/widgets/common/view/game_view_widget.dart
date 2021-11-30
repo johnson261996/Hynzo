@@ -25,8 +25,8 @@ class GameContainerWidget extends StatelessWidget {
         Text(
           name,
           style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                fontSize: 11,
-                fontWeight: FontWeight.w400,
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
                 color: AppColors.black,
               ),
         )

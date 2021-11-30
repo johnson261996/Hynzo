@@ -4,6 +4,7 @@ class ChatModel{
   final String? content;
   final int? unreadCount;
   final String? status;
+  final bool? isRead;
   final String? dateTime;
 
   ChatModel({
@@ -12,6 +13,7 @@ class ChatModel{
     this.content,
     this.unreadCount,
     this.status,
+    this.isRead=false,
     this.dateTime,
   });
 

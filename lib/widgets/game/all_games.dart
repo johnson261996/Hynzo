@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/games_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/common/game_recent/recently_game_widget.dart';
 import 'package:hynzo/widgets/common/image/square_image_widget.dart';
 import 'package:hynzo/widgets/common/view/game_view_widget.dart';
 import 'package:hynzo/widgets/game/game.dart';
@@ -123,150 +124,113 @@ class _AllGamesState extends State<AllGames> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.04,
-          ),
-          Text(
-            Strings.RECENTLY_PLAYED,
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.w600,
-                ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.15,
-            child: ListView.builder(
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  padding: const EdgeInsets.only(
-                    right: 8.0,
-                  ),
-                  child: Column(
-                    children: [
-                      Stack(
-                        children: [
-                          SquareViewWidget(
-                            imagePath: allRecent[index].imagePath!,
-                          ),
-                          if (index == 0) ...[
-                            Positioned(
-                              top: 15.0,
-                              child: Container(
-                                color: AppColors.yellow,
-                                width: 35.0,
-                                height: 13.0,
-                                child: Center(
-                                  child: Text(
-                                    Strings.NEW,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle2!
-                                        .copyWith(
-                                          fontSize: 7,
-                                          fontWeight: FontWeight.w400,
-                                          color: AppColors.black,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ]
-                        ],
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.01,
-                      ),
-                      Text(
-                        allRecent[index].gameName!,
-                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.black,
-                            ),
-                      )
-                    ],
-                  ),
-                );
-              },
-              itemCount: allRecent.length,
-              scrollDirection: Axis.horizontal,
+    var mediaQuery = MediaQuery.of(context).size;
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: mediaQuery.height * 0.04,
             ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
-          ),
-          Text(
-            Strings.SUGGESTED_GAMES,
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.w600,
-                ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.15,
-            child: ListView.builder(
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
+            Text(
+              Strings.RECENTLY_PLAYED,
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+            SizedBox(
+              height: mediaQuery.height * 0.01,
+            ),
+            Container(
+              width: mediaQuery.width,
+              height: mediaQuery.height * 0.18,
+              child: ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
                     padding: const EdgeInsets.only(
-                      right: 8.0,
+                      right: 12.0,
                     ),
-                    child: GameContainerWidget(
-                      imagePath: allSuggested[index].imagePath!,
-                      name: allSuggested[index].gameName!,
-                    ));
-              },
-              itemCount: allSuggested.length,
-              scrollDirection: Axis.horizontal,
+                    child: RecentGameWidget(
+                      mediaQuery: mediaQuery,
+                      imagePath: allRecent[index].imagePath!,
+                      index: index,
+                      name: allRecent[index].gameName!,
+                    ),
+                  );
+                },
+                itemCount: allRecent.length,
+                scrollDirection: Axis.horizontal,
+              ),
             ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
-          ),
-          Text(
-            Strings.ALL_GAMES,
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.w600,
+            SizedBox(
+              height: mediaQuery.height * 0.03,
+            ),
+            Text(
+              Strings.SUGGESTED_GAMES,
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+            SizedBox(
+              height: mediaQuery.height * 0.01,
+            ),
+            Container(
+              width: mediaQuery.width,
+              height: mediaQuery.height * 0.18,
+              child: ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                      padding: const EdgeInsets.only(
+                        right: 12.0,
+                      ),
+                      child: GameContainerWidget(
+                        imagePath: allSuggested[index].imagePath!,
+                        name: allSuggested[index].gameName!,
+                      ));
+                },
+                itemCount: allSuggested.length,
+                scrollDirection: Axis.horizontal,
+              ),
+            ),
+            SizedBox(
+              height: mediaQuery.height * 0.03,
+            ),
+            Text(
+              Strings.ALL_GAMES,
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+            SizedBox(
+              height: mediaQuery.height * 0.01,
+            ),
+            Container(
+              width: mediaQuery.width,
+              height: mediaQuery.height * 0.55,
+              child: GridView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(
+                  right: 15.0,
                 ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
-          ),
-          Expanded(
-            child: GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.only(
-                right: 15.0,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 0.9,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return GameContainerWidget(
+                    imagePath: allGames[index].imagePath!,
+                    name: allGames[index].gameName!,
+                  );
+                },
+                itemCount: allGames.length,
               ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 10,
-                childAspectRatio: 0.9,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return GameContainerWidget(
-                  imagePath: allGames[index].imagePath!,
-                  name: allGames[index].gameName!,
-                );
-              },
-              itemCount: allGames.length,
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

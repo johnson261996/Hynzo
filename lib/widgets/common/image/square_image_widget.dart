@@ -12,7 +12,9 @@ class SquareViewWidget extends StatelessWidget{
       borderRadius: BorderRadius.circular(10.0),
       child: Image.asset(
         imagePath,
-        fit: BoxFit.contain,
+        fit: BoxFit.cover,
+        width: 110.0,
+        height: 110.0,
       ),
     );
   }

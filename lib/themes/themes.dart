@@ -66,7 +66,7 @@ class Themes {
         ),
         headline6: baseTheme.textTheme.headline6!.copyWith(
           color: AppColors.grayDark,
-          fontSize: 16,
+          fontSize: 18,
           fontWeight: FontWeight.w500,
         ),
         subtitle1: baseTheme.textTheme.subtitle1!.copyWith(
@@ -94,9 +94,9 @@ class Themes {
           fontSize: 16,
           fontWeight: FontWeight.w700,
         ),
-        caption: baseTheme.textTheme.subtitle1!.copyWith(
+        caption: baseTheme.textTheme.caption!.copyWith(
           color: AppColors.primaryDark,
-          fontSize: 18,
+          fontSize: 16,
           fontWeight: FontWeight.w500,
         ))
         .apply(
