@@ -94,7 +94,7 @@ class EventContainerWidget extends StatelessWidget {
             Text(
               subTitle,
               style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                    fontSize: 10,
+                    fontSize: 12,
                     fontWeight: FontWeight.w400,
                     color: AppColors.offgreylight,
                   ),

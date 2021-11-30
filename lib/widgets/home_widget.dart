@@ -6,20 +6,23 @@ import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/models/events_model.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/common/search_bar/search_bar.dart';
 import 'common/game_recent/recently_game_widget.dart';
 import 'common/profile_image/profile_image.dart';
 import 'common/view/event_view_widget.dart';
 
 class HomeWidget extends StatefulWidget {
-  const HomeWidget({Key? key}) : super(key: key);
+  final Function _onTapped;
+  const HomeWidget(this._onTapped,{Key? key}) : super(key: key);
 
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  late String search = '';
+  String search = '';
   List<RecentPlayed> allRecent = [];
   List<GamesCategoryModel> allGamesCategory = [];
   List<EventsModel> allEvents = [];
@@ -223,53 +226,14 @@ class _HomeWidgetState extends State<HomeWidget> {
             SizedBox(
               height: mediaQuery.height * 0.025,
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20.0,
-                right: 20.0,
-              ),
-              child: Container(
-                padding: const EdgeInsets.only(
-                  left: 15.0,
-                  right: 15.0,
-                ),
-                alignment: Alignment.center,
-                height: 45.0,
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(10.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.gray.withOpacity(0.1),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.bodyText2,
-                  textInputAction: TextInputAction.done,
-                  onChanged: (val) {
-                    setState(() {
-                      search = val;
-                    });
-                  },
-                  keyboardType: TextInputType.text,
-                  onSubmitted: (value) {},
-                  autofocus: false,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    icon: Image.asset('assets/images/search.png'),
-                    border: InputBorder.none,
-                    hintText: Strings.SEARCH_GAMES,
-                    hintStyle: Theme.of(context).textTheme.bodyText2!.apply(
-                          color: AppColors.lightgray,
-                        ),
-                  ),
-                ),
-              ),
+            SearchBar(
+              hintText: Strings.SEARCH_GAMES,
+              onchangeFunc: (val) {
+                setState(() {
+                  search = val;
+                });
+              },
+              padding: const EdgeInsets.only(left: 20.0,right: 20.0,),
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -318,7 +282,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             width: mediaQuery.width * 0.02,
                           ),
                           Container(
-                            height: 15.0,
+                            height: 25.0,
                             width: 35.0,
                             color: AppColors.red,
                             child: Center(
@@ -329,17 +293,22 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     .subtitle2!
                                     .copyWith(
                                         color: AppColors.white,
-                                        fontSize: 9,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w400),
                               ),
                             ),
                           ),
                           const Spacer(),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              widget._onTapped(2);
+                            },
                             child: Container(
                               padding: const EdgeInsets.only(
                                 right: 20.0,
+                                top: 5.0,
+                                bottom: 5.0,
+                                left: 10.0,
                               ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -351,7 +320,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         .subtitle2!
                                         .copyWith(
                                           color: AppColors.whitegrey,
-                                          fontSize: 10,
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                         ),
                                   ),
@@ -410,10 +379,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                           ),
                           const Spacer(),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              widget._onTapped(3);
+                            },
                             child: Container(
                               padding: const EdgeInsets.only(
                                 right: 20.0,
+                                top: 5.0,
+                                bottom: 5.0,
+                                left: 10.0,
                               ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -425,7 +399,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         .subtitle2!
                                         .copyWith(
                                           color: AppColors.whitegrey,
-                                          fontSize: 10,
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                         ),
                                   ),
@@ -482,10 +456,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                           ),
                           const Spacer(),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).pushNamed(Routes.news);
+                            },
                             child: Container(
                               padding: const EdgeInsets.only(
                                 right: 20.0,
+                                top: 5.0,
+                                bottom: 5.0,
+                                left: 10.0,
                               ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -497,7 +476,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         .subtitle2!
                                         .copyWith(
                                           color: AppColors.whitegrey,
-                                          fontSize: 10,
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                         ),
                                   ),
@@ -522,7 +501,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             return Container(
                               height: mediaQuery.height * 0.14,
                               margin: const EdgeInsets.only(
-                                right: 20.0,
+                                right: 15.0,
                                 bottom: 8.0,
                               ),
                               decoration: BoxDecoration(
@@ -540,8 +519,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   children: [
                                     Container(
                                       height: mediaQuery.height * 0.14,
-                                      child:Image.asset(allNews[index]
-                                          .newsImagePath!,fit: BoxFit.cover,),
+                                      child: Image.asset(
+                                        allNews[index].newsImagePath!,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                     SizedBox(
                                       width: mediaQuery.width * 0.03,
@@ -552,9 +533,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Container(
-                                          width: mediaQuery.width*0.48,
+                                          width: mediaQuery.width * 0.48,
                                           child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
                                             children: [
                                               Text(
                                                 allNews[index].newsTitle!,
@@ -562,29 +544,31 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                     .textTheme
                                                     .headline6!
                                                     .copyWith(
-                                                  color: AppColors.greyBlue,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontFamily: 'open_sans',
-                                                ),
+                                                      color: AppColors.greyBlue,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontFamily: 'open_sans',
+                                                    ),
                                               ),
                                               Spacer(),
                                               Text(
-                                                allNews[index].newsPublishedTime!,
+                                                allNews[index]
+                                                    .newsPublishedTime!,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .subtitle1!
                                                     .copyWith(
-                                                  fontSize: 10.33,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: 'open_sans',
-                                                  color: AppColors.greyBlue,
-                                                ),
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: 'open_sans',
+                                                      color: AppColors.greyBlue,
+                                                    ),
                                               ),
                                             ],
                                           ),
                                         ),
-
                                         SizedBox(
                                           height: mediaQuery.height * 0.01,
                                         ),
@@ -634,10 +618,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                           ),
                           const Spacer(),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              widget._onTapped(3);
+                            },
                             child: Container(
                               padding: const EdgeInsets.only(
                                 right: 20.0,
+                                top: 5.0,
+                                bottom: 5.0,
+                                left: 10.0,
                               ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -649,7 +638,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         .subtitle2!
                                         .copyWith(
                                           color: AppColors.whitegrey,
-                                          fontSize: 10,
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                         ),
                                   ),
@@ -667,7 +656,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                         height: mediaQuery.height * 0.01,
                       ),
                       Container(
-                        margin: const EdgeInsets.only(right: 20.0,),
+                        margin: const EdgeInsets.only(
+                          right: 20.0,
+                        ),
                         width: mediaQuery.width,
                         height: mediaQuery.height * 0.26,
                         child: GridView.builder(
@@ -680,11 +671,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                             childAspectRatio: 3.1,
                           ),
                           itemBuilder: (BuildContext context, int index) {
-                              return Image.asset(allGamesCategory[index].imagePath!);
+                            return Image.asset(
+                                allGamesCategory[index].imagePath!);
                           },
                           itemCount: allGamesCategory.length,
                         ),
-
                       )
                     ],
                   ),

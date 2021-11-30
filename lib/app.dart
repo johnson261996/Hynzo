@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Chaly',
+        title: 'HYNZO',
         debugShowCheckedModeBanner: false,
         theme: Themes.buildLightTheme(),
         initialRoute: Routes.initialRoute,

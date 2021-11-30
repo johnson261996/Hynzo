@@ -343,7 +343,7 @@ class _TodayWidgetState extends State<TodayWidget> {
               Strings.CATEGORIES_SUBTITLE,
               style: Theme.of(context).textTheme.subtitle2!.copyWith(
                     color: AppColors.offwhite,
-                    fontSize: 11,
+                    fontSize: 12,
                     fontWeight: FontWeight.w400,
                   ),
             ),

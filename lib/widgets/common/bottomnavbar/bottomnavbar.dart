@@ -34,7 +34,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         physics: NeverScrollableScrollPhysics(),
         controller: pageController,
         children: <Widget>[
-          HomeScreen(),
+          HomeScreen(onTapped),
           ChatScreen(),
           EventsScreen(),
           GameScreen(),
