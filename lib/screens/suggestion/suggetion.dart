@@ -7,7 +7,7 @@ class Suggetion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SuggetionConatiner(),
+      body: SuggestionContainer(),
     );
   }
 }

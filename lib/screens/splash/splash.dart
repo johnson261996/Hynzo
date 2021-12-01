@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (token == "") {
         Navigator.pushReplacementNamed(context, Routes.login);
       } else {
-        Navigator.pushReplacementNamed(context, Routes.navScreen);
+        Navigator.pushReplacementNamed(context, Routes.interest);
       }
     }
   }

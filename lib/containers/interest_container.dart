@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/interest_model.dart';
 import 'package:hynzo/providers/interest_provider.dart';
 import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/connectivity.dart';
 import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/toast_util.dart';
@@ -20,7 +21,7 @@ class _InterestContainerState extends State<InterestContainer> {
   List<ResultsModel> allResults = [];
   bool _isLoading = false;
   bool _isNextPageIsEmpty=false;
-  int _totalCount=0;
+  int _totalCount=1;
   int limit=10;
   static InterestProvider? _interestProvider;
   late InterestResponseModel interestResponseModel;
@@ -101,13 +102,14 @@ class _InterestContainerState extends State<InterestContainer> {
   Widget build(BuildContext context) {
     return LoadingOverlay(
       isLoading: _isLoading,
-      color: Colors.transparent,
+      color: AppColors.gray,
       child: InterestWidget(
         allResults: allResults,
         fetchInterest: getInitalInterestList,
         addInterest: addInterests,
         isNextValueEmpty: _isNextPageIsEmpty,
         totalCount: _totalCount,
+        isLoading: _isLoading,
       ),
     );
   }

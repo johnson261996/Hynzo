@@ -39,6 +39,7 @@ dependencies:
   simple_gesture_detector: ^0.2.0
   fluttertoast: ^8.0.8
   connectivity: ^3.0.6
+  geolocator: ^8.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -156,6 +157,7 @@ flutter:
     - assets/images/news_big_image.png
     - assets/images/flip_view.png
     - assets/images/next_button.png
+    - assets/images/user.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

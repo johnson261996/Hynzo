@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/interest_model.dart';
 import 'package:hynzo/core/services/interest/interest_service.dart';
 
