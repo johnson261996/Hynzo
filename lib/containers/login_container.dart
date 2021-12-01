@@ -8,14 +8,13 @@ import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/providers/auth_provider.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/auth/login_widget.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 
 class LoginContainer extends StatefulWidget {
-  static AuthProvider? _authProvider;
 
   const LoginContainer({Key? key}) : super(key: key);
 
@@ -25,31 +24,36 @@ class LoginContainer extends StatefulWidget {
 
 class _LoginContainerState extends State<LoginContainer> {
   bool _isLoading = false;
+  static AuthProvider? _authProvider;
 
   Future<void> _generateOTP(String mobile, String signature) async {
-    setState(() {
-      _isLoading = true;
-    });
-    LoginContainer._authProvider!
-        .changeLoadingStatus(true); // change loading status to true
-    final GenerateOTPModel response =
-        await LoginContainer._authProvider!.generateOTP(mobile, signature);
-    LoginContainer._authProvider!
-        .changeLoadingStatus(false); // change loading status to false
-    setState(() {
-      _isLoading = false;
-    });
-    if (response.statusCode == 200) {
-      LocalStorage.setMobileNumber(mobile);
-      Navigator.pushNamed(context, Routes.otp);
-    } else {
-     ToastUtil().showToast('Something went wrong!');
+    try{
+      setState(() {
+        _isLoading = true;
+      });
+      final GenerateOTPModel response =
+      await _authProvider!.generateOTP(mobile, signature);
+      setState(() {
+        _isLoading = false;
+      });
+      if (response.statusCode == 200) {
+        LocalStorage.setMobileNumber(mobile);
+        Navigator.pushNamed(context, Routes.otp);
+      } else {
+        ToastUtil().showToast('Something went wrong!');
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ToastUtil().showToast(e.toString());
     }
+
   }
 
   @override
   Widget build(BuildContext context) {
-    LoginContainer._authProvider = Provider.of<AuthProvider>(context);
+    _authProvider = Provider.of<AuthProvider>(context);
     return LoadingOverlay(
       isLoading: _isLoading,
       color: AppColors.gray,

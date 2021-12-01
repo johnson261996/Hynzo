@@ -29,11 +29,11 @@ class NewsArticleModel {
 
   factory NewsArticleModel.fromJson(Map<String,dynamic> json) {
     return NewsArticleModel(
-      id: json['id'],
+      id: json['id'] ?? -1,
       articleModel: ArticleModel.fromJson(json['articles']),
-      publishedAt: json['publishedAt'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
+      publishedAt: json['publishedAt'] ?? '',
+      createdAt: json['created_at'] ?? '',
+      updatedAt: json['updated_at'] ?? '',
     );
   }
 }
@@ -61,13 +61,13 @@ class ArticleModel {
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) {
     return ArticleModel(
-      url: json['url'],
-      title: json['title'],
-      author: json['author'],
-      urlToImage: json['urlToImage'],
-      content: json['content'],
-      description: json['description'],
-      publishedAt: json['publishedAt'],
+      url: json['url'] ?? '',
+      title: json['title'] ?? '',
+      author: json['author'] ?? '',
+      urlToImage: json['urlToImage'] ?? '',
+      content: json['content'] ?? '',
+      description: json['description'] ?? '',
+      publishedAt: json['publishedAt'] ?? '',
       sourceModel: SourceModel.fromJson(json['source']),
     );
   }
@@ -84,8 +84,8 @@ class SourceModel {
 
   factory SourceModel.fromJson(Map<String, dynamic> json) {
     return SourceModel(
-      id: json['id'],
-      name: json['name'],
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
     );
   }
 }

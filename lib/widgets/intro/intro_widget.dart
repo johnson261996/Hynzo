@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/utils/localstorage.dart';
 
 class IntroWidget extends StatefulWidget {
   const IntroWidget({Key? key}) : super(key: key);

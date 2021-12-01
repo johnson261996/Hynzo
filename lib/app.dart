@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/providers/auth_provider.dart';
+import 'package:hynzo/providers/interest_provider.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/themes.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => AuthProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => InterestProvider(),
         ),
       ],
       child: MaterialApp(

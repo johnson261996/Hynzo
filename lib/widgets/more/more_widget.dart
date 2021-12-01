@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/widgets/common/profile_image/profile_image.dart';
 
 class MoreWidget extends StatelessWidget {

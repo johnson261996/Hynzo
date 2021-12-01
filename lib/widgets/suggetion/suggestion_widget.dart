@@ -4,7 +4,7 @@ import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/themes/themes.dart';
-import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/widgets/common/buttons/primary_button.dart';
 
 class SuggetionWidget extends StatefulWidget {

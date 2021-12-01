@@ -2,6 +2,7 @@ import 'dart:async' show Future;
 import 'dart:convert';
 import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/core/services/service_base.dart';
+import 'package:hynzo/utils/toast_util.dart';
 
 class AuthService {
   static Future<GenerateOTPModel> generateOTP(mobile, signature) async {
@@ -13,6 +14,9 @@ class AuthService {
     };
     var response = await ServiceBase.post(
         url: url, data: data, headers: {"Content-Type": "application/json"});
+    if(response.statusCode != 200){
+      throw "Something went wrong";
+    }
     return GenerateOTPModel.fromJson(
         jsonDecode(response.body), response.statusCode);
   }
@@ -27,6 +31,9 @@ class AuthService {
     String url = 'api/v2/users/verify_otp';
     var response = await ServiceBase.post(
         url: url, data: data, headers: {"Content-Type": "application/json"});
+    if(response.statusCode != 200){
+      throw "Something went wrong";
+    }
     return LoginModel.fromJson(jsonDecode(response.body), response.statusCode);
   }
 }
