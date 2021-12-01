@@ -7,7 +7,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/connectivity.dart';
 import 'package:hynzo/utils/localstorage.dart';
+import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/common/buttons/primary_button.dart';
 import 'package:hynzo/widgets/common/error/error.dart';
 import 'package:sms_autofill/sms_autofill.dart';
@@ -83,23 +85,35 @@ class _OtpWidgetState extends State<OtpWidget> {
   }
 
   verifyOTP() {
-    if (otp.length == 6) {
-      FocusScope.of(context).unfocus();
-      widget.verifyOTP(otp);
-    } else {
-      setState(() {
-        errorMgs = Strings.PHONE_NUMBER_VALIDATION;
-      });
-    }
+    ConnectionStaus().check().then((connectionStatus) {
+      if (connectionStatus) {
+        if (otp.length == 6) {
+          FocusScope.of(context).unfocus();
+          widget.verifyOTP(otp);
+        } else {
+          setState(() {
+            errorMgs = Strings.PHONE_NUMBER_VALIDATION;
+          });
+        }
+      } else {
+        ToastUtil().showToast("No internet connection available. Please check your connection or try again later.");
+      }
+    });
   }
 
   resendOTP() {
     FocusScope.of(context).unfocus();
-    String signature = '';
-    SmsAutoFill().getAppSignature.then((signature) {
-      signature = signature;
+    ConnectionStaus().check().then((connectionStatus) {
+      if (connectionStatus) {
+        String signature = '';
+        SmsAutoFill().getAppSignature.then((signature) {
+          signature = signature;
+        });
+        widget.resendOTP(phone, signature);
+      } else {
+        ToastUtil().showToast("No internet connection available. Please check your connection or try again later.");
+      }
     });
-    widget.resendOTP(phone, signature);
   }
 
   @override

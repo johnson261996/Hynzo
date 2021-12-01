@@ -14,19 +14,9 @@ class AuthService {
     };
     var response = await ServiceBase.post(
         url: url, data: data, headers: {"Content-Type": "application/json"});
-    return GenerateOTPModel.fromJson(
-        jsonDecode(response.body), response.statusCode);
-  }
-
-  static Future<GenerateOTPModel> resendOtp(mobile, signature) async {
-    String url = 'api/v2/users/generate_otp';
-    Map data = {
-      'contact_number': mobile,
-      'phone_code': '91',
-      'signature': signature,
-    };
-    var response = await ServiceBase.post(
-        url: url, data: data, headers: {"Content-Type": "application/json"});
+    if(response.statusCode != 200){
+      throw "Something went wrong";
+    }
     return GenerateOTPModel.fromJson(
         jsonDecode(response.body), response.statusCode);
   }

@@ -27,24 +27,28 @@ class _LoginContainerState extends State<LoginContainer> {
   static AuthProvider? _authProvider;
 
   Future<void> _generateOTP(String mobile, String signature) async {
-    setState(() {
-      _isLoading = true;
-    });
-    _authProvider!
-        .changeLoadingStatus(true); // change loading status to true
-    final GenerateOTPModel response =
-        await _authProvider!.generateOTP(mobile, signature);
-    _authProvider!
-        .changeLoadingStatus(false); // change loading status to false
-    setState(() {
-      _isLoading = false;
-    });
-    if (response.statusCode == 200) {
-      LocalStorage.setMobileNumber(mobile);
-      Navigator.pushNamed(context, Routes.otp);
-    } else {
-     ToastUtil().showToast('Something went wrong!');
+    try{
+      setState(() {
+        _isLoading = true;
+      });
+      final GenerateOTPModel response =
+      await _authProvider!.generateOTP(mobile, signature);
+      setState(() {
+        _isLoading = false;
+      });
+      if (response.statusCode == 200) {
+        LocalStorage.setMobileNumber(mobile);
+        Navigator.pushNamed(context, Routes.otp);
+      } else {
+        ToastUtil().showToast('Something went wrong!');
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ToastUtil().showToast(e.toString());
     }
+
   }
 
   @override

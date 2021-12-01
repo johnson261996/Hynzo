@@ -11,6 +11,9 @@ class InterestService {
     String url = 'api/v1/users/interests/list?limit=$limit&offset=$offset';
     var response = await ServiceBase.get(
         url: url, headers: {"Content-Type": "application/json","Authorization":"Bearer $token"});
+    if(response.statusCode != 200){
+      throw "Something went wrong";
+    }
     return InterestResponseModel.fromJson(
       jsonDecode(response.body),
       response.statusCode,
@@ -24,23 +27,14 @@ class InterestService {
     };
     var response = await ServiceBase.post(
         url: url, data : data, headers: {"Content-Type": "application/json","Authorization":"Bearer $token"});
+    if(response.statusCode != 201){
+      throw "Something went wrong";
+    }
     if(response.statusCode == 201) {
       return true;
     } else {
       return false;
     }
-  }
-
-
-  static Future<InterestResponseModel> getUserSpecificInterest(
-      String limit, String offset) async {
-    String url = 'api/v1/users/interests/list?limit=$limit&offset=$offset';
-    var response = await ServiceBase.get(
-        url: url, headers: {"Content-Type": "application/json"});
-    return InterestResponseModel.fromJson(
-      jsonDecode(response.body),
-      response.statusCode,
-    );
   }
 
 }

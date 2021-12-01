@@ -15,10 +15,4 @@ class InterestProvider extends ChangeNotifier{
     return response;
   }
 
-  Future<InterestResponseModel> getUserSpecificInterest(String limit, String offset) async {
-    final InterestResponseModel response = await InterestService.getUserSpecificInterest(limit, offset);
-    notifyListeners();
-    return response;
-  }
-
 }

@@ -17,9 +17,9 @@ class InterestResponseModel {
 
   factory InterestResponseModel.fromJson(Map<String, dynamic> json,int code) {
     return InterestResponseModel(
-      count: json['count'],
-      next: json['next'],
-      previous: json['previous'],
+      count: json['count'] ?? -1,
+      next: json['next'] ?? '',
+      previous: json['previous'] ?? '',
       resultsList: ((json['results'] as List<dynamic>).map((i) => ResultsModel.fromJson(i)).toList()),
       statusCode: code,
     );
@@ -45,12 +45,12 @@ class ResultsModel {
 
   factory ResultsModel.fromJson(Map<String, dynamic> json) {
     return ResultsModel(
-      id: json['id'],
-      interest: json['interest'],
-      interestImage: json['interest_image'],
-      createdBy: json['created_by'],
-      isSelected: json['is_selected'],
-      isActive: json['is_active'],
+      id: json['id'] ?? -1,
+      interest: json['interest'] ?? '',
+      interestImage: json['interest_image'] ?? '',
+      createdBy: json['created_by'] ?? -1,
+      isSelected: json['is_selected'] ?? false,
+      isActive: json['is_active'] ?? false,
     );
   }
 }
