@@ -8,13 +8,6 @@ class NewsProvider extends ChangeNotifier {
 
   // NewsModel? newsData;
 
-  void changeLoadingStatus(bool loading) {
-    new Future.delayed(new Duration(milliseconds: 300), () {
-      isLoading = loading;
-      notifyListeners();
-    });
-  }
-
   void fetchNews(page) async {
     // final NewsModel response = await NewsService().fetchNews(page);
     // if (newsData != null && newsData!.articles != null) {

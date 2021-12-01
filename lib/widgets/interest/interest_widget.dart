@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/interest_model.dart';
-import 'package:hynzo/providers/news_provider.dart';
 import 'package:hynzo/resources/strings.dart';
-import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/connectivity.dart';
 import 'package:hynzo/utils/toast_util.dart';
@@ -13,6 +11,7 @@ class InterestWidget extends StatefulWidget {
   final Function? addInterest;
   final Function? fetchInterest;
   final bool? isNextValueEmpty;
+  final bool? isLoading;
   final int? totalCount;
 
   InterestWidget({
@@ -21,6 +20,7 @@ class InterestWidget extends StatefulWidget {
     this.addInterest,
     this.fetchInterest,
     this.isNextValueEmpty,
+    this.isLoading,
     this.totalCount,
   }) : super(key: key);
 
@@ -232,38 +232,45 @@ class _InterestWidgetState extends State<InterestWidget> {
           const SizedBox(
             height: 20,
           ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: GestureDetector(
-              onTap: () {
-                _addInterest();
-              },
-              child: Container(
-                width: 80,
-                height: 80,
-                padding: const EdgeInsets.only(
-                  right: 20,
-                  bottom: 20,
-                ),
-                child: Stack(
-                  children: [
-                    Container(
-                      width: 70.0,
-                      height: 70.0,
-                      child: CircularProgressIndicator(value: _setProgressvalue(),backgroundColor: AppColors.blueGray,valueColor:  AlwaysStoppedAnimation<Color>(AppColors.blueDark,),),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.asset(
-                        'assets/images/next_button.png',
-                        fit: BoxFit.cover,
+          if(!widget.isLoading!)...[
+            Align(
+              alignment: Alignment.bottomRight,
+              child: GestureDetector(
+                onTap: () {
+                  _addInterest();
+                },
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  padding: const EdgeInsets.only(
+                    right: 20,
+                    bottom: 20,
+                  ),
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.white,
+                        ),
+                        width: 70.0,
+                        height: 70.0,
+                        child: CircularProgressIndicator(value: _setProgressvalue(),backgroundColor: AppColors.blueGray,valueColor:  AlwaysStoppedAnimation<Color>(AppColors.blueDark,),),
                       ),
-                    ),
-                  ],
+                      Container(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.asset(
+                          'assets/images/next_button.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
+
         ],
       ),
     );
