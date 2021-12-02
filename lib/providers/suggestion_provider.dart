@@ -10,4 +10,10 @@ class SuggestionProvider extends ChangeNotifier{
     return response;
   }
 
+  Future<SuggestUserAddResponseModel> addSuggestUser(String token,List<String> userId) async {
+    final SuggestUserAddResponseModel suggestUserAddResponseModel = await SuggestionService.addSuggestedUser(token, userId);
+    notifyListeners();
+    return suggestUserAddResponseModel;
+  }
+
 }

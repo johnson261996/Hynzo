@@ -17,5 +17,23 @@ class SuggestionService {
     );
   }
 
+  static Future<SuggestUserAddResponseModel> addSuggestedUser(String token,List<String> userId) async {
+    String url = 'api/v1/chats/create';
+
+    Map data = {
+      'participants' : userId,
+      'is_group' : false,
+    };
+    var response = await ServiceBase.post(
+        url: url, data : data,headers: {"Content-Type": "application/json","Authorization":"Bearer $token"});
+    if(response.statusCode != 201){
+      throw "Something went wrong";
+    }
+    return SuggestUserAddResponseModel.fromJson(
+      jsonDecode(response.body),
+      response.statusCode,
+    );
+  }
+
 
 }
