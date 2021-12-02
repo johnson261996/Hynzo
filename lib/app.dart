@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/providers/auth_provider.dart';
 import 'package:hynzo/providers/interest_provider.dart';
+import 'package:hynzo/providers/news_provider.dart';
 import 'package:hynzo/providers/suggestion_provider.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/themes.dart';
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => SuggestionProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => NewsProvider(),
         ),
       ],
       child: MaterialApp(

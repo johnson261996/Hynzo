@@ -10,67 +10,19 @@ class TodayNewsWidget extends StatefulWidget{
 }
 
 class _TodayNewsWidgetState extends State<TodayNewsWidget> {
-  List<NewsModel> allNews = [];
+  //List<NewsModel> allNews = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    allNews.add(
-      NewsModel(
-        newsImagePath: 'assets/images/news_one.png',
-        newsTitle: 'MEDIA',
-        newsContent: 'SMM starter pack, part 2: content promotion',
-        newsPublishedTime: '17 days ago',
-      ),
-    );
-    allNews.add(
-      NewsModel(
-        newsImagePath: 'assets/images/news_two.png',
-        newsTitle: 'PRODUCTIVITY',
-        newsContent: '7 Skills of Highly Effective Programmers',
-        newsPublishedTime: '3 days ago',
-      ),
-    );
-    allNews.add(
-      NewsModel(
-        newsImagePath: 'assets/images/news_one.png',
-        newsTitle: 'MEDIA',
-        newsContent: 'SMM starter pack, part 2: content promotion',
-        newsPublishedTime: '17 days ago',
-      ),
-    );
-    allNews.add(
-      NewsModel(
-        newsImagePath: 'assets/images/news_two.png',
-        newsTitle: 'PRODUCTIVITY',
-        newsContent: '7 Skills of Highly Effective Programmers',
-        newsPublishedTime: '3 days ago',
-      ),
-    );
-    allNews.add(
-      NewsModel(
-        newsImagePath: 'assets/images/news_one.png',
-        newsTitle: 'MEDIA',
-        newsContent: 'SMM starter pack, part 2: content promotion',
-        newsPublishedTime: '17 days ago',
-      ),
-    );
-    allNews.add(
-      NewsModel(
-        newsImagePath: 'assets/images/news_two.png',
-        newsTitle: 'PRODUCTIVITY',
-        newsContent: '7 Skills of Highly Effective Programmers',
-        newsPublishedTime: '3 days ago',
-      ),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
     return Container(
-      child: ListView.builder(
+      /*child: ListView.builder(
         itemBuilder: (BuildContext context, int index) {
           return Container(
             margin: const EdgeInsets.only(
@@ -163,7 +115,7 @@ class _TodayNewsWidgetState extends State<TodayNewsWidget> {
         },
         itemCount: allNews.length,
         padding: EdgeInsets.zero,
-      ),
+      ),*/
     );
   }
 }

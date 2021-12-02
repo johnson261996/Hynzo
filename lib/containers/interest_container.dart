@@ -49,8 +49,7 @@ class _InterestContainerState extends State<InterestContainer> {
         _isLoading = true;
       });
       await LocalStorage.getLoginStatus().then((value) => token=value!);
-      interestResponseModel = await _interestProvider!
-          .getInterestList(limit, offset,token);
+      interestResponseModel = await _interestProvider!.getInterestList(limit, offset,token);
       setState(() {
         _isLoading = false;
       });
@@ -109,7 +108,6 @@ class _InterestContainerState extends State<InterestContainer> {
         addInterest: addInterests,
         isNextValueEmpty: _isNextPageIsEmpty,
         totalCount: _totalCount,
-        isLoading: _isLoading,
       ),
     );
   }

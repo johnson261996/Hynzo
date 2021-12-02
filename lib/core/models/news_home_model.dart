@@ -1,91 +1,90 @@
-class NewsModel {
-  final String? newsImagePath;
-  final String? newsTitle;
-  final String? newsContent;
-  final String? newsPublishedTime;
+class NewsResponseModel {
+  final int? statusCode;
+  final List<NewsDataModel>? newsDataList;
 
-  NewsModel({
-    this.newsImagePath,
-    this.newsTitle,
-    this.newsContent,
-    this.newsPublishedTime,
+  NewsResponseModel({
+    this.statusCode,
+    this.newsDataList,
   });
+
+  factory NewsResponseModel.fromJson(Map<String,dynamic> json,int code) {
+    return NewsResponseModel(
+      newsDataList: json['news_data'] !=  null ? ((json['news_data'] as List<dynamic>).map((i) => NewsDataModel.fromJson(i)).toList()) : [],
+      statusCode: code,
+    );
+  }
+
+
 }
 
-class NewsArticleModel {
+class NewsDataModel {
   final int? id;
-  ArticleModel articleModel;
-  final String? publishedAt;
+  final List<NewsContentDataModel>? newsDataContentList;
   final String? createdAt;
+  final String? category;
   final String? updatedAt;
 
-  NewsArticleModel({
+  NewsDataModel({
     this.id,
-    required this.articleModel,
-    this.publishedAt,
+    this.newsDataContentList,
+    this.category,
     this.createdAt,
     this.updatedAt,
   });
 
-  factory NewsArticleModel.fromJson(Map<String,dynamic> json) {
-    return NewsArticleModel(
+  factory NewsDataModel.fromJson(Map<String,dynamic> json) {
+    return NewsDataModel(
       id: json['id'] ?? -1,
-      articleModel: ArticleModel.fromJson(json['articles']),
-      publishedAt: json['publishedAt'] ?? '',
+      category: json['category'] ?? '',
       createdAt: json['created_at'] ?? '',
+      newsDataContentList: json['news_data'] != null ?((json['news_data'] as List<dynamic>).map((i) => NewsContentDataModel.fromJson(i)).toList()) : [],
       updatedAt: json['updated_at'] ?? '',
     );
   }
+
+
 }
 
-class ArticleModel {
-  final String? url;
+class NewsContentDataModel {
+  final String? link;
   final String? title;
-  final String? author;
   final String? content;
-  SourceModel sourceModel;
-  final String? urlToImage;
+  final List<String>? creator;
+  final String? pubDate;
+  final List<String>? keywords;
+  final String? imageUrl;
+  final String? sourceId;
+  final String? videoUrl;
   final String? description;
-  final String? publishedAt;
+  final String? fullDescription;
 
-  ArticleModel({
-    this.url,
+  NewsContentDataModel({
+    this.link,
     this.title,
-    this.author,
-    required this.sourceModel,
-    this.urlToImage,
     this.content,
+    this.creator,
+    this.keywords,
+    this.imageUrl,
+    this.sourceId,
+    this.pubDate,
+    this.videoUrl,
     this.description,
-    this.publishedAt,
+    this.fullDescription,
   });
-
-  factory ArticleModel.fromJson(Map<String, dynamic> json) {
-    return ArticleModel(
-      url: json['url'] ?? '',
+  factory NewsContentDataModel.fromJson(Map<String,dynamic> json) {
+    return NewsContentDataModel(
+      link: json['link'] ?? '',
       title: json['title'] ?? '',
-      author: json['author'] ?? '',
-      urlToImage: json['urlToImage'] ?? '',
       content: json['content'] ?? '',
+      creator: json['creator'] != null ? ((json['creator'] as List<dynamic>).map((i) => i.toString()).toList()) : [],
+      pubDate: json['pubDate'] ?? '',
+      keywords: json['keywords'] != null ? ((json['keywords'] as List<dynamic>).map((i) => i.toString()).toList()) : [],
+      imageUrl: json['image_url'] ?? '',
+      sourceId: json['source_id'] ?? '',
+      videoUrl: json['video_url'] ?? '',
       description: json['description'] ?? '',
-      publishedAt: json['publishedAt'] ?? '',
-      sourceModel: SourceModel.fromJson(json['source']),
+      fullDescription: json['full_description'] ?? '',
     );
   }
-}
 
-class SourceModel {
-  final String? id;
-  final String? name;
-
-  const SourceModel({
-    this.id,
-    this.name,
-  });
-
-  factory SourceModel.fromJson(Map<String, dynamic> json) {
-    return SourceModel(
-      id: json['id'] ?? '',
-      name: json['name'] ?? '',
-    );
-  }
 }

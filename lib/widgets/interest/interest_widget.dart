@@ -11,7 +11,6 @@ class InterestWidget extends StatefulWidget {
   final Function? addInterest;
   final Function? fetchInterest;
   final bool? isNextValueEmpty;
-  final bool? isLoading;
   final int? totalCount;
 
   InterestWidget({
@@ -20,7 +19,6 @@ class InterestWidget extends StatefulWidget {
     this.addInterest,
     this.fetchInterest,
     this.isNextValueEmpty,
-    this.isLoading,
     this.totalCount,
   }) : super(key: key);
 
@@ -65,9 +63,13 @@ class _InterestWidgetState extends State<InterestWidget> {
         count ++;
       }
     }
-    double value = (count / widget.totalCount!).toDouble();
-    String progressValue = value.toStringAsFixed(1);
-    return double.parse(progressValue);
+    if(widget.totalCount == 0) {
+      return 0.0;
+    } else {
+      double value = (count.toDouble() / widget.totalCount!.toDouble());
+      String progressValue = value.toStringAsFixed(1);
+      return double.parse(progressValue);
+    }
   }
 
   @override
@@ -232,44 +234,42 @@ class _InterestWidgetState extends State<InterestWidget> {
           const SizedBox(
             height: 20,
           ),
-          if(!widget.isLoading!)...[
-            Align(
-              alignment: Alignment.bottomRight,
-              child: GestureDetector(
-                onTap: () {
-                  _addInterest();
-                },
-                child: Container(
-                  width: 80,
-                  height: 80,
-                  padding: const EdgeInsets.only(
-                    right: 20,
-                    bottom: 20,
-                  ),
-                  child: Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.white,
-                        ),
-                        width: 70.0,
-                        height: 70.0,
-                        child: CircularProgressIndicator(value: _setProgressvalue(),backgroundColor: AppColors.blueGray,valueColor:  AlwaysStoppedAnimation<Color>(AppColors.blueDark,),),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: GestureDetector(
+              onTap: () {
+                _addInterest();
+              },
+              child: Container(
+                width: 80,
+                height: 80,
+                padding: const EdgeInsets.only(
+                  right: 20,
+                  bottom: 20,
+                ),
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.white,
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.asset(
-                          'assets/images/next_button.png',
-                          fit: BoxFit.cover,
-                        ),
+                      width: 70.0,
+                      height: 70.0,
+                      child: CircularProgressIndicator(value: _setProgressvalue(),backgroundColor: AppColors.blueGray,valueColor:  AlwaysStoppedAnimation<Color>(AppColors.blueDark,),),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        'assets/images/next_button.png',
+                        fit: BoxFit.cover,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
+          ),
 
         ],
       ),

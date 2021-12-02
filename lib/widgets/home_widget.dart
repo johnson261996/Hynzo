@@ -26,7 +26,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   List<RecentPlayed> allRecent = [];
   List<GamesCategoryModel> allGamesCategory = [];
   List<EventsModel> allEvents = [];
-  List<NewsModel> allNews = [];
+  //List<NewsModel> allNews = [];
 
   @override
   void initState() {
@@ -60,22 +60,6 @@ class _HomeWidgetState extends State<HomeWidget> {
     allGamesCategory.add(
       GamesCategoryModel(
         imagePath: 'assets/images/category_rectangle_six.png',
-      ),
-    );
-    allNews.add(
-      NewsModel(
-        newsImagePath: 'assets/images/news_one.png',
-        newsTitle: 'MEDIA',
-        newsContent: 'SMM starter pack, part 2: content promotion',
-        newsPublishedTime: '17 days ago',
-      ),
-    );
-    allNews.add(
-      NewsModel(
-        newsImagePath: 'assets/images/news_two.png',
-        newsTitle: 'PRODUCTIVITY',
-        newsContent: '7 Skills of Highly Effective Programmers',
-        newsPublishedTime: '3 days ago',
       ),
     );
     allRecent.add(
@@ -496,7 +480,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       Container(
                         width: mediaQuery.width,
                         height: mediaQuery.height * 0.30,
-                        child: ListView.builder(
+                        /*child: ListView.builder(
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
                               height: mediaQuery.height * 0.14,
@@ -597,7 +581,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           itemCount: allNews.length,
                           physics: const NeverScrollableScrollPhysics(),
                           padding: EdgeInsets.zero,
-                        ),
+                        ),*/
                       ),
                       SizedBox(
                         height: mediaQuery.height * 0.04,

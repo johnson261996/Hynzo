@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/core/models/tab_header_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
@@ -6,7 +7,8 @@ import 'package:hynzo/widgets/news/news_swipe_view.dart';
 import 'package:hynzo/widgets/news/news_tab_view.dart';
 
 class NewsWidget extends StatefulWidget {
-  const NewsWidget({Key? key}) : super(key: key);
+  final List<NewsDataModel>? allNews;
+  const NewsWidget({Key? key,this.allNews}) : super(key: key);
 
   @override
   State<NewsWidget> createState() => _NewsWidgetState();
@@ -14,6 +16,22 @@ class NewsWidget extends StatefulWidget {
 
 class _NewsWidgetState extends State<NewsWidget> {
   bool showTabView = false;
+  List<NewsContentDataModel> allContent =[];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    allContent.clear();
+    getNews();
+  }
+  void getNews() {
+    for(int i =0; i<widget.allNews!.length;i++){
+      for(int j =0 ; j< widget.allNews![i].newsDataContentList!.length;j++){
+        allContent.add(widget.allNews![i].newsDataContentList![j]);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +99,9 @@ class _NewsWidgetState extends State<NewsWidget> {
           if (showTabView) ...[
             NewsTabView(),
           ] else ...[
-            NewsSwipeView(),
+            NewsSwipeView(
+              allContent: allContent,
+            ),
           ],
         ],
       ),
