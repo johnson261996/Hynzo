@@ -129,38 +129,39 @@ class _NewsTabViewState extends State<NewsTabView>
   }
 
   void getAllTabNews() {
-    for( int i =0;i<widget.allcategoryNews!.length;i++){
-      if(widget.allcategoryNews![i].category!.toLowerCase() == "business") {
+    for (int i = 0; i < widget.allcategoryNews!.length; i++) {
+      if (widget.allcategoryNews![i].category!.toLowerCase() == "business") {
         allBusinessNews = widget.allcategoryNews![i].newsDataContentList!;
       }
-      if(widget.allcategoryNews![i].category!.toLowerCase() == "entertainment") {
+      if (widget.allcategoryNews![i].category!.toLowerCase() ==
+          "entertainment") {
         allEntertainmentNews = widget.allcategoryNews![i].newsDataContentList!;
       }
-      if(widget.allcategoryNews![i].category!.toLowerCase() == "environment") {
+      if (widget.allcategoryNews![i].category!.toLowerCase() == "environment") {
         allEnvNews = widget.allcategoryNews![i].newsDataContentList!;
       }
-      if(widget.allcategoryNews![i].category!.toLowerCase() == "food") {
+      if (widget.allcategoryNews![i].category!.toLowerCase() == "food") {
         allFoodNews = widget.allcategoryNews![i].newsDataContentList!;
       }
-      if(widget.allcategoryNews![i].category!.toLowerCase() == "health") {
+      if (widget.allcategoryNews![i].category!.toLowerCase() == "health") {
         allHealthNews = widget.allcategoryNews![i].newsDataContentList!;
       }
-      if(widget.allcategoryNews![i].category!.toLowerCase() == "science") {
+      if (widget.allcategoryNews![i].category!.toLowerCase() == "science") {
         allScienceNews = widget.allcategoryNews![i].newsDataContentList!;
       }
-      if(widget.allcategoryNews![i].category!.toLowerCase() == "politics") {
+      if (widget.allcategoryNews![i].category!.toLowerCase() == "politics") {
         allPoliticsNews = widget.allcategoryNews![i].newsDataContentList!;
       }
-      if(widget.allcategoryNews![i].category!.toLowerCase() == "sports") {
+      if (widget.allcategoryNews![i].category!.toLowerCase() == "sports") {
         allSportsNews = widget.allcategoryNews![i].newsDataContentList!;
       }
-      if(widget.allcategoryNews![i].category!.toLowerCase() == "technology") {
+      if (widget.allcategoryNews![i].category!.toLowerCase() == "technology") {
         allTechnologyNews = widget.allcategoryNews![i].newsDataContentList!;
       }
-      if(widget.allcategoryNews![i].category!.toLowerCase() == "top") {
+      if (widget.allcategoryNews![i].category!.toLowerCase() == "top") {
         allTopNews = widget.allcategoryNews![i].newsDataContentList!;
       }
-      if(widget.allcategoryNews![i].category!.toLowerCase() == "world") {
+      if (widget.allcategoryNews![i].category!.toLowerCase() == "world") {
         allWorldNews = widget.allcategoryNews![i].newsDataContentList!;
       }
     }
@@ -279,5 +280,4 @@ class _NewsTabViewState extends State<NewsTabView>
       ),
     );
   }
-
 }
