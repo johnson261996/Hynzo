@@ -6,15 +6,13 @@ import 'package:hynzo/themes/colors.dart';
 
 class SuggestionWidget extends StatefulWidget {
   List<ResultsModel> allResults;
-  final bool? isLoading;
   final int? totalCount;
   final Function? addUser;
 
   SuggestionWidget({
     Key? key,
     required this.allResults,
-    this.isLoading,
-    this.totalCount,
+    this.totalCount = 1,
     this.addUser,
   }) : super(key: key);
 
@@ -25,15 +23,24 @@ class SuggestionWidget extends StatefulWidget {
 class _SuggestionWidgetState extends State<SuggestionWidget> {
 
   double _setProgressvalue() {
-    int count = 0;
-    for (var element in widget.allResults) {
-      if (element.isSelected!) {
-        count++;
+    try{
+      int count = 0;
+      for (var element in widget.allResults) {
+        if (element.isSelected!) {
+          count++;
+        }
       }
+      if(widget.totalCount == 0) {
+        return 0.0;
+      } else {
+        double value = (count / widget.totalCount!).toDouble();
+        String progressValue = value.toStringAsFixed(1);
+        return double.parse(progressValue);
+      }
+    } catch (e) {
+      return 0.0;
     }
-    double value = (count / widget.totalCount!).toDouble();
-    String progressValue = value.toStringAsFixed(1);
-    return double.parse(progressValue);
+
   }
 
   @override
@@ -130,50 +137,48 @@ class _SuggestionWidgetState extends State<SuggestionWidget> {
               itemCount: widget.allResults.length,
             ),
           ),
-          if (!widget.isLoading!) ...[
-            Align(
-              alignment: Alignment.bottomRight,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacementNamed(context, Routes.navScreen);
-                },
-                child: Container(
-                  width: 80,
-                  height: 80,
-                  padding: const EdgeInsets.only(
-                    right: 20,
-                    bottom: 20,
-                  ),
-                  child: Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.white,
-                        ),
-                        width: 70.0,
-                        height: 70.0,
-                        child: CircularProgressIndicator(
-                          value: _setProgressvalue(),
-                          backgroundColor: AppColors.blueGray,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            AppColors.blueDark,
-                          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushReplacementNamed(context, Routes.navScreen);
+              },
+              child: Container(
+                width: 80,
+                height: 80,
+                padding: const EdgeInsets.only(
+                  right: 20,
+                  bottom: 20,
+                ),
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.white,
+                      ),
+                      width: 70.0,
+                      height: 70.0,
+                      child: CircularProgressIndicator(
+                        value: _setProgressvalue(),
+                        backgroundColor: AppColors.blueGray,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          AppColors.blueDark,
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.asset(
-                          'assets/images/next_button.png',
-                          fit: BoxFit.cover,
-                        ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        'assets/images/next_button.png',
+                        fit: BoxFit.cover,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
+          ),
         ],
       ),
     );

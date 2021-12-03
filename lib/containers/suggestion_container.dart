@@ -46,12 +46,12 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
         _isLoading = true;
       });
       await LocalStorage.getLoginStatus().then((value) => token=value!);
-      SuggestionModel suggestionModel = await _suggestionProvider!
-          .getSuggestionList(token);
+      SuggestionModel suggestionModel = await _suggestionProvider!.getSuggestionList(token);
       setState(() {
         _isLoading = false;
       });
       if (suggestionModel.statusCode == 200) {
+        print("api count ${suggestionModel.count!}");
         _totalCount=suggestionModel.count!;
         for (var element in suggestionModel.resultsList) {
           allResults.add(element);
@@ -103,7 +103,6 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
       isLoading: _isLoading,
       color: AppColors.gray,
       child: SuggestionWidget(
-        isLoading: _isLoading,
         totalCount: _totalCount,
         allResults: allResults,
         addUser: addSuggestUser,
