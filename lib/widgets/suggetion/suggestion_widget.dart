@@ -8,12 +8,14 @@ class SuggestionWidget extends StatefulWidget {
   List<ResultsModel> allResults;
   final bool? isLoading;
   final int? totalCount;
+  final Function? addUser;
 
   SuggestionWidget({
     Key? key,
     required this.allResults,
     this.isLoading,
     this.totalCount,
+    this.addUser,
   }) : super(key: key);
 
   @override
@@ -21,6 +23,7 @@ class SuggestionWidget extends StatefulWidget {
 }
 
 class _SuggestionWidgetState extends State<SuggestionWidget> {
+
   double _setProgressvalue() {
     int count = 0;
     for (var element in widget.allResults) {
@@ -88,12 +91,7 @@ class _SuggestionWidgetState extends State<SuggestionWidget> {
                   ),
                   trailing: widget.allResults[index].isSelected!
                       ? ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              widget.allResults[index].isSelected =
-                                  !widget.allResults[index].isSelected!;
-                            });
-                          },
+                          onPressed: null,
                           style: ElevatedButton.styleFrom(
                             primary: AppColors.white,
                             minimumSize: const Size(90.0, 40.0),
@@ -111,10 +109,7 @@ class _SuggestionWidgetState extends State<SuggestionWidget> {
                         )
                       : ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              widget.allResults[index].isSelected =
-                                  !widget.allResults[index].isSelected!;
-                            });
+                            widget.addUser!(widget.allResults[index].pk.toString(),index);
                           },
                           style: ElevatedButton.styleFrom(
                             primary: AppColors.blueDark,
@@ -140,7 +135,7 @@ class _SuggestionWidgetState extends State<SuggestionWidget> {
               alignment: Alignment.bottomRight,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacementNamed(context, Routes.location);
+                  Navigator.pushReplacementNamed(context, Routes.navScreen);
                 },
                 child: Container(
                   width: 80,

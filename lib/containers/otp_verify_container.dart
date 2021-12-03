@@ -43,6 +43,11 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
       devlog.log("$response", name: 'MyLog');
       if(response.statusCode == 200) {
         token= response.token!;
+        LocalStorage.setLoginToken(token);
+        LocalStorage.clearMobileNumber();
+        LocalStorage.setUserID(response.user!.id!);
+        LocalStorage.setUserName(response.user!.username!);
+        LocalStorage.setUserFullName(response.user!.fullName!);
         _getInterestForSpecificUser("10", offSet.toString());
       } else {
         ToastUtil().showToast('Invalid Otp');
@@ -70,8 +75,7 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
           setState(() {
             _isLoading = false;
           });
-          LocalStorage.setLoginToken(token);
-          LocalStorage.clearMobileNumber();
+
           Navigator.pushReplacementNamed(context, Routes.navScreen);
         } else {
           if(interestResponseModel.next! != '') {
@@ -81,8 +85,6 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
             setState(() {
               _isLoading = false;
             });
-            LocalStorage.setLoginToken(token);
-            LocalStorage.clearMobileNumber();
             Navigator.pushReplacementNamed(context, Routes.interest);
           }
         }

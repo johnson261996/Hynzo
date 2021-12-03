@@ -14,6 +14,12 @@ class IntroWidget extends StatefulWidget {
 class _IntroWidgetState extends State<IntroWidget> {
   int state = 0;
 
+  double _setProgressvalue() {
+    double value = ((state + 1) / 4).toDouble();
+    String progressValue = value.toStringAsFixed(1);
+    return double.parse(progressValue);
+  }
+
   Widget _getContinueButtonWidget(int state) {
     if (state == 0) {
       return Image.asset(
@@ -66,15 +72,23 @@ class _IntroWidgetState extends State<IntroWidget> {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.white,
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
+      height: MediaQuery
+          .of(context)
+          .size
+          .height,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(
             height: 100,
           ),
-          Container(
+          AnimatedContainer(
+            duration: const Duration(seconds: 1),
+            curve: Curves.fastOutSlowIn,
             width: 300,
             height: 300,
             child: _getImage(state),
@@ -82,28 +96,60 @@ class _IntroWidgetState extends State<IntroWidget> {
           const SizedBox(
             height: 20,
           ),
-          Text(
-            getText(state),
-            style: Theme.of(context)
-                .textTheme
-                .headline3!
-                .apply(color: AppColors.blueDark),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 20.0,
-              right: 20.0,
-            ),
+          AnimatedSwitcher(
+            duration: const Duration(seconds: 2),
+            transitionBuilder:
+                (Widget child, Animation<double> animation) {
+              return SlideTransition(
+                child: child,
+                position: Tween<Offset>(
+                    begin: const Offset(0.0, -0.8),
+                    end: const Offset(0.0, 0.0))
+                    .animate(animation),
+              );
+            },
             child: Text(
-              Strings.DUMMY_TEXT,
-              style: Theme.of(context).textTheme.headline6,
+              getText(state),
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headline3!
+                  .apply(color: AppColors.blueDark),
               textAlign: TextAlign.center,
             ),
           ),
+
+          const SizedBox(
+            height: 20,
+          ),
+          AnimatedSwitcher(
+            duration: const Duration(seconds: 2),
+            transitionBuilder:
+                (Widget child, Animation<double> animation) {
+              return SlideTransition(
+                child: child,
+                position: Tween<Offset>(
+                    begin: const Offset(0.0, -0.8),
+                    end: const Offset(0.0, 0.0))
+                    .animate(animation),
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 20.0,
+                right: 20.0,
+              ),
+              child: Text(
+                Strings.DUMMY_TEXT,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline6,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+
           const SizedBox(
             height: 35,
           ),
@@ -121,9 +167,38 @@ class _IntroWidgetState extends State<IntroWidget> {
               });
             },
             child: Container(
-              width: 70,
-              height: 70,
-              child: _getContinueButtonWidget(state),
+              width: 80,
+              height: 80,
+              padding: const EdgeInsets.only(
+                right: 20,
+                bottom: 20,
+              ),
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.white,
+                    ),
+                    width: 70.0,
+                    height: 70.0,
+                    child: CircularProgressIndicator(
+                      value: _setProgressvalue(),
+                      backgroundColor: AppColors.blueGray,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        AppColors.blueDark,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      'assets/images/next_button.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

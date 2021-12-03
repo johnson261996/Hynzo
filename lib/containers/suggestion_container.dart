@@ -21,6 +21,7 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
   List<ResultsModel> allResults = [];
   int _totalCount = 1;
   late String token;
+  late String userId;
   static SuggestionProvider? _suggestionProvider;
 
   @override
@@ -66,6 +67,36 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
     }
   }
 
+  Future<void> addSuggestUser(String suggestUserId,int index) async {
+    List<String> userIds=[];
+    userIds.clear();
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      await LocalStorage.getLoginStatus().then((value) => token=value!);
+      await LocalStorage.getUserID().then((value) => userId=value.toString());
+      userIds.add(suggestUserId);
+      userIds.add(userId);
+      SuggestUserAddResponseModel suggestionModel = await _suggestionProvider!
+          .addSuggestUser(token,userIds);
+      if (suggestionModel.statusCode == 201) {
+        allResults[index].isSelected=!allResults[index].isSelected!;
+        ToastUtil().showToast("User added successfully.");
+      } else {
+        ToastUtil().showToast("Something went wrong.");
+      }
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ToastUtil().showToast(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return LoadingOverlay(
@@ -75,6 +106,7 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
         isLoading: _isLoading,
         totalCount: _totalCount,
         allResults: allResults,
+        addUser: addSuggestUser,
       ),
     );
   }
