@@ -180,12 +180,15 @@ class _InterestWidgetState extends State<InterestWidget> {
                               : null,
                           child: Stack(
                             children: [
-                              Center(
+                              Positioned(
+                                right: 50.0,
+                                left: 50.0,
+                                top: 15.0,
                                 child: Image.network(
                                   widget.allResults[index].interestImage!,
                                   fit: BoxFit.contain,
                                   width: 60,
-                                  height: 80,
+                                  height: 60,
                                 ),
                               ),
                               if (widget.allResults[index].isSelected!) ...[
@@ -206,9 +209,13 @@ class _InterestWidgetState extends State<InterestWidget> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(
                                     bottom: 10.0,
+                                    left: 5.0,
+                                    right: 5.0,
                                   ),
                                   child: Text(
                                     widget.allResults[index].interest!,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: !widget.allResults[index].isSelected!
                                         ? Theme.of(context).textTheme.headline6
                                         : Theme.of(context)

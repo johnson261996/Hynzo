@@ -47,9 +47,6 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
       });
       await LocalStorage.getLoginStatus().then((value) => token=value!);
       SuggestionModel suggestionModel = await _suggestionProvider!.getSuggestionList(token);
-      setState(() {
-        _isLoading = false;
-      });
       if (suggestionModel.statusCode == 200) {
         _totalCount=suggestionModel.count!;
         for (var element in suggestionModel.resultsList) {
@@ -58,6 +55,9 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
       } else {
         ToastUtil().showToast("Something went wrong.");
       }
+      setState(() {
+        _isLoading = false;
+      });
     } catch (e) {
       setState(() {
         _isLoading = false;
