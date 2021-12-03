@@ -3,6 +3,7 @@ import 'package:hynzo/core/models/suggestion_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/navigations.dart';
 
 class SuggestionWidget extends StatefulWidget {
   List<ResultsModel> allResults;
@@ -141,7 +142,7 @@ class _SuggestionWidgetState extends State<SuggestionWidget> {
             alignment: Alignment.bottomRight,
             child: GestureDetector(
               onTap: () {
-                Navigator.pushReplacementNamed(context, Routes.navScreen);
+                Navigation.pushReplacementNamed(context, Routes.navScreen);
               },
               child: Container(
                 width: 80,

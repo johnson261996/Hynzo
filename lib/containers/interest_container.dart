@@ -5,6 +5,7 @@ import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/connectivity.dart';
 import 'package:hynzo/utils/localstorage.dart';
+import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
 import 'package:hynzo/widgets/interest/interest_widget.dart';
@@ -85,7 +86,7 @@ class _InterestContainerState extends State<InterestContainer> {
         _isLoading = false;
       });
       if (response) {
-        Navigator.pushReplacementNamed(context, Routes.location);
+        Navigation.pushReplacementNamed(context, Routes.location);
       } else {
         ToastUtil().showToast("Something went wrong.");
       }

@@ -12,6 +12,7 @@ import 'package:hynzo/screens/splash/splash.dart';
 import 'package:hynzo/screens/about/about.dart';
 import 'package:hynzo/screens/home/home.dart';
 import 'package:hynzo/screens/suggestion/suggetion.dart';
+import 'package:hynzo/screens/webview/webviewscreen.dart';
 
 /// [Routes] which contains common routing configuaration needed for the Application.
 /// This includes all pages and all routes mapped to each other.
@@ -34,7 +35,6 @@ class Routes {
   static const login = '/login';
   static const intro = '/intro';
   static const otp = '/otp';
-  static const webViewScreen = '/webview';
   static const about = '/about';
   static const interest = '/interest';
   static const location = '/location';
@@ -42,6 +42,7 @@ class Routes {
   static const onboarding = '/onboarding';
   static const navScreen = '/navScreen';
   static const news="./news";
+  static const webview="./webview";
 
   /// Routing Table needed for the App.
   static Map<String, WidgetBuilder> get buildRoutes {
@@ -68,6 +69,8 @@ class Routes {
           BaseLayout(page: NavigationScreen(), isAppBar: false),
       news: (BuildContext context) =>
           BaseLayout(page: News(), isAppBar: false),
+      webview: (BuildContext context) =>
+          BaseLayout(page: WebViewScreen(), isAppBar: false),
     };
   }
 

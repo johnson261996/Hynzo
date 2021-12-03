@@ -8,14 +8,17 @@ import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/common/search_bar/search_bar.dart';
+import 'package:intl/intl.dart';
 import 'common/game_recent/recently_game_widget.dart';
 import 'common/profile_image/profile_image.dart';
 import 'common/view/event_view_widget.dart';
 
 class HomeWidget extends StatefulWidget {
-  final Function _onTapped;
-  const HomeWidget(this._onTapped,{Key? key}) : super(key: key);
+  final Function onTapped;
+  final List<NewsContentDataModel>? allContent;
+  const HomeWidget({required this.onTapped,this.allContent,Key? key}) : super(key: key);
 
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
@@ -26,7 +29,6 @@ class _HomeWidgetState extends State<HomeWidget> {
   List<RecentPlayed> allRecent = [];
   List<GamesCategoryModel> allGamesCategory = [];
   List<EventsModel> allEvents = [];
-  //List<NewsModel> allNews = [];
 
   @override
   void initState() {
@@ -110,6 +112,25 @@ class _HomeWidgetState extends State<HomeWidget> {
         dateTime: 'Thu, 11 Nov',
       ),
     );
+  }
+
+  String getDate(String time) {
+    var now = DateTime.now();
+    var formatter = DateFormat('MM/dd/yyyy');
+    String currentDate = formatter.format(now);
+    var newsdate=DateTime.parse(time);
+    String newsDate= formatter.format(newsdate);
+    if(currentDate.split("/")[1] == newsDate.split("/")[1]){
+      return DateFormat.jm().format(DateTime.parse(time));
+    } else {
+      var diff = newsdate.difference(now).inDays;
+      if(diff> 1){
+        return newsDate;
+      } else {
+        return 'Yesterday';
+      }
+    }
+
   }
 
   @override
@@ -285,7 +306,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           const Spacer(),
                           GestureDetector(
                             onTap: () {
-                              widget._onTapped(2);
+                              widget.onTapped(2);
                             },
                             child: Container(
                               padding: const EdgeInsets.only(
@@ -323,7 +344,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       ),
                       Container(
                         width: mediaQuery.width,
-                        height: mediaQuery.height * 0.285,
+                        height: mediaQuery.height * 0.29,
                         child: ListView.builder(
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
@@ -364,7 +385,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           const Spacer(),
                           GestureDetector(
                             onTap: () {
-                              widget._onTapped(3);
+                              widget.onTapped(3);
                             },
                             child: Container(
                               padding: const EdgeInsets.only(
@@ -421,168 +442,185 @@ class _HomeWidgetState extends State<HomeWidget> {
                           scrollDirection: Axis.horizontal,
                         ),
                       ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.04,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            Strings.TODAY_NEWS,
-                            style:
-                                Theme.of(context).textTheme.headline6!.copyWith(
-                                      color: AppColors.black,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                          ),
-                          SizedBox(
-                            width: mediaQuery.width * 0.02,
-                          ),
-                          const Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(Routes.news);
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.only(
-                                right: 20.0,
-                                top: 5.0,
-                                bottom: 5.0,
-                                left: 10.0,
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    Strings.MORE_NEWS,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle2!
-                                        .copyWith(
-                                          color: AppColors.whitegrey,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                  ),
-                                  SizedBox(
-                                    width: mediaQuery.width * 0.005,
-                                  ),
-                                  Image.asset('assets/images/right_arrow.png'),
-                                ],
+                      if(widget.allContent!.isNotEmpty) ...[
+                        SizedBox(
+                          height: mediaQuery.height * 0.04,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              Strings.TODAY_NEWS,
+                              style:
+                              Theme.of(context).textTheme.headline6!.copyWith(
+                                color: AppColors.black,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.01,
-                      ),
-                      Container(
-                        width: mediaQuery.width,
-                        height: mediaQuery.height * 0.30,
-                        /*child: ListView.builder(
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              height: mediaQuery.height * 0.14,
-                              margin: const EdgeInsets.only(
-                                right: 15.0,
-                                bottom: 8.0,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              child: Card(
-                                elevation: 2,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
+                            SizedBox(
+                              width: mediaQuery.width * 0.02,
+                            ),
+                            const Spacer(),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(Routes.news);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.only(
+                                  right: 20.0,
+                                  top: 5.0,
+                                  bottom: 5.0,
+                                  left: 10.0,
                                 ),
                                 child: Row(
-                                  mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Container(
-                                      height: mediaQuery.height * 0.14,
-                                      child: Image.asset(
-                                        allNews[index].newsImagePath!,
-                                        fit: BoxFit.cover,
+                                    Text(
+                                      Strings.MORE_NEWS,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle2!
+                                          .copyWith(
+                                        color: AppColors.whitegrey,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
                                       ),
                                     ),
                                     SizedBox(
-                                      width: mediaQuery.width * 0.03,
+                                      width: mediaQuery.width * 0.005,
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
+                                    Image.asset('assets/images/right_arrow.png'),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Container(
+                          width: mediaQuery.width,
+                          height: mediaQuery.height * 0.32,
+                          child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigation.pushNamed(context, Routes.webview,
+                                      {'link': widget.allContent![index].link});
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(
+                                    right: 15.0,
+                                    top: 5.0,
+                                  ),
+                                  height: 120.0,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  child: Card(
+                                    elevation: 2,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Container(
-                                          width: mediaQuery.width * 0.48,
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                allNews[index].newsTitle!,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline6!
-                                                    .copyWith(
-                                                      color: AppColors.greyBlue,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontFamily: 'open_sans',
-                                                    ),
+                                          width: 120.0,
+                                          height: 120.0,
+                                          child: ClipRRect(
+                                            borderRadius: const BorderRadius.only(
+                                              topLeft: Radius.circular(10.0),
+                                              bottomLeft: Radius.circular(10.0),),
+                                            child: Image.network(
+                                              widget.allContent![index].imageUrl!,
+                                              fit: BoxFit.cover,
+                                              errorBuilder: (context, error, stackTrace) => ClipRRect(
+                                                borderRadius: const BorderRadius.only(topLeft: Radius.circular(10.0),bottomLeft:  Radius.circular(10.0)),
+                                                child: Image.asset('assets/images/no_image.png',fit: BoxFit.cover,),
                                               ),
-                                              Spacer(),
-                                              Text(
-                                                allNews[index]
-                                                    .newsPublishedTime!,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: mediaQuery.width * 0.03,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Container(
+                                              width: mediaQuery.width * 0.50,
+                                              child: Row(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Flexible(
+                                                    child: Text(
+                                                      widget.allContent![index].title!,
+                                                      maxLines: 1,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline6!
+                                                          .copyWith(
+                                                        color: AppColors.greyBlue,
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w600,
+                                                        fontFamily: 'open_sans',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Spacer(),
+                                                  Text(
+                                                    getDate(widget.allContent![index].pubDate!),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .subtitle1!
+                                                        .copyWith(
+                                                      fontSize: 10.33,
+                                                      fontWeight: FontWeight.w400,
+                                                      fontFamily: 'open_sans',
+                                                      color: AppColors.greyBlue,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: mediaQuery.height * 0.01,
+                                            ),
+                                            Container(
+                                              width: 150.0,
+                                              child: Text(
+                                                widget.allContent![index].description!
+                                                    .replaceAll(
+                                                    RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
+                                                overflow: TextOverflow.ellipsis,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .subtitle1!
                                                     .copyWith(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontFamily: 'open_sans',
-                                                      color: AppColors.greyBlue,
-                                                    ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: mediaQuery.height * 0.01,
-                                        ),
-                                        Container(
-                                          width: 150.0,
-                                          child: Text(
-                                            allNews[index].newsContent!,
-                                            maxLines: 2,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1!
-                                                .copyWith(
-                                                  fontSize: 13,
                                                   fontWeight: FontWeight.w400,
+                                                  fontSize: 16,
                                                   color: AppColors.blackBlue,
                                                 ),
-                                          ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                          itemCount: allNews.length,
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.zero,
-                        ),*/
-                      ),
+                              );
+                            },
+                            itemCount: widget.allContent!.length,
+                            padding: EdgeInsets.zero,
+                          ),
+                        ),
+                      ],
+
                       SizedBox(
                         height: mediaQuery.height * 0.04,
                       ),
@@ -603,7 +641,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           const Spacer(),
                           GestureDetector(
                             onTap: () {
-                              widget._onTapped(3);
+                              widget.onTapped(3);
                             },
                             child: Container(
                               padding: const EdgeInsets.only(
