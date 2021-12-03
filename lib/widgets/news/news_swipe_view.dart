@@ -86,7 +86,8 @@ class _NewsSwipeViewState extends State<NewsSwipeView> {
                       height: mediaQuery.height * 0.03,
                     ),
                     Text(
-                      widget.allContent![selectedIndex].title!,
+                      widget.allContent![selectedIndex].title!.replaceAll(
+                          RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
                       style: Theme.of(context).textTheme.headline1!.copyWith(
                             fontWeight: FontWeight.w500,
                             fontSize: 27,

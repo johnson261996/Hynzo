@@ -20,7 +20,7 @@ class GameContainerWidget extends StatelessWidget {
           imagePath: imagePath,
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.01,
+          height: 10,
         ),
         Text(
           name,

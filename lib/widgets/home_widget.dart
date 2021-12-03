@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/models/events_model.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
@@ -18,7 +19,8 @@ import 'common/view/event_view_widget.dart';
 class HomeWidget extends StatefulWidget {
   final Function onTapped;
   final List<NewsContentDataModel>? allContent;
-  const HomeWidget({required this.onTapped,this.allContent,Key? key}) : super(key: key);
+  final List<SuggestedPlayModel>? allSuggestedGames;
+  const HomeWidget({required this.onTapped,this.allContent,this.allSuggestedGames,Key? key}) : super(key: key);
 
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
@@ -26,7 +28,6 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget> {
   String search = '';
-  List<RecentPlayed> allRecent = [];
   List<GamesCategoryModel> allGamesCategory = [];
   List<EventsModel> allEvents = [];
 
@@ -64,30 +65,6 @@ class _HomeWidgetState extends State<HomeWidget> {
         imagePath: 'assets/images/category_rectangle_six.png',
       ),
     );
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Cricket",
-        imagePath: "assets/images/cricket.png",
-      ),
-    );
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Chess",
-        imagePath: "assets/images/chess.png",
-      ),
-    );
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Archery",
-        imagePath: "assets/images/archery.png",
-      ),
-    );
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Poker",
-        imagePath: "assets/images/suggested_two.png",
-      ),
-    );
     allEvents.add(
       EventsModel(
         imagePath: 'assets/images/events_dummy_one.png',
@@ -116,14 +93,14 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   String getDate(String time) {
     var now = DateTime.now();
-    var formatter = DateFormat('MM/dd/yyyy');
+    var formatter = DateFormat('dd/MM/yyyy');
     String currentDate = formatter.format(now);
     var newsdate=DateTime.parse(time);
     String newsDate= formatter.format(newsdate);
-    if(currentDate.split("/")[1] == newsDate.split("/")[1]){
+    if(currentDate.split("/")[0] == newsDate.split("/")[0]){
       return DateFormat.jm().format(DateTime.parse(time));
     } else {
-      var diff = newsdate.difference(now).inDays;
+      var diff = now.difference(newsdate).inDays;
       if(diff> 1){
         return newsDate;
       } else {
@@ -144,8 +121,8 @@ class _HomeWidgetState extends State<HomeWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
-              height: mediaQuery.height * 0.09,
+            const SizedBox(
+              height: 60,
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -170,8 +147,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                               color: AppColors.gray,
                             ),
                       ),
-                      SizedBox(
-                        width: mediaQuery.height * 0.02,
+                      const SizedBox(
+                        width: 10,
                       ),
                       Text(
                         Strings.HOME_PROFILE_SUBTITLE,
@@ -228,8 +205,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                 ],
               ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.025,
+            const SizedBox(
+              height: 20,
             ),
             SearchBar(
               hintText: Strings.SEARCH_GAMES,
@@ -250,8 +227,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: mediaQuery.height * 0.015,
+                      const SizedBox(
+                        height: 10,
                       ),
                       GestureDetector(
                         onTap: () {},
@@ -265,12 +242,13 @@ class _HomeWidgetState extends State<HomeWidget> {
                             child: Image.asset(
                               'assets/images/home_rectangle.png',
                               fit: BoxFit.contain,
+                              height: 130.0,
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.05,
+                      const SizedBox(
+                        height: 40,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -339,12 +317,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                           )
                         ],
                       ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.01,
+                      const SizedBox(
+                        height: 10,
                       ),
                       Container(
                         width: mediaQuery.width,
-                        height: mediaQuery.height * 0.29,
+                        height: 230,
                         child: ListView.builder(
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
@@ -365,8 +343,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                           scrollDirection: Axis.horizontal,
                         ),
                       ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.04,
+                      const SizedBox(
+                        height: 30,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -418,33 +396,57 @@ class _HomeWidgetState extends State<HomeWidget> {
                           )
                         ],
                       ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.01,
+                      const SizedBox(
+                        height: 10,
                       ),
                       Container(
                         width: mediaQuery.width,
-                        height: mediaQuery.height * 0.18,
+                        height: 140,
                         child: ListView.builder(
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
-                              padding: const EdgeInsets.only(
-                                right: 12.0,
-                              ),
-                              child: RecentGameWidget(
-                                mediaQuery: mediaQuery,
-                                imagePath: allRecent[index].imagePath!,
-                                index: index,
-                                name: allRecent[index].gameName!,
-                              ),
-                            );
+                                padding: const EdgeInsets.only(
+                                  right: 12.0,
+                                ),
+                                child: GestureDetector(
+                                  onTap: (){
+                                    Navigation.pushNamed(context, Routes.webview,
+                                        {'link': widget.allSuggestedGames![index].redirectionUrl});
+                                  },
+                                  child: Column(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(10.0),
+                                        child: Image.network(
+                                          widget.allSuggestedGames![index].image!,
+                                          fit: BoxFit.cover,
+                                          width: 110.0,
+                                          height: 110.0,
+                                          errorBuilder: (context, error, stackTrace) => Image.asset('assets/images/no_image.png',fit: BoxFit.cover,),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        widget.allSuggestedGames![index].gameName!,
+                                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.black,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ));
                           },
-                          itemCount: allRecent.length,
+                          itemCount: widget.allSuggestedGames!.length,
                           scrollDirection: Axis.horizontal,
                         ),
                       ),
                       if(widget.allContent!.isNotEmpty) ...[
-                        SizedBox(
-                          height: mediaQuery.height * 0.04,
+                        const SizedBox(
+                          height: 30,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -498,7 +500,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                         Container(
                           width: mediaQuery.width,
-                          height: mediaQuery.height * 0.32,
+                          height: 250,
                           child: ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (BuildContext context, int index) {
@@ -557,7 +559,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                 children: [
                                                   Flexible(
                                                     child: Text(
-                                                      widget.allContent![index].title!,
+                                                      widget.allContent![index].title!.replaceAll(
+                                                          RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
                                                       maxLines: 1,
                                                       overflow: TextOverflow.ellipsis,
                                                       style: Theme.of(context)
@@ -621,8 +624,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                       ],
 
-                      SizedBox(
-                        height: mediaQuery.height * 0.04,
+                      const SizedBox(
+                        height: 30,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -674,15 +677,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                           )
                         ],
                       ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.01,
+                      const SizedBox(
+                        height: 10,
                       ),
                       Container(
                         margin: const EdgeInsets.only(
                           right: 20.0,
                         ),
                         width: mediaQuery.width,
-                        height: mediaQuery.height * 0.26,
+                        height: 200,
                         child: GridView.builder(
                           padding: EdgeInsets.zero,
                           physics: const NeverScrollableScrollPhysics(),

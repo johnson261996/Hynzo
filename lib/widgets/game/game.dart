@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/models/tab_header_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
@@ -11,7 +12,12 @@ import 'package:hynzo/widgets/game/card.dart';
 import 'package:hynzo/widgets/game/top_charts.dart';
 
 class GameWidget extends StatefulWidget {
-  const GameWidget({Key? key}) : super(key: key);
+  final List<SuggestedPlayModel>? allSuggestedGames;
+
+  const GameWidget({
+    Key? key,
+    this.allSuggestedGames,
+  }) : super(key: key);
 
   @override
   State<GameWidget> createState() => _GameWidgetState();
@@ -199,8 +205,10 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
                         curve: Curves.fastLinearToSlowEaseIn);
                   });
                 },
-                children: const [
-                  AllGames(),
+                children: [
+                  AllGames(
+                    allSuggestedGames: widget.allSuggestedGames,
+                  ),
                   TopCharts(),
                   ActionGames(),
                   CardGames(),

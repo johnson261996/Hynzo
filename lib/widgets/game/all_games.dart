@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hynzo/core/models/games_model.dart';
+import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/common/game_recent/recently_game_widget.dart';
-import 'package:hynzo/widgets/common/image/square_image_widget.dart';
 import 'package:hynzo/widgets/common/view/game_view_widget.dart';
-import 'package:hynzo/widgets/game/game.dart';
 
 class AllGames extends StatefulWidget {
-  const AllGames({Key? key}) : super(key: key);
+  final List<SuggestedPlayModel>? allSuggestedGames;
+
+  const AllGames({
+    Key? key,
+    this.allSuggestedGames,
+  }) : super(key: key);
 
   @override
   State<AllGames> createState() => _AllGamesState();
@@ -18,7 +23,6 @@ class AllGames extends StatefulWidget {
 class _AllGamesState extends State<AllGames> {
   List<AllGamesModel> allGames = [];
   List<RecentPlayed> allRecent = [];
-  List<SuggestedPlayModel> allSuggested = [];
 
   @override
   void initState() {
@@ -46,30 +50,6 @@ class _AllGamesState extends State<AllGames> {
       RecentPlayed(
         gameName: "Poker",
         imagePath: "assets/images/suggested_two.png",
-      ),
-    );
-    allSuggested.add(
-      SuggestedPlayModel(
-        gameName: "Cricket",
-        imagePath: "assets/images/suggested_one.png",
-      ),
-    );
-    allSuggested.add(
-      SuggestedPlayModel(
-        gameName: "Chess",
-        imagePath: "assets/images/suggested_two.png",
-      ),
-    );
-    allSuggested.add(
-      SuggestedPlayModel(
-        gameName: "Archery",
-        imagePath: "assets/images/suggested_three.png",
-      ),
-    );
-    allSuggested.add(
-      SuggestedPlayModel(
-        gameName: "Poker",
-        imagePath: "assets/images/suggested_one.png",
       ),
     );
     allGames.add(
@@ -130,8 +110,8 @@ class _AllGamesState extends State<AllGames> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: mediaQuery.height * 0.04,
+            const SizedBox(
+              height: 35,
             ),
             Text(
               Strings.RECENTLY_PLAYED,
@@ -140,12 +120,12 @@ class _AllGamesState extends State<AllGames> {
                     fontWeight: FontWeight.w600,
                   ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.01,
+            const SizedBox(
+              height: 10,
             ),
             Container(
               width: mediaQuery.width,
-              height: mediaQuery.height * 0.18,
+              height: 140,
               child: ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
@@ -164,8 +144,8 @@ class _AllGamesState extends State<AllGames> {
                 scrollDirection: Axis.horizontal,
               ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.03,
+            const SizedBox(
+              height: 20,
             ),
             Text(
               Strings.SUGGESTED_GAMES,
@@ -174,29 +154,56 @@ class _AllGamesState extends State<AllGames> {
                     fontWeight: FontWeight.w600,
                   ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.01,
+            const SizedBox(
+              height: 10,
             ),
             Container(
               width: mediaQuery.width,
-              height: mediaQuery.height * 0.18,
+              height: 140,
               child: ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                       padding: const EdgeInsets.only(
                         right: 12.0,
                       ),
-                      child: GameContainerWidget(
-                        imagePath: allSuggested[index].imagePath!,
-                        name: allSuggested[index].gameName!,
+                      child: GestureDetector(
+                        onTap: (){
+                          Navigation.pushNamed(context, Routes.webview,
+                              {'link': widget.allSuggestedGames![index].redirectionUrl});
+                        },
+                        child: Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: Image.network(
+                                widget.allSuggestedGames![index].image!,
+                                fit: BoxFit.cover,
+                                width: 110.0,
+                                height: 110.0,
+                                errorBuilder: (context, error, stackTrace) => Image.asset('assets/images/no_image.png',fit: BoxFit.cover,),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              widget.allSuggestedGames![index].gameName!,
+                              style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.black,
+                              ),
+                            )
+                          ],
+                        ),
                       ));
                 },
-                itemCount: allSuggested.length,
+                itemCount: widget.allSuggestedGames!.length,
                 scrollDirection: Axis.horizontal,
               ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.03,
+            const SizedBox(
+              height: 20,
             ),
             Text(
               Strings.ALL_GAMES,
@@ -205,12 +212,12 @@ class _AllGamesState extends State<AllGames> {
                     fontWeight: FontWeight.w600,
                   ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.01,
+            const SizedBox(
+              height: 10,
             ),
             Container(
               width: mediaQuery.width,
-              height: mediaQuery.height * 0.55,
+              height: 450,
               child: GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.only(
@@ -218,7 +225,7 @@ class _AllGamesState extends State<AllGames> {
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
-                  childAspectRatio: 0.9,
+                  childAspectRatio: 0.85,
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   return GameContainerWidget(
