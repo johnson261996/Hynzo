@@ -188,7 +188,7 @@ class _NewsTabViewState extends State<NewsTabView>
               indicatorColor: Colors.transparent,
               tabs: List<Widget>.generate(allTabHeader.length, (int index) {
                 return Container(
-                  width: 65.0,
+                  width: 75.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
                     color: index == selectedIndexValue
