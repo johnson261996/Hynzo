@@ -3,13 +3,21 @@
 ///
 
 import 'package:flutter/material.dart';
-import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/core/models/news_home_model.dart';
+import 'package:hynzo/providers/news_provider.dart';
+import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/connectivity.dart';
 import 'package:hynzo/utils/localstorage.dart';
+import 'package:hynzo/utils/toast_util.dart';
+import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
 import 'package:hynzo/widgets/home_widget.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class HomeContainer extends StatefulWidget {
   final Function _onTapped;
-  const HomeContainer(this._onTapped,{Key? key}) : super(key: key);
+
+  const HomeContainer(this._onTapped, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -18,13 +26,86 @@ class HomeContainer extends StatefulWidget {
 }
 
 class _HomeContainerState extends State<HomeContainer> {
-  /*logOut() async {
-    LocalStorage.clearToken();
-    Navigator.pushReplacementNamed(context, Routes.login);
-  }*/
+  static NewsProvider? _newsProvider;
+  List<NewsContentDataModel> allNews = [];
+  bool _isLoading = false;
+  late String token;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _newsProvider = Provider.of<NewsProvider>(context, listen: false);
+    allNews.clear();
+    ConnectionStaus().check().then((connectionStatus) {
+      if (connectionStatus) {
+        getAllNews();
+      } else {
+        ToastUtil().showToast(
+            "No internet connection available. Please check your connection or try again later.");
+      }
+    });
+  }
+
+  bool isToday(String time) {
+    var now = DateTime.now();
+    var formatter = DateFormat('MM/dd/yyyy');
+    String currentDate = formatter.format(now);
+    var newsdate = DateTime.parse(time);
+    String newsDate = formatter.format(newsdate);
+    if (currentDate.split("/")[1] == newsDate.split("/")[1]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> getAllNews() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      token = (await LocalStorage.getLoginStatus())!;
+      NewsResponseModel newsResponseModel =
+          await _newsProvider!.getNewsList(token);
+      setState(() {
+        _isLoading = false;
+      });
+      if (newsResponseModel.statusCode == 200) {
+        for (var element in newsResponseModel.newsDataList!) {
+          for (var newsContent in element.newsDataContentList!) {
+            if(isToday(newsContent.pubDate!)){
+              if (allNews.length < 2) {
+                allNews.add(newsContent);
+              } else {
+                break;
+              }
+            }
+          }
+          if (allNews.length == 2) {
+            break;
+          }
+        }
+      } else {
+        ToastUtil().showToast("Something went wrong.");
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ToastUtil().showToast(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return HomeWidget(widget._onTapped);
+    return LoadingOverlay(
+      isLoading: _isLoading,
+      color: AppColors.gray,
+      child: HomeWidget(
+        onTapped: widget._onTapped,
+        allContent: allNews,
+      ),
+    );
   }
 }

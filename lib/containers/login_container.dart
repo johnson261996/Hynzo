@@ -9,6 +9,7 @@ import 'package:hynzo/providers/auth_provider.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/localstorage.dart';
+import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/auth/login_widget.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
@@ -38,7 +39,7 @@ class _LoginContainerState extends State<LoginContainer> {
       });
       if (response.statusCode == 200) {
         LocalStorage.setMobileNumber(mobile);
-        Navigator.pushNamed(context, Routes.otp);
+        Navigation.pushNamed(context, Routes.otp);
       } else {
         ToastUtil().showToast('Something went wrong!');
       }

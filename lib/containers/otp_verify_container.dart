@@ -10,6 +10,7 @@ import 'package:hynzo/providers/interest_provider.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/localstorage.dart';
+import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/auth/otp_verify_widget.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
@@ -76,7 +77,7 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
             _isLoading = false;
           });
 
-          Navigator.pushReplacementNamed(context, Routes.navScreen);
+          Navigation.pushReplacementNamed(context, Routes.navScreen);
         } else {
           if(interestResponseModel.next! != '') {
             offSet = offSet + 10;
@@ -85,7 +86,7 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
             setState(() {
               _isLoading = false;
             });
-            Navigator.pushReplacementNamed(context, Routes.interest);
+            Navigation.pushReplacementNamed(context, Routes.interest);
           }
         }
       } else {

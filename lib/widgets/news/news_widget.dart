@@ -3,6 +3,7 @@ import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/core/models/tab_header_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/news/news_swipe_view.dart';
 import 'package:hynzo/widgets/news/news_tab_view.dart';
 
@@ -56,7 +57,7 @@ class _NewsWidgetState extends State<NewsWidget> {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).pop();
+                    Navigation.pop(context);
                   },
                   child: Image.asset(
                     'assets/images/top_back.png',
@@ -97,7 +98,10 @@ class _NewsWidgetState extends State<NewsWidget> {
             height: mediaQuery.height * 0.02,
           ),
           if (showTabView) ...[
-            NewsTabView(),
+            NewsTabView(
+              allContent: allContent,
+              allcategoryNews: widget.allNews,
+            ),
           ] else ...[
             NewsSwipeView(
               allContent: allContent,

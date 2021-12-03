@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/location/location_widget.dart';
 import 'package:geolocator/geolocator.dart';
@@ -38,7 +39,7 @@ class _LocationContainerState extends State<LocationContainer> {
   _navigateToSuggestScreen() {
     _determinePosition()
         .then(
-          (value) => Navigator.pushReplacementNamed(context, Routes.suggetion),
+          (value) => Navigation.pushReplacementNamed(context, Routes.suggetion),
         )
         .onError(
           (error, stackTrace) =>
