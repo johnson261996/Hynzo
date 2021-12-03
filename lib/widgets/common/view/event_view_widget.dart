@@ -76,8 +76,8 @@ class EventContainerWidget extends StatelessWidget {
           ],
         ),
         if (showDate) ...[
-          SizedBox(
-            height: mediaQuery.height * 0.01,
+          const SizedBox(
+            height: 10,
           ),
           Text(
             title,
@@ -88,8 +88,8 @@ class EventContainerWidget extends StatelessWidget {
                 ),
           ),
           if (showSubTitle) ...[
-            SizedBox(
-              height: mediaQuery.height * 0.005,
+            const SizedBox(
+              height: 5,
             ),
             Text(
               subTitle,

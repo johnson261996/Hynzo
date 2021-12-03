@@ -51,7 +51,6 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
         _isLoading = false;
       });
       if (suggestionModel.statusCode == 200) {
-        print("api count ${suggestionModel.count!}");
         _totalCount=suggestionModel.count!;
         for (var element in suggestionModel.resultsList) {
           allResults.add(element);

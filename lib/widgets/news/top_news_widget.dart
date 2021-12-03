@@ -16,14 +16,14 @@ class TopNewsWidget extends StatefulWidget{
 class _TopNewsWidgetState extends State<TopNewsWidget> {
   String getDate(String time) {
     var now = DateTime.now();
-    var formatter = DateFormat('MM/dd/yyyy');
+    var formatter = DateFormat('dd/MM/yyyy');
     String currentDate = formatter.format(now);
     var newsdate=DateTime.parse(time);
     String newsDate= formatter.format(newsdate);
-    if(currentDate.split("/")[1] == newsDate.split("/")[1]){
+    if(currentDate.split("/")[0] == newsDate.split("/")[0]){
       return DateFormat.jm().format(DateTime.parse(time));
     } else {
-      var diff = newsdate.difference(now).inDays;
+      var diff = now.difference(newsdate).inDays;
       if(diff> 1){
         return newsDate;
       } else {
@@ -105,7 +105,8 @@ class _TopNewsWidgetState extends State<TopNewsWidget> {
                               children: [
                                 Flexible(
                                   child: Text(
-                                    widget.allContent![index].title!,
+                                    widget.allContent![index].title!.replaceAll(
+                                        RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context)

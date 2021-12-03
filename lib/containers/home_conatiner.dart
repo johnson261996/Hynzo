@@ -3,7 +3,9 @@
 ///
 
 import 'package:flutter/material.dart';
+import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
+import 'package:hynzo/providers/game_provider.dart';
 import 'package:hynzo/providers/news_provider.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/connectivity.dart';
@@ -27,7 +29,9 @@ class HomeContainer extends StatefulWidget {
 
 class _HomeContainerState extends State<HomeContainer> {
   static NewsProvider? _newsProvider;
+  static GamesProvider? _gamesProvider;
   List<NewsContentDataModel> allNews = [];
+  List<SuggestedPlayModel> allSuggestedGames = [];
   bool _isLoading = false;
   late String token;
 
@@ -36,10 +40,11 @@ class _HomeContainerState extends State<HomeContainer> {
     // TODO: implement initState
     super.initState();
     _newsProvider = Provider.of<NewsProvider>(context, listen: false);
+    _gamesProvider = Provider.of<GamesProvider>(context, listen: false);
     allNews.clear();
     ConnectionStaus().check().then((connectionStatus) {
       if (connectionStatus) {
-        getAllNews();
+        getSuggestionGames();
       } else {
         ToastUtil().showToast(
             "No internet connection available. Please check your connection or try again later.");
@@ -60,11 +65,33 @@ class _HomeContainerState extends State<HomeContainer> {
     }
   }
 
-  Future<void> getAllNews() async {
+  Future<void> getSuggestionGames() async {
     try {
       setState(() {
         _isLoading = true;
       });
+      await LocalStorage.getLoginStatus().then((value) => token=value!);
+      SuggestedGamesResponseModel suggestedGamesResponseModel = await _gamesProvider!.getSuggestedGames(token);
+      if (suggestedGamesResponseModel.statusCode == 200) {
+        for (var element in suggestedGamesResponseModel.allSuggestedGames!) {
+          if(element.activeStatus!) {
+            allSuggestedGames.add(element);
+          }
+        }
+      } else {
+        ToastUtil().showToast("Something went wrong.");
+      }
+      getAllNews();
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ToastUtil().showToast(e.toString());
+    }
+  }
+
+  Future<void> getAllNews() async {
+    try {
       token = (await LocalStorage.getLoginStatus())!;
       NewsResponseModel newsResponseModel =
           await _newsProvider!.getNewsList(token);
@@ -105,6 +132,7 @@ class _HomeContainerState extends State<HomeContainer> {
       child: HomeWidget(
         onTapped: widget._onTapped,
         allContent: allNews,
+        allSuggestedGames: allSuggestedGames,
       ),
     );
   }

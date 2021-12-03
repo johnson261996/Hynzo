@@ -304,12 +304,12 @@ class _TodayWidgetState extends State<TodayWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: mediaQuery.height * 0.02,
+            const SizedBox(
+              height: 25,
             ),
             Container(
               width: mediaQuery.width,
-              height: mediaQuery.height * 0.30,
+              height: 230,
               child: ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
@@ -330,8 +330,8 @@ class _TodayWidgetState extends State<TodayWidget> {
                 scrollDirection: Axis.horizontal,
               ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.04,
+            const SizedBox(
+              height: 20,
             ),
             Text(
               Strings.CATEGORIES_TITLE,
@@ -347,12 +347,12 @@ class _TodayWidgetState extends State<TodayWidget> {
                     fontWeight: FontWeight.w400,
                   ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.015,
+            const SizedBox(
+              height: 10,
             ),
             Container(
               width: mediaQuery.width,
-              height: mediaQuery.height * 0.3,
+              height: 230,
               child: GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.only(
@@ -377,8 +377,8 @@ class _TodayWidgetState extends State<TodayWidget> {
                 itemCount: allCategories.length,
               ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.03,
+            const SizedBox(
+              height: 20,
             ),
             Text(
               Strings.WORKSHOPS,
@@ -387,15 +387,15 @@ class _TodayWidgetState extends State<TodayWidget> {
                     fontWeight: FontWeight.w600,
                   ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.01,
+            const SizedBox(
+              height: 10,
             ),
             Container(
               padding: const EdgeInsets.only(
                 right: 10.0,
               ),
               width: mediaQuery.width,
-              height: mediaQuery.height * 0.50,
+              height: 400,
               child: GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -417,8 +417,8 @@ class _TodayWidgetState extends State<TodayWidget> {
                 itemCount: allWorkshops.length,
               ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.03,
+            const SizedBox(
+              height: 20,
             ),
             Text(
               Strings.KIDS,
@@ -427,12 +427,12 @@ class _TodayWidgetState extends State<TodayWidget> {
                     fontWeight: FontWeight.w600,
                   ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.01,
+            const SizedBox(
+              height: 10,
             ),
             Container(
               width: mediaQuery.width,
-              height: mediaQuery.height * 0.50,
+              height: 400,
               child: GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.only(
@@ -457,8 +457,8 @@ class _TodayWidgetState extends State<TodayWidget> {
                 itemCount: allWorkshops.length,
               ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.03,
+            const SizedBox(
+              height: 20,
             ),
             Text(
               Strings.MUSIC,
@@ -467,12 +467,12 @@ class _TodayWidgetState extends State<TodayWidget> {
                     fontWeight: FontWeight.w600,
                   ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.01,
+            const SizedBox(
+              height: 10,
             ),
             Container(
               width: mediaQuery.width,
-              height: mediaQuery.height * 0.50,
+              height: 400,
               child: GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.only(
@@ -497,8 +497,8 @@ class _TodayWidgetState extends State<TodayWidget> {
                 itemCount: allMusic.length,
               ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.03,
+            const SizedBox(
+              height: 20,
             ),
             Text(
               Strings.COMEDY,
@@ -507,12 +507,12 @@ class _TodayWidgetState extends State<TodayWidget> {
                     fontWeight: FontWeight.w600,
                   ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.01,
+            const SizedBox(
+              height: 10,
             ),
             Container(
               width: mediaQuery.width,
-              height: mediaQuery.height * 0.50,
+              height: 400,
               child: GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.only(
@@ -537,8 +537,8 @@ class _TodayWidgetState extends State<TodayWidget> {
                 itemCount: allComedy.length,
               ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.03,
+            const SizedBox(
+              height: 20,
             ),
             Text(
               Strings.FIT,
@@ -547,12 +547,12 @@ class _TodayWidgetState extends State<TodayWidget> {
                     fontWeight: FontWeight.w600,
                   ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.01,
+            const SizedBox(
+              height: 10,
             ),
             Container(
               width: mediaQuery.width,
-              height: mediaQuery.height * 0.50,
+              height: 400,
               child: GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.only(
