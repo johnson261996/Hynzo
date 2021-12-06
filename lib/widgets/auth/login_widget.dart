@@ -2,12 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/utils/connectivity.dart';
+import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/common/buttons/primary_button.dart';
 import 'package:hynzo/widgets/common/error/error.dart';
 import 'package:hynzo/widgets/common/input/input.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/resources/strings.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -23,28 +23,25 @@ class _LoginWidgetState extends State<LoginWidget> {
   late String mobile = '';
   late String errorMgs = '';
   late String name = '';
-  bool isLoading = false;
 
-  _generateOTP() async {
-    if (mobile.length == 10) {
-      setState(() {
-        isLoading = true;
-      });
-      String signature = '';
-      SmsAutoFill().getAppSignature.then((signature) {
-        signature = signature;
-      });
-      widget.generateOTP(mobile, signature);
-      LocalStorage.setMobileNumber(mobile);
-      setState(() {
-        isLoading = false;
-      });
-      Navigator.pushNamed(context, Routes.otp);
-    } else {
-      setState(() {
-        errorMgs = Strings.PHONE_NUMBER_VALIDATION;
-      });
-    }
+  _generateOTP() {
+    ConnectionStaus().check().then((connectionStatus) {
+      if (connectionStatus) {
+        if (mobile.length == 10) {
+          String signature = '';
+          SmsAutoFill().getAppSignature.then((signature) {
+            signature = signature;
+          });
+          widget.generateOTP(mobile, signature);
+        } else {
+          setState(() {
+            errorMgs = Strings.PHONE_NUMBER_VALIDATION;
+          });
+        }
+      } else {
+        ToastUtil().showToast("No internet connection available. Please check your connection or try again later.");
+      }
+    });
   }
 
   @override
@@ -55,11 +52,12 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var mediaQuery = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Container(
         color: AppColors.white,
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        width: mediaQuery.width,
+        height: mediaQuery.height,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -67,7 +65,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.12,
+                    height: mediaQuery.height * 0.08,
                   ),
                   Hero(
                     tag: 'HeroTitle',
@@ -79,11 +77,11 @@ class _LoginWidgetState extends State<LoginWidget> {
                     ),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.03,
+                    height: mediaQuery.height * 0.03,
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 220,
+                    width: mediaQuery.width,
+                    height: 240,
                     child: Image.asset(
                       'assets/images/registration.png',
                       fit: BoxFit.contain,
@@ -93,8 +91,8 @@ class _LoginWidgetState extends State<LoginWidget> {
               ),
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.52,
+              width: mediaQuery.width,
+              height: mediaQuery.height * 0.52,
               child: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -110,7 +108,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      height: mediaQuery.height * 0.06,
                     ),
                     Text(
                       Strings.LOGIN_TITLE,
@@ -129,7 +127,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.04,
+                      height: mediaQuery.height * 0.04,
                     ),
                     Container(
                       padding: const EdgeInsets.only(

@@ -1,7 +1,8 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/utils/localstorage.dart';
+import 'package:hynzo/utils/navigations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'package:hynzo/routes/routes.dart';
@@ -39,12 +40,12 @@ class _SplashScreenState extends State<SplashScreen> {
     await LocalStorage.getIntroStatus().then((value) => introStatus = value!);
     await LocalStorage.getLoginToken().then((value) => token = value!);
     if (introStatus) {
-      Navigator.pushReplacementNamed(context, Routes.intro);
+      Navigation.pushReplacementNamed(context, Routes.intro);
     } else {
       if (token == "") {
-        Navigator.pushReplacementNamed(context, Routes.login);
+        Navigation.pushReplacementNamed(context, Routes.login);
       } else {
-        Navigator.pushReplacementNamed(context, Routes.navScreen);
+        Navigation.pushReplacementNamed(context, Routes.navScreen);
       }
     }
   }

@@ -1,28 +1,14 @@
 import 'dart:async' show Future;
 import 'package:flutter/foundation.dart';
-import 'package:hynzo/core/models/auth_model.dart';
-// import 'package:hynzo/core/services/news/news_services.dart';
+import 'package:hynzo/core/models/news_home_model.dart';
+import 'package:hynzo/core/services/news/news_service.dart';
 
 class NewsProvider extends ChangeNotifier {
-  bool isLoading = true;
 
-  // NewsModel? newsData;
-
-  void changeLoadingStatus(bool loading) {
-    new Future.delayed(new Duration(milliseconds: 300), () {
-      isLoading = loading;
-      notifyListeners();
-    });
-  }
-
-  void fetchNews(page) async {
-    // final NewsModel response = await NewsService().fetchNews(page);
-    // if (newsData != null && newsData!.articles != null) {
-    //   newsData!.articles!.addAll(response.articles!);
-    // } else {
-    //   newsData = response;
-    // }
-    isLoading = false;
+  Future<NewsResponseModel> getNewsList(String token) async {
+    final NewsResponseModel response = await NewsService.getAllNews(token);
     notifyListeners();
+    return response;
   }
+
 }

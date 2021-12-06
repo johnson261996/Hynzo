@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/containers/home_conatiner.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final Function _onTapped;
+  const HomeScreen(this._onTapped,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: HomeContainer(),
+      body: HomeContainer(_onTapped),
     );
   }
 }

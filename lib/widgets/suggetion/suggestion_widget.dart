@@ -3,80 +3,45 @@ import 'package:hynzo/core/models/suggestion_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/themes/themes.dart';
-import 'package:hynzo/utils/localStorage.dart';
-import 'package:hynzo/widgets/common/buttons/primary_button.dart';
+import 'package:hynzo/utils/navigations.dart';
 
-class SuggetionWidget extends StatefulWidget {
-  const SuggetionWidget({Key? key}) : super(key: key);
+class SuggestionWidget extends StatefulWidget {
+  List<ResultsModel> allResults;
+  final int? totalCount;
+  final Function? addUser;
+
+  SuggestionWidget({
+    Key? key,
+    required this.allResults,
+    this.totalCount = 1,
+    this.addUser,
+  }) : super(key: key);
 
   @override
-  State<SuggetionWidget> createState() => _SuggetionWidgetState();
+  State<SuggestionWidget> createState() => _SuggestionWidgetState();
 }
 
-class _SuggetionWidgetState extends State<SuggetionWidget> {
-  List<SuggestionModel> allSuggestionList = [];
+class _SuggestionWidgetState extends State<SuggestionWidget> {
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    allSuggestionList.add(
-      SuggestionModel(
-          profileImage: 'assets/images/dummy_user_one.png',
-          name: 'Bessie Copper',
-          city: 'Bengaluru',
-          country: 'India',
-          isAdded: false),
-    );
-    allSuggestionList.add(
-      SuggestionModel(
-          profileImage: 'assets/images/dummy_user_two.png',
-          name: 'Guy Hawkins',
-          city: 'Bengaluru',
-          country: 'India',
-          isAdded: false),
-    );
-    allSuggestionList.add(
-      SuggestionModel(
-          profileImage: 'assets/images/dummy_user_three.png',
-          name: 'Jacob Jones',
-          city: 'Bengaluru',
-          country: 'India',
-          isAdded: false),
-    );
-    allSuggestionList.add(
-      SuggestionModel(
-          profileImage: 'assets/images/dummy_user_four.png',
-          name: 'Arlenee McCoy',
-          city: 'Bengaluru',
-          country: 'India',
-          isAdded: false),
-    );
-    allSuggestionList.add(
-      SuggestionModel(
-          profileImage: 'assets/images/dummy_user_five.png',
-          name: 'Jane Copper',
-          city: 'Bengaluru',
-          country: 'India',
-          isAdded: false),
-    );
-    allSuggestionList.add(
-      SuggestionModel(
-          profileImage: 'assets/images/dummy_user_six.png',
-          name: 'Robert Fox',
-          city: 'Bengaluru',
-          country: 'India',
-          isAdded: false),
-    );
-    allSuggestionList.add(
-      SuggestionModel(
-          profileImage: 'assets/images/dummy_user_seven.png',
-          name: 'Devon Lane',
-          city: 'Bengaluru',
-          country: 'India',
-          isAdded: false),
-    );
+  double _setProgressvalue() {
+    try{
+      int count = 0;
+      for (var element in widget.allResults) {
+        if (element.isSelected!) {
+          count++;
+        }
+      }
+      if(widget.totalCount == 0) {
+        return 0.0;
+      } else {
+        double value = (count / widget.totalCount!).toDouble();
+        String progressValue = value.toStringAsFixed(1);
+        return double.parse(progressValue);
+      }
+    } catch (e) {
+      return 0.0;
+    }
+
   }
 
   @override
@@ -85,14 +50,12 @@ class _SuggetionWidgetState extends State<SuggetionWidget> {
       color: AppColors.white,
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
+      child: Stack(
         children: [
           Padding(
             padding: const EdgeInsets.only(
               left: 20.0,
-              top: 100.0,
+              top: 80.0,
             ),
             child: Align(
               alignment: Alignment.topLeft,
@@ -106,112 +69,113 @@ class _SuggetionWidgetState extends State<SuggetionWidget> {
               ),
             ),
           ),
-          Expanded(
-            child: Padding(
+          Container(
+            margin: const EdgeInsets.only(top: 110.0,),
+            child: ListView.builder(
               padding: const EdgeInsets.only(
                 right: 5.0,
-                bottom: 5.0,
                 left: 5.0,
-                top: 10.0,
+                bottom: 80.0,
               ),
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    leading: Image.asset(
-                      allSuggestionList[index].profileImage!,
-                      fit: BoxFit.contain,
-                      width: 45,
-                      height: 45,
-                    ),
-                    title: Text(
-                      allSuggestionList[index].name!,
-                      style: Theme.of(context).textTheme.caption!.copyWith(
-                            color: AppColors.black,
-                            fontWeight: FontWeight.w400,
-                          ),
-                    ),
-                    subtitle: Text(
-                      '${allSuggestionList[index].city}, ${allSuggestionList[index].country}',
-                      style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                            color: AppColors.black,
-                            fontWeight: FontWeight.w400,
-                          ),
-                    ),
-                    trailing: allSuggestionList[index].isAdded
-                        ? ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                allSuggestionList[index].isAdded =
-                                    !allSuggestionList[index].isAdded;
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: AppColors.white,
-                              minimumSize: const Size(90.0, 40.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                side: BorderSide(color: AppColors.blueDark),
-                              ),
-                            ),
-                            child: Text(
-                              Strings.ADDED,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .button!
-                                  .copyWith(
-                                      color: AppColors.blueDark,
-                                      fontWeight: FontWeight.w500),
-                            ),
-                          )
-                        : ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                allSuggestionList[index].isAdded =
-                                    !allSuggestionList[index].isAdded;
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: AppColors.blueDark,
-                              minimumSize: const Size(90.0, 40.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                            child: Text(
-                              Strings.ADD,
-                              style:
-                                  Theme.of(context).textTheme.button!.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                      ),
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  leading: widget.allResults[index].avatar != ''
+                      ? CircleAvatar(
+                          radius: 22.5,
+                          backgroundImage:
+                              NetworkImage(widget.allResults[index].avatar!))
+                      : Image.asset(
+                          'assets/images/user.png',
+                          fit: BoxFit.contain,
+                          width: 45,
+                          height: 45,
+                        ),
+                  title: Text(
+                    widget.allResults[index].username!,
+                    style: Theme.of(context).textTheme.caption!.copyWith(
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
+                  ),
+                  trailing: widget.allResults[index].isSelected!
+                      ? ElevatedButton(
+                          onPressed: null,
+                          style: ElevatedButton.styleFrom(
+                            primary: AppColors.white,
+                            minimumSize: const Size(90.0, 40.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              side: BorderSide(color: AppColors.blueDark),
                             ),
                           ),
-                  );
-                },
-                itemCount: allSuggestionList.length,
-              ),
+                          child: Text(
+                            Strings.ADDED,
+                            style: Theme.of(context).textTheme.button!.copyWith(
+                                color: AppColors.blueDark,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        )
+                      : ElevatedButton(
+                          onPressed: () {
+                            widget.addUser!(widget.allResults[index].pk.toString(),index);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: AppColors.blueDark,
+                            minimumSize: const Size(90.0, 40.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          child: Text(
+                            Strings.ADD,
+                            style: Theme.of(context).textTheme.button!.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                        ),
+                );
+              },
+              itemCount: widget.allResults.length,
             ),
-          ),
-          const SizedBox(
-            height: 20,
           ),
           Align(
             alignment: Alignment.bottomRight,
             child: GestureDetector(
               onTap: () {
-                Navigator.pushReplacementNamed(context, Routes.navScreen);
+                Navigation.pushReplacementNamed(context, Routes.navScreen);
               },
               child: Container(
-                color: Colors.transparent,
+                width: 80,
+                height: 80,
                 padding: const EdgeInsets.only(
                   right: 20,
                   bottom: 20,
                 ),
-                width: 80,
-                height: 80,
-                child: Image.asset(
-                  'assets/images/first_button.png',
-                  fit: BoxFit.contain,
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.white,
+                      ),
+                      width: 70.0,
+                      height: 70.0,
+                      child: CircularProgressIndicator(
+                        value: _setProgressvalue(),
+                        backgroundColor: AppColors.blueGray,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          AppColors.blueDark,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        'assets/images/next_button.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

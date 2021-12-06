@@ -76,8 +76,8 @@ class EventContainerWidget extends StatelessWidget {
           ],
         ),
         if (showDate) ...[
-          SizedBox(
-            height: mediaQuery.height * 0.01,
+          const SizedBox(
+            height: 10,
           ),
           Text(
             title,
@@ -88,13 +88,13 @@ class EventContainerWidget extends StatelessWidget {
                 ),
           ),
           if (showSubTitle) ...[
-            SizedBox(
-              height: mediaQuery.height * 0.005,
+            const SizedBox(
+              height: 5,
             ),
             Text(
               subTitle,
               style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                    fontSize: 10,
+                    fontSize: 12,
                     fontWeight: FontWeight.w400,
                     color: AppColors.offgreylight,
                   ),

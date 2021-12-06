@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/resources/strings.dart';
-import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/widgets/common/buttons/primary_button.dart';
 
 class LocationWidget extends StatelessWidget {
-  const LocationWidget({Key? key}) : super(key: key);
+  final Function? checkPosition;
+  const LocationWidget({Key? key,this.checkPosition}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class LocationWidget extends StatelessWidget {
               child: PrimaryButton(
                 text: const Text(Strings.LOCATION_BUTTON),
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, Routes.suggetion);
+                  checkPosition!();
                 },
               ),
             ),

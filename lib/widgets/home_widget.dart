@@ -2,28 +2,34 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/models/events_model.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/navigations.dart';
+import 'package:hynzo/widgets/common/search_bar/search_bar.dart';
+import 'package:intl/intl.dart';
 import 'common/game_recent/recently_game_widget.dart';
 import 'common/profile_image/profile_image.dart';
 import 'common/view/event_view_widget.dart';
 
 class HomeWidget extends StatefulWidget {
-  const HomeWidget({Key? key}) : super(key: key);
+  final Function onTapped;
+  final List<NewsContentDataModel>? allContent;
+  final List<SuggestedPlayModel>? allSuggestedGames;
+  const HomeWidget({required this.onTapped,this.allContent,this.allSuggestedGames,Key? key}) : super(key: key);
 
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  late String search = '';
-  List<RecentPlayed> allRecent = [];
+  String search = '';
   List<GamesCategoryModel> allGamesCategory = [];
   List<EventsModel> allEvents = [];
-  List<NewsModel> allNews = [];
 
   @override
   void initState() {
@@ -59,46 +65,6 @@ class _HomeWidgetState extends State<HomeWidget> {
         imagePath: 'assets/images/category_rectangle_six.png',
       ),
     );
-    allNews.add(
-      NewsModel(
-        newsImagePath: 'assets/images/news_one.png',
-        newsTitle: 'MEDIA',
-        newsContent: 'SMM starter pack, part 2: content promotion',
-        newsPublishedTime: '17 days ago',
-      ),
-    );
-    allNews.add(
-      NewsModel(
-        newsImagePath: 'assets/images/news_two.png',
-        newsTitle: 'PRODUCTIVITY',
-        newsContent: '7 Skills of Highly Effective Programmers',
-        newsPublishedTime: '3 days ago',
-      ),
-    );
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Cricket",
-        imagePath: "assets/images/cricket.png",
-      ),
-    );
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Chess",
-        imagePath: "assets/images/chess.png",
-      ),
-    );
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Archery",
-        imagePath: "assets/images/archery.png",
-      ),
-    );
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Poker",
-        imagePath: "assets/images/suggested_two.png",
-      ),
-    );
     allEvents.add(
       EventsModel(
         imagePath: 'assets/images/events_dummy_one.png',
@@ -125,6 +91,25 @@ class _HomeWidgetState extends State<HomeWidget> {
     );
   }
 
+  String getDate(String time) {
+    var now = DateTime.now();
+    var formatter = DateFormat('dd/MM/yyyy');
+    String currentDate = formatter.format(now);
+    var newsdate=DateTime.parse(time);
+    String newsDate= formatter.format(newsdate);
+    if(currentDate.split("/")[0] == newsDate.split("/")[0]){
+      return DateFormat.jm().format(DateTime.parse(time));
+    } else {
+      var diff = now.difference(newsdate).inDays;
+      if(diff> 1){
+        return newsDate;
+      } else {
+        return 'Yesterday';
+      }
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
@@ -136,8 +121,8 @@ class _HomeWidgetState extends State<HomeWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
-              height: mediaQuery.height * 0.09,
+            const SizedBox(
+              height: 60,
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -162,8 +147,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                               color: AppColors.gray,
                             ),
                       ),
-                      SizedBox(
-                        width: mediaQuery.height * 0.02,
+                      const SizedBox(
+                        width: 10,
                       ),
                       Text(
                         Strings.HOME_PROFILE_SUBTITLE,
@@ -220,56 +205,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                 ],
               ),
             ),
-            SizedBox(
-              height: mediaQuery.height * 0.025,
+            const SizedBox(
+              height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20.0,
-                right: 20.0,
-              ),
-              child: Container(
-                padding: const EdgeInsets.only(
-                  left: 15.0,
-                  right: 15.0,
-                ),
-                alignment: Alignment.center,
-                height: 45.0,
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(10.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.gray.withOpacity(0.1),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.bodyText2,
-                  textInputAction: TextInputAction.done,
-                  onChanged: (val) {
-                    setState(() {
-                      search = val;
-                    });
-                  },
-                  keyboardType: TextInputType.text,
-                  onSubmitted: (value) {},
-                  autofocus: false,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    icon: Image.asset('assets/images/search.png'),
-                    border: InputBorder.none,
-                    hintText: Strings.SEARCH_GAMES,
-                    hintStyle: Theme.of(context).textTheme.bodyText2!.apply(
-                          color: AppColors.lightgray,
-                        ),
-                  ),
-                ),
-              ),
+            SearchBar(
+              hintText: Strings.SEARCH_GAMES,
+              onchangeFunc: (val) {
+                setState(() {
+                  search = val;
+                });
+              },
+              padding: const EdgeInsets.only(left: 20.0,right: 20.0,),
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -281,8 +227,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: mediaQuery.height * 0.015,
+                      const SizedBox(
+                        height: 10,
                       ),
                       GestureDetector(
                         onTap: () {},
@@ -296,12 +242,13 @@ class _HomeWidgetState extends State<HomeWidget> {
                             child: Image.asset(
                               'assets/images/home_rectangle.png',
                               fit: BoxFit.contain,
+                              height: 130.0,
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.05,
+                      const SizedBox(
+                        height: 40,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -318,7 +265,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             width: mediaQuery.width * 0.02,
                           ),
                           Container(
-                            height: 15.0,
+                            height: 25.0,
                             width: 35.0,
                             color: AppColors.red,
                             child: Center(
@@ -329,17 +276,22 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     .subtitle2!
                                     .copyWith(
                                         color: AppColors.white,
-                                        fontSize: 9,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w400),
                               ),
                             ),
                           ),
                           const Spacer(),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              widget.onTapped(2);
+                            },
                             child: Container(
                               padding: const EdgeInsets.only(
                                 right: 20.0,
+                                top: 5.0,
+                                bottom: 5.0,
+                                left: 10.0,
                               ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -351,7 +303,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         .subtitle2!
                                         .copyWith(
                                           color: AppColors.whitegrey,
-                                          fontSize: 10,
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                         ),
                                   ),
@@ -365,12 +317,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                           )
                         ],
                       ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.01,
+                      const SizedBox(
+                        height: 10,
                       ),
                       Container(
                         width: mediaQuery.width,
-                        height: mediaQuery.height * 0.3,
+                        height: 230,
                         child: ListView.builder(
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
@@ -391,8 +343,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                           scrollDirection: Axis.horizontal,
                         ),
                       ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.04,
+                      const SizedBox(
+                        height: 30,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -410,10 +362,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                           ),
                           const Spacer(),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              widget.onTapped(3);
+                            },
                             child: Container(
                               padding: const EdgeInsets.only(
                                 right: 20.0,
+                                top: 5.0,
+                                bottom: 5.0,
+                                left: 10.0,
                               ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -425,7 +382,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         .subtitle2!
                                         .copyWith(
                                           color: AppColors.whitegrey,
-                                          fontSize: 10,
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                         ),
                                   ),
@@ -439,184 +396,236 @@ class _HomeWidgetState extends State<HomeWidget> {
                           )
                         ],
                       ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.01,
+                      const SizedBox(
+                        height: 10,
                       ),
                       Container(
                         width: mediaQuery.width,
-                        height: mediaQuery.height * 0.18,
+                        height: 140,
                         child: ListView.builder(
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
-                              padding: const EdgeInsets.only(
-                                right: 12.0,
-                              ),
-                              child: RecentGameWidget(
-                                mediaQuery: mediaQuery,
-                                imagePath: allRecent[index].imagePath!,
-                                index: index,
-                                name: allRecent[index].gameName!,
-                              ),
-                            );
+                                padding: const EdgeInsets.only(
+                                  right: 12.0,
+                                ),
+                                child: GestureDetector(
+                                  onTap: (){
+                                    Navigation.pushNamed(context, Routes.webview,
+                                        {'link': widget.allSuggestedGames![index].redirectionUrl});
+                                  },
+                                  child: Column(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(10.0),
+                                        child: Image.network(
+                                          widget.allSuggestedGames![index].image!,
+                                          fit: BoxFit.cover,
+                                          width: 110.0,
+                                          height: 110.0,
+                                          errorBuilder: (context, error, stackTrace) => Image.asset('assets/images/no_image.png',fit: BoxFit.cover,),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        widget.allSuggestedGames![index].gameName!,
+                                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.black,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ));
                           },
-                          itemCount: allRecent.length,
+                          itemCount: widget.allSuggestedGames!.length,
                           scrollDirection: Axis.horizontal,
                         ),
                       ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.04,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            Strings.TODAY_NEWS,
-                            style:
-                                Theme.of(context).textTheme.headline6!.copyWith(
-                                      color: AppColors.black,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                          ),
-                          SizedBox(
-                            width: mediaQuery.width * 0.02,
-                          ),
-                          const Spacer(),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              padding: const EdgeInsets.only(
-                                right: 20.0,
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    Strings.MORE_NEWS,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle2!
-                                        .copyWith(
-                                          color: AppColors.whitegrey,
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                  ),
-                                  SizedBox(
-                                    width: mediaQuery.width * 0.005,
-                                  ),
-                                  Image.asset('assets/images/right_arrow.png'),
-                                ],
+                      if(widget.allContent!.isNotEmpty) ...[
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              Strings.TODAY_NEWS,
+                              style:
+                              Theme.of(context).textTheme.headline6!.copyWith(
+                                color: AppColors.black,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.01,
-                      ),
-                      Container(
-                        width: mediaQuery.width,
-                        height: mediaQuery.height * 0.30,
-                        child: ListView.builder(
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              height: mediaQuery.height * 0.14,
-                              margin: const EdgeInsets.only(
-                                right: 20.0,
-                                bottom: 8.0,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              child: Card(
-                                elevation: 2,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
+                            SizedBox(
+                              width: mediaQuery.width * 0.02,
+                            ),
+                            const Spacer(),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(Routes.news);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.only(
+                                  right: 20.0,
+                                  top: 5.0,
+                                  bottom: 5.0,
+                                  left: 10.0,
                                 ),
                                 child: Row(
-                                  mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Container(
-                                      height: mediaQuery.height * 0.14,
-                                      child:Image.asset(allNews[index]
-                                          .newsImagePath!,fit: BoxFit.cover,),
+                                    Text(
+                                      Strings.MORE_NEWS,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle2!
+                                          .copyWith(
+                                        color: AppColors.whitegrey,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                      ),
                                     ),
                                     SizedBox(
-                                      width: mediaQuery.width * 0.03,
+                                      width: mediaQuery.width * 0.005,
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
+                                    Image.asset('assets/images/right_arrow.png'),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Container(
+                          width: mediaQuery.width,
+                          height: 250,
+                          child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigation.pushNamed(context, Routes.webview,
+                                      {'link': widget.allContent![index].link});
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(
+                                    right: 15.0,
+                                    top: 5.0,
+                                  ),
+                                  height: 120.0,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  child: Card(
+                                    elevation: 2,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Container(
-                                          width: mediaQuery.width*0.48,
-                                          child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                allNews[index].newsTitle!,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline6!
-                                                    .copyWith(
-                                                  color: AppColors.greyBlue,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontFamily: 'open_sans',
-                                                ),
+                                          width: 120.0,
+                                          height: 120.0,
+                                          child: ClipRRect(
+                                            borderRadius: const BorderRadius.only(
+                                              topLeft: Radius.circular(10.0),
+                                              bottomLeft: Radius.circular(10.0),),
+                                            child: Image.network(
+                                              widget.allContent![index].imageUrl!,
+                                              fit: BoxFit.cover,
+                                              errorBuilder: (context, error, stackTrace) => ClipRRect(
+                                                borderRadius: const BorderRadius.only(topLeft: Radius.circular(10.0),bottomLeft:  Radius.circular(10.0)),
+                                                child: Image.asset('assets/images/no_image.png',fit: BoxFit.cover,),
                                               ),
-                                              Spacer(),
-                                              Text(
-                                                allNews[index].newsPublishedTime!,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: mediaQuery.width * 0.03,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Container(
+                                              width: mediaQuery.width * 0.50,
+                                              child: Row(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Flexible(
+                                                    child: Text(
+                                                      widget.allContent![index].title!.replaceAll(
+                                                          RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
+                                                      maxLines: 1,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline6!
+                                                          .copyWith(
+                                                        color: AppColors.greyBlue,
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w600,
+                                                        fontFamily: 'open_sans',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Spacer(),
+                                                  Text(
+                                                    getDate(widget.allContent![index].pubDate!),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .subtitle1!
+                                                        .copyWith(
+                                                      fontSize: 10.33,
+                                                      fontWeight: FontWeight.w400,
+                                                      fontFamily: 'open_sans',
+                                                      color: AppColors.greyBlue,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: mediaQuery.height * 0.01,
+                                            ),
+                                            Container(
+                                              width: 150.0,
+                                              child: Text(
+                                                widget.allContent![index].description!
+                                                    .replaceAll(
+                                                    RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
+                                                overflow: TextOverflow.ellipsis,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .subtitle1!
                                                     .copyWith(
-                                                  fontSize: 10.33,
                                                   fontWeight: FontWeight.w400,
-                                                  fontFamily: 'open_sans',
-                                                  color: AppColors.greyBlue,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-
-                                        SizedBox(
-                                          height: mediaQuery.height * 0.01,
-                                        ),
-                                        Container(
-                                          width: 150.0,
-                                          child: Text(
-                                            allNews[index].newsContent!,
-                                            maxLines: 2,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1!
-                                                .copyWith(
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 16,
                                                   color: AppColors.blackBlue,
                                                 ),
-                                          ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                          itemCount: allNews.length,
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.zero,
+                              );
+                            },
+                            itemCount: widget.allContent!.length,
+                            padding: EdgeInsets.zero,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.04,
+                      ],
+
+                      const SizedBox(
+                        height: 30,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -634,10 +643,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                           ),
                           const Spacer(),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              widget.onTapped(3);
+                            },
                             child: Container(
                               padding: const EdgeInsets.only(
                                 right: 20.0,
+                                top: 5.0,
+                                bottom: 5.0,
+                                left: 10.0,
                               ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -649,7 +663,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         .subtitle2!
                                         .copyWith(
                                           color: AppColors.whitegrey,
-                                          fontSize: 10,
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                         ),
                                   ),
@@ -663,13 +677,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                           )
                         ],
                       ),
-                      SizedBox(
-                        height: mediaQuery.height * 0.01,
+                      const SizedBox(
+                        height: 10,
                       ),
                       Container(
-                        margin: const EdgeInsets.only(right: 20.0,),
+                        margin: const EdgeInsets.only(
+                          right: 20.0,
+                        ),
                         width: mediaQuery.width,
-                        height: mediaQuery.height * 0.26,
+                        height: 200,
                         child: GridView.builder(
                           padding: EdgeInsets.zero,
                           physics: const NeverScrollableScrollPhysics(),
@@ -680,11 +696,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                             childAspectRatio: 3.1,
                           ),
                           itemBuilder: (BuildContext context, int index) {
-                              return Image.asset(allGamesCategory[index].imagePath!);
+                            return Image.asset(
+                                allGamesCategory[index].imagePath!);
                           },
                           itemCount: allGamesCategory.length,
                         ),
-
                       )
                     ],
                   ),

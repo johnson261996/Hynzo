@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hynzo/providers/auth_provider.dart';
 import 'package:hynzo/providers/chat_provider.dart';
+import 'package:hynzo/providers/game_provider.dart';
+import 'package:hynzo/providers/interest_provider.dart';
+import 'package:hynzo/providers/news_provider.dart';
+import 'package:hynzo/providers/suggestion_provider.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/themes.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +23,18 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ChatProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => InterestProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SuggestionProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => NewsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => GamesProvider(),
         ),
       ],
       child: MaterialApp(

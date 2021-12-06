@@ -13,6 +13,7 @@ class AppColors {
 
   static final Color black = Pigment.fromString('#000000');
   static final Color red = Pigment.fromString('#D34242');
+  static final Color offblack = Pigment.fromString('#646161');
   static final Color greyBlack = Pigment.fromString('#1B1A57');
   static final Color greyBlue = Pigment.fromString('#6E798C');
   static final Color blackBlue = Pigment.fromString('#081F32');
@@ -36,6 +37,7 @@ class AppColors {
   static final Color geryYellow = Pigment.fromString("#F2C94C");
   static final Color offline = Pigment.fromString("#BDBDBD");
   static final Color darkyellow = Pigment.fromString("#FFC900");
+  static final Color blueGray = Pigment.fromString("#91b7e2");
   static final Color blue = Pigment.fromString("#839CDE");
   static final Color offblue = Pigment.fromString("#4F5E7B");
   static final Color lightblue = Pigment.fromString("#94BDE3");

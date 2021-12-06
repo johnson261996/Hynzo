@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/models/tab_header_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/widgets/common/search_bar/search_bar.dart';
 import 'package:hynzo/widgets/game/action.dart';
 import 'package:hynzo/widgets/game/adventure.dart';
 import 'package:hynzo/widgets/game/all_games.dart';
@@ -10,17 +12,24 @@ import 'package:hynzo/widgets/game/card.dart';
 import 'package:hynzo/widgets/game/top_charts.dart';
 
 class GameWidget extends StatefulWidget {
-  const GameWidget({Key? key}) : super(key: key);
+  final List<SuggestedPlayModel>? allSuggestedGames;
+
+  const GameWidget({
+    Key? key,
+    this.allSuggestedGames,
+  }) : super(key: key);
 
   @override
   State<GameWidget> createState() => _GameWidgetState();
 }
 
-class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin{
+class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
   List<TabHeaderModel> allTabHeader = [];
   int selectedIndexValue = 0;
   late TabController tabController;
   late PageController _pageController;
+  String search = '';
+  bool showSearchBar = false;
 
   @override
   void dispose() {
@@ -34,7 +43,7 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin{
   void initState() {
     // TODO: implement initState
     super.initState();
-    _pageController=PageController();
+    _pageController = PageController();
     allTabHeader.add(
       TabHeaderModel(
         tabName: 'All games',
@@ -97,7 +106,11 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin{
                 ),
                 const Spacer(),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      showSearchBar = !showSearchBar;
+                    });
+                  },
                   icon: Icon(
                     Icons.search,
                     size: 20,
@@ -108,23 +121,45 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin{
             ),
           ),
           SizedBox(
+            height: mediaQuery.height * 0.005,
+          ),
+          if (showSearchBar) ...[
+            SearchBar(
+              hintText: Strings.SEARCH_GAMES,
+              onchangeFunc: (val) {
+                setState(() {
+                  search = val;
+                });
+              },
+              padding: const EdgeInsets.only(
+                left: 15.0,
+                right: 15.0,
+              ),
+            ),
+          ],
+          SizedBox(
             height: mediaQuery.height * 0.02,
           ),
           Container(
             height: 25.0,
             child: TabBar(
               padding: EdgeInsets.zero,
-              onTap: (index){
+              onTap: (index) {
                 setState(() {
                   selectedIndexValue = index;
-                  _pageController.animateToPage(selectedIndexValue, duration: const Duration(milliseconds: 500), curve: Curves.fastLinearToSlowEaseIn);
+                  _pageController.animateToPage(selectedIndexValue,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.fastLinearToSlowEaseIn);
                 });
               },
               controller: tabController,
-                indicatorColor: Colors.transparent,
-              tabs:  List<Widget>.generate(allTabHeader.length, (int index){
+              indicatorColor: Colors.transparent,
+              tabs: List<Widget>.generate(allTabHeader.length, (int index) {
                 return Container(
-                  padding: const EdgeInsets.only(left: 5.0,right: 5.0,),
+                  padding: const EdgeInsets.only(
+                    left: 5.0,
+                    right: 5.0,
+                  ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
                     color: index == selectedIndexValue
@@ -135,17 +170,17 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin{
                     child: Text(
                       allTabHeader[index].tabName!,
                       style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                        fontSize: 12,
-                        color: index == selectedIndexValue
-                            ? AppColors.white
-                            : AppColors.greyBlack,
-                        fontWeight: FontWeight.w400,
-                      ),
+                            fontSize: 12,
+                            color: index == selectedIndexValue
+                                ? AppColors.white
+                                : AppColors.greyBlack,
+                            fontWeight: FontWeight.w400,
+                          ),
                     ),
                   ),
                 );
               }),
-              isScrollable:true,
+              isScrollable: true,
             ),
           ),
           SizedBox(
@@ -165,11 +200,15 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin{
                 onPageChanged: (page) {
                   setState(() {
                     selectedIndexValue = page;
-                    tabController.animateTo(selectedIndexValue, duration: const Duration(milliseconds: 500), curve: Curves.fastLinearToSlowEaseIn);
+                    tabController.animateTo(selectedIndexValue,
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.fastLinearToSlowEaseIn);
                   });
                 },
-                children: const [
-                  AllGames(),
+                children: [
+                  AllGames(
+                    allSuggestedGames: widget.allSuggestedGames,
+                  ),
                   TopCharts(),
                   ActionGames(),
                   CardGames(),
