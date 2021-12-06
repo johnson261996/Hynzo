@@ -112,7 +112,7 @@ class _NewsSwipeViewState extends State<NewsSwipeView> {
                                       RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
                           overflow: TextOverflow.ellipsis,
                           softWrap: false,
-                          maxLines: 20,
+                          maxLines: 15,
                           style:
                               Theme.of(context).textTheme.subtitle1!.copyWith(
                                     fontWeight: FontWeight.w400,

@@ -28,7 +28,8 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _suggestionProvider = Provider.of<SuggestionProvider>(context,listen: false);
+    _suggestionProvider =
+        Provider.of<SuggestionProvider>(context, listen: false);
     allResults.clear();
     ConnectionStaus().check().then((connectionStatus) {
       if (connectionStatus) {
@@ -45,19 +46,20 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
       setState(() {
         _isLoading = true;
       });
-      await LocalStorage.getLoginStatus().then((value) => token=value!);
-      SuggestionModel suggestionModel = await _suggestionProvider!.getSuggestionList(token);
-      setState(() {
-        _isLoading = false;
-      });
+      await LocalStorage.getLoginStatus().then((value) => token = value!);
+      SuggestionModel suggestionModel =
+          await _suggestionProvider!.getSuggestionList(token);
       if (suggestionModel.statusCode == 200) {
-        _totalCount=suggestionModel.count!;
+        _totalCount = suggestionModel.count!;
         for (var element in suggestionModel.resultsList) {
           allResults.add(element);
         }
       } else {
         ToastUtil().showToast("Something went wrong.");
       }
+      setState(() {
+        _isLoading = false;
+      });
     } catch (e) {
       setState(() {
         _isLoading = false;
@@ -66,21 +68,21 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
     }
   }
 
-  Future<void> addSuggestUser(String suggestUserId,int index) async {
-    List<String> userIds=[];
+  Future<void> addSuggestUser(String suggestUserId, int index) async {
+    List<String> userIds = [];
     userIds.clear();
     try {
       setState(() {
         _isLoading = true;
       });
-      await LocalStorage.getLoginStatus().then((value) => token=value!);
-      await LocalStorage.getUserID().then((value) => userId=value.toString());
+      await LocalStorage.getLoginStatus().then((value) => token = value!);
+      await LocalStorage.getUserID().then((value) => userId = value.toString());
       userIds.add(suggestUserId);
       userIds.add(userId);
-      SuggestUserAddResponseModel suggestionModel = await _suggestionProvider!
-          .addSuggestUser(token,userIds);
+      SuggestUserAddResponseModel suggestionModel =
+          await _suggestionProvider!.addSuggestUser(token, userIds);
       if (suggestionModel.statusCode == 201) {
-        allResults[index].isSelected=!allResults[index].isSelected!;
+        allResults[index].isSelected = !allResults[index].isSelected!;
         ToastUtil().showToast("User added successfully.");
       } else {
         ToastUtil().showToast("Something went wrong.");
