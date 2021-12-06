@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "220271949073",
+    "project_id": "hynzo-2e6cf",
+    "storage_bucket": "hynzo-2e6cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220271949073:android:a26e201498e4cc539c08b0",
+        "android_client_info": {
+          "package_name": "com.gloify.hynzo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220271949073-lci9s9k8n0sn1d701obco7hnsvq497gs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwf6v4FslT14RSxPo4P7p_IBNvOmVLwaM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220271949073-lci9s9k8n0sn1d701obco7hnsvq497gs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
