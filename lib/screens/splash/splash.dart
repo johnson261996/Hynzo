@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   checkAuth() async {
     await LocalStorage.getIntroStatus().then((value) => introStatus = value!);
-    await LocalStorage.getLoginStatus().then((value) => token = value!);
+    await LocalStorage.getLoginToken().then((value) => token = value!);
     if (introStatus) {
       Navigator.pushReplacementNamed(context, Routes.intro);
     } else {

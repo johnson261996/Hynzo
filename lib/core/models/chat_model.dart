@@ -5,7 +5,7 @@ class ChatModel{
   final int? unreadCount;
   final String? status;
   final bool? isRead;
-  final String? dateTime;
+  final DateTime? dateTime;
 
   ChatModel({
     this.imagePath,

@@ -370,7 +370,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       ),
                       Container(
                         width: mediaQuery.width,
-                        height: mediaQuery.height * 0.285,
+                        height: mediaQuery.height * 0.3,
                         child: ListView.builder(
                           itemBuilder: (BuildContext context, int index) {
                             return Container(

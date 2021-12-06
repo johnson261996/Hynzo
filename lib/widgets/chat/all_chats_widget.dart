@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:hynzo/core/models/chat_list_model.dart';
 import 'package:hynzo/core/models/chat_model.dart';
+import 'package:hynzo/core/models/create_channel_model.dart';
+import 'package:hynzo/screens/chat/chat_message_screen.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/themes/themes.dart';
+import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class AllChatsWidget extends StatefulWidget {
-  const AllChatsWidget({Key? key}) : super(key: key);
+  const AllChatsWidget(
+      {Key? key, required this.getChatList, required this.createChannel})
+      : super(key: key);
+
+  final Function(int, int)? getChatList;
+  final Function(List<String>, bool)? createChannel;
 
   @override
   State<AllChatsWidget> createState() => _AllChatsWidgetState();
@@ -11,221 +23,276 @@ class AllChatsWidget extends StatefulWidget {
 
 class _AllChatsWidgetState extends State<AllChatsWidget> {
   List<ChatModel> allChats = [];
+  bool loading = true;
+  DateFormat formatter = DateFormat('dd/MM/yyyy');
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    allChats.add(
-      ChatModel(
-        imagePath: 'assets/images/message_image_one.png',
-        name: 'Darlene Steward',
-        unreadCount: 5,
-        status: 'unread',
-        isRead: false,
-        content: 'Pls take a look at the images.',
-        dateTime: '16.04',
-      ),
-    );
-    allChats.add(
-      ChatModel(
-        imagePath: 'assets/images/message_image_three.png',
-        name: 'Fullsnack Designers',
-        unreadCount: 0,
-        status: 'inactive',
-        isRead: false,
-        content: 'Hello guys, we have discussed about ...',
-        dateTime: '16.04',
-      ),
-    );
-    allChats.add(
-      ChatModel(
-        imagePath: 'assets/images/message_image_three.png',
-        name: 'Lee Williamson',
-        unreadCount: 0,
-        status: 'active',
-        isRead: false,
-        content: 'Yes, that’s gonna work, hopefully. ',
-        dateTime: '06.12',
-      ),
-    );
-    allChats.add(
-      ChatModel(
-        imagePath: 'assets/images/message_image_four.png',
-        name: 'Ronald Mccoy',
-        unreadCount: 0,
-        status: 'inactive',
-        isRead: true,
-        content: 'Thanks dude 😉',
-        dateTime: 'Yesterday',
-      ),
-    );
-    allChats.add(
-      ChatModel(
-        imagePath: 'assets/images/message_image_five.png',
-        name: 'Albert Bell',
-        unreadCount: 0,
-        status: 'inactive',
-        isRead: false,
-        content: 'I‘m happy this anime has such grea...',
-        dateTime: 'Yesterday',
-      ),
-    );
+    timeago.setLocaleMessages('en_short', timeago.EnShortMessages());
+    getAllChats(10, 0);
+  }
+
+  getAllChats(int limit, int offset) async {
+    final ChatListModel response = await widget.getChatList!(limit, offset);
+    allChats.clear();
+    response.results.forEach((element) {
+      allChats.add(
+        ChatModel(
+          imagePath: element.avatar,
+          name: element.lastMessage.author.username,
+          unreadCount: element.unreadMessages,
+          status: element.userBasicInfo.isOnline ? 'active' : 'inacvtive',
+          isRead: false,
+          content: element.lastMessage.content,
+          dateTime: element.lastMessage.timestamp,
+        ),
+      );
+    });
+    setState(() {
+      allChats = allChats;
+      loading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    var mediaQuery=MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     return Container(
-      height: mediaQuery.height,
+      height: size.height,
       padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-      child: ListView.builder(
-        padding: EdgeInsets.zero,
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: allChats.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            width: mediaQuery.width,
-            height: 80,
-            margin: const EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
-              bottom: 10.0,
-            ),
-            decoration: BoxDecoration(
-              color: allChats[index].unreadCount! > 0
-                  ? AppColors.lighterblue.withOpacity(0.3)
-                  : AppColors.white,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: ListTile(
-              leading: Stack(
-                children: [
-                  Image.asset(
-                    allChats[index].imagePath!,
-                    fit: BoxFit.contain,
-                    width: 50.0,
-                    height: 50.0,
-                  ),
-                  if(allChats[index].status == "active")...[
-                    Positioned(
-                      top: 35.0,
-                      left: 40.0,
-                      child: Container(
-                        width: 10.0,
-                        height: 10.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: AppColors.green,
-                        ),
-                      ),
-                    )
-                  ] else if(allChats[index].status == "inactive")...[
-                    Positioned(
-                      top: 35.0,
-                      left: 40.0,
-                      child: Container(
-                        width: 10.0,
-                        height: 10.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: AppColors.offline,
-                        ),
-                      ),
-                    )
-                  ] else if(allChats[index].status == "unread")...[
-                    Positioned(
-                      top: 35.0,
-                      left: 40.0,
-                      child: Container(
-                        width: 10.0,
-                        height: 10.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: AppColors.geryYellow,
-                        ),
-                      ),
-                    )
-                  ]
-                ],
-              ),
-              title: Text(
-                allChats[index].name!,
-                style: Theme.of(context).textTheme.headline6!.apply(
-                      color: AppColors.greyBlack,
+      child: allChats.isEmpty || loading
+          ? Center(
+              child: loading
+                  ? const CircularProgressIndicator()
+                  : const Text('No chats available'),
+            )
+          : ListView.builder(
+              padding: EdgeInsets.zero,
+              physics: const BouncingScrollPhysics(),
+              itemCount: allChats.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () async {
+                    EasyLoading.show(maskType: EasyLoadingMaskType.black);
+                    CreateChannelModel response =
+                        await widget.createChannel!(['128', '186'], false);
+                    EasyLoading.dismiss(animation: false);
+                    if (response.participants.isNotEmpty) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChatMessageScreen(
+                                    channelId: response.id,
+                                    participants:response.participants
+                                  )));
+                    }
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: size.width,
+                    height: 80,
+                    margin: const EdgeInsets.only(
+                      left: 8.0,
+                      right: 8.0,
+                      bottom: 10.0,
                     ),
-              ),
-              subtitle: allChats[index].isRead! ?
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Image.asset('assets/images/read.png',width: 10.0,height: 10.0,),
-                  const SizedBox(width: 2.0,),
-                  Text(
-                    allChats[index].content!,
-                    style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 13,
-                      color: AppColors.offblue,
+                    decoration: BoxDecoration(
+                      color: allChats[index].unreadCount! > 0
+                          ? AppColors.lighterblue.withOpacity(0.3)
+                          : AppColors.white,
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  ),
-                ],
-              ):Text(
-                allChats[index].content!,
-                style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 13,
-                      color: AppColors.offblue,
-                    ),
-              ),
-              trailing: allChats[index].unreadCount! > 0
-                  ? Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          allChats[index].dateTime!,
-                          style:
-                              Theme.of(context).textTheme.subtitle2!.copyWith(
+                    child: ListTile(
+                      leading: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: allChats[index].imagePath! == ''
+                                ? Container(
+                                    width: 50,
+                                    height: 50,
+                                    child: Center(
+                                      child: Text(
+                                        allChats[index]
+                                            .name!
+                                            .substring(0, 1)
+                                            .toUpperCase(),
+                                        style: Themes
+                                            .baseTheme.textTheme.headline2!
+                                            .copyWith(
+                                                color: AppColors.blueDark,
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white),
+                                  )
+                                : Image.network(
+                                    allChats[index].imagePath!,
+                                    fit: BoxFit.contain,
+                                    width: 50.0,
+                                    height: 50.0,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Container(
+                                      width: 50,
+                                      height: 50,
+                                      child: Center(
+                                        child: Text(
+                                          allChats[index]
+                                              .name!
+                                              .substring(0, 1)
+                                              .toUpperCase(),
+                                          style: Themes
+                                              .baseTheme.textTheme.headline2!
+                                              .copyWith(
+                                                  color: AppColors.blueDark,
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                          ),
+                          if (allChats[index].status == "active") ...[
+                            Positioned(
+                              top: 35.0,
+                              left: 40.0,
+                              child: Container(
+                                width: 10.0,
+                                height: 10.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  color: AppColors.green,
+                                ),
+                              ),
+                            )
+                          ] else if (allChats[index].status == "inactive") ...[
+                            Positioned(
+                              top: 35.0,
+                              left: 40.0,
+                              child: Container(
+                                width: 10.0,
+                                height: 10.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  color: AppColors.offline,
+                                ),
+                              ),
+                            )
+                          ] else if (allChats[index].status == "unread") ...[
+                            Positioned(
+                              top: 35.0,
+                              left: 40.0,
+                              child: Container(
+                                width: 10.0,
+                                height: 10.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  color: AppColors.geryYellow,
+                                ),
+                              ),
+                            )
+                          ]
+                        ],
+                      ),
+                      title: Text(
+                        allChats[index].name!,
+                        style: Theme.of(context).textTheme.headline6!.apply(
+                              color: AppColors.greyBlack,
+                            ),
+                      ),
+                      subtitle: allChats[index].isRead!
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Image.asset(
+                                  'assets/images/read.png',
+                                  width: 10.0,
+                                  height: 10.0,
+                                ),
+                                const SizedBox(
+                                  width: 2.0,
+                                ),
+                                Text(
+                                  allChats[index].content!,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 13,
+                                        color: AppColors.offblue,
+                                      ),
+                                ),
+                              ],
+                            )
+                          : Text(
+                              allChats[index].content!,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2!
+                                  .copyWith(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 13,
-                                    color: AppColors.greishBlack,
+                                    color: AppColors.offblue,
                                   ),
-                        ),
-                        const SizedBox(
-                          height: 2.0,
-                        ),
-                        Container(
-                          width: 20.0,
-                          height: 20.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.0),
-                            color: AppColors.blueDark,
-                          ),
-                          child: Center(
-                            child: Text(
-                              allChats[index].unreadCount!.toString(),
-                              style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12,
-                              ),
                             ),
+                      trailing: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            DateTime.now()
+                                        .difference(allChats[index].dateTime!) >
+                                    const Duration(hours: 24)
+                                ? formatter.format(allChats[index].dateTime!)
+                                : timeago.format(allChats[index].dateTime!),
+                            style:
+                                Theme.of(context).textTheme.subtitle2!.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 13,
+                                      color: AppColors.greishBlack,
+                                    ),
                           ),
-                        )
-                      ],
-                    )
-                  : Text(
-                      allChats[index].dateTime!,
-                      style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13,
-                            color: AppColors.greishBlack,
+                          const SizedBox(
+                            height: 5.0,
                           ),
+                          if (allChats[index].unreadCount! > 0)
+                            Container(
+                              width: 20.0,
+                              height: 20.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                color: AppColors.blueDark,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  allChats[index].unreadCount!.toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1!
+                                      .copyWith(
+                                        color: AppColors.white,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 12,
+                                      ),
+                                ),
+                              ),
+                            )
+                        ],
+                      ),
                     ),
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }

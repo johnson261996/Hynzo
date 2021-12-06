@@ -36,6 +36,15 @@ dependencies:
   shared_preferences: ^2.0.8
   animated_text_kit: ^4.2.1
   sms_autofill: ^2.2.0
+  flutter_chat_ui: ^1.5.2
+  file_picker: ^4.2.5
+  uuid: ^3.0.5
+  mime: ^1.0.1
+  open_file: ^3.2.1
+  image_picker: ^0.8.4+4
+  timeago: ^3.1.0
+  web_socket_channel: ^2.1.0
+  flutter_easyloading: ^3.0.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -155,6 +164,7 @@ flutter:
     - assets/images/coin.png
     - assets/images/search.png
     - assets/images/right_arrow.png
+    - assets/messages.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

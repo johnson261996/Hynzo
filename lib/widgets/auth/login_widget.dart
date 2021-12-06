@@ -1,8 +1,6 @@
 ///Contains all the widgets included in login screen.
 
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:hynzo/containers/chat/connected_container.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/localStorage.dart';
 import 'package:hynzo/widgets/common/buttons/primary_button.dart';
