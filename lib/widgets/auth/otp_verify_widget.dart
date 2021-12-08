@@ -85,40 +85,41 @@ class _OtpWidgetState extends State<OtpWidget> {
   }
 
   verifyOTP() {
-    ConnectionStaus().check().then((connectionStatus) {
-      if (connectionStatus) {
-        if (otp.length == 6) {
-          FocusScope.of(context).unfocus();
-          widget.verifyOTP(otp);
-        } else {
-          setState(() {
-            errorMgs = Strings.PHONE_NUMBER_VALIDATION;
-          });
-        }
-      } else {
-        ToastUtil().showToast("No internet connection available. Please check your connection or try again later.");
-      }
-    });
+    // ConnectionStaus().check().then((connectionStatus) {
+    //   if (connectionStatus) {
+    if (otp.length == 6) {
+      FocusScope.of(context).unfocus();
+      widget.verifyOTP(otp);
+    } else {
+      setState(() {
+        errorMgs = Strings.PHONE_NUMBER_VALIDATION;
+      });
+    }
+    //   } else {
+    //     ToastUtil().showToast("No internet connection available. Please check your connection or try again later.");
+    //   }
+    // });
   }
 
   resendOTP() {
     FocusScope.of(context).unfocus();
-    ConnectionStaus().check().then((connectionStatus) {
-      if (connectionStatus) {
-        String signature = '';
-        SmsAutoFill().getAppSignature.then((signature) {
-          signature = signature;
-        });
-        widget.resendOTP(phone, signature);
-      } else {
-        ToastUtil().showToast("No internet connection available. Please check your connection or try again later.");
-      }
+    // ConnectionStaus().check().then((connectionStatus) {
+    //   if (connectionStatus) {
+    String signature = '';
+    SmsAutoFill().getAppSignature.then((signature) {
+      signature = signature;
     });
+    widget.resendOTP(phone, signature);
+    //   } else {
+    //     ToastUtil().showToast(
+    //         "No internet connection available. Please check your connection or try again later.");
+    //   }
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    var mediaQuery= MediaQuery.of(context).size;
+    var mediaQuery = MediaQuery.of(context).size;
     return Container(
       color: AppColors.white,
       width: mediaQuery.width,

@@ -39,31 +39,31 @@ class _InterestWidgetState extends State<InterestWidget> {
       if (_sccontroller.position.pixels ==
           _sccontroller.position.maxScrollExtent) {
         if (!widget.isNextValueEmpty!) {
-          ConnectionStaus().check().then((connectionStatus) {
-            if (connectionStatus) {
-              offset = offset + 10;
-              widget.fetchInterest!(
-                "10",
-                (offset).toString(),
-              );
-            } else {
-              ToastUtil().showToast(
-                  "No internet connection available. Please check your connection or try again later.");
-            }
-          });
+          // ConnectionStaus().check().then((connectionStatus) {
+          //   if (connectionStatus) {
+          offset = offset + 10;
+          widget.fetchInterest!(
+            "10",
+            (offset).toString(),
+          );
+          //   } else {
+          //     ToastUtil().showToast(
+          //         "No internet connection available. Please check your connection or try again later.");
+          //   }
+          // });
         }
       }
     });
   }
 
-  double _setProgressvalue(){
+  double _setProgressvalue() {
     int count = 0;
     for (var element in widget.allResults) {
       if (element.isSelected!) {
-        count ++;
+        count++;
       }
     }
-    if(widget.totalCount == 0) {
+    if (widget.totalCount == 0) {
       return 0.0;
     } else {
       double value = (count.toDouble() / widget.totalCount!.toDouble());
@@ -79,35 +79,35 @@ class _InterestWidgetState extends State<InterestWidget> {
   }
 
   _addInterest() {
-    ConnectionStaus().check().then((connectionStatus) {
-      if (connectionStatus) {
-        for (var element in widget.allResults) {
-          if (element.isSelected!) {
-            if (interestIds == '') {
-              interestIds = element.id.toString();
-            } else {
-              interestIds = interestIds + element.id.toString();
-            }
-          }
-        }
+    // ConnectionStaus().check().then((connectionStatus) {
+    //   if (connectionStatus) {
+    for (var element in widget.allResults) {
+      if (element.isSelected!) {
         if (interestIds == '') {
-          var snackBar = SnackBar(
-            content: Text(
-              'You need to select one of them from above',
-              style: Theme.of(context).textTheme.subtitle2!.apply(
-                    color: AppColors.white,
-                  ),
-            ),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          interestIds = element.id.toString();
         } else {
-          widget.addInterest!(interestIds);
+          interestIds = interestIds + element.id.toString();
         }
-      } else {
-        ToastUtil().showToast(
-            "No internet connection available. Please check your connection or try again later.");
       }
-    });
+    }
+    if (interestIds == '') {
+      var snackBar = SnackBar(
+        content: Text(
+          'You need to select one of them from above',
+          style: Theme.of(context).textTheme.subtitle2!.apply(
+                color: AppColors.white,
+              ),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      widget.addInterest!(interestIds);
+    }
+    //   } else {
+    //     ToastUtil().showToast(
+    //         "No internet connection available. Please check your connection or try again later.");
+    //   }
+    // });
   }
 
   @override
@@ -263,7 +263,13 @@ class _InterestWidgetState extends State<InterestWidget> {
                       ),
                       width: 70.0,
                       height: 70.0,
-                      child: CircularProgressIndicator(value: _setProgressvalue(),backgroundColor: AppColors.blueGray,valueColor:  AlwaysStoppedAnimation<Color>(AppColors.blueDark,),),
+                      child: CircularProgressIndicator(
+                        value: _setProgressvalue(),
+                        backgroundColor: AppColors.blueGray,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          AppColors.blueDark,
+                        ),
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(8.0),
@@ -277,7 +283,6 @@ class _InterestWidgetState extends State<InterestWidget> {
               ),
             ),
           ),
-
         ],
       ),
     );

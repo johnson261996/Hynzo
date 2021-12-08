@@ -25,23 +25,23 @@ class _LoginWidgetState extends State<LoginWidget> {
   late String name = '';
 
   _generateOTP() {
-    ConnectionStaus().check().then((connectionStatus) {
-      if (connectionStatus) {
-        if (mobile.length == 10) {
-          String signature = '';
-          SmsAutoFill().getAppSignature.then((signature) {
-            signature = signature;
-          });
-          widget.generateOTP(mobile, signature);
-        } else {
-          setState(() {
-            errorMgs = Strings.PHONE_NUMBER_VALIDATION;
-          });
-        }
-      } else {
-        ToastUtil().showToast("No internet connection available. Please check your connection or try again later.");
-      }
-    });
+    // ConnectionStaus().check().then((connectionStatus) {
+    //   if (connectionStatus) {
+    if (mobile.length == 10) {
+      String signature = '';
+      SmsAutoFill().getAppSignature.then((signature) {
+        signature = signature;
+      });
+      widget.generateOTP(mobile, signature);
+    } else {
+      setState(() {
+        errorMgs = Strings.PHONE_NUMBER_VALIDATION;
+      });
+    }
+    //   } else {
+    //     ToastUtil().showToast("No internet connection available. Please check your connection or try again later.");
+    //   }
+    // });
   }
 
   @override

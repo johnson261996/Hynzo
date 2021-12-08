@@ -42,14 +42,14 @@ class _HomeContainerState extends State<HomeContainer> {
     _newsProvider = Provider.of<NewsProvider>(context, listen: false);
     _gamesProvider = Provider.of<GamesProvider>(context, listen: false);
     allNews.clear();
-    ConnectionStaus().check().then((connectionStatus) {
-      if (connectionStatus) {
-        getSuggestionGames();
-      } else {
-        ToastUtil().showToast(
-            "No internet connection available. Please check your connection or try again later.");
-      }
-    });
+    // ConnectionStaus().check().then((connectionStatus) {
+    //   if (connectionStatus) {
+    getSuggestionGames();
+    //   } else {
+    //     ToastUtil().showToast(
+    //         "No internet connection available. Please check your connection or try again later.");
+    //   }
+    // });
   }
 
   bool isToday(String time) {
@@ -70,11 +70,12 @@ class _HomeContainerState extends State<HomeContainer> {
       setState(() {
         _isLoading = true;
       });
-      await LocalStorage.getLoginStatus().then((value) => token=value!);
-      SuggestedGamesResponseModel suggestedGamesResponseModel = await _gamesProvider!.getSuggestedGames(token);
+      await LocalStorage.getLoginStatus().then((value) => token = value!);
+      SuggestedGamesResponseModel suggestedGamesResponseModel =
+          await _gamesProvider!.getSuggestedGames(token);
       if (suggestedGamesResponseModel.statusCode == 200) {
         for (var element in suggestedGamesResponseModel.allSuggestedGames!) {
-          if(element.activeStatus!) {
+          if (element.activeStatus!) {
             allSuggestedGames.add(element);
           }
         }
@@ -101,7 +102,7 @@ class _HomeContainerState extends State<HomeContainer> {
       if (newsResponseModel.statusCode == 200) {
         for (var element in newsResponseModel.newsDataList!) {
           for (var newsContent in element.newsDataContentList!) {
-            if(isToday(newsContent.pubDate!)){
+            if (isToday(newsContent.pubDate!)) {
               if (allNews.length < 2) {
                 allNews.add(newsContent);
               } else {

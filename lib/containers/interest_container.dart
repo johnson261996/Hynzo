@@ -21,9 +21,9 @@ class InterestContainer extends StatefulWidget {
 class _InterestContainerState extends State<InterestContainer> {
   List<ResultsModel> allResults = [];
   bool _isLoading = false;
-  bool _isNextPageIsEmpty=false;
-  int _totalCount=1;
-  int limit=10;
+  bool _isNextPageIsEmpty = false;
+  int _totalCount = 1;
+  int limit = 10;
   static InterestProvider? _interestProvider;
   late InterestResponseModel interestResponseModel;
   late String token;
@@ -32,34 +32,35 @@ class _InterestContainerState extends State<InterestContainer> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _interestProvider = Provider.of<InterestProvider>(context,listen: false);
+    _interestProvider = Provider.of<InterestProvider>(context, listen: false);
     allResults.clear();
-    ConnectionStaus().check().then((connectionStatus) {
-      if (connectionStatus) {
-        getInitalInterestList(limit.toString(), "0");
-      } else {
-        ToastUtil().showToast(
-            "No internet connection available. Please check your connection or try again later.");
-      }
-    });
+    // ConnectionStaus().check().then((connectionStatus) {
+    //   if (connectionStatus) {
+    getInitalInterestList(limit.toString(), "0");
+    //   } else {
+    //     ToastUtil().showToast(
+    //         "No internet connection available. Please check your connection or try again later.");
+    //   }
+    // });
   }
 
-  Future<void> getInitalInterestList(String limit,String offset) async {
+  Future<void> getInitalInterestList(String limit, String offset) async {
     try {
       setState(() {
         _isLoading = true;
       });
-      await LocalStorage.getLoginStatus().then((value) => token=value!);
-      interestResponseModel = await _interestProvider!.getInterestList(limit, offset,token);
+      await LocalStorage.getLoginStatus().then((value) => token = value!);
+      interestResponseModel =
+          await _interestProvider!.getInterestList(limit, offset, token);
       setState(() {
         _isLoading = false;
       });
       if (interestResponseModel.statusCode == 200) {
-        _totalCount=interestResponseModel.count!;
+        _totalCount = interestResponseModel.count!;
         for (var element in interestResponseModel.resultsList) {
           allResults.add(element);
         }
-        if ( interestResponseModel.next != '') {
+        if (interestResponseModel.next != '') {
           _isNextPageIsEmpty = false;
         } else {
           _isNextPageIsEmpty = true;
@@ -80,8 +81,9 @@ class _InterestContainerState extends State<InterestContainer> {
       setState(() {
         _isLoading = true;
       });
-      LocalStorage.getLoginStatus().then((value) => token=value!);
-      bool response = await _interestProvider!.createUserInterest(interestIds,token);
+      LocalStorage.getLoginStatus().then((value) => token = value!);
+      bool response =
+          await _interestProvider!.createUserInterest(interestIds, token);
       setState(() {
         _isLoading = false;
       });

@@ -16,7 +16,7 @@ class NewsContainer extends StatefulWidget {
 
 class _NewsContainerState extends State<NewsContainer> {
   static NewsProvider? _newsProvider;
-  List<NewsDataModel> allNews=[];
+  List<NewsDataModel> allNews = [];
   bool _isLoading = false;
   late String token;
 
@@ -26,14 +26,14 @@ class _NewsContainerState extends State<NewsContainer> {
     super.initState();
     _newsProvider = Provider.of<NewsProvider>(context, listen: false);
     allNews.clear();
-    ConnectionStaus().check().then((connectionStatus) {
-      if (connectionStatus) {
-        getAllNews();
-      } else {
-        ToastUtil().showToast(
-            "No internet connection available. Please check your connection or try again later.");
-      }
-    });
+    // ConnectionStaus().check().then((connectionStatus) {
+    //   if (connectionStatus) {
+    getAllNews();
+    //   } else {
+    //     ToastUtil().showToast(
+    //         "No internet connection available. Please check your connection or try again later.");
+    //   }
+    // });
   }
 
   Future<void> getAllNews() async {
@@ -42,7 +42,8 @@ class _NewsContainerState extends State<NewsContainer> {
         _isLoading = true;
       });
       token = (await LocalStorage.getLoginStatus())!;
-      NewsResponseModel newsResponseModel = await _newsProvider!.getNewsList(token);
+      NewsResponseModel newsResponseModel =
+          await _newsProvider!.getNewsList(token);
       setState(() {
         _isLoading = false;
       });
@@ -76,6 +77,5 @@ class _NewsContainerState extends State<NewsContainer> {
         child: CircularProgressIndicator(),
       );
     }
-
   }
 }
