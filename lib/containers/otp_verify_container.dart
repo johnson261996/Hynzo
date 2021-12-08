@@ -1,8 +1,9 @@
 /// Contains service and logic related of otp verification screen.
 ///
 ///
-
+import 'dart:developer' as devlog;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/core/models/interest_model.dart';
 import 'package:hynzo/providers/auth_provider.dart';
@@ -14,11 +15,8 @@ import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/auth/otp_verify_widget.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
-import 'package:provider/provider.dart';
-import 'dart:developer' as devlog;
 
 class OtpVerifyContainer extends StatefulWidget {
-
   const OtpVerifyContainer({Key? key}) : super(key: key);
 
   @override
@@ -27,23 +25,22 @@ class OtpVerifyContainer extends StatefulWidget {
 
 class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
   bool _isLoading = false;
-  bool _isAlreadyInterestAdded=false;
+  bool _isAlreadyInterestAdded = false;
   late String token;
   int offSet = 0;
   static AuthProvider? _authProvider;
   static InterestProvider? _interestProvider;
-
 
   Future<void> _verifyOtp(otp) async {
     try {
       setState(() {
         _isLoading = true;
       });
-      final LoginModel response = await _authProvider!
-          .verifyOtp(_authProvider!.userMobile, "91", _authProvider!.otpId, otp);
+      final LoginModel response = await _authProvider!.verifyOtp(
+          _authProvider!.userMobile, "91", _authProvider!.otpId, otp);
       devlog.log("$response", name: 'MyLog');
-      if(response.statusCode == 200) {
-        token= response.token!;
+      if (response.statusCode == 200) {
+        token = response.token!;
         LocalStorage.setLoginToken(token);
         LocalStorage.clearMobileNumber();
         LocalStorage.setUserID(response.user!.id!);
@@ -63,23 +60,23 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
 
   Future<void> _getInterestForSpecificUser(String limit, String offset) async {
     try {
-      InterestResponseModel interestResponseModel = await _interestProvider!
-          .getInterestList(limit, offset,token);
+      InterestResponseModel interestResponseModel =
+          await _interestProvider!.getInterestList(limit, offset);
       if (interestResponseModel.statusCode == 200) {
         for (var element in interestResponseModel.resultsList) {
-          if(element.isSelected!){
+          if (element.isSelected!) {
             _isAlreadyInterestAdded = true;
             break;
           }
         }
-        if(_isAlreadyInterestAdded) {
+        if (_isAlreadyInterestAdded) {
           setState(() {
             _isLoading = false;
           });
 
           Navigation.pushReplacementNamed(context, Routes.navScreen);
         } else {
-          if(interestResponseModel.next! != '') {
+          if (interestResponseModel.next! != '') {
             offSet = offSet + 10;
             _getInterestForSpecificUser("10", offSet.toString());
           } else {
@@ -106,12 +103,13 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
         _isLoading = true;
       });
       final GenerateOTPModel response =
-      await _authProvider!.resendOtp(mobile, signature);
+          await _authProvider!.resendOtp(mobile, signature);
       setState(() {
         _isLoading = false;
       });
       if (response.statusCode == 200) {
-        ToastUtil().showToast("Otp has been resend to your mobile number successfully.");
+        ToastUtil().showToast(
+            "Otp has been resend to your mobile number successfully.");
       } else {
         ToastUtil().showToast('Something went wrong!');
       }

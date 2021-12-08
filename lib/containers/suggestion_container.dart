@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:hynzo/core/models/suggestion_model.dart';
 import 'package:hynzo/providers/suggestion_provider.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/connectivity.dart';
 import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
 import 'package:hynzo/widgets/suggetion/suggestion_widget.dart';
-import 'package:provider/provider.dart';
 
 class SuggestionContainer extends StatefulWidget {
   const SuggestionContainer({Key? key}) : super(key: key);
@@ -20,7 +19,6 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
   bool _isLoading = false;
   List<ResultsModel> allResults = [];
   int _totalCount = 1;
-  late String token;
   late String userId;
   static SuggestionProvider? _suggestionProvider;
 
@@ -46,9 +44,8 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
       setState(() {
         _isLoading = true;
       });
-      await LocalStorage.getLoginStatus().then((value) => token = value!);
       SuggestionModel suggestionModel =
-          await _suggestionProvider!.getSuggestionList(token);
+          await _suggestionProvider!.getSuggestionList();
       if (suggestionModel.statusCode == 200) {
         _totalCount = suggestionModel.count!;
         for (var element in suggestionModel.resultsList) {
@@ -75,12 +72,11 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
       setState(() {
         _isLoading = true;
       });
-      await LocalStorage.getLoginStatus().then((value) => token = value!);
       await LocalStorage.getUserID().then((value) => userId = value.toString());
       userIds.add(suggestUserId);
       userIds.add(userId);
       SuggestUserAddResponseModel suggestionModel =
-          await _suggestionProvider!.addSuggestUser(token, userIds);
+          await _suggestionProvider!.addSuggestUser(userIds);
       if (suggestionModel.statusCode == 201) {
         allResults[index].isSelected = !allResults[index].isSelected!;
         ToastUtil().showToast("User added successfully.");

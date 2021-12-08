@@ -8,8 +8,6 @@ import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/providers/game_provider.dart';
 import 'package:hynzo/providers/news_provider.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/connectivity.dart';
-import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
 import 'package:hynzo/widgets/home_widget.dart';
@@ -33,7 +31,6 @@ class _HomeContainerState extends State<HomeContainer> {
   List<NewsContentDataModel> allNews = [];
   List<SuggestedPlayModel> allSuggestedGames = [];
   bool _isLoading = false;
-  late String token;
 
   @override
   void initState() {
@@ -70,15 +67,15 @@ class _HomeContainerState extends State<HomeContainer> {
       setState(() {
         _isLoading = true;
       });
-      await LocalStorage.getLoginStatus().then((value) => token = value!);
       SuggestedGamesResponseModel suggestedGamesResponseModel =
-          await _gamesProvider!.getSuggestedGames(token);
+          await _gamesProvider!.getSuggestedGames();
       if (suggestedGamesResponseModel.statusCode == 200) {
-        for (var element in suggestedGamesResponseModel.allSuggestedGames!) {
-          if (element.activeStatus!) {
-            allSuggestedGames.add(element);
-          }
-        }
+        allSuggestedGames = suggestedGamesResponseModel.allSuggestedGames!;
+        // for (var element in suggestedGamesResponseModel.allSuggestedGames!) {
+        //   if (element.activeStatus!) {
+        //     allSuggestedGames.add(element);
+        //   }
+        // }
       } else {
         ToastUtil().showToast("Something went wrong.");
       }
@@ -93,9 +90,7 @@ class _HomeContainerState extends State<HomeContainer> {
 
   Future<void> getAllNews() async {
     try {
-      token = (await LocalStorage.getLoginStatus())!;
-      NewsResponseModel newsResponseModel =
-          await _newsProvider!.getNewsList(token);
+      NewsResponseModel newsResponseModel = await _newsProvider!.getNewsList();
       setState(() {
         _isLoading = false;
       });

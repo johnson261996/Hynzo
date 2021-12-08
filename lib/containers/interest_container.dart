@@ -3,8 +3,6 @@ import 'package:hynzo/core/models/interest_model.dart';
 import 'package:hynzo/providers/interest_provider.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/connectivity.dart';
-import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
@@ -26,7 +24,6 @@ class _InterestContainerState extends State<InterestContainer> {
   int limit = 10;
   static InterestProvider? _interestProvider;
   late InterestResponseModel interestResponseModel;
-  late String token;
 
   @override
   void initState() {
@@ -49,9 +46,8 @@ class _InterestContainerState extends State<InterestContainer> {
       setState(() {
         _isLoading = true;
       });
-      await LocalStorage.getLoginStatus().then((value) => token = value!);
       interestResponseModel =
-          await _interestProvider!.getInterestList(limit, offset, token);
+          await _interestProvider!.getInterestList(limit, offset);
       setState(() {
         _isLoading = false;
       });
@@ -81,9 +77,7 @@ class _InterestContainerState extends State<InterestContainer> {
       setState(() {
         _isLoading = true;
       });
-      LocalStorage.getLoginStatus().then((value) => token = value!);
-      bool response =
-          await _interestProvider!.createUserInterest(interestIds, token);
+      bool response = await _interestProvider!.createUserInterest(interestIds);
       setState(() {
         _isLoading = false;
       });

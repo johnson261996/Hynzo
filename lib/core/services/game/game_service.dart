@@ -1,12 +1,13 @@
 import 'dart:convert';
-
 import 'package:hynzo/core/models/all_games_model.dart';
-
-import '../service_base.dart';
+import 'package:hynzo/core/services/service_base.dart';
+import 'package:hynzo/utils/localstorage.dart';
 
 class GameService {
-  static Future<SuggestedGamesResponseModel> getSuggestedGames(
-      String token) async {
+  static Future<SuggestedGamesResponseModel> getSuggestedGames() async {
+    String token = "";
+    await LocalStorage.getLoginStatus().then((value) => token = value!);
+
     String url = 'api/v1/games/fetch';
     var response = await ServiceBase.get(url: url, headers: {
       "Content-Type": "application/json",

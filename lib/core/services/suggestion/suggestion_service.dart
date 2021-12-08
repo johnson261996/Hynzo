@@ -1,14 +1,19 @@
 import 'dart:convert';
 import 'package:hynzo/core/models/suggestion_model.dart';
-import '../service_base.dart';
+import 'package:hynzo/core/services/service_base.dart';
+import 'package:hynzo/utils/localstorage.dart';
 
 class SuggestionService {
+  static Future<SuggestionModel> getAllSuggestion() async {
+    String token = "";
+    await LocalStorage.getLoginStatus().then((value) => token = value!);
 
-  static Future<SuggestionModel> getAllSuggestion(String token) async {
     String url = 'api/v1/users/suggestions';
-    var response = await ServiceBase.get(
-        url: url, headers: {"Content-Type": "application/json","Authorization":"Bearer $token"});
-    if(response.statusCode != 200){
+    var response = await ServiceBase.get(url: url, headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $token"
+    });
+    if (response.statusCode != 200) {
       throw "Something went wrong";
     }
     return SuggestionModel.fromJson(
@@ -17,16 +22,22 @@ class SuggestionService {
     );
   }
 
-  static Future<SuggestUserAddResponseModel> addSuggestedUser(String token,List<String> userId) async {
+  static Future<SuggestUserAddResponseModel> addSuggestedUser(
+      List<String> userId) async {
+    String token = "";
+    await LocalStorage.getLoginStatus().then((value) => token = value!);
+
     String url = 'api/v1/chats/create';
 
     Map data = {
-      'participants' : userId,
-      'is_group' : false,
+      'participants': userId,
+      'is_group': false,
     };
-    var response = await ServiceBase.post(
-        url: url, data : data,headers: {"Content-Type": "application/json","Authorization":"Bearer $token"});
-    if(response.statusCode != 201){
+    var response = await ServiceBase.post(url: url, data: data, headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $token"
+    });
+    if (response.statusCode != 201) {
       throw "Something went wrong";
     }
     return SuggestUserAddResponseModel.fromJson(
@@ -34,6 +45,4 @@ class SuggestionService {
       response.statusCode,
     );
   }
-
-
 }

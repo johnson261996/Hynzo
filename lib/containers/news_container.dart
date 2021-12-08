@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/connectivity.dart';
-import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
 import 'package:hynzo/widgets/news/news_widget.dart';
@@ -18,7 +16,6 @@ class _NewsContainerState extends State<NewsContainer> {
   static NewsProvider? _newsProvider;
   List<NewsDataModel> allNews = [];
   bool _isLoading = false;
-  late String token;
 
   @override
   void initState() {
@@ -41,9 +38,7 @@ class _NewsContainerState extends State<NewsContainer> {
       setState(() {
         _isLoading = true;
       });
-      token = (await LocalStorage.getLoginStatus())!;
-      NewsResponseModel newsResponseModel =
-          await _newsProvider!.getNewsList(token);
+      NewsResponseModel newsResponseModel = await _newsProvider!.getNewsList();
       setState(() {
         _isLoading = false;
       });
