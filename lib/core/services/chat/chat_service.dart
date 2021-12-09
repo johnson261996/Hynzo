@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/chat_list_model.dart';
 import 'package:hynzo/core/models/create_channel_model.dart';
 import 'package:hynzo/core/services/service_base.dart';

@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:hynzo/core/models/chat_socket_model.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/themes/themes.dart';
 import 'package:hynzo/utils/localStorage.dart';
@@ -172,11 +175,15 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
 
   void _loadMessages() async {
     String? token = await LocalStorage.getLoginToken();
+    int? uid = await LocalStorage.getUserID();
     channel = WebSocketChannel.connect(Uri.parse(
         'ws://api.inventchat.com/api/v1/ws/chat/${widget.channelId}?token=$token'));
     Future.delayed(const Duration(microseconds: 500)).whenComplete(() =>
         channel.sink.add(
-            '{"command": "fetch_messages", "username": "${widget.participants[0]}", "user_id": 186, "chatId": ${widget.channelId}}'));
+            '{"command": "fetch_messages", "username": "${widget.participants[1]}", "user_id": $uid, "chatId": ${widget.channelId}}'));
+    //Future.delayed(const Duration(microseconds: 300)).whenComplete(() =>
+    //    channel.sink.add(
+    //        '{"command": "new_message",  "from": "128", "message": "Hello", "chatId": "667", "type_of_content": "text", "media_id": "", "offline_locator":""}'));
     setState(() {
       loading = false;
     });
@@ -204,29 +211,34 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                   return const Center(child: CircularProgressIndicator());
                 }
 
-                return Text('${snapshot.data}' '\n' +
-                    snapshot.error.toString() +
-                    '\n' +
-                    snapshot.connectionState.toString());
+                if (snapshot.connectionState == ConnectionState.active) {
+                  ChatSocketModel chats =
+                      ChatSocketModel.fromJson(jsonDecode(snapshot.data));
 
-                _messages.insert(
-                    _messages.length,
-                    types.Message.fromJson(const {
-                      "author": {
-                        "firstName": "John",
-                        "id": "b4878b96-efbc-479a-8291-474ef323dec7",
-                        "imageUrl":
-                            "https://avatars.githubusercontent.com/u/14123304?v=4"
-                      },
-                      "createdAt": 1598438788000,
-                      "id": "b23e5907-6d8b-4134-8cf3-c6dd34fc42d2",
-                      "status": "seen",
-                      "text": "Hic iure corrupti aut delectus tempore.",
-                      "type": "text"
-                    }));
+                  if (chats.messages.isNotEmpty) {
+                    chats.messages.forEach((element) {
+                      _messages.insert(
+                          _messages.length,
+                          types.Message.fromJson({
+                            "author": {
+                              "firstName": element.author.username,
+                              "id": element.author.id.toString(),
+                              "imageUrl": element.author.avatar
+                            },
+                            "createdAt":
+                                element.timestamp.millisecondsSinceEpoch,
+                            "id": element.id.toString(),
+                            "status": "seen",
+                            "text": element.content,
+                            "type": "text"
+                          }));
+                    });
+                  }
+                }
+
                 return Chat(
-                  showUserNames: true,
-                  showUserAvatars: true,
+                  showUserNames: false,
+                  showUserAvatars: false,
                   scrollPhysics: const BouncingScrollPhysics(),
                   theme: const DefaultChatTheme(),
                   messages: _messages,

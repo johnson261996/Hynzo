@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hynzo/core/models/chat_list_model.dart';
@@ -6,6 +8,7 @@ import 'package:hynzo/core/models/create_channel_model.dart';
 import 'package:hynzo/screens/chat/chat_message_screen.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/themes/themes.dart';
+import 'package:hynzo/utils/localstorage.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -39,8 +42,9 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
     response.results.forEach((element) {
       allChats.add(
         ChatModel(
+          senderId: element.userBasicInfo.id,
           imagePath: element.avatar,
-          name: element.lastMessage.author.username,
+          name: element.channelName,
           unreadCount: element.unreadMessages,
           status: element.userBasicInfo.isOnline ? 'active' : 'inacvtive',
           isRead: false,
@@ -74,18 +78,18 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () async {
+                    int? uid = await LocalStorage.getUserID();
                     EasyLoading.show(maskType: EasyLoadingMaskType.black);
-                    CreateChannelModel response =
-                        await widget.createChannel!(['128', '186'], false);
+                    CreateChannelModel response = await widget.createChannel!(
+                        ['$uid', '${allChats[index].senderId}'], false);
                     EasyLoading.dismiss(animation: false);
                     if (response.participants.isNotEmpty) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => ChatMessageScreen(
-                                    channelId: response.id,
-                                    participants:response.participants
-                                  )));
+                                  channelId: response.id,
+                                  participants: response.participants)));
                     }
                   },
                   child: Container(
