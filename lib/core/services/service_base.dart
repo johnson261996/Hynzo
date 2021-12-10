@@ -7,7 +7,7 @@ import 'package:hynzo/utils/connectivity.dart';
 import 'package:hynzo/utils/toast_util.dart';
 
 class ServiceBase {
-  static String apiBaseUrl = 'http://api.inventchat.com/';
+  static String apiBaseUrl = 'http://35.154.69.40/';
 
   static Future<http.Response> get({
     String? url,
