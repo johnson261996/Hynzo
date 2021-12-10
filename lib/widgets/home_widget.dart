@@ -27,6 +27,8 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
+  String name = "roha";
+  int coin = 0;
   String search = '';
   List<GamesCategoryModel> allGamesCategory = [];
   List<EventsModel> allEvents = [];
@@ -132,7 +134,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const ProfileImageWidget(),
+                  ProfileImageWidget( imageUrl: 'https://image.shutterstock.com/image-photo/portrait-smiling-red-haired-millennial-600w-1194497251.jpg',level: 0),
                   SizedBox(
                     width: mediaQuery.width * 0.03,
                   ),
@@ -141,7 +143,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        Strings.HOME_PROFILE_NAME,
+                        'Welcome $name',
                         style: Theme.of(context).textTheme.headline2!.copyWith(
                               fontSize: 20,
                               color: AppColors.gray,
@@ -153,7 +155,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       Text(
                         Strings.HOME_PROFILE_SUBTITLE,
                         style: Theme.of(context).textTheme.headline2!.copyWith(
-                              fontSize: 15,
+                              fontSize: 12,
                               color: AppColors.gray,
                               fontWeight: FontWeight.w400,
                             ),
@@ -188,10 +190,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                           ),
                         ),
                         SizedBox(
-                          width: mediaQuery.width * 0.02,
+                          width: mediaQuery.width * 0.01,
                         ),
                         Text(
-                          Strings.AMOUNT,
+                          "$coin",
                           style:
                               Theme.of(context).textTheme.subtitle1!.copyWith(
                                     fontWeight: FontWeight.w400,

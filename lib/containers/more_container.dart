@@ -12,6 +12,6 @@ class _MoreContainerState extends State<MoreContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return MoreWidget();
+    return const MoreWidget(imageUrl: '',level: 0);
   }
 }

@@ -14,6 +14,7 @@ import 'package:hynzo/themes/colors.dart';
 ///  });
 ///  ```
 
+
 class PrimaryButton extends StatelessWidget {
   final Function onPressed;
   final bool disabled;

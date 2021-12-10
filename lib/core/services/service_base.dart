@@ -5,7 +5,7 @@ import 'package:http_interceptor/http/intercepted_http.dart';
 import 'package:hynzo/core/services/auth/auth_interceptor.dart';
 
 class ServiceBase {
-  static String apiBaseUrl = 'http://api.inventchat.com/';
+  static String apiBaseUrl = 'http://35.154.69.40/';
 
   static Future<http.Response> get({
     String? url,

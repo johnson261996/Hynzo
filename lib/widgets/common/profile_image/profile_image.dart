@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/themes/colors.dart';
 
 class ProfileImageWidget extends StatelessWidget {
-  const ProfileImageWidget({Key? key}) : super(key: key);
+  final String imageUrl;
+  final int level;
+  const ProfileImageWidget({Key? key,required this.imageUrl,required this.level}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +20,10 @@ class ProfileImageWidget extends StatelessWidget {
           bottom: 1.0,
           right: 1.0,
           left: 1.0,
-          child: Container(
-            width: 68.0,
-            height: 68.0,
-            child: Image.asset(
-              'assets/images/profile_image.png',
-              fit: BoxFit.cover,
+          child: CircleAvatar(
+            radius: 30.0,
+            backgroundImage:NetworkImage(
+              imageUrl,
             ),
           ),
         ),
@@ -48,7 +48,7 @@ class ProfileImageWidget extends StatelessWidget {
           child: Align(
             alignment: Alignment.bottomRight,
             child: Text(
-              '2',
+              level.toString(),
               style: Theme.of(context).textTheme.caption!.copyWith(
                     fontSize: 9,
                     color: AppColors.yellowDark,

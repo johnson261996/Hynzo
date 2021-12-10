@@ -7,9 +7,11 @@ import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/common/profile_image/profile_image.dart';
 
 class MoreWidget extends StatelessWidget {
+  final String imageUrl;
+  final int level;
 
   const MoreWidget({
-    Key? key
+    Key? key,required this.imageUrl, required this.level
   }) : super(key: key);
 
   @override
@@ -61,7 +63,7 @@ class MoreWidget extends StatelessWidget {
             ),
             child: Row(
               children: [
-                const ProfileImageWidget(),
+                const ProfileImageWidget(imageUrl:'https://image.shutterstock.com/image-photo/portrait-smiling-red-haired-millennial-600w-1194497251.jpg',level: 0,),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.03,
                 ),
