@@ -7,7 +7,7 @@ import 'package:hynzo/utils/localstorage.dart';
 class NewsService {
   static Future<NewsResponseModel> getAllNews() async {
     String token = "";
-    await LocalStorage.getLoginStatus().then((value) => token = value!);
+    await LocalStorage.getLoginToken().then((value) => token = value!);
 
     String url = 'api/v1/news/fetch/news';
     Map data = {

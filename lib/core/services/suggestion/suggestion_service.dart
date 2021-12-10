@@ -6,7 +6,7 @@ import 'package:hynzo/utils/localstorage.dart';
 class SuggestionService {
   static Future<SuggestionModel> getAllSuggestion() async {
     String token = "";
-    await LocalStorage.getLoginStatus().then((value) => token = value!);
+    await LocalStorage.getLoginToken().then((value) => token = value!);
 
     String url = 'api/v1/users/suggestions';
     var response = await ServiceBase.get(url: url, headers: {
@@ -25,7 +25,7 @@ class SuggestionService {
   static Future<SuggestUserAddResponseModel> addSuggestedUser(
       List<String> userId) async {
     String token = "";
-    await LocalStorage.getLoginStatus().then((value) => token = value!);
+    await LocalStorage.getLoginToken().then((value) => token = value!);
 
     String url = 'api/v1/chats/create';
 

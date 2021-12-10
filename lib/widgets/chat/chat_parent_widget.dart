@@ -10,7 +10,10 @@ import 'package:hynzo/widgets/common/search_bar/search_bar.dart';
 import 'calls_widget.dart';
 
 class ChatWidget extends StatefulWidget {
-  const ChatWidget({Key? key}) : super(key: key);
+  const ChatWidget({Key? key,required this.getChatList,required this.createChannel}) : super(key: key);
+
+  final Function(int,int)? getChatList;
+  final Function(List<String>,bool)? createChannel;
 
   @override
   State<ChatWidget> createState() => _ChatWidgetState();
@@ -190,8 +193,8 @@ class _ChatWidgetState extends State<ChatWidget> with TickerProviderStateMixin {
                         curve: Curves.fastLinearToSlowEaseIn);
                   });
                 },
-                children: const [
-                  AllChatsWidget(),
+                children: [
+                  AllChatsWidget(getChatList: widget.getChatList,createChannel: widget.createChannel,),
                   RequestedWidget(),
                   CallsWidget(),
                   SuggestedWidget(),

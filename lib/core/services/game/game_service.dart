@@ -6,7 +6,7 @@ import 'package:hynzo/utils/localstorage.dart';
 class GameService {
   static Future<SuggestedGamesResponseModel> getSuggestedGames() async {
     String token = "";
-    await LocalStorage.getLoginStatus().then((value) => token = value!);
+    await LocalStorage.getLoginToken().then((value) => token = value!);
 
     String url = 'api/v1/games/fetch';
     var response = await ServiceBase.get(url: url, headers: {

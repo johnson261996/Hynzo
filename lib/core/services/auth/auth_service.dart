@@ -2,7 +2,6 @@ import 'dart:async' show Future;
 import 'dart:convert';
 import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/core/services/service_base.dart';
-import 'package:hynzo/utils/toast_util.dart';
 
 class AuthService {
   static Future<GenerateOTPModel> generateOTP(mobile, signature) async {

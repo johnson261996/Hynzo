@@ -7,7 +7,7 @@ class InterestService {
   static Future<InterestResponseModel> getAllInterest(
       String limit, String offset) async {
     String token = "";
-    await LocalStorage.getLoginStatus().then((value) => token = value!);
+    await LocalStorage.getLoginToken().then((value) => token = value!);
     String url = 'api/v1/users/interests/list?limit=$limit&offset=$offset';
     var response = await ServiceBase.get(url: url, headers: {
       "Content-Type": "application/json",
@@ -24,7 +24,7 @@ class InterestService {
 
   static Future<bool> createUserInterest(String interestIds) async {
     String token = "";
-    await LocalStorage.getLoginStatus().then((value) => token = value!);
+    await LocalStorage.getLoginToken().then((value) => token = value!);
 
     String url = 'api/v1/users/interests/create';
     Map data = {

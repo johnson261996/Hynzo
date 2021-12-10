@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hynzo/providers/auth_provider.dart';
+import 'package:hynzo/providers/chat_provider.dart';
 import 'package:hynzo/providers/game_provider.dart';
 import 'package:hynzo/providers/interest_provider.dart';
 import 'package:hynzo/providers/news_provider.dart';
@@ -31,6 +33,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => GamesProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => ChatProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'HYNZO',
@@ -40,6 +45,7 @@ class MyApp extends StatelessWidget {
         routes: Routes.buildRoutes,
         onUnknownRoute:
             Routes.unknownRoute as Route<dynamic>? Function(RouteSettings)?,
+        builder: EasyLoading.init(),
       ),
     );
   }
