@@ -26,6 +26,7 @@ class SuggestedGamesResponseModel {
     );
   }
 }
+
 class SuggestedPlayModel{
 
   final String? gameName;

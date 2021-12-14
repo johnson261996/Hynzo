@@ -6,13 +6,41 @@ import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/common/profile_image/profile_image.dart';
 
-class MoreWidget extends StatelessWidget {
+class MoreWidget extends StatefulWidget {
   final String imageUrl;
   final int level;
 
   const MoreWidget({
-    Key? key,required this.imageUrl, required this.level
+    Key? key,required this.imageUrl, required this.level,
   }) : super(key: key);
+
+  @override
+  State<MoreWidget> createState() => _MoreWidgetState();
+}
+
+class _MoreWidgetState extends State<MoreWidget> {
+  late String url= '';
+  String name = '';
+
+  getProfilePic()async{
+    url = (await LocalStorage.getProfilePic())!;
+    print(url);
+  }
+
+  getName() async {
+    String _name = (await LocalStorage.getUserName())!;
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {setState(()  {
+    name = _name;
+    });});
+
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    getName();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,43 +89,48 @@ class MoreWidget extends StatelessWidget {
               left: 15.0,
               right: 15.0,
             ),
-            child: Row(
-              children: [
-                const ProfileImageWidget(imageUrl:'https://image.shutterstock.com/image-photo/portrait-smiling-red-haired-millennial-600w-1194497251.jpg',level: 0,),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.03,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      Strings.DUMMY_PROFILE_NAME,
-                      style: Theme.of(context).textTheme.headline5!.apply(
-                            color: AppColors.greyBlack,
+            child: Expanded(
+              child: Row(
+                children: [
+                  const ProfileImageWidget(imageUrl: '',level: 1,),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.03,
+                  ),
+                  Container(
+                    width: 200,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          style: Theme.of(context).textTheme.headline5!.apply(
+                                color: AppColors.greyBlack,
+                              ),
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: Row(
+                            children: [
+                              Text(
+                                Strings.VIEW_PROFILE,
+                                style:
+                                    Theme.of(context).textTheme.caption!.copyWith(
+                                          fontSize: 12,
+                                          color: AppColors.greyBlack,
+                                        ),
+                              ),
+                              const Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                size: 10,
+                              ),
+                            ],
                           ),
+                        )
+                      ],
                     ),
-                    InkWell(
-                      onTap: () {},
-                      child: Row(
-                        children: [
-                          Text(
-                            Strings.VIEW_PROFILE,
-                            style:
-                                Theme.of(context).textTheme.caption!.copyWith(
-                                      fontSize: 12,
-                                      color: AppColors.greyBlack,
-                                    ),
-                          ),
-                          const Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            size: 10,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(

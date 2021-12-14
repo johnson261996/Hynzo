@@ -1,5 +1,6 @@
 ///Widget created for home screen.
 
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,10 +10,11 @@ import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/common/search_bar/search_bar.dart';
 import 'package:intl/intl.dart';
-import 'common/game_recent/recently_game_widget.dart';
+import 'common/no_data/no_data_error.dart';
 import 'common/profile_image/profile_image.dart';
 import 'common/view/event_view_widget.dart';
 
@@ -20,15 +22,18 @@ class HomeWidget extends StatefulWidget {
   final Function onTapped;
   final List<NewsContentDataModel>? allContent;
   final List<SuggestedPlayModel>? allSuggestedGames;
-  const HomeWidget({required this.onTapped,this.allContent,this.allSuggestedGames,Key? key}) : super(key: key);
+  final Function LoadImage;
+  const HomeWidget({required this.onTapped,this.allContent,this.allSuggestedGames,required this.LoadImage,Key? key}) : super(key: key);
 
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  String name = "roha";
+  String name = '';
   int coin = 0;
+  String url = "";
+
   String search = '';
   List<GamesCategoryModel> allGamesCategory = [];
   List<EventsModel> allEvents = [];
@@ -37,6 +42,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     allGamesCategory.add(
       GamesCategoryModel(
         imagePath: 'assets/images/category_rectangle_one.png',
@@ -76,22 +82,35 @@ class _HomeWidgetState extends State<HomeWidget> {
       ),
     );
     allEvents.add(
-      EventsModel(
-        imagePath: 'assets/images/events_dummy_two.png',
-        title: 'Sunday Night Party',
-        subTitle: 'Badmash Louunge: Koramongala',
-        dateTime: 'Fri, 12 Nov',
-      ),
+       EventsModel(
+      imagePath: 'assets/images/events_dummy_two.png',
+      title: 'Sunday Night Party',
+      subTitle: 'Badmash Louunge: Koramongala',
+      dateTime: 'Fri, 12 Nov',
+     ),
     );
     allEvents.add(
-      EventsModel(
-        imagePath: 'assets/images/events_dummy_one.png',
-        title: 'Sunday Night Party',
-        subTitle: 'Badmash Louunge: Koramongala',
-        dateTime: 'Thu, 11 Nov',
-      ),
+    EventsModel(
+    imagePath: 'assets/images/events_dummy_one.png',
+    title: 'Sunday Night Party',
+    subTitle: 'Badmash Louunge: Koramongala',
+    dateTime: 'Thu, 11 Nov'
+    ,
+    )
+    ,
     );
+     getName();
+     getProfilePic();
   }
+
+  getName() async {
+     name = (await LocalStorage.getUserName())!;
+  }
+  getProfilePic()async{
+    url = (await LocalStorage.getProfilePic())!;
+    print(url);
+  }
+
 
   String getDate(String time) {
     var now = DateTime.now();
@@ -110,6 +129,17 @@ class _HomeWidgetState extends State<HomeWidget> {
       }
     }
 
+  }
+
+  //check the internet connection
+  Future<bool> check() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+      return true;
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      return true;
+    }
+    return false;
   }
 
   @override
@@ -134,36 +164,37 @@ class _HomeWidgetState extends State<HomeWidget> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  ProfileImageWidget( imageUrl: 'https://image.shutterstock.com/image-photo/portrait-smiling-red-haired-millennial-600w-1194497251.jpg',level: 0),
-                  SizedBox(
-                    width: mediaQuery.width * 0.03,
+                  ProfileImageWidget( imageUrl: url,level: 1,),
+                  const SizedBox(
+                    width:8,
                   ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Welcome $name',
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
-                              fontSize: 20,
-                              color: AppColors.gray,
-                            ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        Strings.HOME_PROFILE_SUBTITLE,
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
-                              fontSize: 12,
-                              color: AppColors.gray,
-                              fontWeight: FontWeight.w400,
-                            ),
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Welcome $name',
+                          style: Theme.of(context).textTheme.headline2!.copyWith(
+                                fontSize: 20,
+                                color: AppColors.gray,
+                              ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          Strings.HOME_PROFILE_SUBTITLE,
+                          style: Theme.of(context).textTheme.headline2!.copyWith(
+                                fontSize: 12,
+                                color: AppColors.gray,
+                                fontWeight: FontWeight.w400,
+                              ),
+                        ),
+                      ],
+                    ),
                   ),
-                  const Spacer(),
-                  Container(
+                 /* Container(
                     width: 75.0,
                     height: 40.0,
                     decoration: BoxDecoration(
@@ -203,7 +234,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         )
                       ],
                     ),
-                  ),
+                  ),*/
                 ],
               ),
             ),
@@ -233,7 +264,19 @@ class _HomeWidgetState extends State<HomeWidget> {
                         height: 10,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          check().then((intenet) {
+                            if (intenet != null && intenet) {
+                              // Internet Present Case
+                            }else{
+                              // No-Internet Case
+                              Navigator.of(
+                                  context).push(MaterialPageRoute(builder: (context) => NoDataError()));
+                            }
+
+                          });
+
+                        },
                         child: Container(
                           padding: const EdgeInsets.only(
                             right: 20.0,
@@ -331,6 +374,21 @@ class _HomeWidgetState extends State<HomeWidget> {
                               padding: const EdgeInsets.only(
                                 right: 15.0,
                               ),
+                            child: GestureDetector(
+                                onTap: (){
+                                check().then((internet) {
+                                if (internet != null && internet) {
+                                 /* Navigation.pushNamed(context, Routes.webview,
+                                  {
+                                  'link': widget
+                                      .allSuggestedGames![index]
+                                      .redirectionUrl
+                                  });*/
+                                } else {
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NoDataError()));
+                                }
+                              });
+                            },
                               child: EventContainerWidget(
                                 imagePath: allEvents[index].imagePath!,
                                 title: allEvents[index].title!,
@@ -339,7 +397,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 showDate: true,
                                 showSubTitle: true,
                               ),
-                            );
+                            ));
                           },
                           itemCount: allEvents.length,
                           scrollDirection: Axis.horizontal,
@@ -412,8 +470,20 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 ),
                                 child: GestureDetector(
                                   onTap: (){
-                                    Navigation.pushNamed(context, Routes.webview,
-                                        {'link': widget.allSuggestedGames![index].redirectionUrl});
+                                    check().then((internet) {
+                                      if (internet != null && internet) {
+                                        Navigation.pushNamed(
+                                            context, Routes.webview,
+                                            {
+                                              'link': widget
+                                                  .allSuggestedGames![index]
+                                                  .redirectionUrl
+                                            });
+                                      } else {
+                                        Navigator.of(
+                                            context).push(MaterialPageRoute(builder: (context) => NoDataError()));
+                                      }
+                                    });
                                   },
                                   child: Column(
                                     children: [

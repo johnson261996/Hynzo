@@ -12,6 +12,17 @@ class LocalStorage {
     return prefs.getBool('introStatus') ?? true;
   }
 
+  static void setProfilePic(String url) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('profilepic', url);
+    print(url);
+  }
+
+  static Future<String?> getProfilePic() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('profilepic') ?? "";
+  }
+
 
   static void setLoginToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -52,6 +52,8 @@ class _HomeContainerState extends State<HomeContainer> {
     });
   }
 
+
+
   bool isToday(String time) {
     var now = DateTime.now();
     var formatter = DateFormat('MM/dd/yyyy');
@@ -89,6 +91,8 @@ class _HomeContainerState extends State<HomeContainer> {
       ToastUtil().showToast(e.toString());
     }
   }
+
+
 
   Future<void> getAllNews() async {
     try {
@@ -132,7 +136,7 @@ class _HomeContainerState extends State<HomeContainer> {
       child: HomeWidget(
         onTapped: widget._onTapped,
         allContent: allNews,
-        allSuggestedGames: allSuggestedGames,
+        allSuggestedGames: allSuggestedGames, LoadImage: widget._onTapped,
       ),
     );
   }
