@@ -38,6 +38,18 @@ class ChatService {
     return CreateChannelModel.fromJson(jsonDecode(response.body));
   }
 
+  Future<Map<String, dynamic>> setUserStatus({required bool status}) async {
+    String url = 'api/v1/users/set_status';
+    var response = await ServiceBase.post(url: url, data: {
+      'status': '$status',
+    }, headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Bearer ${await getToken()}'
+    });
+    log(response.body);
+    return jsonDecode(response.body);
+  }
+
   Future<String> getToken() async {
     String? token = await LocalStorage.getLoginToken();
     return token ?? '';
