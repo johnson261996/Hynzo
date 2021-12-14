@@ -5,7 +5,8 @@ class ChatMessageScreen extends StatelessWidget {
   final int channelId;
   final List<String> participants;
 
-  const ChatMessageScreen({Key? key, required this.channelId,required this.participants})
+  const ChatMessageScreen(
+      {Key? key, required this.channelId, required this.participants})
       : super(key: key);
 
   @override
