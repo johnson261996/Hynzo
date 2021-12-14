@@ -10,6 +10,8 @@ import 'package:hynzo/core/models/new_message_model.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/themes/themes.dart';
 import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/widgets/chat/chat_bottom_widget.dart';
+import 'package:hynzo/widgets/chat/chat_theme.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:open_file/open_file.dart';
@@ -19,9 +21,17 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class ChatMessageWidget extends StatefulWidget {
   final int channelId;
   final List<String> participants;
+  final bool status;
+  final String userName;
+  final Function setUserStatus;
 
   const ChatMessageWidget(
-      {Key? key, required this.channelId, required this.participants})
+      {Key? key,
+      required this.channelId,
+      required this.participants,
+      required this.status,
+      required this.userName,
+      required this.setUserStatus})
       : super(key: key);
 
   @override
@@ -35,6 +45,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
   late WebSocketChannel channel;
   int? uid;
   String? token;
+  String? name;
   late types.User _user;
 
   @override
@@ -48,7 +59,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
     token = await LocalStorage.getLoginToken();
     _user = types.User(
       id: uid.toString(),
-      firstName: '',
+      firstName: widget.userName,
       lastName: '',
       imageUrl:
           'https://i.picsum.photos/id/1075/200/300.jpg?hmac=pffU5_mFDClpUhsTVng81yHXXvdsGGKHi1jCz2pRsaU',
@@ -193,18 +204,58 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
     setState(() {
       loading = false;
     });
+    setUserStatus(true);
+  }
+
+  setUserStatus(bool status) {
+    widget.setUserStatus(status);
+  }
+
+  @override
+  void dispose() {
+    setUserStatus(false);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          _user.firstName!,
-          style: Themes.baseTheme.textTheme.bodyText1!
-              .copyWith(color: Colors.white),
+        title: SizedBox(
+          height: kToolbarHeight,
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    _user.firstName!,
+                    style: Themes.baseTheme.textTheme.bodyText1!
+                        .copyWith(color: AppColors.blackBlue, fontSize: 16),
+                  ),
+                  Text(
+                    widget.status ? 'online' : 'offline',
+                    style: Themes.baseTheme.textTheme.bodyText1!.copyWith(
+                      color: AppColors.offgreylight,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-        backgroundColor: AppColors.blackBlue,
+        backgroundColor: AppColors.white,
+        leadingWidth: 30,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: AppColors.blackBlue,
+            )),
       ),
       body: loading
           ? const Center(
@@ -277,17 +328,13 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                   showUserNames: false,
                   sendButtonVisibilityMode: SendButtonVisibilityMode.always,
                   showUserAvatars: false,
+                  customBottomWidget: ChatBottomWidget(
+                    onAttachPressed: _handleAtachmentPressed,
+                    onSendPressed: _handleSendPressed,
+                  ),
+                  hideBackgroundOnEmojiMessages: true,
                   scrollPhysics: const BouncingScrollPhysics(),
-                  theme: DefaultChatTheme(
-                      inputBackgroundColor: Colors.white,
-                      sendButtonIcon: Icon(
-                        Icons.send,
-                        color: Colors.indigo,
-                      ),
-                      attachmentButtonIcon: Icon(
-                        Icons.pin,
-                        color: Colors.indigo,
-                      )),
+                  theme: CustomTheme().theme,
                   messages: _messages,
                   onAttachmentPressed: _handleAtachmentPressed,
                   onMessageTap: _handleMessageTap,

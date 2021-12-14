@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hynzo/core/models/chat_list_model.dart';
@@ -85,11 +83,16 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                     EasyLoading.dismiss(animation: false);
                     if (response.participants.isNotEmpty) {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ChatMessageScreen(
-                                  channelId: response.id,
-                                  participants: response.participants)));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatMessageScreen(
+                            channelId: response.id,
+                            participants: response.participants,
+                            status: allChats[index].status == 'active',
+                            userName: allChats[index].name!,
+                          ),
+                        ),
+                      ).then((value) => getAllChats(10, 0));
                     }
                   },
                   child: Container(
