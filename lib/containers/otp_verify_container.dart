@@ -1,7 +1,8 @@
 /// Contains service and logic related of otp verification screen.
 ///
 ///
-import 'dart:developer' as devlog;
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hynzo/core/models/auth_model.dart';
@@ -31,14 +32,13 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
   static AuthProvider? _authProvider;
   static InterestProvider? _interestProvider;
 
-  Future<void> _verifyOtp(otp) async {
+  Future<void> _verifyOtp(String otp) async {
     try {
       setState(() {
         _isLoading = true;
       });
       final LoginModel response = await _authProvider!.verifyOtp(
           _authProvider!.userMobile, "91", _authProvider!.otpId, otp);
-      devlog.log("$response", name: 'MyLog');
       if (response.statusCode == 200) {
         token = response.token!;
         LocalStorage.setLoginToken(token);

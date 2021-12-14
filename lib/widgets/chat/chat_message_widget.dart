@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:hynzo/core/models/chat_socket_model.dart';
+import 'package:hynzo/core/models/new_message_model.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/themes/themes.dart';
 import 'package:hynzo/utils/localStorage.dart';
@@ -17,6 +19,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class ChatMessageWidget extends StatefulWidget {
   final int channelId;
   final List<String> participants;
+
   const ChatMessageWidget(
       {Key? key, required this.channelId, required this.participants})
       : super(key: key);
@@ -27,21 +30,31 @@ class ChatMessageWidget extends StatefulWidget {
 
 class _ChatMessageWidgetState extends State<ChatMessageWidget> {
   List<types.Message> _messages = [];
+  bool isInitLoaded = false;
   bool loading = true;
   late WebSocketChannel channel;
-  final _user = const types.User(
-    id: '186',
-    firstName: 'Lin',
-    lastName: 'Sanjo',
-    imageUrl:
-        'https://i.picsum.photos/id/1075/200/300.jpg?hmac=pffU5_mFDClpUhsTVng81yHXXvdsGGKHi1jCz2pRsaU',
-    role: types.Role.user,
-  );
+  int? uid;
+  String? token;
+  late types.User _user;
 
   @override
   void initState() {
     super.initState();
     _loadMessages();
+  }
+
+  Future<bool> assignUser() async {
+    uid = await LocalStorage.getUserID();
+    token = await LocalStorage.getLoginToken();
+    _user = types.User(
+      id: uid.toString(),
+      firstName: '',
+      lastName: '',
+      imageUrl:
+          'https://i.picsum.photos/id/1075/200/300.jpg?hmac=pffU5_mFDClpUhsTVng81yHXXvdsGGKHi1jCz2pRsaU',
+      role: types.Role.user,
+    );
+    return true;
   }
 
   void _addMessage(types.Message message) {
@@ -163,27 +176,20 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
   }
 
   void _handleSendPressed(types.PartialText message) {
-    final textMessage = types.TextMessage(
-        author: _user,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-        id: const Uuid().v4(),
-        text: message.text,
-        status: types.Status.delivered);
-
-    _addMessage(textMessage);
+    channel.sink.add(
+        '{"command": "new_message",  "from": $uid, "message": "${message.text}", "chatId": ${widget.channelId}, "type_of_content": "text", "media_id": "", "offline_locator":""}');
   }
 
   void _loadMessages() async {
-    String? token = await LocalStorage.getLoginToken();
-    int? uid = await LocalStorage.getUserID();
+    await assignUser();
     channel = WebSocketChannel.connect(Uri.parse(
-        'ws://api.inventchat.com/api/v1/ws/chat/${widget.channelId}?token=$token'));
+        'ws://35.154.69.40:9000/api/v1/ws/chat/${widget.channelId}?token=$token'));
+    log(Uri.parse(
+            'ws://35.154.69.40:9000/api/v1/ws/chat/${widget.channelId}?token=$token')
+        .toString());
     Future.delayed(const Duration(microseconds: 500)).whenComplete(() =>
         channel.sink.add(
             '{"command": "fetch_messages", "username": "${widget.participants[1]}", "user_id": $uid, "chatId": ${widget.channelId}}'));
-    //Future.delayed(const Duration(microseconds: 300)).whenComplete(() =>
-    //    channel.sink.add(
-    //        '{"command": "new_message",  "from": "128", "message": "Hello", "chatId": "667", "type_of_content": "text", "media_id": "", "offline_locator":""}'));
     setState(() {
       loading = false;
     });
@@ -207,40 +213,81 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
           : StreamBuilder<dynamic>(
               stream: channel.stream,
               builder: (context, snapshot) {
+                log(snapshot.connectionState.toString());
+                log(snapshot.data.toString());
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
 
-                if (snapshot.connectionState == ConnectionState.active) {
-                  ChatSocketModel chats =
-                      ChatSocketModel.fromJson(jsonDecode(snapshot.data));
-
-                  if (chats.messages.isNotEmpty) {
-                    chats.messages.forEach((element) {
-                      _messages.insert(
-                          _messages.length,
-                          types.Message.fromJson({
-                            "author": {
-                              "firstName": element.author.username,
-                              "id": element.author.id.toString(),
-                              "imageUrl": element.author.avatar
-                            },
-                            "createdAt":
-                                element.timestamp.millisecondsSinceEpoch,
-                            "id": element.id.toString(),
-                            "status": "seen",
-                            "text": element.content,
-                            "type": "text"
-                          }));
-                    });
+                if (snapshot.connectionState == ConnectionState.active &&
+                    snapshot.hasData) {
+                  if (jsonDecode(snapshot.data)['command'] == 'messages') {
+                    if (!isInitLoaded) {
+                      ChatSocketModel chats =
+                          ChatSocketModel.fromJson(jsonDecode(snapshot.data));
+                      if (chats.messages.isNotEmpty) {
+                        chats.messages.forEach((element) {
+                          _messages.insert(
+                              _messages.length,
+                              types.Message.fromJson({
+                                "author": {
+                                  "firstName": element.author.username,
+                                  "id": element.author.id.toString(),
+                                  "imageUrl": element.author.avatar,
+                                },
+                                "createdAt":
+                                    element.timestamp.millisecondsSinceEpoch,
+                                "id": element.id.toString(),
+                                "status": "seen",
+                                "text": element.content,
+                                "type": "text",
+                              }));
+                        });
+                        WidgetsBinding.instance!
+                            .addPostFrameCallback((timeStamp) {
+                          setState(() {
+                            isInitLoaded = true;
+                          });
+                        });
+                      }
+                    }
+                  } else if (jsonDecode(snapshot.data)['command'] ==
+                      'new_message') {
+                    NewMessageModel msg =
+                        NewMessageModel.fromJson(jsonDecode(snapshot.data));
+                    _messages.insert(
+                        0,
+                        types.Message.fromJson({
+                          "author": {
+                            "firstName": msg.message.author.username,
+                            "id": msg.message.author.id.toString(),
+                            "imageUrl": msg.message.author.avatar
+                          },
+                          "createdAt":
+                              msg.message.timestamp.millisecondsSinceEpoch,
+                          "id": msg.message.id.toString(),
+                          "status": "seen",
+                          "text": msg.message.content,
+                          "type": "text"
+                        }));
                   }
                 }
 
                 return Chat(
                   showUserNames: false,
+                  sendButtonVisibilityMode: SendButtonVisibilityMode.always,
                   showUserAvatars: false,
                   scrollPhysics: const BouncingScrollPhysics(),
-                  theme: const DefaultChatTheme(),
+                  theme: DefaultChatTheme(
+                      inputBackgroundColor: Colors.white,
+                      sendButtonIcon: Icon(
+                        Icons.send,
+                        color: Colors.indigo,
+                      ),
+                      attachmentButtonIcon: Icon(
+                        Icons.pin,
+                        color: Colors.indigo,
+                      )),
                   messages: _messages,
                   onAttachmentPressed: _handleAtachmentPressed,
                   onMessageTap: _handleMessageTap,
