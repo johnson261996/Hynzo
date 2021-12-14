@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
@@ -281,7 +282,7 @@ class MoreWidget extends StatelessWidget {
                       height: 2.0,
                     ),
                     InkWell(
-                      onTap: () {
+                      onTap: ()  {
                         LocalStorage.clearToken();
                         Navigation.pushReplacementNamed(context, Routes.login);
                       },

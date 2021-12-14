@@ -3,6 +3,7 @@
 ///
 import 'dart:developer' as devlog;
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/core/models/interest_model.dart';
@@ -30,6 +31,7 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
   int offSet = 0;
   static AuthProvider? _authProvider;
   static InterestProvider? _interestProvider;
+
 
   Future<void> _verifyOtp(otp) async {
     try {
@@ -73,9 +75,15 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
           setState(() {
             _isLoading = false;
           });
+          LocationPermission permission = await Geolocator.checkPermission();
+          if(permission == LocationPermission.denied){
+            Navigation.pushReplacementNamed(context, Routes.location);
+          }else{
+            Navigation.pushReplacementNamed(context, Routes.navScreen);
+          }
 
-          Navigation.pushReplacementNamed(context, Routes.navScreen);
         } else {
+
           if (interestResponseModel.next! != '') {
             offSet = offSet + 10;
             _getInterestForSpecificUser("10", offSet.toString());

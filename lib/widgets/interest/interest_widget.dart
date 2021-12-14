@@ -35,22 +35,19 @@ class _InterestWidgetState extends State<InterestWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    widget.fetchInterest!(
+      "10",
+      '0',
+    );
     _sccontroller.addListener(() {
       if (_sccontroller.position.pixels ==
           _sccontroller.position.maxScrollExtent) {
         if (!widget.isNextValueEmpty!) {
-          // ConnectionStaus().check().then((connectionStatus) {
-          //   if (connectionStatus) {
           offset = offset + 10;
           widget.fetchInterest!(
             "10",
             (offset).toString(),
           );
-          //   } else {
-          //     ToastUtil().showToast(
-          //         "No internet connection available. Please check your connection or try again later.");
-          //   }
-          // });
         }
       }
     });
@@ -86,7 +83,7 @@ class _InterestWidgetState extends State<InterestWidget> {
         if (interestIds == '') {
           interestIds = element.id.toString();
         } else {
-          interestIds = interestIds + element.id.toString();
+          interestIds = interestIds + " ," + element.id.toString();
         }
       }
     }
@@ -103,11 +100,6 @@ class _InterestWidgetState extends State<InterestWidget> {
     } else {
       widget.addInterest!(interestIds);
     }
-    //   } else {
-    //     ToastUtil().showToast(
-    //         "No internet connection available. Please check your connection or try again later.");
-    //   }
-    // });
   }
 
   @override
