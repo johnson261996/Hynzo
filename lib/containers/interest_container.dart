@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hynzo/core/models/interest_model.dart';
 import 'package:hynzo/providers/interest_provider.dart';
 import 'package:hynzo/routes/routes.dart';
@@ -29,28 +30,17 @@ class _InterestContainerState extends State<InterestContainer> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _interestProvider = Provider.of<InterestProvider>(context, listen: false);
     allResults.clear();
-    // ConnectionStaus().check().then((connectionStatus) {
-    //   if (connectionStatus) {
-    getInitalInterestList(limit.toString(), "0");
-    //   } else {
-    //     ToastUtil().showToast(
-    //         "No internet connection available. Please check your connection or try again later.");
-    //   }
-    // });
   }
 
   Future<void> getInitalInterestList(String limit, String offset) async {
     try {
-      setState(() {
-        _isLoading = true;
-      });
       interestResponseModel =
           await _interestProvider!.getInterestList(limit, offset);
       setState(() {
         _isLoading = false;
       });
+      _interestProvider!.isLoading = false;
       if (interestResponseModel.statusCode == 200) {
         _totalCount = interestResponseModel.count!;
         for (var element in interestResponseModel.resultsList) {
@@ -65,39 +55,39 @@ class _InterestContainerState extends State<InterestContainer> {
         ToastUtil().showToast("Something went wrong.");
       }
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
+      _interestProvider!.isLoading = false;
       ToastUtil().showToast(e.toString());
     }
   }
 
   Future<void> addInterests(String interestIds) async {
     try {
-      setState(() {
-        _isLoading = true;
-      });
+      _interestProvider!.isLoading = true;
       bool response = await _interestProvider!.createUserInterest(interestIds);
-      setState(() {
-        _isLoading = false;
-      });
+      _interestProvider!.isLoading = false;
       if (response) {
-        Navigation.pushReplacementNamed(context, Routes.location);
+        LocationPermission permission = await Geolocator.checkPermission();
+        if(permission == LocationPermission.denied){
+          Navigation.pushReplacementNamed(context, Routes.location);
+        }else{
+          Navigation.pushReplacementNamed(context, Routes.suggetion);
+        }
+
+
       } else {
         ToastUtil().showToast("Something went wrong.");
       }
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
+      _interestProvider!.isLoading = false;
       ToastUtil().showToast(e.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    _interestProvider = Provider.of<InterestProvider>(context, listen: false);
     return LoadingOverlay(
-      isLoading: _isLoading,
+      isLoading: _interestProvider!.isLoading,
       color: AppColors.gray,
       child: InterestWidget(
         allResults: allResults,
