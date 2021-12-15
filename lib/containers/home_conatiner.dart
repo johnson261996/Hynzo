@@ -1,15 +1,12 @@
 /// Contains service and logic related of home screen.
 ///
 ///
-
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/providers/game_provider.dart';
 import 'package:hynzo/providers/news_provider.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/connectivity.dart';
-import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
 import 'package:hynzo/widgets/home_widget.dart';
@@ -33,7 +30,6 @@ class _HomeContainerState extends State<HomeContainer> {
   List<NewsContentDataModel> allNews = [];
   List<SuggestedPlayModel> allSuggestedGames = [];
   bool _isLoading = false;
-  late String token;
 
   @override
   void initState() {
@@ -42,17 +38,15 @@ class _HomeContainerState extends State<HomeContainer> {
     _newsProvider = Provider.of<NewsProvider>(context, listen: false);
     _gamesProvider = Provider.of<GamesProvider>(context, listen: false);
     allNews.clear();
-    ConnectionStaus().check().then((connectionStatus) {
-      if (connectionStatus) {
-        getSuggestionGames();
-      } else {
-        ToastUtil().showToast(
-            "No internet connection available. Please check your connection or try again later.");
-      }
-    });
+    // ConnectionStaus().check().then((connectionStatus) {
+    //   if (connectionStatus) {
+    getSuggestionGames();
+    //   } else {
+    //     ToastUtil().showToast(
+    //         "No internet connection available. Please check your connection or try again later.");
+    //   }
+    // });
   }
-
-
 
   bool isToday(String time) {
     var now = DateTime.now();
@@ -72,14 +66,15 @@ class _HomeContainerState extends State<HomeContainer> {
       setState(() {
         _isLoading = true;
       });
-      await LocalStorage.getLoginToken().then((value) => token=value!);
-      SuggestedGamesResponseModel suggestedGamesResponseModel = await _gamesProvider!.getSuggestedGames(token);
+      SuggestedGamesResponseModel suggestedGamesResponseModel =
+          await _gamesProvider!.getSuggestedGames();
       if (suggestedGamesResponseModel.statusCode == 200) {
-        for (var element in suggestedGamesResponseModel.allSuggestedGames!) {
-          if(element.activeStatus!) {
-            allSuggestedGames.add(element);
-          }
-        }
+        allSuggestedGames = suggestedGamesResponseModel.allSuggestedGames!;
+        // for (var element in suggestedGamesResponseModel.allSuggestedGames!) {
+        //   if (element.activeStatus!) {
+        //     allSuggestedGames.add(element);
+        //   }
+        // }
       } else {
         ToastUtil().showToast("Something went wrong.");
       }
@@ -92,20 +87,16 @@ class _HomeContainerState extends State<HomeContainer> {
     }
   }
 
-
-
   Future<void> getAllNews() async {
     try {
-      token = (await LocalStorage.getLoginToken())!;
-      NewsResponseModel newsResponseModel =
-          await _newsProvider!.getNewsList(token);
+      NewsResponseModel newsResponseModel = await _newsProvider!.getNewsList();
       setState(() {
         _isLoading = false;
       });
       if (newsResponseModel.statusCode == 200) {
         for (var element in newsResponseModel.newsDataList!) {
           for (var newsContent in element.newsDataContentList!) {
-            if(isToday(newsContent.pubDate!)){
+            if (isToday(newsContent.pubDate!)) {
               if (allNews.length < 2) {
                 allNews.add(newsContent);
               } else {
@@ -136,7 +127,7 @@ class _HomeContainerState extends State<HomeContainer> {
       child: HomeWidget(
         onTapped: widget._onTapped,
         allContent: allNews,
-        allSuggestedGames: allSuggestedGames, LoadImage: widget._onTapped,
+        allSuggestedGames: allSuggestedGames,
       ),
     );
   }

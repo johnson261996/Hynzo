@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/interest_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/connectivity.dart';
-import 'package:hynzo/utils/toast_util.dart';
 
 class InterestWidget extends StatefulWidget {
   List<ResultsModel> allResults;
@@ -35,35 +33,32 @@ class _InterestWidgetState extends State<InterestWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    widget.fetchInterest!(
+      "10",
+      '0',
+    );
     _sccontroller.addListener(() {
       if (_sccontroller.position.pixels ==
           _sccontroller.position.maxScrollExtent) {
         if (!widget.isNextValueEmpty!) {
-          ConnectionStaus().check().then((connectionStatus) {
-            if (connectionStatus) {
-              offset = offset + 10;
-              widget.fetchInterest!(
-                "10",
-                (offset).toString(),
-              );
-            } else {
-              ToastUtil().showToast(
-                  "No internet connection available. Please check your connection or try again later.");
-            }
-          });
+          offset = offset + 10;
+          widget.fetchInterest!(
+            "10",
+            (offset).toString(),
+          );
         }
       }
     });
   }
 
-  double _setProgressvalue(){
+  double _setProgressvalue() {
     int count = 0;
     for (var element in widget.allResults) {
       if (element.isSelected!) {
-        count ++;
+        count++;
       }
     }
-    if(widget.totalCount == 0) {
+    if (widget.totalCount == 0) {
       return 0.0;
     } else {
       double value = (count.toDouble() / widget.totalCount!.toDouble());
@@ -79,35 +74,30 @@ class _InterestWidgetState extends State<InterestWidget> {
   }
 
   _addInterest() {
-    ConnectionStaus().check().then((connectionStatus) {
-      if (connectionStatus) {
-        for (var element in widget.allResults) {
-          if (element.isSelected!) {
-            if (interestIds == '') {
-              interestIds = element.id.toString();
-            } else {
-              interestIds = interestIds + element.id.toString();
-            }
-          }
-        }
+    // ConnectionStaus().check().then((connectionStatus) {
+    //   if (connectionStatus) {
+    for (var element in widget.allResults) {
+      if (element.isSelected!) {
         if (interestIds == '') {
-          var snackBar = SnackBar(
-            content: Text(
-              'You need to select one of them from above',
-              style: Theme.of(context).textTheme.subtitle2!.apply(
-                    color: AppColors.white,
-                  ),
-            ),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          interestIds = element.id.toString();
         } else {
-          widget.addInterest!(interestIds);
+          interestIds = interestIds + " ," + element.id.toString();
         }
-      } else {
-        ToastUtil().showToast(
-            "No internet connection available. Please check your connection or try again later.");
       }
-    });
+    }
+    if (interestIds == '') {
+      var snackBar = SnackBar(
+        content: Text(
+          'You need to select one of them from above',
+          style: Theme.of(context).textTheme.subtitle2!.apply(
+                color: AppColors.white,
+              ),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      widget.addInterest!(interestIds);
+    }
   }
 
   @override
@@ -180,12 +170,15 @@ class _InterestWidgetState extends State<InterestWidget> {
                               : null,
                           child: Stack(
                             children: [
-                              Center(
+                              Positioned(
+                                right: 50.0,
+                                left: 50.0,
+                                top: 15.0,
                                 child: Image.network(
                                   widget.allResults[index].interestImage!,
                                   fit: BoxFit.contain,
                                   width: 60,
-                                  height: 80,
+                                  height: 60,
                                 ),
                               ),
                               if (widget.allResults[index].isSelected!) ...[
@@ -206,9 +199,13 @@ class _InterestWidgetState extends State<InterestWidget> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(
                                     bottom: 10.0,
+                                    left: 5.0,
+                                    right: 5.0,
                                   ),
                                   child: Text(
                                     widget.allResults[index].interest!,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: !widget.allResults[index].isSelected!
                                         ? Theme.of(context).textTheme.headline6
                                         : Theme.of(context)
@@ -256,7 +253,13 @@ class _InterestWidgetState extends State<InterestWidget> {
                       ),
                       width: 70.0,
                       height: 70.0,
-                      child: CircularProgressIndicator(value: _setProgressvalue(),backgroundColor: AppColors.blueGray,valueColor:  AlwaysStoppedAnimation<Color>(AppColors.blueDark,),),
+                      child: CircularProgressIndicator(
+                        value: _setProgressvalue(),
+                        backgroundColor: AppColors.blueGray,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          AppColors.blueDark,
+                        ),
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(8.0),
@@ -270,7 +273,6 @@ class _InterestWidgetState extends State<InterestWidget> {
               ),
             ),
           ),
-
         ],
       ),
     );

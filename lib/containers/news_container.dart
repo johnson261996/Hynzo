@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
+import 'package:hynzo/providers/news_provider.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/connectivity.dart';
-import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
 import 'package:hynzo/widgets/news/news_widget.dart';
-import 'package:hynzo/providers/news_provider.dart';
 import 'package:provider/provider.dart';
 
 class NewsContainer extends StatefulWidget {
@@ -16,9 +14,8 @@ class NewsContainer extends StatefulWidget {
 
 class _NewsContainerState extends State<NewsContainer> {
   static NewsProvider? _newsProvider;
-  List<NewsDataModel> allNews=[];
+  List<NewsDataModel> allNews = [];
   bool _isLoading = false;
-  late String token;
 
   @override
   void initState() {
@@ -26,14 +23,14 @@ class _NewsContainerState extends State<NewsContainer> {
     super.initState();
     _newsProvider = Provider.of<NewsProvider>(context, listen: false);
     allNews.clear();
-    ConnectionStaus().check().then((connectionStatus) {
-      if (connectionStatus) {
-        getAllNews();
-      } else {
-        ToastUtil().showToast(
-            "No internet connection available. Please check your connection or try again later.");
-      }
-    });
+    // ConnectionStaus().check().then((connectionStatus) {
+    //   if (connectionStatus) {
+    getAllNews();
+    //   } else {
+    //     ToastUtil().showToast(
+    //         "No internet connection available. Please check your connection or try again later.");
+    //   }
+    // });
   }
 
   Future<void> getAllNews() async {
@@ -41,8 +38,7 @@ class _NewsContainerState extends State<NewsContainer> {
       setState(() {
         _isLoading = true;
       });
-      token = (await LocalStorage.getLoginToken())!;
-      NewsResponseModel newsResponseModel = await _newsProvider!.getNewsList(token);
+      NewsResponseModel newsResponseModel = await _newsProvider!.getNewsList();
       setState(() {
         _isLoading = false;
       });
@@ -76,6 +72,5 @@ class _NewsContainerState extends State<NewsContainer> {
         child: CircularProgressIndicator(),
       );
     }
-
   }
 }

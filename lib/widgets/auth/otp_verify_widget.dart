@@ -1,20 +1,14 @@
 ///Contains all the widgets added in Otp verification screen.
-
 import 'dart:async';
 
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/connectivity.dart';
 import 'package:hynzo/utils/localstorage.dart';
-import 'package:hynzo/utils/toast_util.dart';
-import 'package:hynzo/widgets/common/buttons/primary_button.dart';
 import 'package:hynzo/widgets/common/error/error.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-import 'package:hynzo/routes/routes.dart';
-import 'package:hynzo/resources/strings.dart';
 
 class OtpWidget extends StatefulWidget {
   final Function verifyOTP;
@@ -85,40 +79,41 @@ class _OtpWidgetState extends State<OtpWidget> {
   }
 
   verifyOTP() {
-    ConnectionStaus().check().then((connectionStatus) {
-      if (connectionStatus) {
-        if (otp.length == 6) {
-          FocusScope.of(context).unfocus();
-          widget.verifyOTP(otp);
-        } else {
-          setState(() {
-            errorMgs = Strings.PHONE_NUMBER_VALIDATION;
-          });
-        }
-      } else {
-        ToastUtil().showToast("No internet connection available. Please check your connection or try again later.");
-      }
-    });
+    // ConnectionStaus().check().then((connectionStatus) {
+    //   if (connectionStatus) {
+    if (otp.length == 6) {
+      FocusScope.of(context).unfocus();
+      widget.verifyOTP(otp);
+    } else {
+      setState(() {
+        errorMgs = Strings.PHONE_NUMBER_VALIDATION;
+      });
+    }
+    //   } else {
+    //     ToastUtil().showToast("No internet connection available. Please check your connection or try again later.");
+    //   }
+    // });
   }
 
   resendOTP() {
     FocusScope.of(context).unfocus();
-    ConnectionStaus().check().then((connectionStatus) {
-      if (connectionStatus) {
-        String signature = '';
-        SmsAutoFill().getAppSignature.then((signature) {
-          signature = signature;
-        });
-        widget.resendOTP(phone, signature);
-      } else {
-        ToastUtil().showToast("No internet connection available. Please check your connection or try again later.");
-      }
+    // ConnectionStaus().check().then((connectionStatus) {
+    //   if (connectionStatus) {
+    String signature = '';
+    SmsAutoFill().getAppSignature.then((signature) {
+      signature = signature;
     });
+    widget.resendOTP(phone, signature);
+    //   } else {
+    //     ToastUtil().showToast(
+    //         "No internet connection available. Please check your connection or try again later.");
+    //   }
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    var mediaQuery= MediaQuery.of(context).size;
+    var mediaQuery = MediaQuery.of(context).size;
     return Container(
       color: AppColors.white,
       width: mediaQuery.width,

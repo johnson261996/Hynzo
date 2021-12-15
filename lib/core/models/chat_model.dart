@@ -1,4 +1,5 @@
-class ChatModel{
+class ChatModel {
+  final int? senderId;
   final String? imagePath;
   final String? name;
   final String? content;
@@ -8,13 +9,13 @@ class ChatModel{
   final DateTime? dateTime;
 
   ChatModel({
+    this.senderId,
     this.imagePath,
     this.name,
     this.content,
     this.unreadCount,
     this.status,
-    this.isRead=false,
+    this.isRead = false,
     this.dateTime,
   });
-
 }

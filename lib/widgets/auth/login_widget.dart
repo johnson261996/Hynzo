@@ -1,14 +1,11 @@
 ///Contains all the widgets included in login screen.
-
 import 'package:flutter/material.dart';
+import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/connectivity.dart';
-import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/common/buttons/primary_button.dart';
 import 'package:hynzo/widgets/common/error/error.dart';
 import 'package:hynzo/widgets/common/input/input.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-import 'package:hynzo/resources/strings.dart';
 
 class LoginWidget extends StatefulWidget {
   final Function generateOTP;
@@ -25,23 +22,23 @@ class _LoginWidgetState extends State<LoginWidget> {
   late String name = '';
 
   _generateOTP() {
-    ConnectionStaus().check().then((connectionStatus) {
-      if (connectionStatus) {
-        if (mobile.length == 10) {
-          String signature = '';
-          SmsAutoFill().getAppSignature.then((signature) {
-            signature = signature;
-          });
-          widget.generateOTP(mobile, signature);
-        } else {
-          setState(() {
-            errorMgs = Strings.PHONE_NUMBER_VALIDATION;
-          });
-        }
-      } else {
-        ToastUtil().showToast("No internet connection available. Please check your connection or try again later.");
-      }
-    });
+    // ConnectionStaus().check().then((connectionStatus) {
+    //   if (connectionStatus) {
+    if (mobile.length == 10) {
+      String signature = '';
+      SmsAutoFill().getAppSignature.then((signature) {
+        signature = signature;
+      });
+      widget.generateOTP(mobile, signature);
+    } else {
+      setState(() {
+        errorMgs = Strings.PHONE_NUMBER_VALIDATION;
+      });
+    }
+    //   } else {
+    //     ToastUtil().showToast("No internet connection available. Please check your connection or try again later.");
+    //   }
+    // });
   }
 
   @override

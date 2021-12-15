@@ -1,9 +1,7 @@
 ///Widget created for home screen.
-
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/models/events_model.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
@@ -14,6 +12,7 @@ import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/common/search_bar/search_bar.dart';
 import 'package:intl/intl.dart';
+
 import 'common/no_data/no_data_error.dart';
 import 'common/profile_image/profile_image.dart';
 import 'common/view/event_view_widget.dart';
@@ -22,8 +21,13 @@ class HomeWidget extends StatefulWidget {
   final Function onTapped;
   final List<NewsContentDataModel>? allContent;
   final List<SuggestedPlayModel>? allSuggestedGames;
-  final Function LoadImage;
-  const HomeWidget({required this.onTapped,this.allContent,this.allSuggestedGames,required this.LoadImage,Key? key}) : super(key: key);
+
+  const HomeWidget(
+      {required this.onTapped,
+      this.allContent,
+      this.allSuggestedGames,
+      Key? key})
+      : super(key: key);
 
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
@@ -106,6 +110,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   getName() async {
      name = (await LocalStorage.getUserName())!;
   }
+
   getProfilePic()async{
     url = (await LocalStorage.getProfilePic())!;
     print(url);
@@ -128,7 +133,6 @@ class _HomeWidgetState extends State<HomeWidget> {
         return 'Yesterday';
       }
     }
-
   }
 
   //check the internet connection

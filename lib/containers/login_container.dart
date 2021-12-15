@@ -1,7 +1,6 @@
 /// Contains service and logic related of login screen.
 ///
 ///
-
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/providers/auth_provider.dart';
@@ -15,7 +14,6 @@ import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 
 class LoginContainer extends StatefulWidget {
-
   const LoginContainer({Key? key}) : super(key: key);
 
   @override
@@ -27,12 +25,12 @@ class _LoginContainerState extends State<LoginContainer> {
   static AuthProvider? _authProvider;
 
   Future<void> _generateOTP(String mobile, String signature) async {
-    try{
+    try {
       setState(() {
         _isLoading = true;
       });
       final GenerateOTPModel response =
-      await _authProvider!.generateOTP(mobile, signature);
+          await _authProvider!.generateOTP(mobile, signature);
       setState(() {
         _isLoading = false;
       });
@@ -48,7 +46,6 @@ class _LoginContainerState extends State<LoginContainer> {
       });
       ToastUtil().showToast(e.toString());
     }
-
   }
 
   @override
