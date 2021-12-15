@@ -22,6 +22,9 @@ class MyApp extends StatelessWidget {
           create: (_) => AuthProvider(),
         ),
         ChangeNotifierProvider(
+          create: (_) => ChatProvider(),
+        ),
+        ChangeNotifierProvider(
           create: (_) => InterestProvider(),
         ),
         ChangeNotifierProvider(

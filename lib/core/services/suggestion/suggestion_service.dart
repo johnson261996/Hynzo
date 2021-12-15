@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:hynzo/core/models/suggestion_model.dart';
 import 'package:hynzo/core/services/service_base.dart';
 import 'package:hynzo/utils/localstorage.dart';

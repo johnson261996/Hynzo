@@ -1,5 +1,6 @@
 import 'dart:async' show Future;
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:http_interceptor/http/intercepted_http.dart';
 import 'package:hynzo/core/services/auth/auth_interceptor.dart';
@@ -22,6 +23,7 @@ class ServiceBase {
     return response;
   }
 
+
   static Future<http.Response> post({
     String? url,
     required Map data,
@@ -31,8 +33,8 @@ class ServiceBase {
     checkConnectionStaus();
     String apiUrl = apiBaseUrl + url!;
     final response =
-        await InterceptedHttp.build(interceptors: [AuthInterceptorHeader()])
-            .post(Uri.parse(apiUrl), body: jsonEncode(data), headers: headers);
+    await InterceptedHttp.build(interceptors: [AuthInterceptorHeader()])
+        .post(Uri.parse(apiUrl), body: jsonEncode(data), headers: headers);
     return response;
   }
 }

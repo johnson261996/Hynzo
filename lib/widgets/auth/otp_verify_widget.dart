@@ -1,14 +1,14 @@
 ///Contains all the widgets added in Otp verification screen.
-
 import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:sms_autofill/sms_autofill.dart';
+import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/widgets/common/error/error.dart';
-import 'package:hynzo/resources/strings.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 class OtpWidget extends StatefulWidget {
   final Function verifyOTP;

@@ -1,7 +1,6 @@
 /// Contains service and logic related of home screen.
 ///
 ///
-
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/models/news_home_model.dart';

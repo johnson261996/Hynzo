@@ -1,9 +1,7 @@
 /// Contains service and logic related of login screen.
 ///
 ///
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/providers/auth_provider.dart';
 import 'package:hynzo/routes/routes.dart';
@@ -13,6 +11,7 @@ import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/auth/login_widget.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
+import 'package:provider/provider.dart';
 
 class LoginContainer extends StatefulWidget {
   const LoginContainer({Key? key}) : super(key: key);

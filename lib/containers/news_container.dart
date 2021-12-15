@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
+import 'package:hynzo/providers/news_provider.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
 import 'package:hynzo/widgets/news/news_widget.dart';
-import 'package:hynzo/providers/news_provider.dart';
 import 'package:provider/provider.dart';
 
 class NewsContainer extends StatefulWidget {

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/interest_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/connectivity.dart';
-import 'package:hynzo/utils/toast_util.dart';
 
 class InterestWidget extends StatefulWidget {
   List<ResultsModel> allResults;

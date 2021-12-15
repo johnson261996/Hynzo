@@ -1,9 +1,9 @@
 import 'dart:convert';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:hynzo/core/models/chat_socket_model.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/themes/themes.dart';
@@ -17,6 +17,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class ChatMessageWidget extends StatefulWidget {
   final int channelId;
   final List<String> participants;
+
   const ChatMessageWidget(
       {Key? key, required this.channelId, required this.participants})
       : super(key: key);
@@ -148,10 +149,8 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
     }
   }
 
-  void _handlePreviewDataFetched(
-    types.TextMessage message,
-    types.PreviewData previewData,
-  ) {
+  void _handlePreviewDataFetched(types.TextMessage message,
+      types.PreviewData previewData,) {
     final index = _messages.indexWhere((element) => element.id == message.id);
     final updatedMessage = _messages[index].copyWith(previewData: previewData);
 
@@ -180,7 +179,9 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
         'ws://api.inventchat.com/api/v1/ws/chat/${widget.channelId}?token=$token'));
     Future.delayed(const Duration(microseconds: 500)).whenComplete(() =>
         channel.sink.add(
-            '{"command": "fetch_messages", "username": "${widget.participants[1]}", "user_id": $uid, "chatId": ${widget.channelId}}'));
+            '{"command": "fetch_messages", "username": "${widget
+                .participants[1]}", "user_id": $uid, "chatId": ${widget
+                .channelId}}'));
     //Future.delayed(const Duration(microseconds: 300)).whenComplete(() =>
     //    channel.sink.add(
     //        '{"command": "new_message",  "from": "128", "message": "Hello", "chatId": "667", "type_of_content": "text", "media_id": "", "offline_locator":""}'));
@@ -202,53 +203,53 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
       ),
       body: loading
           ? const Center(
-              child: CircularProgressIndicator(),
-            )
+        child: CircularProgressIndicator(),
+      )
           : StreamBuilder<dynamic>(
-              stream: channel.stream,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+          stream: channel.stream,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-                if (snapshot.connectionState == ConnectionState.active) {
-                  ChatSocketModel chats =
-                      ChatSocketModel.fromJson(jsonDecode(snapshot.data));
+            if (snapshot.connectionState == ConnectionState.active) {
+              ChatSocketModel chats =
+              ChatSocketModel.fromJson(jsonDecode(snapshot.data));
 
-                  if (chats.messages.isNotEmpty) {
-                    chats.messages.forEach((element) {
-                      _messages.insert(
-                          _messages.length,
-                          types.Message.fromJson({
-                            "author": {
-                              "firstName": element.author.username,
-                              "id": element.author.id.toString(),
-                              "imageUrl": element.author.avatar
-                            },
-                            "createdAt":
-                                element.timestamp.millisecondsSinceEpoch,
-                            "id": element.id.toString(),
-                            "status": "seen",
-                            "text": element.content,
-                            "type": "text"
-                          }));
-                    });
-                  }
-                }
+              if (chats.messages.isNotEmpty) {
+                chats.messages.forEach((element) {
+                  _messages.insert(
+                      _messages.length,
+                      types.Message.fromJson({
+                        "author": {
+                          "firstName": element.author.username,
+                          "id": element.author.id.toString(),
+                          "imageUrl": element.author.avatar
+                        },
+                        "createdAt":
+                        element.timestamp.millisecondsSinceEpoch,
+                        "id": element.id.toString(),
+                        "status": "seen",
+                        "text": element.content,
+                        "type": "text"
+                      }));
+                });
+              }
+            }
 
-                return Chat(
-                  showUserNames: false,
-                  showUserAvatars: false,
-                  scrollPhysics: const BouncingScrollPhysics(),
-                  theme: const DefaultChatTheme(),
-                  messages: _messages,
-                  onAttachmentPressed: _handleAtachmentPressed,
-                  onMessageTap: _handleMessageTap,
-                  onPreviewDataFetched: _handlePreviewDataFetched,
-                  onSendPressed: _handleSendPressed,
-                  user: _user,
-                );
-              }),
+            return Chat(
+              showUserNames: false,
+              showUserAvatars: false,
+              scrollPhysics: const BouncingScrollPhysics(),
+              theme: const DefaultChatTheme(),
+              messages: _messages,
+              onAttachmentPressed: _handleAtachmentPressed,
+              onMessageTap: _handleMessageTap,
+              onPreviewDataFetched: _handlePreviewDataFetched,
+              onSendPressed: _handleSendPressed,
+              user: _user,
+            );
+          }),
     );
   }
 }

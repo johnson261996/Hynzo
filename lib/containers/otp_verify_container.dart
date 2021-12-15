@@ -2,9 +2,9 @@
 ///
 ///
 import 'dart:developer' as devlog;
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:provider/provider.dart';
 import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/core/models/interest_model.dart';
 import 'package:hynzo/providers/auth_provider.dart';
@@ -16,6 +16,7 @@ import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/auth/otp_verify_widget.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
+import 'package:provider/provider.dart';
 
 class OtpVerifyContainer extends StatefulWidget {
   const OtpVerifyContainer({Key? key}) : super(key: key);
@@ -44,6 +45,8 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
       if (response.statusCode == 200) {
         token = response.token!;
         LocalStorage.setLoginToken(token);
+        LocalStorage.setProfilePic(response.user!.avatar!);
+        print("response:" + response.user!.avatar!);
         LocalStorage.clearMobileNumber();
         LocalStorage.setUserID(response.user!.id!);
         LocalStorage.setUserName(response.user!.username!);
@@ -76,14 +79,13 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
             _isLoading = false;
           });
           LocationPermission permission = await Geolocator.checkPermission();
-          if(permission == LocationPermission.denied){
+          if (permission == LocationPermission.denied) {
             Navigation.pushReplacementNamed(context, Routes.location);
-          }else{
+          } else {
             Navigation.pushReplacementNamed(context, Routes.navScreen);
           }
 
         } else {
-
           if (interestResponseModel.next! != '') {
             offSet = offSet + 10;
             _getInterestForSpecificUser("10", offSet.toString());
@@ -111,7 +113,7 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
         _isLoading = true;
       });
       final GenerateOTPModel response =
-          await _authProvider!.resendOtp(mobile, signature);
+      await _authProvider!.resendOtp(mobile, signature);
       setState(() {
         _isLoading = false;
       });

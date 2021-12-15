@@ -35,11 +35,10 @@ class _InterestContainerState extends State<InterestContainer> {
 
   Future<void> getInitalInterestList(String limit, String offset) async {
     try {
+      _interestProvider!.isLoading = true;
       interestResponseModel =
           await _interestProvider!.getInterestList(limit, offset);
-      setState(() {
-        _isLoading = false;
-      });
+
       _interestProvider!.isLoading = false;
       if (interestResponseModel.statusCode == 200) {
         _totalCount = interestResponseModel.count!;
@@ -67,9 +66,9 @@ class _InterestContainerState extends State<InterestContainer> {
       _interestProvider!.isLoading = false;
       if (response) {
         LocationPermission permission = await Geolocator.checkPermission();
-        if(permission == LocationPermission.denied){
+        if (permission == LocationPermission.denied) {
           Navigation.pushReplacementNamed(context, Routes.location);
-        }else{
+        } else {
           Navigation.pushReplacementNamed(context, Routes.suggetion);
         }
 

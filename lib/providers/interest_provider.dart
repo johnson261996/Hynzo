@@ -3,7 +3,6 @@ import 'package:hynzo/core/models/interest_model.dart';
 import 'package:hynzo/core/services/interest/interest_service.dart';
 
 class InterestProvider extends ChangeNotifier {
-
   bool isLoading = false;
 
   void changeLoadingStatus(bool loading) {
