@@ -1,5 +1,4 @@
-class RecentPlayed{
-
+class RecentPlayed {
   final String? imagePath;
   final String? gameName;
 
@@ -7,7 +6,6 @@ class RecentPlayed{
     this.imagePath,
     this.gameName,
   });
-
 }
 
 class SuggestedGamesResponseModel {
@@ -19,15 +17,20 @@ class SuggestedGamesResponseModel {
     this.statusCode,
   });
 
-  factory SuggestedGamesResponseModel.fromJson(Map<String,dynamic> json, int code) {
+  factory SuggestedGamesResponseModel.fromJson(
+      Map<String, dynamic> json, int code) {
     return SuggestedGamesResponseModel(
-      allSuggestedGames: json['popular_games'] !=  null ? ((json['popular_games'] as List<dynamic>).map((i) => SuggestedPlayModel.fromJson(i)).toList()) : [],
+      allSuggestedGames: json['results'] != null
+          ? ((json['results'] as List<dynamic>)
+              .map((i) => SuggestedPlayModel.fromJson(i))
+              .toList())
+          : [],
       statusCode: code,
     );
   }
 }
-class SuggestedPlayModel{
 
+class SuggestedPlayModel {
   final String? gameName;
   final String? category;
   final String? image;
@@ -50,7 +53,7 @@ class SuggestedPlayModel{
     this.upDatedAt,
   });
 
-  factory SuggestedPlayModel.fromJson(Map<String,dynamic> json) {
+  factory SuggestedPlayModel.fromJson(Map<String, dynamic> json) {
     return SuggestedPlayModel(
       gameName: json['game_name'] ?? '',
       category: json['category'] ?? '',
@@ -63,11 +66,9 @@ class SuggestedPlayModel{
       upDatedAt: json['updated_at'] ?? '',
     );
   }
-
 }
 
-class AllGamesModel{
-
+class AllGamesModel {
   final String? imagePath;
   final String? gameName;
 
@@ -75,15 +76,12 @@ class AllGamesModel{
     this.imagePath,
     this.gameName,
   });
-
 }
 
-class GamesCategoryModel{
+class GamesCategoryModel {
   final String? imagePath;
 
   GamesCategoryModel({
     this.imagePath,
   });
-
 }
-
