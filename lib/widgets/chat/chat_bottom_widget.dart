@@ -5,8 +5,9 @@ import 'package:hynzo/themes/colors.dart';
 class ChatBottomWidget extends StatefulWidget {
   Function(types.PartialText) onSendPressed;
   Function() onAttachPressed;
+  Function() onEmojiPressed;
   ChatBottomWidget(
-      {Key? key, required this.onSendPressed, required this.onAttachPressed})
+      {Key? key, required this.onSendPressed, required this.onAttachPressed,required this.onEmojiPressed})
       : super(key: key);
 
   @override
@@ -60,6 +61,14 @@ class _ChatBottomWidgetState extends State<ChatBottomWidget> {
                   ),
                 ),
                 filled: true,
+                prefixIcon: IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.mood,
+                    size: 25,
+                    color: AppColors.offgrey,
+                  ),
+                ),
                 suffixIcon: IconButton(
                   onPressed: () {
                     widget.onSendPressed(
