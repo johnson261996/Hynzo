@@ -86,8 +86,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => ChatMessageScreen(
-                            channelId: response.id,
-                            participants: response.participants,
+                            channelDetails: response,
                             status: allChats[index].status == 'active',
                             userName: allChats[index].name!,
                           ),

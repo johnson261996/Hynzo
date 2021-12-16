@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:hynzo/core/models/chat_socket_model.dart';
+import 'package:hynzo/core/models/create_channel_model.dart';
 import 'package:hynzo/core/models/new_message_model.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/themes/themes.dart';
@@ -19,16 +20,14 @@ import 'package:uuid/uuid.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ChatMessageWidget extends StatefulWidget {
-  final int channelId;
-  final List<String> participants;
+  final CreateChannelModel channelDetails;
   final bool status;
   final String userName;
   final Function setUserStatus;
 
   const ChatMessageWidget(
       {Key? key,
-      required this.channelId,
-      required this.participants,
+      required this.channelDetails,
       required this.status,
       required this.userName,
       required this.setUserStatus})
@@ -213,19 +212,19 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
 
   void _handleSendPressed(types.PartialText message) {
     channel.sink.add(
-        '{"command": "new_message",  "from": $uid, "message": "${message.text}", "chatId": ${widget.channelId}, "type_of_content": "text", "media_id": "", "offline_locator":""}');
+        '{"command": "new_message",  "from": $uid, "message": "${message.text}", "chatId": ${widget.channelDetails.id}, "type_of_content": "text", "media_id": "", "offline_locator":""}');
   }
 
   void _loadMessages() async {
     await assignUser();
     channel = WebSocketChannel.connect(Uri.parse(
-        'ws://35.154.69.40:9000/api/v1/ws/chat/${widget.channelId}?token=$token'));
+        'ws://35.154.69.40:9000/api/v1/ws/chat/${widget.channelDetails.id}?token=$token'));
     log(Uri.parse(
-            'ws://35.154.69.40:9000/api/v1/ws/chat/${widget.channelId}?token=$token')
+            'ws://35.154.69.40:9000/api/v1/ws/chat/${widget.channelDetails.id}?token=$token')
         .toString());
     Future.delayed(const Duration(microseconds: 500)).whenComplete(() =>
         channel.sink.add(
-            '{"command": "fetch_messages", "username": "${widget.participants[1]}", "user_id": $uid, "chatId": ${widget.channelId}}'));
+            '{"command": "fetch_messages", "username": "${widget.channelDetails.participants[1]}", "user_id": $uid, "chatId": ${widget.channelDetails.id}}'));
     setState(() {
       loading = false;
     });

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/containers/chat/chat_message_container.dart';
+import 'package:hynzo/core/models/create_channel_model.dart';
 
 class ChatMessageScreen extends StatelessWidget {
-  final int channelId;
-  final List<String> participants;
+  final CreateChannelModel channelDetails;
   final bool status;
   final String userName;
 
   const ChatMessageScreen({
     Key? key,
-    required this.channelId,
-    required this.participants,
+    required this.channelDetails,
     required this.status,
     required this.userName,
   }) : super(key: key);
@@ -19,8 +18,7 @@ class ChatMessageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ChatMessageContainer(
-        channelId: channelId,
-        participants: participants,
+        channelDetails: channelDetails,
         status: status,
         userName: userName,
       ),

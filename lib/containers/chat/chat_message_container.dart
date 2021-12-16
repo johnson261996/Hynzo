@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:hynzo/core/models/create_channel_model.dart';
 import 'package:hynzo/providers/chat_provider.dart';
 import 'package:hynzo/widgets/chat/chat_message_widget.dart';
 import 'package:provider/provider.dart';
 
 class ChatMessageContainer extends StatefulWidget {
-  final int channelId;
-  final List<String> participants;
+  final CreateChannelModel channelDetails;
   final bool status;
   final String userName;
 
   const ChatMessageContainer({
     Key? key,
-    required this.channelId,
-    required this.participants,
+    required this.channelDetails,
     required this.status,
     required this.userName,
   }) : super(key: key);
@@ -33,8 +32,7 @@ class _ChatMessageContainerState extends State<ChatMessageContainer> {
   Widget build(BuildContext context) {
     _chatProvider = Provider.of<ChatProvider>(context);
     return ChatMessageWidget(
-      channelId: widget.channelId,
-      participants: widget.participants,
+      channelDetails: widget.channelDetails,
       status: widget.status,
       setUserStatus: setUserStatus,
       userName: widget.userName,

@@ -33,7 +33,11 @@ class ChatService {
     log(response.body);
     if (response.statusCode != 201) {
       return CreateChannelModel(
-          id: 0, messages: '', participants: [], isGroup: false);
+          id: 0,
+          messages: '',
+          participants: [],
+          isGroup: false,
+          encryptionKey: '');
     }
     return CreateChannelModel.fromJson(jsonDecode(response.body));
   }
