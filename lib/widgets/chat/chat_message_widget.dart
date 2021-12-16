@@ -77,29 +77,52 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
   void _handleAtachmentPressed() {
     showModalBottomSheet<void>(
       context: context,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.transparent,
+      isDismissible: true,
       builder: (BuildContext context) {
         return SafeArea(
-          child: SizedBox(
-            height: 144,
+          child: Container(
+            height: 150,
+            margin: const EdgeInsets.only(right: 20, left: 20, bottom: 65),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.grey,
+                  offset: Offset(1, 1),
+                  blurRadius: 3,
+                )
+              ],
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                TextButton(
+                TextButton.icon(
                   onPressed: () {
                     Navigator.pop(context);
                     _handleImageSelection();
                   },
-                  child: const Align(
+                  icon: const Icon(
+                    Icons.photo_library_rounded,
+                    size: 25,
+                  ),
+                  label: const Align(
                     alignment: Alignment.centerLeft,
                     child: Text('Photo'),
                   ),
                 ),
-                TextButton(
+                TextButton.icon(
                   onPressed: () {
                     Navigator.pop(context);
                     _handleFileSelection();
                   },
-                  child: const Align(
+                  icon: const Icon(
+                    Icons.folder_open,
+                    size: 25,
+                  ),
+                  label: const Align(
                     alignment: Alignment.centerLeft,
                     child: Text('File'),
                   ),
@@ -185,6 +208,8 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
       });
     });
   }
+
+  void _handEmojiPressed() {}
 
   void _handleSendPressed(types.PartialText message) {
     channel.sink.add(
@@ -331,6 +356,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                   customBottomWidget: ChatBottomWidget(
                     onAttachPressed: _handleAtachmentPressed,
                     onSendPressed: _handleSendPressed,
+                    onEmojiPressed: _handEmojiPressed,
                   ),
                   hideBackgroundOnEmojiMessages: true,
                   scrollPhysics: const BouncingScrollPhysics(),
