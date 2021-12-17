@@ -1,13 +1,18 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:hynzo/core/models/chat_socket_model.dart';
+import 'package:hynzo/core/models/create_channel_model.dart';
+import 'package:hynzo/core/models/new_message_model.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/themes/themes.dart';
 import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/widgets/chat/chat_bottom_widget.dart';
+import 'package:hynzo/widgets/chat/chat_theme.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:open_file/open_file.dart';
@@ -15,11 +20,17 @@ import 'package:uuid/uuid.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ChatMessageWidget extends StatefulWidget {
-  final int channelId;
-  final List<String> participants;
+  final CreateChannelModel channelDetails;
+  final bool status;
+  final String userName;
+  final Function setUserStatus;
 
   const ChatMessageWidget(
-      {Key? key, required this.channelId, required this.participants})
+      {Key? key,
+      required this.channelDetails,
+      required this.status,
+      required this.userName,
+      required this.setUserStatus})
       : super(key: key);
 
   @override
@@ -28,21 +39,32 @@ class ChatMessageWidget extends StatefulWidget {
 
 class _ChatMessageWidgetState extends State<ChatMessageWidget> {
   List<types.Message> _messages = [];
+  bool isInitLoaded = false;
   bool loading = true;
   late WebSocketChannel channel;
-  final _user = const types.User(
-    id: '186',
-    firstName: 'Lin',
-    lastName: 'Sanjo',
-    imageUrl:
-        'https://i.picsum.photos/id/1075/200/300.jpg?hmac=pffU5_mFDClpUhsTVng81yHXXvdsGGKHi1jCz2pRsaU',
-    role: types.Role.user,
-  );
+  int? uid;
+  String? token;
+  String? name;
+  late types.User _user;
 
   @override
   void initState() {
     super.initState();
     _loadMessages();
+  }
+
+  Future<bool> assignUser() async {
+    uid = await LocalStorage.getUserID();
+    token = await LocalStorage.getLoginToken();
+    _user = types.User(
+      id: uid.toString(),
+      firstName: widget.userName,
+      lastName: '',
+      imageUrl:
+          'https://i.picsum.photos/id/1075/200/300.jpg?hmac=pffU5_mFDClpUhsTVng81yHXXvdsGGKHi1jCz2pRsaU',
+      role: types.Role.user,
+    );
+    return true;
   }
 
   void _addMessage(types.Message message) {
@@ -54,29 +76,52 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
   void _handleAtachmentPressed() {
     showModalBottomSheet<void>(
       context: context,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.transparent,
+      isDismissible: true,
       builder: (BuildContext context) {
         return SafeArea(
-          child: SizedBox(
-            height: 144,
+          child: Container(
+            height: 150,
+            margin: const EdgeInsets.only(right: 20, left: 20, bottom: 65),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.grey,
+                  offset: Offset(1, 1),
+                  blurRadius: 3,
+                )
+              ],
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                TextButton(
+                TextButton.icon(
                   onPressed: () {
                     Navigator.pop(context);
                     _handleImageSelection();
                   },
-                  child: const Align(
+                  icon: const Icon(
+                    Icons.photo_library_rounded,
+                    size: 25,
+                  ),
+                  label: const Align(
                     alignment: Alignment.centerLeft,
                     child: Text('Photo'),
                   ),
                 ),
-                TextButton(
+                TextButton.icon(
                   onPressed: () {
                     Navigator.pop(context);
                     _handleFileSelection();
                   },
-                  child: const Align(
+                  icon: const Icon(
+                    Icons.folder_open,
+                    size: 25,
+                  ),
+                  label: const Align(
                     alignment: Alignment.centerLeft,
                     child: Text('File'),
                   ),
@@ -149,8 +194,10 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
     }
   }
 
-  void _handlePreviewDataFetched(types.TextMessage message,
-      types.PreviewData previewData,) {
+  void _handlePreviewDataFetched(
+    types.TextMessage message,
+    types.PreviewData previewData,
+  ) {
     final index = _messages.indexWhere((element) => element.id == message.id);
     final updatedMessage = _messages[index].copyWith(previewData: previewData);
 
@@ -161,95 +208,166 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
     });
   }
 
-  void _handleSendPressed(types.PartialText message) {
-    final textMessage = types.TextMessage(
-        author: _user,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-        id: const Uuid().v4(),
-        text: message.text,
-        status: types.Status.delivered);
+  void _handEmojiPressed() {}
 
-    _addMessage(textMessage);
+  void _handleSendPressed(types.PartialText message) {
+    channel.sink.add(
+        '{"command": "new_message",  "from": $uid, "message": "${message.text}", "chatId": ${widget.channelDetails.id}, "type_of_content": "text", "media_id": "", "offline_locator":""}');
   }
 
   void _loadMessages() async {
-    String? token = await LocalStorage.getLoginToken();
-    int? uid = await LocalStorage.getUserID();
+    await assignUser();
     channel = WebSocketChannel.connect(Uri.parse(
-        'ws://api.inventchat.com/api/v1/ws/chat/${widget.channelId}?token=$token'));
+        'ws://35.154.69.40:9000/api/v1/ws/chat/${widget.channelDetails.id}?token=$token'));
+    log(Uri.parse(
+            'ws://35.154.69.40:9000/api/v1/ws/chat/${widget.channelDetails.id}?token=$token')
+        .toString());
     Future.delayed(const Duration(microseconds: 500)).whenComplete(() =>
         channel.sink.add(
-            '{"command": "fetch_messages", "username": "${widget
-                .participants[1]}", "user_id": $uid, "chatId": ${widget
-                .channelId}}'));
-    //Future.delayed(const Duration(microseconds: 300)).whenComplete(() =>
-    //    channel.sink.add(
-    //        '{"command": "new_message",  "from": "128", "message": "Hello", "chatId": "667", "type_of_content": "text", "media_id": "", "offline_locator":""}'));
+            '{"command": "fetch_messages", "username": "${widget.channelDetails.participants[1]}", "user_id": $uid, "chatId": ${widget.channelDetails.id}}'));
     setState(() {
       loading = false;
     });
+    setUserStatus(true);
+  }
+
+  setUserStatus(bool status) {
+    widget.setUserStatus(status);
+  }
+
+  @override
+  void dispose() {
+    setUserStatus(false);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          _user.firstName!,
-          style: Themes.baseTheme.textTheme.bodyText1!
-              .copyWith(color: Colors.white),
+        title: SizedBox(
+          height: kToolbarHeight,
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    _user.firstName!,
+                    style: Themes.baseTheme.textTheme.bodyText1!
+                        .copyWith(color: AppColors.blackBlue, fontSize: 16),
+                  ),
+                  Text(
+                    widget.status ? 'online' : 'offline',
+                    style: Themes.baseTheme.textTheme.bodyText1!.copyWith(
+                      color: AppColors.offgreylight,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-        backgroundColor: AppColors.blackBlue,
+        backgroundColor: AppColors.white,
+        leadingWidth: 30,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: AppColors.blackBlue,
+            )),
       ),
       body: loading
           ? const Center(
-        child: CircularProgressIndicator(),
-      )
+              child: CircularProgressIndicator(),
+            )
           : StreamBuilder<dynamic>(
-          stream: channel.stream,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
+              stream: channel.stream,
+              builder: (context, snapshot) {
+                log(snapshot.connectionState.toString());
+                log(snapshot.data.toString());
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-            if (snapshot.connectionState == ConnectionState.active) {
-              ChatSocketModel chats =
-              ChatSocketModel.fromJson(jsonDecode(snapshot.data));
+                if (snapshot.connectionState == ConnectionState.active &&
+                    snapshot.hasData) {
+                  if (jsonDecode(snapshot.data)['command'] == 'messages') {
+                    if (!isInitLoaded) {
+                      ChatSocketModel chats =
+                          ChatSocketModel.fromJson(jsonDecode(snapshot.data));
+                      if (chats.messages.isNotEmpty) {
+                        chats.messages.forEach((element) {
+                          _messages.insert(
+                              _messages.length,
+                              types.Message.fromJson({
+                                "author": {
+                                  "firstName": element.author.username,
+                                  "id": element.author.id.toString(),
+                                  "imageUrl": element.author.avatar,
+                                },
+                                "createdAt":
+                                    element.timestamp.millisecondsSinceEpoch,
+                                "id": element.id.toString(),
+                                "status": "seen",
+                                "text": element.content,
+                                "type": "text",
+                              }));
+                        });
+                        WidgetsBinding.instance!
+                            .addPostFrameCallback((timeStamp) {
+                          setState(() {
+                            isInitLoaded = true;
+                          });
+                        });
+                      }
+                    }
+                  } else if (jsonDecode(snapshot.data)['command'] ==
+                      'new_message') {
+                    NewMessageModel msg =
+                        NewMessageModel.fromJson(jsonDecode(snapshot.data));
+                    _messages.insert(
+                        0,
+                        types.Message.fromJson({
+                          "author": {
+                            "firstName": msg.message.author.username,
+                            "id": msg.message.author.id.toString(),
+                            "imageUrl": msg.message.author.avatar
+                          },
+                          "createdAt":
+                              msg.message.timestamp.millisecondsSinceEpoch,
+                          "id": msg.message.id.toString(),
+                          "status": "seen",
+                          "text": msg.message.content,
+                          "type": "text"
+                        }));
+                  }
+                }
 
-              if (chats.messages.isNotEmpty) {
-                chats.messages.forEach((element) {
-                  _messages.insert(
-                      _messages.length,
-                      types.Message.fromJson({
-                        "author": {
-                          "firstName": element.author.username,
-                          "id": element.author.id.toString(),
-                          "imageUrl": element.author.avatar
-                        },
-                        "createdAt":
-                        element.timestamp.millisecondsSinceEpoch,
-                        "id": element.id.toString(),
-                        "status": "seen",
-                        "text": element.content,
-                        "type": "text"
-                      }));
-                });
-              }
-            }
-
-            return Chat(
-              showUserNames: false,
-              showUserAvatars: false,
-              scrollPhysics: const BouncingScrollPhysics(),
-              theme: const DefaultChatTheme(),
-              messages: _messages,
-              onAttachmentPressed: _handleAtachmentPressed,
-              onMessageTap: _handleMessageTap,
-              onPreviewDataFetched: _handlePreviewDataFetched,
-              onSendPressed: _handleSendPressed,
-              user: _user,
-            );
-          }),
+                return Chat(
+                  showUserNames: false,
+                  sendButtonVisibilityMode: SendButtonVisibilityMode.always,
+                  showUserAvatars: false,
+                  customBottomWidget: ChatBottomWidget(
+                    onAttachPressed: _handleAtachmentPressed,
+                    onSendPressed: _handleSendPressed,
+                    onEmojiPressed: _handEmojiPressed,
+                  ),
+                  hideBackgroundOnEmojiMessages: true,
+                  scrollPhysics: const BouncingScrollPhysics(),
+                  theme: CustomTheme().theme,
+                  messages: _messages,
+                  onAttachmentPressed: _handleAtachmentPressed,
+                  onMessageTap: _handleMessageTap,
+                  onPreviewDataFetched: _handlePreviewDataFetched,
+                  onSendPressed: _handleSendPressed,
+                  user: _user,
+                );
+              }),
     );
   }
 }

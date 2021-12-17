@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:hynzo/core/models/chat_list_model.dart';
 import 'package:hynzo/core/models/create_channel_model.dart';
@@ -12,6 +13,7 @@ class ChatService {
       "Content-Type": "application/json",
       "Authorization": 'Bearer ${await getToken()}'
     });
+    log(response.body);
     if (jsonDecode(response.body)['message'] == 'chat_list is empty') {
       return ChatListModel(results: []);
     }
@@ -28,12 +30,28 @@ class ChatService {
       "Content-Type": "application/json",
       "Authorization": 'Bearer ${await getToken()}'
     });
-    print(response.body);
+    log(response.body);
     if (response.statusCode != 201) {
       return CreateChannelModel(
-          id: 0, messages: '', participants: [], isGroup: false);
+          id: 0,
+          messages: '',
+          participants: [],
+          isGroup: false,
+          encryptionKey: '');
     }
     return CreateChannelModel.fromJson(jsonDecode(response.body));
+  }
+
+  Future<Map<String, dynamic>> setUserStatus({required bool status}) async {
+    String url = 'api/v1/users/set_status';
+    var response = await ServiceBase.post(url: url, data: {
+      'status': '$status',
+    }, headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Bearer ${await getToken()}'
+    });
+    log(response.body);
+    return jsonDecode(response.body);
   }
 
   Future<String> getToken() async {
