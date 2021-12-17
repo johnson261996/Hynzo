@@ -37,8 +37,7 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
             enableInfiniteScroll: false,
             reverse: false,
             autoPlay: true,
-            autoPlayInterval: Duration(milliseconds:1),
-            autoPlayAnimationDuration: Duration(seconds: 1),
+            autoPlayInterval: Duration(seconds:2),
             enlargeCenterPage: true,
             scrollDirection: Axis.horizontal,
           )
