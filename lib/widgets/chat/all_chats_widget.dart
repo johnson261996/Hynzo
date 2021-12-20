@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hynzo/core/models/chat_list_model.dart';
@@ -38,6 +40,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
     final ChatListModel response = await widget.getChatList!(limit, offset);
     allChats.clear();
     response.results.forEach((element) {
+      log(element.lastMessage.typeOfContent);
       allChats.add(
         ChatModel(
           senderId: element.userBasicInfo.id,

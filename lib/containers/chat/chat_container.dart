@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/chat_list_model.dart';
+import 'package:hynzo/core/models/connected_list_model.dart';
 import 'package:hynzo/core/models/create_channel_model.dart';
+import 'package:hynzo/core/models/requested_chats_model.dart';
 import 'package:hynzo/core/models/suggestion_model.dart';
 import 'package:hynzo/providers/chat_provider.dart';
 import 'package:hynzo/providers/suggestion_provider.dart';
@@ -34,6 +36,16 @@ class _ChatContainerState extends State<ChatContainer> {
     return response;
   }
 
+  Future<RequestedChatsModel> getRequestedChats() {
+    final response = _chatProvider.getRequestedChatsList();
+    return response;
+  }
+
+  Future<List<ConnectedListModel>> getConnectedChats() {
+    final response = _chatProvider.getConnectedChatList();
+    return response;
+  }
+
   @override
   Widget build(BuildContext context) {
     _chatProvider = Provider.of<ChatProvider>(context);
@@ -42,6 +54,8 @@ class _ChatContainerState extends State<ChatContainer> {
       getChatList: getAllChats,
       createChannel: createChannel,
       getSuggestedList: getSuggestionList,
+      getRequestedChats: getRequestedChats,
+      getConnectedChats: getConnectedChats,
     );
   }
 }

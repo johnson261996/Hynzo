@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hynzo/core/models/chat_list_model.dart';
+import 'package:hynzo/core/models/connected_list_model.dart';
 import 'package:hynzo/core/models/create_channel_model.dart';
+import 'package:hynzo/core/models/requested_chats_model.dart';
 import 'package:hynzo/core/services/chat/chat_service.dart';
 
 class ChatProvider extends ChangeNotifier {
@@ -19,8 +21,19 @@ class ChatProvider extends ChangeNotifier {
     return response;
   }
 
-  Future<Map<String,dynamic>> setUserStatus(bool status)async{
+  Future<Map<String, dynamic>> setUserStatus(bool status) async {
     final response = await ChatService().setUserStatus(status: status);
     return response;
   }
+
+  Future<RequestedChatsModel> getRequestedChatsList() async {
+    final response = await ChatService().getRequestedList();
+    return response;
+  }
+
+  Future<List<ConnectedListModel>> getConnectedChatList()async{
+    final response = await ChatService().getConnectedChats();
+    return response;
+  }
+
 }
