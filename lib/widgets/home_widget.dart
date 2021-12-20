@@ -21,7 +21,7 @@ import 'common/view/event_view_widget.dart';
 class HomeWidget extends StatefulWidget {
   final Function onTapped;
   final List<NewsContentDataModel>? allContent;
-  final List<SuggestedPlayModel>? allSuggestedGames;
+  final List<GamePlayModel>? allSuggestedGames;
 
   const HomeWidget(
       {required this.onTapped,

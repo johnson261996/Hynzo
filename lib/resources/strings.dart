@@ -156,6 +156,7 @@ class Strings {
   static const ALL_GAMES = "All games";
   static const SUGGESTED_GAMES = "Suggested for you";
   static const NEW = "New";
+  static const POPULAR_GAMES = "Popular Games";
 
   //chat
   static const USER_NAMES = ['Anusree', 'John', 'Neha'];
