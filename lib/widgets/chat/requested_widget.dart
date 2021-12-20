@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RequestedWidget extends StatelessWidget{
+class RequestedWidget extends StatelessWidget {
   const RequestedWidget({Key? key}) : super(key: key);
 
   @override
@@ -15,5 +15,4 @@ class RequestedWidget extends StatelessWidget{
       ),
     );
   }
-
 }

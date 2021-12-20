@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:hynzo/core/models/suggestion_model.dart';
 import 'package:hynzo/core/services/service_base.dart';
@@ -8,7 +9,6 @@ class SuggestionService {
   static Future<SuggestionModel> getAllSuggestion() async {
     String token = "";
     await LocalStorage.getLoginToken().then((value) => token = value!);
-
     String url = 'api/v1/users/suggestions';
     var response = await ServiceBase.get(url: url, headers: {
       "Content-Type": "application/json",

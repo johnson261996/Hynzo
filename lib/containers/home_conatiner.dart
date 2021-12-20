@@ -76,7 +76,7 @@ class _HomeContainerState extends State<HomeContainer> {
         //   }
         // }
       } else {
-        ToastUtil().showToast("Something went wrong.");
+        ToastUtil().showToast("Something went wrong.3");
       }
       getAllNews();
     } catch (e) {

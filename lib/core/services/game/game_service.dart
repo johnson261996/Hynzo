@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/services/service_base.dart';
@@ -12,11 +13,12 @@ class GameService {
     String url = 'api/v1/games/fetch';
     var response = await ServiceBase.get(url: url, headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer $token"
+      "Authorization": "Bearer $token",
     });
     if (response.statusCode != 200) {
       throw "Something went wrong";
     }
+    log(response.body);
     return SuggestedGamesResponseModel.fromJson(
       jsonDecode(response.body),
       response.statusCode,

@@ -7,7 +7,10 @@ class ChatBottomWidget extends StatefulWidget {
   Function() onAttachPressed;
   Function() onEmojiPressed;
   ChatBottomWidget(
-      {Key? key, required this.onSendPressed, required this.onAttachPressed,required this.onEmojiPressed})
+      {Key? key,
+      required this.onSendPressed,
+      required this.onAttachPressed,
+      required this.onEmojiPressed})
       : super(key: key);
 
   @override
@@ -62,13 +65,12 @@ class _ChatBottomWidgetState extends State<ChatBottomWidget> {
                 ),
                 filled: true,
                 prefixIcon: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.mood,
-                    size: 25,
-                    color: AppColors.offgrey,
-                  ),
-                ),
+                    onPressed: () {},
+                    icon: Image.asset(
+                      'assets/images/chat_sticker.png',
+                      height: 25,
+                      width: 25,
+                    )),
                 suffixIcon: IconButton(
                   onPressed: () {
                     widget.onSendPressed(

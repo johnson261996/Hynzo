@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:http/http.dart' as http;
 import 'package:hynzo/core/models/chat_list_model.dart';
 import 'package:hynzo/core/models/create_channel_model.dart';
 import 'package:hynzo/core/services/service_base.dart';
 import 'package:hynzo/utils/localStorage.dart';
+import 'package:path/path.dart' as Path;
 
 class ChatService {
   Future<ChatListModel> getAllChats({int? limit, int? offset}) async {
@@ -30,6 +32,7 @@ class ChatService {
       "Content-Type": "application/json",
       "Authorization": 'Bearer ${await getToken()}'
     });
+    log(participants.toString());
     log(response.body);
     if (response.statusCode != 201) {
       return CreateChannelModel(
@@ -52,6 +55,24 @@ class ChatService {
     });
     log(response.body);
     return jsonDecode(response.body);
+  }
+
+  Future<Map> uploadImage(file, fileName, url) async {
+    String apiUrl = ServiceBase.getApiBaseUrl() + url;
+    var request = http.MultipartRequest("POST", Uri.parse(apiUrl));
+    var stream = http.ByteStream(file!.openRead());
+    stream.cast();
+    var length = await file.length();
+    var multipartFile = http.MultipartFile(fileName, stream, length,
+        filename: Path.basename(file.path));
+    request.headers.addAll({
+      "Content-Type": "multipart/form-data",
+      "Authorization": await getToken()
+    });
+    request.files.add(multipartFile);
+    var streamResponse = await request.send();
+    var res = await http.Response.fromStream(streamResponse);
+    return jsonDecode(res.body);
   }
 
   Future<String> getToken() async {

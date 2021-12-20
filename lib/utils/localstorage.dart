@@ -1,7 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorage {
-
   static void setIntroStatus(bool status) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('introStatus', status);
@@ -23,7 +22,6 @@ class LocalStorage {
     return prefs.getString('profilepic') ?? "";
   }
 
-
   static void setLoginToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
@@ -41,7 +39,7 @@ class LocalStorage {
 
   static Future<int?> getUserID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getInt('userId') ?? -1;
+    return prefs.getInt('userId') ?? 0;
   }
 
   static void setUserName(String username) async {
@@ -74,34 +72,33 @@ class LocalStorage {
     return prefs.getString('mobile') ?? "";
   }
 
-  static void clearPreference() async{
+  static void clearPreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
   }
 
-  static void clearToken() async{
+  static void clearToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
   }
 
-  static void clearMobileNumber() async{
+  static void clearMobileNumber() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('mobile');
   }
 
-  static void clearUserID() async{
+  static void clearUserID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('userId');
   }
 
-  static void clearUsername() async{
+  static void clearUsername() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('username');
   }
 
-  static void clearUserFullName() async{
+  static void clearUserFullName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('fullname');
   }
-
 }

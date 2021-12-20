@@ -51,7 +51,7 @@ class _GameContainerState extends State<GameContainer> {
         //   allSuggestedGames.add(element);
         // }
       } else {
-        ToastUtil().showToast("Something went wrong.");
+        ToastUtil().showToast("Something went wrong.2");
       }
     } catch (e) {
       setState(() {

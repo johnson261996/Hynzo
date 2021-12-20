@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CallsWidget extends StatelessWidget{
-  const CallsWidget({Key? key}) : super(key: key);
+class ConnectedWidget extends StatelessWidget {
+  const ConnectedWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -9,11 +9,10 @@ class CallsWidget extends StatelessWidget{
       height: MediaQuery.of(context).size.height,
       child: Center(
         child: Text(
-          'Calls',
+          'Connected',
           style: Theme.of(context).textTheme.headline1,
         ),
       ),
     );
   }
-
 }

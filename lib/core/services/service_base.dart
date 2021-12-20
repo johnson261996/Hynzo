@@ -8,7 +8,7 @@ import 'package:hynzo/utils/connectivity.dart';
 import 'package:hynzo/utils/toast_util.dart';
 
 class ServiceBase {
-  static String apiBaseUrl = 'http://35.154.69.40/';
+  static String apiBaseUrl = 'http://api.hynzo.com/';
 
   static Future<http.Response> get({
     String? url,
@@ -23,7 +23,6 @@ class ServiceBase {
     return response;
   }
 
-
   static Future<http.Response> post({
     String? url,
     required Map data,
@@ -33,10 +32,15 @@ class ServiceBase {
     checkConnectionStaus();
     String apiUrl = apiBaseUrl + url!;
     final response =
-    await InterceptedHttp.build(interceptors: [AuthInterceptorHeader()])
-        .post(Uri.parse(apiUrl), body: jsonEncode(data), headers: headers);
+        await InterceptedHttp.build(interceptors: [AuthInterceptorHeader()])
+            .post(Uri.parse(apiUrl), body: jsonEncode(data), headers: headers);
     return response;
   }
+
+  static String getApiBaseUrl(){
+    return apiBaseUrl;
+  }
+
 }
 
 checkConnectionStaus() {
