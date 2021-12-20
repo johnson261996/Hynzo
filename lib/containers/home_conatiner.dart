@@ -38,14 +38,7 @@ class _HomeContainerState extends State<HomeContainer> {
     _newsProvider = Provider.of<NewsProvider>(context, listen: false);
     _gamesProvider = Provider.of<GamesProvider>(context, listen: false);
     allNews.clear();
-    // ConnectionStaus().check().then((connectionStatus) {
-    //   if (connectionStatus) {
     getSuggestionGames();
-    //   } else {
-    //     ToastUtil().showToast(
-    //         "No internet connection available. Please check your connection or try again later.");
-    //   }
-    // });
   }
 
   bool isToday(String time) {
@@ -70,11 +63,6 @@ class _HomeContainerState extends State<HomeContainer> {
           await _gamesProvider!.getSuggestedGames();
       if (suggestedGamesResponseModel.statusCode == 200) {
         allSuggestedGames = suggestedGamesResponseModel.allSuggestedGames!;
-        // for (var element in suggestedGamesResponseModel.allSuggestedGames!) {
-        //   if (element.activeStatus!) {
-        //     allSuggestedGames.add(element);
-        //   }
-        // }
       } else {
         ToastUtil().showToast("Something went wrong.");
       }

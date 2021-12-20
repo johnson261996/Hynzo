@@ -10,7 +10,7 @@ class SquareViewWidget extends StatelessWidget{
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10.0),
-      child: Image.asset(
+      child: Image.network(
         imagePath,
         fit: BoxFit.cover,
         width: 105.0,

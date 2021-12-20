@@ -9,9 +9,15 @@ class GamesProvider extends ChangeNotifier {
     notifyListeners();
     return response;
   }
-  Future<RecentPlayedResponseModel> getRecentGames() async {
-    final RecentPlayedResponseModel response =
-    await GameService.getRecentPlayedGames();
+  Future<GamesResponseModel> getGames() async {
+    final GamesResponseModel response =
+    await GameService.getGames();
+    notifyListeners();
+    return response;
+  }
+  Future<FilteredGamesResponseModel> getFilteredGames(String categ) async {
+    final FilteredGamesResponseModel response =
+    await GameService.getFilteredGames(categ);
     notifyListeners();
     return response;
   }

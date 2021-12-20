@@ -15,7 +15,6 @@ class LocalStorage {
   static void setProfilePic(String url) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('profilepic', url);
-    print(url);
   }
 
   static Future<String?> getProfilePic() async {

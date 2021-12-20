@@ -19,7 +19,9 @@ class _GameContainerState extends State<GameContainer> {
   bool _isLoading = false;
   List<GamePlayModel> allSuggestedGames = [];
   List<GamePlayModel> recentGames = [];
-
+  List<GamePlayModel> allGames = [];
+  List<GamePlayModel> popularGames = [];
+  List<GamePlayModel> filteredGames = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -27,32 +29,28 @@ class _GameContainerState extends State<GameContainer> {
     _gamesProvider = Provider.of<GamesProvider>(context, listen: false);
     allSuggestedGames.clear();
     recentGames.clear();
-    // ConnectionStaus().check().then((connectionStatus) {
-    //   if (connectionStatus) {
-    getSuggestionGames();
-    getRecentlyPlayedGames();
-    //   } else {
-    //     ToastUtil().showToast(
-    //         "No internet connection available. Please check your connection or try again later.");
-    //   }
-    // });
+    allGames.clear();
+    popularGames.clear();
+    filteredGames.clear();
+
+    //getFilteredGamesGames();
+    getGames();
   }
 
-  Future<void> getSuggestionGames() async {
+  Future<void> getGames() async {
     try {
       setState(() {
         _isLoading = true;
       });
-      SuggestedGamesResponseModel suggestedGamesResponseModel =
-          await _gamesProvider!.getSuggestedGames();
+      GamesResponseModel gamesResponseModel =
+      await _gamesProvider!.getGames();
       setState(() {
         _isLoading = false;
       });
-      if (suggestedGamesResponseModel.statusCode == 200) {
-        allSuggestedGames = suggestedGamesResponseModel.allSuggestedGames!;
-        // for (var element in suggestedGamesResponseModel.allSuggestedGames!) {
-        //   allSuggestedGames.add(element);
-        // }
+      if (gamesResponseModel.statusCode == 200) {
+        recentGames = gamesResponseModel.recentGames!;
+        allGames = gamesResponseModel.allGames!;
+        popularGames = gamesResponseModel.popularGames!;
       } else {
         ToastUtil().showToast("Something went wrong.");
       }
@@ -63,39 +61,24 @@ class _GameContainerState extends State<GameContainer> {
       ToastUtil().showToast(e.toString());
     }
   }
-  Future<void> getRecentlyPlayedGames() async {
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-      RecentPlayedResponseModel recentGamesResponseModel =
-      await _gamesProvider!.getRecentGames();
-      setState(() {
-        _isLoading = false;
-      });
-      if (recentGamesResponseModel.statusCode == 200) {
-        recentGames = recentGamesResponseModel.recentPlayedGames!;
-        // for (var element in suggestedGamesResponseModel.allSuggestedGames!) {
-        //   allSuggestedGames.add(element);
-        // }
-      } else {
-        ToastUtil().showToast("Something went wrong.");
-      }
-    } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
-      ToastUtil().showToast(e.toString());
-    }
+
+  Future<FilteredGamesResponseModel> getFilteredGames(String categ)async{
+    FilteredGamesResponseModel filteredResponseModel =
+        await _gamesProvider!.getFilteredGames(categ);
+    return filteredResponseModel;
   }
+
   @override
   Widget build(BuildContext context) {
     return LoadingOverlay(
       isLoading: _isLoading,
       color: AppColors.gray,
       child: GameWidget(
-        allSuggestedGames: allSuggestedGames,
+        allSuggestedGames: popularGames,
         recentlyPlayedGames: recentGames,
+        allGames: allGames,
+        popularGames: popularGames,
+        filteredGames: getFilteredGames,
       ),
     );
   }

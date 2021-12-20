@@ -1,18 +1,32 @@
 
 
-class RecentPlayedResponseModel {
-  final List<GamePlayModel>? recentPlayedGames;
+class GamesResponseModel {
+  final List<GamePlayModel>? recentGames;
+  final List<GamePlayModel>? popularGames;
+  final List<GamePlayModel>? allGames;
   final int? statusCode;
 
-  RecentPlayedResponseModel({
-    this.recentPlayedGames,
+  GamesResponseModel({
+    this.recentGames,
+    this.popularGames,
+    this.allGames,
     this.statusCode,
   });
-  factory RecentPlayedResponseModel.fromJson(
+  factory GamesResponseModel.fromJson(
       Map<String, dynamic> json, int code) {
-    return RecentPlayedResponseModel(
-      recentPlayedGames: json['results'] != null
-          ? ((json['results'] as List<dynamic>)
+    return GamesResponseModel(
+      recentGames: json['recent_games'] != null
+          ? ((json['recent_games'] as List<dynamic>)
+          .map((i) => GamePlayModel.fromJson(i))
+          .toList())
+          : [],
+      popularGames: json['popular_games'] != null
+          ? ((json['popular_games'] as List<dynamic>)
+          .map((i) => GamePlayModel.fromJson(i))
+          .toList())
+          : [],
+      allGames: json['all_games'] != null
+          ? ((json['all_games'] as List<dynamic>)
           .map((i) => GamePlayModel.fromJson(i))
           .toList())
           : [],
@@ -42,6 +56,28 @@ class SuggestedGamesResponseModel {
     );
   }
 }
+class FilteredGamesResponseModel {
+  final List<GamePlayModel>? filteredGames;
+  final int? statusCode;
+
+  FilteredGamesResponseModel({
+    this.filteredGames,
+    this.statusCode,
+  });
+
+  factory FilteredGamesResponseModel.fromJson(
+      Map<String, dynamic> json, int code) {
+    return FilteredGamesResponseModel(
+      filteredGames: json['results'] != null
+          ? ((json['results'] as List<dynamic>)
+          .map((i) => GamePlayModel.fromJson(i))
+          .toList())
+          : [],
+      statusCode: code,
+    );
+  }
+}
+
 
 class GamePlayModel {
   final String? gameName;
@@ -81,15 +117,6 @@ class GamePlayModel {
   }
 }
 
-class AllGamesModel {
-  final String? imagePath;
-  final String? gameName;
-
-  AllGamesModel({
-    this.imagePath,
-    this.gameName,
-  });
-}
 
 class GamesCategoryModel {
   final String? imagePath;
