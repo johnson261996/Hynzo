@@ -13,8 +13,8 @@ class SquareViewWidget extends StatelessWidget{
       child: Image.asset(
         imagePath,
         fit: BoxFit.cover,
-        width: 110.0,
-        height: 110.0,
+        width: 105.0,
+        height: 105.0,
       ),
     );
   }

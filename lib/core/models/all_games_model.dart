@@ -1,15 +1,28 @@
-class RecentPlayed {
-  final String? imagePath;
-  final String? gameName;
 
-  RecentPlayed({
-    this.imagePath,
-    this.gameName,
+
+class RecentPlayedResponseModel {
+  final List<GamePlayModel>? recentPlayedGames;
+  final int? statusCode;
+
+  RecentPlayedResponseModel({
+    this.recentPlayedGames,
+    this.statusCode,
   });
+  factory RecentPlayedResponseModel.fromJson(
+      Map<String, dynamic> json, int code) {
+    return RecentPlayedResponseModel(
+      recentPlayedGames: json['results'] != null
+          ? ((json['results'] as List<dynamic>)
+          .map((i) => GamePlayModel.fromJson(i))
+          .toList())
+          : [],
+      statusCode: code,
+    );
+  }
 }
 
 class SuggestedGamesResponseModel {
-  final List<SuggestedPlayModel>? allSuggestedGames;
+  final List<GamePlayModel>? allSuggestedGames;
   final int? statusCode;
 
   SuggestedGamesResponseModel({
@@ -22,7 +35,7 @@ class SuggestedGamesResponseModel {
     return SuggestedGamesResponseModel(
       allSuggestedGames: json['results'] != null
           ? ((json['results'] as List<dynamic>)
-              .map((i) => SuggestedPlayModel.fromJson(i))
+              .map((i) => GamePlayModel.fromJson(i))
               .toList())
           : [],
       statusCode: code,
@@ -30,7 +43,7 @@ class SuggestedGamesResponseModel {
   }
 }
 
-class SuggestedPlayModel {
+class GamePlayModel {
   final String? gameName;
   final String? category;
   final String? image;
@@ -41,7 +54,7 @@ class SuggestedPlayModel {
   final String? createdAt;
   final String? upDatedAt;
 
-  SuggestedPlayModel({
+  GamePlayModel({
     this.gameName,
     this.category,
     this.image,
@@ -53,8 +66,8 @@ class SuggestedPlayModel {
     this.upDatedAt,
   });
 
-  factory SuggestedPlayModel.fromJson(Map<String, dynamic> json) {
-    return SuggestedPlayModel(
+  factory GamePlayModel.fromJson(Map<String, dynamic> json) {
+    return GamePlayModel(
       gameName: json['game_name'] ?? '',
       category: json['category'] ?? '',
       image: json['image'] ?? '',

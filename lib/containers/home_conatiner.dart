@@ -28,7 +28,7 @@ class _HomeContainerState extends State<HomeContainer> {
   static NewsProvider? _newsProvider;
   static GamesProvider? _gamesProvider;
   List<NewsContentDataModel> allNews = [];
-  List<SuggestedPlayModel> allSuggestedGames = [];
+  List<GamePlayModel> allSuggestedGames = [];
   bool _isLoading = false;
 
   @override

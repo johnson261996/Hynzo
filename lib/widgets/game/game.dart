@@ -12,11 +12,13 @@ import 'package:hynzo/widgets/game/card.dart';
 import 'package:hynzo/widgets/game/top_charts.dart';
 
 class GameWidget extends StatefulWidget {
-  final List<SuggestedPlayModel>? allSuggestedGames;
+  final List<GamePlayModel>? allSuggestedGames;
+  final List<GamePlayModel>? recentlyPlayedGames;
 
   const GameWidget({
     Key? key,
     this.allSuggestedGames,
+    this.recentlyPlayedGames
   }) : super(key: key);
 
   @override
@@ -208,6 +210,7 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
                 children: [
                   AllGames(
                     allSuggestedGames: widget.allSuggestedGames,
+                    recentGames: widget.recentlyPlayedGames,
                   ),
                   TopCharts(),
                   ActionGames(),

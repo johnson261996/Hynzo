@@ -9,11 +9,14 @@ import 'package:hynzo/widgets/common/game_recent/recently_game_widget.dart';
 import 'package:hynzo/widgets/common/view/game_view_widget.dart';
 
 class AllGames extends StatefulWidget {
-  final List<SuggestedPlayModel>? allSuggestedGames;
+  final List<GamePlayModel>? allSuggestedGames;
+  final List<GamePlayModel>? recentGames;
 
   const AllGames({
     Key? key,
     this.allSuggestedGames,
+    this.recentGames
+
   }) : super(key: key);
 
   @override
@@ -22,36 +25,36 @@ class AllGames extends StatefulWidget {
 
 class _AllGamesState extends State<AllGames> {
   List<AllGamesModel> allGames = [];
-  List<RecentPlayed> allRecent = [];
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Cricket",
-        imagePath: "assets/images/cricket.png",
-      ),
-    );
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Chess",
-        imagePath: "assets/images/chess.png",
-      ),
-    );
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Archery",
-        imagePath: "assets/images/archery.png",
-      ),
-    );
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Poker",
-        imagePath: "assets/images/suggested_two.png",
-      ),
-    );
+    // allRecent.add(
+    //   RecentPlayed(
+    //     gameName: "Cricket",
+    //     imagePath: "assets/images/cricket.png",
+    //   ),
+    // );
+    // allRecent.add(
+    //   RecentPlayed(
+    //     gameName: "Chess",
+    //     imagePath: "assets/images/chess.png",
+    //   ),
+    // );
+    // allRecent.add(
+    //   RecentPlayed(
+    //     gameName: "Archery",
+    //     imagePath: "assets/images/archery.png",
+    //   ),
+    // );
+    // allRecent.add(
+    //   RecentPlayed(
+    //     gameName: "Poker",
+    //     imagePath: "assets/images/suggested_two.png",
+    //   ),
+    // );
     allGames.add(
       AllGamesModel(
         gameName: "Cricket",
@@ -132,15 +135,46 @@ class _AllGamesState extends State<AllGames> {
                     padding: const EdgeInsets.only(
                       right: 12.0,
                     ),
-                    child: RecentGameWidget(
-                      mediaQuery: mediaQuery,
-                      imagePath: allRecent[index].imagePath!,
-                      index: index,
-                      name: allRecent[index].gameName!,
-                    ),
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigation.pushNamed(context, Routes.webview,
+                            {'link': widget.recentGames![index].redirectionUrl});
+                      },
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Image.network(
+                              widget.recentGames![index].image!,
+                              fit: BoxFit.cover,
+                              width: 110.0,
+                              height: 110.0,
+                              errorBuilder: (context, error, stackTrace) => Image.asset('assets/images/no_image.png',fit: BoxFit.cover,),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            widget.recentGames![index].gameName!,
+                            style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.black,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                    // RecentGameWidget(
+                    //   mediaQuery: mediaQuery,
+                    //   imagePath: allRecent[index].imagePath!,
+                    //   index: index,
+                    //   name: allRecent[index].gameName!,
+                    // ),
                   );
                 },
-                itemCount: allRecent.length,
+                itemCount: widget.recentGames!.length,
                 scrollDirection: Axis.horizontal,
               ),
             ),
@@ -221,7 +255,7 @@ class _AllGamesState extends State<AllGames> {
               child: GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.only(
-                  right: 15.0,
+                  right: 8.0,
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,

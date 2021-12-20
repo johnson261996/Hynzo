@@ -29,7 +29,7 @@ class GameContainerWidget extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 color: AppColors.black,
               ),
-        )
+        ),
       ],
     );
   }

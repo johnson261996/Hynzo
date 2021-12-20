@@ -17,7 +17,8 @@ class GameContainer extends StatefulWidget {
 class _GameContainerState extends State<GameContainer> {
   static GamesProvider? _gamesProvider;
   bool _isLoading = false;
-  List<SuggestedPlayModel> allSuggestedGames = [];
+  List<GamePlayModel> allSuggestedGames = [];
+  List<GamePlayModel> recentGames = [];
 
   @override
   void initState() {
@@ -25,9 +26,11 @@ class _GameContainerState extends State<GameContainer> {
     super.initState();
     _gamesProvider = Provider.of<GamesProvider>(context, listen: false);
     allSuggestedGames.clear();
+    recentGames.clear();
     // ConnectionStaus().check().then((connectionStatus) {
     //   if (connectionStatus) {
     getSuggestionGames();
+    getRecentlyPlayedGames();
     //   } else {
     //     ToastUtil().showToast(
     //         "No internet connection available. Please check your connection or try again later.");
@@ -60,7 +63,31 @@ class _GameContainerState extends State<GameContainer> {
       ToastUtil().showToast(e.toString());
     }
   }
-
+  Future<void> getRecentlyPlayedGames() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      RecentPlayedResponseModel recentGamesResponseModel =
+      await _gamesProvider!.getRecentGames();
+      setState(() {
+        _isLoading = false;
+      });
+      if (recentGamesResponseModel.statusCode == 200) {
+        recentGames = recentGamesResponseModel.recentPlayedGames!;
+        // for (var element in suggestedGamesResponseModel.allSuggestedGames!) {
+        //   allSuggestedGames.add(element);
+        // }
+      } else {
+        ToastUtil().showToast("Something went wrong.");
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ToastUtil().showToast(e.toString());
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return LoadingOverlay(
@@ -68,6 +95,7 @@ class _GameContainerState extends State<GameContainer> {
       color: AppColors.gray,
       child: GameWidget(
         allSuggestedGames: allSuggestedGames,
+        recentlyPlayedGames: recentGames,
       ),
     );
   }

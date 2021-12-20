@@ -22,4 +22,21 @@ class GameService {
       response.statusCode,
     );
   }
+  static Future<RecentPlayedResponseModel> getRecentPlayedGames() async {
+    String token = "";
+    await LocalStorage.getLoginToken().then((value) => token = value!);
+
+    String url = 'api/v1/games/recent';
+    var response = await ServiceBase.get(url: url, headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $token"
+    });
+    if (response.statusCode != 200) {
+      throw "Something went wrong";
+    }
+    return RecentPlayedResponseModel.fromJson(
+      jsonDecode(response.body),
+      response.statusCode,
+    );
+  }
 }
