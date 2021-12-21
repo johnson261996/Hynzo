@@ -3,7 +3,6 @@ import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/localstorage.dart';
-import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/common/profile_image/profile_image.dart';
 
 class MoreWidget extends StatefulWidget {
@@ -326,7 +325,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                       height: 2.0,
                     ),
                     InkWell(
-                      onTap:null,
+                      onTap: null,
                       child: Container(
                         padding: const EdgeInsets.only(
                           left: 15.0,
