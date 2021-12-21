@@ -50,7 +50,8 @@ dependencies:
   fluttertoast: ^8.0.8
   connectivity: ^3.0.6
   geolocator: ^8.0.0
-  crypto: ^3.0.1
+  encrypt: ^5.0.1
+  path: ^1.8.0
   carousel_slider: ^4.0.0
 
   # The following adds the Cupertino Icons font to your application.
@@ -80,99 +81,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/check.png
-    - assets/images/blue_circle.png
-    - assets/images/location.png
-    - assets/images/new_user_image_one.png
-    - assets/images/new_user_image_two.png
-    - assets/images/new_user_image_three.png
-    - assets/images/registration.png
-    - assets/images/right_white_arrow.png
-    - assets/images/mobile.png
-    - assets/images/first_button.png
-    - assets/images/second_button.png
-    - assets/images/third_button.png
-    - assets/images/dummy_user_one.png
-    - assets/images/dummy_user_two.png
-    - assets/images/dummy_user_three.png
-    - assets/images/dummy_user_four.png
-    - assets/images/dummy_user_five.png
-    - assets/images/dummy_user_six.png
-    - assets/images/dummy_user_seven.png
-    - assets/images/cricket.png
-    - assets/images/archery.png
-    - assets/images/chess.png
-    - assets/images/category_item_five.png
-    - assets/images/category_item_four.png
-    - assets/images/category_item_one.png
-    - assets/images/category_item_six.png
-    - assets/images/category_item_three.png
-    - assets/images/category_item_two.png
-    - assets/images/category_rectangle_five.png
-    - assets/images/category_rectangle_four.png
-    - assets/images/category_rectangle_one.png
-    - assets/images/category_rectangle_six.png
-    - assets/images/category_rectangle_three.png
-    - assets/images/category_rectangle_two.png
-    - assets/images/suggested_one.png
-    - assets/images/suggested_two.png
-    - assets/images/suggested_three.png
-    - assets/images/home_active.png
-    - assets/images/home_inactive.png
-    - assets/images/game_active.png
-    - assets/images/game_inactive.png
-    - assets/images/events_active.png
-    - assets/images/events_inactive.png
-    - assets/images/message_active.png
-    - assets/images/message_inactive.png
-    - assets/images/more_active.png
-    - assets/images/more_inactive.png
-    - assets/images/profile_image.png
-    - assets/images/profile_image_background.png
-    - assets/images/profile_star.png
-    - assets/images/help.png
-    - assets/images/news.png
-    - assets/images/wallet.png
-    - assets/images/subscription.png
-    - assets/images/edit.png
-    - assets/images/about.png
-    - assets/images/settings.png
-    - assets/images/event_category_five.png
-    - assets/images/event_category_four.png
-    - assets/images/event_category_three.png
-    - assets/images/event_category_two.png
-    - assets/images/event_category_one.png
-    - assets/images/events_dummy_five.png
-    - assets/images/events_dummy_four.png
-    - assets/images/events_dummy_three.png
-    - assets/images/events_dummy_two.png
-    - assets/images/events_dummy_one.png
-    - assets/images/black_rectangle.png
-    - assets/images/message_image_one.png
-    - assets/images/message_image_two.png
-    - assets/images/message_image_three.png
-    - assets/images/message_image_four.png
-    - assets/images/message_image_five.png
-    - assets/images/read.png
-    - assets/images/news_two.png
-    - assets/images/news_one.png
-    - assets/images/home_rectangle.png
-    - assets/images/chess_home.png
-    - assets/images/blue_add.png
-    - assets/images/blue_circle_outline.png
-    - assets/images/coin.png
-    - assets/images/search.png
-    - assets/images/right_arrow.png
-    - assets/messages.json
-    - assets/images/flip.png
-    - assets/images/top_back.png
-    - assets/images/news_big_image.png
-    - assets/images/flip_view.png
-    - assets/images/next_button.png
-    - assets/images/user.png
-    - assets/images/no_image.png
-    - assets/images/error_503.jpg
-    - assets/images/profile_pic.png
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

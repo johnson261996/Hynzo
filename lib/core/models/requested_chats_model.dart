@@ -1,14 +1,31 @@
 import 'dart:convert';
 
-List<ChatListModel> chatListModelFromJson(String str) =>
-    List<ChatListModel>.from(
-        json.decode(str).map((x) => ChatListModel.fromJson(x)));
+RequestedChatsModel requestedChatsModelFromJson(String str) =>
+    RequestedChatsModel.fromJson(json.decode(str));
 
-String chatListModelToJson(List<ChatListModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String requestedChatsModelToJson(RequestedChatsModel data) =>
+    json.encode(data.toJson());
 
-class ChatListModel {
-  ChatListModel({
+class RequestedChatsModel {
+  RequestedChatsModel({
+    required this.response,
+  });
+
+  List<Response> response;
+
+  factory RequestedChatsModel.fromJson(Map<String, dynamic> json) =>
+      RequestedChatsModel(
+        response: List<Response>.from(
+            json["response"].map((x) => Response.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "response": List<dynamic>.from(response.map((x) => x.toJson())),
+      };
+}
+
+class Response {
+  Response({
     required this.id,
     required this.lastMessage,
     required this.channelName,
@@ -26,14 +43,14 @@ class ChatListModel {
   int unreadMessages;
   bool isGroup;
 
-  factory ChatListModel.fromJson(Map<String, dynamic> json) => ChatListModel(
+  factory Response.fromJson(Map<String, dynamic> json) => Response(
         id: json["id"],
         lastMessage: LastMessage.fromJson(json["last_message"]),
         channelName: json["channel_name"],
         avatar: json["avatar"] ?? '',
         userBasicInfo: UserBasicInfo.fromJson(json["user_basic_info"]),
         unreadMessages: json["unread_messages"],
-        isGroup: json["is_group"], 
+        isGroup: json["is_group"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -48,59 +65,11 @@ class ChatListModel {
 }
 
 class LastMessage {
-  LastMessage({
-    required this.id,
-    required this.author,
-    required this.userId,
-    required this.content,
-    required this.typeOfContent,
-    required this.timestamp,
-  });
+  LastMessage();
 
-  int id;
-  Author author;
-  int userId;
-  String content;
-  String typeOfContent;
-  DateTime timestamp;
+  factory LastMessage.fromJson(Map<String, dynamic> json) => LastMessage();
 
-  factory LastMessage.fromJson(Map<String, dynamic> json) => LastMessage(
-        id: json["id"],
-        author: Author.fromJson(json["author"]),
-        userId: json["user_id"],
-        content: json["content"],
-        typeOfContent: json["type_of_content"],
-        timestamp: DateTime.parse(json["timestamp"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "author": author.toJson(),
-        "user_id": userId,
-        "content": content,
-        "type_of_content": typeOfContent,
-        "timestamp": timestamp.toIso8601String(),
-      };
-}
-
-class Author {
-  Author({
-    required this.username,
-    required this.id,
-  });
-
-  String username;
-  int id;
-
-  factory Author.fromJson(Map<String, dynamic> json) => Author(
-        username: json["username"],
-        id: json["id"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "username": username,
-        "id": id,
-      };
+  Map<String, dynamic> toJson() => {};
 }
 
 class UserBasicInfo {

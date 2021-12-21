@@ -36,6 +36,11 @@ class ServiceBase {
             .post(Uri.parse(apiUrl), body: jsonEncode(data), headers: headers);
     return response;
   }
+
+  static String getApiBaseUrl(){
+    return apiBaseUrl;
+  }
+
 }
 
 checkConnectionStaus() {

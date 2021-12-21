@@ -52,7 +52,7 @@ class _GameContainerState extends State<GameContainer> {
         allGames = gamesResponseModel.allGames!;
         popularGames = gamesResponseModel.popularGames!;
       } else {
-        ToastUtil().showToast("Something went wrong.");
+        ToastUtil().showToast("Something went wrong.2");
       }
     } catch (e) {
       setState(() {

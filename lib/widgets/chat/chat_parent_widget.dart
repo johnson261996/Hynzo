@@ -3,17 +3,27 @@ import 'package:hynzo/core/models/tab_header_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/widgets/chat/all_chats_widget.dart';
-import 'package:hynzo/widgets/chat/requested_widget.dart';
+import 'package:hynzo/widgets/chat/connected_widget.dart';
 import 'package:hynzo/widgets/chat/suggested_widget.dart';
 import 'package:hynzo/widgets/common/search_bar/search_bar.dart';
 
-import 'calls_widget.dart';
+import 'requested_widget.dart';
 
 class ChatWidget extends StatefulWidget {
-  const ChatWidget({Key? key,required this.getChatList,required this.createChannel}) : super(key: key);
+  const ChatWidget(
+      {Key? key,
+      required this.getChatList,
+      required this.createChannel,
+      required this.getSuggestedList,
+      required this.getRequestedChats,
+      required this.getConnectedChats})
+      : super(key: key);
 
-  final Function(int,int)? getChatList;
-  final Function(List<String>,bool)? createChannel;
+  final Function(int, int)? getChatList;
+  final Function(List<String>, bool)? createChannel;
+  final Function? getSuggestedList;
+  final Function getRequestedChats;
+  final Function getConnectedChats;
 
   @override
   State<ChatWidget> createState() => _ChatWidgetState();
@@ -40,26 +50,20 @@ class _ChatWidgetState extends State<ChatWidget> with TickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
     _pageController = PageController();
-    allTabHeader.add(
+    allTabHeader.addAll([
       TabHeaderModel(
         tabName: 'All chats',
       ),
-    );
-    allTabHeader.add(
+      TabHeaderModel(
+        tabName: 'Connected',
+      ),
       TabHeaderModel(
         tabName: 'Requested',
       ),
-    );
-    allTabHeader.add(
-      TabHeaderModel(
-        tabName: 'Calls',
-      ),
-    );
-    allTabHeader.add(
       TabHeaderModel(
         tabName: 'Suggested',
       ),
-    );
+    ]);
     tabController = TabController(
       initialIndex: selectedIndexValue,
       length: allTabHeader.length,
@@ -185,6 +189,7 @@ class _ChatWidgetState extends State<ChatWidget> with TickerProviderStateMixin {
             child: Container(
               child: PageView(
                 controller: _pageController,
+                physics: BouncingScrollPhysics(),
                 onPageChanged: (page) {
                   setState(() {
                     selectedIndexValue = page;
@@ -194,10 +199,18 @@ class _ChatWidgetState extends State<ChatWidget> with TickerProviderStateMixin {
                   });
                 },
                 children: [
-                  AllChatsWidget(getChatList: widget.getChatList,createChannel: widget.createChannel,),
-                  RequestedWidget(),
-                  CallsWidget(),
-                  SuggestedWidget(),
+                  AllChatsWidget(
+                    getChatList: widget.getChatList,
+                    createChannel: widget.createChannel,
+                  ),
+                  ConnectedWidget(
+                    getConnectedChats: widget.getConnectedChats,
+                    createChannel: widget.createChannel,
+                  ),
+                  RequestedWidget(getRequestedChats: widget.getRequestedChats,),
+                  SuggestedWidget(
+                    getSuggestedList: widget.getSuggestedList,
+                  ),
                 ],
               ),
             ),

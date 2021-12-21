@@ -11,6 +11,7 @@ import 'package:hynzo/core/models/new_message_model.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/themes/themes.dart';
 import 'package:hynzo/utils/localStorage.dart';
+import 'package:hynzo/utils/message_encrypt.dart';
 import 'package:hynzo/widgets/chat/chat_bottom_widget.dart';
 import 'package:hynzo/widgets/chat/chat_theme.dart';
 import 'package:image_picker/image_picker.dart';
@@ -46,10 +47,12 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
   String? token;
   String? name;
   late types.User _user;
+  late MessageEncrypt _encrypt;
 
   @override
   void initState() {
     super.initState();
+    _encrypt = MessageEncrypt.initialize(widget.channelDetails.encryptionKey);
     _loadMessages();
   }
 
@@ -211,8 +214,10 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
   void _handEmojiPressed() {}
 
   void _handleSendPressed(types.PartialText message) {
+    String encText = '';
+    encText = _encrypt.encrypt(message.text);
     channel.sink.add(
-        '{"command": "new_message",  "from": $uid, "message": "${message.text}", "chatId": ${widget.channelDetails.id}, "type_of_content": "text", "media_id": "", "offline_locator":""}');
+        '{"command": "new_message",  "from": $uid, "message": "$encText", "chatId": ${widget.channelDetails.id}, "type_of_content": "text", "media_id": "", "offline_locator":""}');
   }
 
   void _loadMessages() async {
@@ -314,7 +319,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                                     element.timestamp.millisecondsSinceEpoch,
                                 "id": element.id.toString(),
                                 "status": "seen",
-                                "text": element.content,
+                                "text": _encrypt.decrypt(element.content),
                                 "type": "text",
                               }));
                         });
@@ -342,7 +347,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                               msg.message.timestamp.millisecondsSinceEpoch,
                           "id": msg.message.id.toString(),
                           "status": "seen",
-                          "text": msg.message.content,
+                          "text": _encrypt.decrypt(msg.message.content),
                           "type": "text"
                         }));
                   }

@@ -1,23 +1,33 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:http/http.dart' as http;
 import 'package:hynzo/core/models/chat_list_model.dart';
+import 'package:hynzo/core/models/connected_list_model.dart';
 import 'package:hynzo/core/models/create_channel_model.dart';
+import 'package:hynzo/core/models/requested_chats_model.dart';
 import 'package:hynzo/core/services/service_base.dart';
 import 'package:hynzo/utils/localStorage.dart';
+import 'package:path/path.dart' as Path;
 
 class ChatService {
-  Future<ChatListModel> getAllChats({int? limit, int? offset}) async {
+  Future<List<ChatListModel>> getAllChats({int? limit, int? offset}) async {
     String url = 'api/v1/chats/?limit=$limit&offset=$offset';
     var response = await ServiceBase.get(url: url, headers: {
       "Content-Type": "application/json",
       "Authorization": 'Bearer ${await getToken()}'
     });
-    log(response.body);
-    if (jsonDecode(response.body)['message'] == 'chat_list is empty') {
-      return ChatListModel(results: []);
-    }
-    return ChatListModel.fromJson(jsonDecode(response.body));
+    return chatListModelFromJson(response.body);
+  }
+
+  Future<List<ConnectedListModel>> getConnectedChats(
+      {int? limit, int? offset}) async {
+    String url = 'api/v1/chats/connected/users';
+    var response = await ServiceBase.get(url: url, headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Bearer ${await getToken()}'
+    });
+    return connectedListModelFromJson(response.body);
   }
 
   Future<CreateChannelModel> createChannel(
@@ -30,7 +40,6 @@ class ChatService {
       "Content-Type": "application/json",
       "Authorization": 'Bearer ${await getToken()}'
     });
-    log(response.body);
     if (response.statusCode != 201) {
       return CreateChannelModel(
           id: 0,
@@ -50,8 +59,37 @@ class ChatService {
       "Content-Type": "application/json",
       "Authorization": 'Bearer ${await getToken()}'
     });
-    log(response.body);
     return jsonDecode(response.body);
+  }
+
+  Future<RequestedChatsModel> getRequestedList() async {
+    String url = 'api/v1/chats/requests/list';
+    var response = await ServiceBase.get(url: url, headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Bearer ${await getToken()}'
+    });
+    if (jsonDecode(response.body)['response'] == '') {
+      return RequestedChatsModel(response: []);
+    }
+    return RequestedChatsModel.fromJson(jsonDecode(response.body));
+  }
+
+  Future<Map> uploadImage(file, fileName, url) async {
+    String apiUrl = ServiceBase.getApiBaseUrl() + url;
+    var request = http.MultipartRequest("POST", Uri.parse(apiUrl));
+    var stream = http.ByteStream(file!.openRead());
+    stream.cast();
+    var length = await file.length();
+    var multipartFile = http.MultipartFile(fileName, stream, length,
+        filename: Path.basename(file.path));
+    request.headers.addAll({
+      "Content-Type": "multipart/form-data",
+      "Authorization": await getToken()
+    });
+    request.files.add(multipartFile);
+    var streamResponse = await request.send();
+    var res = await http.Response.fromStream(streamResponse);
+    return jsonDecode(res.body);
   }
 
   Future<String> getToken() async {

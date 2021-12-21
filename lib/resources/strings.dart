@@ -82,6 +82,7 @@ class Strings {
   static const SUGGESTION_TITLE = "Suggested people near you";
   static const ADD = "Add";
   static const ADDED = "Added";
+  static const ACCEPT = "Accept";
 
   //Location
   static const LOCATION_Title = "Allow access to your location";
@@ -106,18 +107,18 @@ class Strings {
   static const LOG_OUT = 'LogOut';
 
   //Home
-  static const HOME_PROFILE_NAME="Welcome Kumar,";
-  static const HOME_PROFILE_SUBTITLE="What would you like to play?";
-  static const AMOUNT="560";
-  static const SPECIAL_EVENTS="Special Events";
-  static const MUST_TRY_GAMES="Must Try Games";
-  static const TODAY_NEWS="Today's News";
-  static const GAMES_BY_CATEGORIES="Games by Categories";
-  static const SEARCH_GAMES="Search Games here";
-  static const SEARCH_CHATS="Search Chats here";
-  static const SEARCH_EVENTS="Search Events here";
-  static const MORE_NEWS="More news";
-  static const ALL_GAMES_HOME="All Games";
+  static const HOME_PROFILE_NAME = "Welcome Kumar,";
+  static const HOME_PROFILE_SUBTITLE = "What would you like to play?";
+  static const AMOUNT = "560";
+  static const SPECIAL_EVENTS = "Special Events";
+  static const MUST_TRY_GAMES = "Must Try Games";
+  static const TODAY_NEWS = "Today's News";
+  static const GAMES_BY_CATEGORIES = "Games by Categories";
+  static const SEARCH_GAMES = "Search Games here";
+  static const SEARCH_CHATS = "Search Chats here";
+  static const SEARCH_EVENTS = "Search Events here";
+  static const MORE_NEWS = "More news";
+  static const ALL_GAMES_HOME = "All Games";
 
   //Events
   static const CATEGORIES_TITLE = "Categories";

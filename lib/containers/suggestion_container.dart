@@ -29,14 +29,7 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
     _suggestionProvider =
         Provider.of<SuggestionProvider>(context, listen: false);
     allResults.clear();
-    // ConnectionStaus().check().then((connectionStatus) {
-    //   if (connectionStatus) {
     getSuggestionList();
-    // } else {
-    //   ToastUtil().showToast(
-    //       "No internet connection available. Please check your connection or try again later.");
-    // }
-    // });
   }
 
   Future<void> getSuggestionList() async {
@@ -79,7 +72,7 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
       await LocalStorage.getUserID().then((value) => userId = value.toString());
       userIds.add(userId);
       SuggestUserAddResponseModel suggestionModel =
-      await _suggestionProvider!.addSuggestUser(userIds);
+          await _suggestionProvider!.addSuggestUser(userIds);
       if (suggestionModel.statusCode == 201) {
         allResults[index].isSelected = !allResults[index].isSelected!;
         ToastUtil().showToast("User added successfully.");

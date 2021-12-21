@@ -31,7 +31,6 @@ class AuthService {
     String url = 'api/v2/users/verify_otp';
     var response = await ServiceBase.post(
         url: url, data: data, headers: {"Content-Type": "application/json"});
-    log(response.body);
     if(response.statusCode != 200){
       throw "Something went wrong";
     }

@@ -64,7 +64,7 @@ class _HomeContainerState extends State<HomeContainer> {
       if (suggestedGamesResponseModel.statusCode == 200) {
         allSuggestedGames = suggestedGamesResponseModel.allSuggestedGames!;
       } else {
-        ToastUtil().showToast("Something went wrong.");
+        ToastUtil().showToast("Something went wrong.3");
       }
       getAllNews();
     } catch (e) {
