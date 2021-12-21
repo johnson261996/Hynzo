@@ -30,10 +30,12 @@ class _ConnectedWidgetState extends State<ConnectedWidget> {
   getRequestedList() async {
     final List<ConnectedListModel> response = await widget.getConnectedChats();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      setState(() {
-        connectedListModel = response;
-        loading = false;
-      });
+      if (mounted) {
+        setState(() {
+          connectedListModel = response;
+          loading = false;
+        });
+      }
     });
   }
 

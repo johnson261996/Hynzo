@@ -16,6 +16,7 @@ class ChatListModel {
     required this.userBasicInfo,
     required this.unreadMessages,
     required this.isGroup,
+    required this.encryptionKey,
   });
 
   int id;
@@ -25,6 +26,7 @@ class ChatListModel {
   UserBasicInfo userBasicInfo;
   int unreadMessages;
   bool isGroup;
+  String encryptionKey;
 
   factory ChatListModel.fromJson(Map<String, dynamic> json) => ChatListModel(
         id: json["id"],
@@ -33,7 +35,8 @@ class ChatListModel {
         avatar: json["avatar"] ?? '',
         userBasicInfo: UserBasicInfo.fromJson(json["user_basic_info"]),
         unreadMessages: json["unread_messages"],
-        isGroup: json["is_group"], 
+        isGroup: json["is_group"],
+        encryptionKey: json["encryption_key"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -44,6 +47,7 @@ class ChatListModel {
         "user_basic_info": userBasicInfo.toJson(),
         "unread_messages": unreadMessages,
         "is_group": isGroup,
+        "encryption_key": encryptionKey,
       };
 }
 

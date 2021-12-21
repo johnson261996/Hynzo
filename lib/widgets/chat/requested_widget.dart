@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/requested_chats_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/toast_util.dart';
 
 class RequestedWidget extends StatefulWidget {
   final Function getRequestedChats;
+  final Function(String, String) acceptRequest;
 
-  const RequestedWidget({Key? key, required this.getRequestedChats})
+  const RequestedWidget(
+      {Key? key, required this.getRequestedChats, required this.acceptRequest})
       : super(key: key);
 
   @override
@@ -31,6 +34,19 @@ class _RequestedWidgetState extends State<RequestedWidget> {
         loading = false;
       });
     });
+  }
+
+  acceptRequest(String friendId, String chatId, int index) async {
+    final Map<String, dynamic> response =
+        await widget.acceptRequest(friendId, chatId);
+
+    if (response['message'] == 'You accepted request successfully') {
+      setState(() {
+        suggestionModel.response.removeAt(index);
+      });
+    } else {
+      ToastUtil().showToast('Something went wrong!');
+    }
   }
 
   @override
@@ -76,7 +92,13 @@ class _RequestedWidgetState extends State<RequestedWidget> {
                           ),
                     ),
                     trailing: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        acceptRequest(
+                            suggestionModel.response[index].userBasicInfo.id
+                                .toString(),
+                            suggestionModel.response[index].id.toString(),
+                            index);
+                      },
                       style: ElevatedButton.styleFrom(
                         primary: AppColors.blueDark,
                         minimumSize: const Size(70.0, 30.0),
