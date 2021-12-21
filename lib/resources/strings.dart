@@ -164,6 +164,9 @@ class Strings {
   static const MESSAGES = ['Welcome', 'Welcome', 'Welcome'];
   static const SEARCH = 'Search New Connection';
 
+  //Profile
+  static const PROFILE_HEADING = 'Profile';
+
   // it will return the dynamic string
   static String demo(amount) {
     return 'Total amount: $amount';

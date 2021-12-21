@@ -22,6 +22,7 @@ class AppColors {
   static final Color greishBlack = Pigment.fromString('#333333');
   static final Color gray = Pigment.fromString('#606060');
   static final Color graylight = Pigment.fromString('#B0B0B2');
+  static final Color grayLight_secondary = Pigment.fromString('#D7D7D7');
   static final Color lightgray = Pigment.fromString('#C4C4C4');
   static final Color offgrey = Pigment.fromString('#7B7B7B');
   static final Color offwhite = Pigment.fromString('#ACACAC');

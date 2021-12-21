@@ -46,6 +46,7 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
         LocalStorage.setUserID(response.user!.id!);
         LocalStorage.setUserName(response.user!.username!);
         LocalStorage.setUserFullName(response.user!.fullName!);
+        LocalStorage.setProfilePic(response.user!.avatar!);
         _getInterestForSpecificUser("10", offSet.toString());
       } else {
         ToastUtil().showToast('Invalid Otp');

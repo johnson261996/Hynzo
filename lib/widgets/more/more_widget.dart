@@ -11,7 +11,9 @@ class MoreWidget extends StatefulWidget {
   final int level;
 
   const MoreWidget({
-    Key? key,required this.imageUrl, required this.level,
+    Key? key,
+    required this.imageUrl,
+    required this.level,
   }) : super(key: key);
 
   @override
@@ -19,22 +21,21 @@ class MoreWidget extends StatefulWidget {
 }
 
 class _MoreWidgetState extends State<MoreWidget> {
-  late String url= '';
+  late String url = '';
   String name = '';
 
-  getProfilePic()async{
+  getProfilePic() async {
     url = (await LocalStorage.getProfilePic())!;
-    print(url);
   }
 
   getName() async {
     String _name = (await LocalStorage.getUserName())!;
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {setState(()  {
-    name = _name;
-    });});
-
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      setState(() {
+        name = _name;
+      });
+    });
   }
-
 
   @override
   void initState() {
@@ -92,7 +93,12 @@ class _MoreWidgetState extends State<MoreWidget> {
             child: Expanded(
               child: Row(
                 children: [
-                  const ProfileImageWidget(imageUrl: '',level: 1,),
+                  ProfileImageWidget(
+                    backgroundcolor: AppColors.offyellow,
+                    valueColor: AppColors.darkyellow,
+                    imageUrl: '',
+                    level: 1,
+                  ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.03,
                   ),
@@ -109,17 +115,19 @@ class _MoreWidgetState extends State<MoreWidget> {
                         ),
                         InkWell(
                           onTap: () {
-
+                            Navigator.pushNamed(context, Routes.profile);
                           },
                           child: Row(
                             children: [
                               Text(
                                 Strings.VIEW_PROFILE,
-                                style:
-                                    Theme.of(context).textTheme.caption!.copyWith(
-                                          fontSize: 12,
-                                          color: AppColors.greyBlack,
-                                        ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption!
+                                    .copyWith(
+                                      fontSize: 12,
+                                      color: AppColors.greyBlack,
+                                    ),
                               ),
                               const Icon(
                                 Icons.arrow_forward_ios_outlined,
@@ -318,10 +326,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                       height: 2.0,
                     ),
                     InkWell(
-                      onTap: () {
-                        LocalStorage.clearToken();
-                        Navigation.pushReplacementNamed(context, Routes.login);
-                      },
+                      onTap:null,
                       child: Container(
                         padding: const EdgeInsets.only(
                           left: 15.0,
