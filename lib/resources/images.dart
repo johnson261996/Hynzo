@@ -16,6 +16,16 @@ class Images {
   static const String ORDERS = 'assets/images/orders.png';
   static const String LOGOUT = 'assets/images/logout.png';
   static const String HELP = 'assets/images/help_outline.png';
+  static const String MY_ACCOUNT = 'assets/images/my_account.png';
+  static const String MY_CHAT = 'assets/images/my_chat.png';
+  static const String ACTIVITIES = 'assets/images/activities.png';
+  static const String HELP_SUPPORT = 'assets/images/help_support.png';
+  static const String REFER_FRIEND = 'assets/images/refer_friend.png';
+  static const String LOG_OUT = 'assets/images/log_out.png';
+  static const String TOP_BACK = 'assets/images/top_back.png';
+  static const String PROFILE_PIC = 'assets/images/profile_pic.png';
+  static const String PROFILE_STAR = 'assets/images/profile_star.png';
+
   static const List CAROUSELIMAGES = ['assets/images/home_rectangle.png','assets/images/home_rectangle.png','assets/images/home_rectangle.png'];
 
 

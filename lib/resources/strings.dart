@@ -165,6 +165,20 @@ class Strings {
   static const MESSAGES = ['Welcome', 'Welcome', 'Welcome'];
   static const SEARCH = 'Search New Connection';
 
+  //Profile
+  static const PROFILE_HEADING = 'Profile';
+  static const LOGOUT = 'Log Out';
+  static const REFER_FRIEND = 'Refer a friend';
+  static const ACTIVITIES ='Activities';
+  static const MY_CHAT = 'My Chat';
+  static const MY_ACCOUNT = 'My Account';
+  static const FOLLOWING = 'Following';
+  static const FOLLOWING_NUMBER = '250';
+  static const FOLLOWERS = 'Followers';
+  static const FOLLLOWERS_NUMBER = '230';
+  static const FRIENDS = 'Friends';
+  static const FRIENDS_NUMBER = '25';
+
   // it will return the dynamic string
   static String demo(amount) {
     return 'Total amount: $amount';

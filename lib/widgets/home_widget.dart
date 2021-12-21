@@ -87,48 +87,44 @@ class _HomeWidgetState extends State<HomeWidget> {
       ),
     );
     allEvents.add(
-       EventsModel(
-      imagePath: 'assets/images/events_dummy_two.png',
-      title: 'Sunday Night Party',
-      subTitle: 'Badmash Louunge: Koramongala',
-      dateTime: 'Fri, 12 Nov',
-     ),
+      EventsModel(
+        imagePath: 'assets/images/events_dummy_two.png',
+        title: 'Sunday Night Party',
+        subTitle: 'Badmash Louunge: Koramongala',
+        dateTime: 'Fri, 12 Nov',
+      ),
     );
     allEvents.add(
-    EventsModel(
-    imagePath: 'assets/images/events_dummy_one.png',
-    title: 'Sunday Night Party',
-    subTitle: 'Badmash Louunge: Koramongala',
-    dateTime: 'Thu, 11 Nov'
-    ,
-    )
-    ,
+      EventsModel(
+        imagePath: 'assets/images/events_dummy_one.png',
+        title: 'Sunday Night Party',
+        subTitle: 'Badmash Louunge: Koramongala',
+        dateTime: 'Thu, 11 Nov',
+      ),
     );
-     getName();
-     getProfilePic();
+    getName();
+    getProfilePic();
   }
 
   getName() async {
-     name = (await LocalStorage.getUserName())!;
+    name = (await LocalStorage.getUserName())!;
   }
 
-  getProfilePic()async{
+  getProfilePic() async {
     url = (await LocalStorage.getProfilePic())!;
-    print(url);
   }
-
 
   String getDate(String time) {
     var now = DateTime.now();
     var formatter = DateFormat('dd/MM/yyyy');
     String currentDate = formatter.format(now);
-    var newsdate=DateTime.parse(time);
-    String newsDate= formatter.format(newsdate);
-    if(currentDate.split("/")[0] == newsDate.split("/")[0]){
+    var newsdate = DateTime.parse(time);
+    String newsDate = formatter.format(newsdate);
+    if (currentDate.split("/")[0] == newsDate.split("/")[0]) {
       return DateFormat.jm().format(DateTime.parse(time));
     } else {
       var diff = now.difference(newsdate).inDays;
-      if(diff> 1){
+      if (diff > 1) {
         return newsDate;
       } else {
         return 'Yesterday';
@@ -169,9 +165,14 @@ class _HomeWidgetState extends State<HomeWidget> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  ProfileImageWidget( imageUrl: url,level: 1,),
+                  ProfileImageWidget(
+                    backgroundcolor: AppColors.offyellow,
+                    valueColor: AppColors.darkyellow,
+                    imageUrl: url,
+                    level: 1,
+                  ),
                   const SizedBox(
-                    width:8,
+                    width: 8,
                   ),
                   Expanded(
                     child: Column(
@@ -180,26 +181,28 @@ class _HomeWidgetState extends State<HomeWidget> {
                       children: [
                         Text(
                           'Welcome $name',
-                          style: Theme.of(context).textTheme.headline2!.copyWith(
-                                fontSize: 20,
-                                color: AppColors.gray,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.headline2!.copyWith(
+                                    fontSize: 20,
+                                    color: AppColors.gray,
+                                  ),
                         ),
                         const SizedBox(
                           width: 10,
                         ),
                         Text(
                           Strings.HOME_PROFILE_SUBTITLE,
-                          style: Theme.of(context).textTheme.headline2!.copyWith(
-                                fontSize: 12,
-                                color: AppColors.gray,
-                                fontWeight: FontWeight.w400,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.headline2!.copyWith(
+                                    fontSize: 12,
+                                    color: AppColors.gray,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                         ),
                       ],
                     ),
                   ),
-                 /* Container(
+                  /* Container(
                     width: 75.0,
                     height: 40.0,
                     decoration: BoxDecoration(
@@ -253,7 +256,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                   search = val;
                 });
               },
-              padding: const EdgeInsets.only(left: 20.0,right: 20.0,),
+              padding: const EdgeInsets.only(
+                left: 20.0,
+                right: 20.0,
+              ),
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -268,13 +274,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                       const SizedBox(
                         height: 10,
                       ),
-                         Container(
-                          padding: const EdgeInsets.only(
-                            right: 10
-                          ),
+                      Container(
+                          padding: const EdgeInsets.only(right: 10),
                           height: 130.0,
-                          child: CarouselSliderWidget()
-                      ),
+                          child: CarouselSliderWidget()),
                       const SizedBox(
                         height: 10,
                       ),
@@ -354,33 +357,36 @@ class _HomeWidgetState extends State<HomeWidget> {
                         child: ListView.builder(
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
-                              padding: const EdgeInsets.only(
-                                right: 15.0,
-                              ),
-                            child: GestureDetector(
-                                onTap: (){
-                                check().then((internet) {
-                                if (internet != null && internet) {
-                                 /* Navigation.pushNamed(context, Routes.webview,
+                                padding: const EdgeInsets.only(
+                                  right: 15.0,
+                                ),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    check().then((internet) {
+                                      if (internet != null && internet) {
+                                        /* Navigation.pushNamed(context, Routes.webview,
                                   {
                                   'link': widget
                                       .allSuggestedGames![index]
                                       .redirectionUrl
                                   });*/
-                                } else {
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NoDataError()));
-                                }
-                              });
-                            },
-                              child: EventContainerWidget(
-                                imagePath: allEvents[index].imagePath!,
-                                title: allEvents[index].title!,
-                                subTitle: allEvents[index].subTitle!,
-                                dateTime: allEvents[index].dateTime!,
-                                showDate: true,
-                                showSubTitle: true,
-                              ),
-                            ));
+                                      } else {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const NoDataError()));
+                                      }
+                                    });
+                                  },
+                                  child: EventContainerWidget(
+                                    imagePath: allEvents[index].imagePath!,
+                                    title: allEvents[index].title!,
+                                    subTitle: allEvents[index].subTitle!,
+                                    dateTime: allEvents[index].dateTime!,
+                                    showDate: true,
+                                    showSubTitle: true,
+                                  ),
+                                ));
                           },
                           itemCount: allEvents.length,
                           scrollDirection: Axis.horizontal,
@@ -452,44 +458,56 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   right: 12.0,
                                 ),
                                 child: GestureDetector(
-                                  onTap: (){
+                                  onTap: () {
                                     check().then((internet) {
                                       if (internet != null && internet) {
                                         Navigation.pushNamed(
-                                            context, Routes.webview,
-                                            {
-                                              'link': widget
-                                                  .allSuggestedGames![index]
-                                                  .redirectionUrl
-                                            });
+                                            context, Routes.webview, {
+                                          'link': widget
+                                              .allSuggestedGames![index]
+                                              .redirectionUrl
+                                        });
                                       } else {
-                                        Navigator.of(
-                                            context).push(MaterialPageRoute(builder: (context) => NoDataError()));
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    NoDataError()));
                                       }
                                     });
                                   },
                                   child: Column(
                                     children: [
                                       ClipRRect(
-                                        borderRadius: BorderRadius.circular(10.0),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
                                         child: Image.network(
-                                          widget.allSuggestedGames![index].image!,
+                                          widget
+                                              .allSuggestedGames![index].image!,
                                           fit: BoxFit.cover,
                                           width: 110.0,
                                           height: 110.0,
-                                          errorBuilder: (context, error, stackTrace) => Image.asset('assets/images/no_image.png',fit: BoxFit.cover,),
+                                          errorBuilder:
+                                              (context, error, stackTrace) =>
+                                                  Image.asset(
+                                            'assets/images/no_image.png',
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
                                       SizedBox(
                                         height: 10,
                                       ),
                                       Text(
-                                        widget.allSuggestedGames![index].gameName!,
-                                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600,
-                                          color: AppColors.black,
-                                        ),
+                                        widget.allSuggestedGames![index]
+                                            .gameName!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle2!
+                                            .copyWith(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.black,
+                                            ),
                                       )
                                     ],
                                   ),
@@ -499,7 +517,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           scrollDirection: Axis.horizontal,
                         ),
                       ),
-                      if(widget.allContent!.isNotEmpty) ...[
+                      if (widget.allContent!.isNotEmpty) ...[
                         const SizedBox(
                           height: 30,
                         ),
@@ -508,11 +526,13 @@ class _HomeWidgetState extends State<HomeWidget> {
                           children: [
                             Text(
                               Strings.TODAY_NEWS,
-                              style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
-                                color: AppColors.black,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(
+                                    color: AppColors.black,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                             ),
                             SizedBox(
                               width: mediaQuery.width * 0.02,
@@ -538,15 +558,16 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           .textTheme
                                           .subtitle2!
                                           .copyWith(
-                                        color: AppColors.whitegrey,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                      ),
+                                            color: AppColors.whitegrey,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                          ),
                                     ),
                                     SizedBox(
                                       width: mediaQuery.width * 0.005,
                                     ),
-                                    Image.asset('assets/images/right_arrow.png'),
+                                    Image.asset(
+                                        'assets/images/right_arrow.png'),
                                   ],
                                 ),
                               ),
@@ -581,21 +602,35 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     ),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Container(
                                           width: 120.0,
                                           height: 120.0,
                                           child: ClipRRect(
-                                            borderRadius: const BorderRadius.only(
+                                            borderRadius:
+                                                const BorderRadius.only(
                                               topLeft: Radius.circular(10.0),
-                                              bottomLeft: Radius.circular(10.0),),
+                                              bottomLeft: Radius.circular(10.0),
+                                            ),
                                             child: Image.network(
-                                              widget.allContent![index].imageUrl!,
+                                              widget
+                                                  .allContent![index].imageUrl!,
                                               fit: BoxFit.cover,
-                                              errorBuilder: (context, error, stackTrace) => ClipRRect(
-                                                borderRadius: const BorderRadius.only(topLeft: Radius.circular(10.0),bottomLeft:  Radius.circular(10.0)),
-                                                child: Image.asset('assets/images/no_image.png',fit: BoxFit.cover,),
+                                              errorBuilder: (context, error,
+                                                      stackTrace) =>
+                                                  ClipRRect(
+                                                borderRadius: const BorderRadius
+                                                        .only(
+                                                    topLeft:
+                                                        Radius.circular(10.0),
+                                                    bottomLeft:
+                                                        Radius.circular(10.0)),
+                                                child: Image.asset(
+                                                  'assets/images/no_image.png',
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -604,43 +639,58 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           width: mediaQuery.width * 0.03,
                                         ),
                                         Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Container(
                                               width: mediaQuery.width * 0.50,
                                               child: Row(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
                                                 children: [
                                                   Flexible(
                                                     child: Text(
-                                                      widget.allContent![index].title!.replaceAll(
-                                                          RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
+                                                      widget.allContent![index]
+                                                          .title!
+                                                          .replaceAll(
+                                                              RegExp(
+                                                                  r'[^A-Za-z0-9().,;?]'),
+                                                              ' '),
                                                       maxLines: 1,
-                                                      overflow: TextOverflow.ellipsis,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .headline6!
                                                           .copyWith(
-                                                        color: AppColors.greyBlue,
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.w600,
-                                                        fontFamily: 'open_sans',
-                                                      ),
+                                                            color: AppColors
+                                                                .greyBlue,
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontFamily:
+                                                                'open_sans',
+                                                          ),
                                                     ),
                                                   ),
                                                   Spacer(),
                                                   Text(
-                                                    getDate(widget.allContent![index].pubDate!),
+                                                    getDate(widget
+                                                        .allContent![index]
+                                                        .pubDate!),
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .subtitle1!
                                                         .copyWith(
-                                                      fontSize: 10.33,
-                                                      fontWeight: FontWeight.w400,
-                                                      fontFamily: 'open_sans',
-                                                      color: AppColors.greyBlue,
-                                                    ),
+                                                          fontSize: 10.33,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontFamily:
+                                                              'open_sans',
+                                                          color: AppColors
+                                                              .greyBlue,
+                                                        ),
                                                   ),
                                                 ],
                                               ),
@@ -651,18 +701,23 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             Container(
                                               width: 150.0,
                                               child: Text(
-                                                widget.allContent![index].description!
+                                                widget.allContent![index]
+                                                    .description!
                                                     .replaceAll(
-                                                    RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
+                                                        RegExp(
+                                                            r'[^A-Za-z0-9().,;?]'),
+                                                        ' '),
                                                 overflow: TextOverflow.ellipsis,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .subtitle1!
                                                     .copyWith(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 16,
-                                                  color: AppColors.blackBlue,
-                                                ),
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 16,
+                                                      color:
+                                                          AppColors.blackBlue,
+                                                    ),
                                               ),
                                             ),
                                           ],
@@ -678,7 +733,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                           ),
                         ),
                       ],
-
                       const SizedBox(
                         height: 30,
                       ),
