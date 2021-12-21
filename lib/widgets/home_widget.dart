@@ -10,6 +10,7 @@ import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/navigations.dart';
+import 'package:hynzo/widgets/carouselSlider/carousel_slider.dart';
 import 'package:hynzo/widgets/common/search_bar/search_bar.dart';
 import 'package:intl/intl.dart';
 
@@ -20,7 +21,7 @@ import 'common/view/event_view_widget.dart';
 class HomeWidget extends StatefulWidget {
   final Function onTapped;
   final List<NewsContentDataModel>? allContent;
-  final List<SuggestedPlayModel>? allSuggestedGames;
+  final List<GamePlayModel>? allSuggestedGames;
 
   const HomeWidget(
       {required this.onTapped,
@@ -267,37 +268,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                       const SizedBox(
                         height: 10,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          check().then((intenet) {
-                            if (intenet != null && intenet) {
-                              // Internet Present Case
-                            }else{
-                              // No-Internet Case
-                              Navigator.of(
-                                  context).push(MaterialPageRoute(builder: (context) => NoDataError()));
-                            }
-
-                          });
-
-                        },
-                        child: Container(
+                         Container(
                           padding: const EdgeInsets.only(
-                            right: 20.0,
+                            right: 10
                           ),
                           height: 130.0,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset(
-                              'assets/images/home_rectangle.png',
-                              fit: BoxFit.contain,
-                              height: 130.0,
-                            ),
-                          ),
-                        ),
+                          child: CarouselSliderWidget()
                       ),
                       const SizedBox(
-                        height: 40,
+                        height: 10,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,

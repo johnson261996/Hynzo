@@ -1,30 +1,32 @@
+
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
-import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/common/view/game_view_widget.dart';
 
-class TopChartsWidget extends StatefulWidget{
-  
-  final List<GamePlayModel>? popularGames;
+class FilteredGamesWidget extends StatefulWidget{
 
-  const TopChartsWidget({
+  final String title ;
+  final List<GamePlayModel>? filteredGames;
+
+  const FilteredGamesWidget({
     Key? key,
-    this.popularGames
+    required this.title,
+    this.filteredGames
 
   }) : super(key: key);
   @override
-  State<TopChartsWidget> createState() => _TopChartsWidgetState();
+  State<FilteredGamesWidget> createState() => _FilteredGamesWidgetState();
 }
 
-class _TopChartsWidgetState extends State<TopChartsWidget> {
+class _FilteredGamesWidgetState extends State<FilteredGamesWidget> {
   @override
   Widget build(BuildContext context) {
     Size mediaQuery = MediaQuery.of(context).size;
     return Container(
-      height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height,
         child:SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +37,7 @@ class _TopChartsWidgetState extends State<TopChartsWidget> {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                Strings.POPULAR_GAMES,
+                  widget.title,
                   style: Theme.of(context).textTheme.headline6!.copyWith(
                     color: AppColors.black,
                     fontWeight: FontWeight.w600,
@@ -61,15 +63,15 @@ class _TopChartsWidgetState extends State<TopChartsWidget> {
                     return GestureDetector(
                       onTap: (){
                         Navigation.pushNamed(context, Routes.webview,
-                            {'link': widget.popularGames![index].redirectionUrl});
+                            {'link': widget.filteredGames![index].redirectionUrl});
                       },
                       child: GameContainerWidget(
-                        imagePath: widget.popularGames![index].image!,
-                        name: widget.popularGames![index].gameName!,
+                        imagePath: widget.filteredGames![index].image!,
+                        name: widget.filteredGames![index].gameName!,
                       ),
                     );
                   },
-                  itemCount: widget.popularGames!.length,
+                  itemCount: widget.filteredGames!.length,
                 ),
               )
             ],
