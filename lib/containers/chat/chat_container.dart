@@ -46,6 +46,11 @@ class _ChatContainerState extends State<ChatContainer> {
     return response;
   }
 
+  Future<Map<String, dynamic>> acceptRequest(String friendId, String chatId) {
+    final response = _chatProvider.acceptRequest(friendId, chatId);
+    return response;
+  }
+
   @override
   Widget build(BuildContext context) {
     _chatProvider = Provider.of<ChatProvider>(context);
@@ -56,6 +61,7 @@ class _ChatContainerState extends State<ChatContainer> {
       getSuggestedList: getSuggestionList,
       getRequestedChats: getRequestedChats,
       getConnectedChats: getConnectedChats,
+      acceptRequest: acceptRequest,
     );
   }
 }

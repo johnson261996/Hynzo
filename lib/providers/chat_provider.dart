@@ -21,6 +21,14 @@ class ChatProvider extends ChangeNotifier {
     return response;
   }
 
+  Future<Map<String, dynamic>> acceptRequest(
+      String friendId, String chatId) async {
+    final Map<String, dynamic> response =
+        await ChatService().acceptRequest(friendId, chatId);
+    notifyListeners();
+    return response;
+  }
+
   Future<Map<String, dynamic>> setUserStatus(bool status) async {
     final response = await ChatService().setUserStatus(status: status);
     return response;

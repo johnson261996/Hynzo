@@ -9,7 +9,7 @@ class MessageEncrypt {
   late var encryptor;
 
   MessageEncrypt.initialize(this.key) {
-    final subKey = enc.Key.fromUtf8(key.substring(0, 32));
+    final subKey = enc.Key.fromUtf8(key + key);
     iv = enc.IV.fromLength(16);
     encryptor = enc.Encrypter(enc.AES(subKey));
   }
