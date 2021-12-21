@@ -1,4 +1,7 @@
+///Profile page widget
+
 import 'package:flutter/material.dart';
+import 'package:hynzo/resources/images.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
@@ -57,7 +60,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       Navigator.pop(context);
                     },
                     child: Image.asset(
-                      'assets/images/top_back.png',
+                      Images.TOP_BACK,
                       width: 15,
                       height: 15,
                       fit: BoxFit.contain,
@@ -141,13 +144,13 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Column(children: [
                               Text(
-                                '25',
+                                Strings.FRIENDS_NUMBER,
                                 style: Theme.of(context)
                                     .textTheme
                                     .caption!
                                     .copyWith(color: AppColors.white),
                               ),
-                              Text('Friends',
+                              Text(Strings.FRIENDS,
                                   style: Theme.of(context)
                                       .textTheme
                                       .caption!
@@ -160,13 +163,13 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 left: 30.0, right: 30, top: 8),
                             child: Column(children: [
                               Text(
-                                '230',
+                                Strings.FOLLLOWERS_NUMBER,
                                 style: Theme.of(context)
                                     .textTheme
                                     .caption!
                                     .copyWith(color: AppColors.white),
                               ),
-                              Text('Followers',
+                              Text(Strings.FOLLOWERS,
                                   style: Theme.of(context)
                                       .textTheme
                                       .caption!
@@ -178,13 +181,13 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Column(children: [
                               Text(
-                                '250',
+                                Strings.FOLLOWING_NUMBER,
                                 style: Theme.of(context)
                                     .textTheme
                                     .caption!
                                     .copyWith(color: AppColors.white),
                               ),
-                              Text('Following',
+                              Text(Strings.FOLLOWING,
                                   style: Theme.of(context)
                                       .textTheme
                                       .caption!
@@ -217,7 +220,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/Profile.png',
+                          Images.MY_ACCOUNT,
                           width: 25,
                           height: 25,
                         ),
@@ -225,7 +228,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           width: 20.0,
                         ),
                         Text(
-                          'My Account',
+                         Strings.MY_ACCOUNT,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -260,7 +263,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/Group.png',
+                         Images.MY_CHAT,
                           width: 25,
                           height: 25,
                         ),
@@ -268,7 +271,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           width: 20.0,
                         ),
                         Text(
-                          'My Chat ',
+                         Strings.MY_CHAT,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -303,7 +306,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/Group 12559.png',
+                          Images.ACTIVITIES,
                           width: 25,
                           height: 25,
                         ),
@@ -311,7 +314,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           width: 20.0,
                         ),
                         Text(
-                          'Activities',
+                         Strings.ACTIVITIES,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -346,7 +349,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/Notification.png',
+                          Images.HELP_SUPPORT,
                           width: 25,
                           height: 25,
                         ),
@@ -354,7 +357,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           width: 20.0,
                         ),
                         Text(
-                          'Help & Support',
+                         Strings.HELP_SUPPORT,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -389,7 +392,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/Vector.png',
+                          Images.REFER_FRIEND,
                           width: 25,
                           height: 25,
                         ),
@@ -397,7 +400,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           width: 20.0,
                         ),
                         Text(
-                          'Refer a friend',
+                          Strings.REFER_FRIEND,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -435,7 +438,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/Logout.png',
+                          Images.LOG_OUT,
                           width: 25,
                           height: 25,
                         ),
@@ -443,7 +446,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           width: 20.0,
                         ),
                         Text(
-                          'Log out',
+                          Strings.LOG_OUT,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!

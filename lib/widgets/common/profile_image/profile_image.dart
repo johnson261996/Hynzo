@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hynzo/resources/images.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -8,9 +9,7 @@ class ProfileImageWidget extends StatefulWidget {
   final Color backgroundcolor;
   final Color valueColor;
 
-  //final Function UploadImage;
 
-  //const ProfileImageWidget({Key? key,required this.imageUrl,required this.level,required this.UploadImage}) : super(key: key);
   const ProfileImageWidget(
       {Key? key,
       required this.imageUrl,
@@ -27,7 +26,6 @@ class ProfileImageWidget extends StatefulWidget {
 class _ProfileImageWidgetState extends State<ProfileImageWidget> {
   XFile? image;
 
-  // final int level=1;
 
   UploadimgFromGallery() async {
     XFile? image = await ImagePicker()
@@ -38,8 +36,6 @@ class _ProfileImageWidgetState extends State<ProfileImageWidget> {
       this.image = image;
     });
 
-    /*HomeService h = HomeService();
-    h.postTodProfilePicService(this.image);*/
   }
 
   @override
@@ -62,22 +58,13 @@ class _ProfileImageWidgetState extends State<ProfileImageWidget> {
           bottom: 1.0,
           right: 1.0,
           left: 1.0,
-          /*child:widget.imageUrl == '' ? IconButton(onPressed: (){
-              UploadimgFromGallery();
-              Navigator.of(context).pop();
-
-          }, icon: Icon(Icons.upload_file_rounded)) :*/
           child: CircleAvatar(
             radius: 30.0,
             // ignore: unnecessary_null_comparison
             child: widget.imageUrl == '' ? Image.asset(
-              'assets/images/profile_pic.png',
+             Images.PROFILE_PIC,
               fit: BoxFit.contain,
             ) : Image.network(widget.imageUrl),
-            // Image.asset(
-            //   'assets/images/profile_pic.png',
-            //   fit: BoxFit.contain,
-            // ),
             backgroundColor: AppColors.white,
           ),
         ),
@@ -90,7 +77,7 @@ class _ProfileImageWidgetState extends State<ProfileImageWidget> {
               width: 12.0,
               height: 12.0,
               child: Image.asset(
-                'assets/images/profile_star.png',
+               Images.PROFILE_STAR,
                 fit: BoxFit.cover,
               ),
             ),
