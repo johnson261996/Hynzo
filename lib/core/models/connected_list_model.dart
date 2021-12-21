@@ -25,7 +25,7 @@ class ConnectedListModel {
     id: json["id"],
     lastMessage: LastMessage.fromJson(json["last_message"]),
     channelName: json["channel_name"],
-    avatar: json["avatar"],
+    avatar: json["avatar"] ?? '',
     userBasicInfo: UserBasicInfo.fromJson(json["user_basic_info"]),
     unreadMessages: json["unread_messages"],
     isGroup: json["is_group"],
@@ -51,12 +51,17 @@ class LastMessage {
   DateTime timestamp;
 
   factory LastMessage.fromJson(Map<String, dynamic> json) => LastMessage(
-    id: json["id"] ?? '',
+    id: int.parse(
+            json["id"].toString() == '' ? '0' : json["id"].toString()),
     author: json["author"] == null ? Author(username: '', id: 0) : Author.fromJson(json["author"]),
-    userId: json["user_id"] ?? '',
+    userId: int.parse(json["user_id"].toString() == ''
+            ? '0'
+            : json["user_id"].toString()),
     content: json["content"] ?? '',
     typeOfContent: json["type_of_content"] ?? 'text',
-    timestamp: json["timestamp"] == null ? DateTime.now() : DateTime.parse(json["timestamp"]),
+    timestamp: json["timestamp"] == ''
+            ? DateTime.now()
+            : DateTime.parse(json["timestamp"]),
   );
 
 }
@@ -71,8 +76,9 @@ class Author {
   int id;
 
   factory Author.fromJson(Map<String, dynamic> json) => Author(
-    username: json["username"],
-    id: json["id"],
+    username: json["username"] ?? '',
+        id: int.parse(
+            json["id"].toString() == '' ? '0' : json["id"].toString()),
   );
 
   Map<String, dynamic> toJson() => {

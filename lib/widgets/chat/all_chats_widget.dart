@@ -37,10 +37,10 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
   }
 
   getAllChats(int limit, int offset) async {
-    final ChatListModel response = await widget.getChatList!(limit, offset);
+    final List<ChatListModel> response =
+        await widget.getChatList!(limit, offset);
     allChats.clear();
-    response.results.forEach((element) {
-      log(element.lastMessage.typeOfContent);
+    response.forEach((element) {
       allChats.add(
         ChatModel(
           senderId: element.userBasicInfo.id,
@@ -54,9 +54,11 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
         ),
       );
     });
-    setState(() {
-      allChats = allChats;
-      loading = false;
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      setState(() {
+        allChats = allChats;
+        loading = false;
+      });
     });
   }
 
@@ -69,7 +71,9 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
       child: allChats.isEmpty || loading
           ? Center(
               child: loading
-                  ? const CircularProgressIndicator()
+                  ? CircularProgressIndicator(
+                      color: AppColors.blueDark,
+                    )
                   : const Text('No chats available'),
             )
           : ListView.builder(

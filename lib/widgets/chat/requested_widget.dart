@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/requested_chats_model.dart';
+import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
 
 class RequestedWidget extends StatefulWidget {
@@ -78,14 +79,14 @@ class _RequestedWidgetState extends State<RequestedWidget> {
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         primary: AppColors.blueDark,
-                        minimumSize: const Size(90.0, 40.0),
+                        minimumSize: const Size(70.0, 30.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           side: BorderSide(color: AppColors.blueDark),
                         ),
                       ),
                       child: Text(
-                        "Accept",
+                        Strings.ACCEPT,
                         style: Theme.of(context).textTheme.button!.copyWith(
                             color: AppColors.white,
                             fontWeight: FontWeight.w500),

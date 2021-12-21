@@ -100,7 +100,7 @@ class _SuggestedWidgetState extends State<SuggestedWidget> {
                           },
                           style: ElevatedButton.styleFrom(
                             primary: AppColors.blueDark,
-                            minimumSize: const Size(90.0, 40.0),
+                            minimumSize: const Size(70.0, 30.0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),

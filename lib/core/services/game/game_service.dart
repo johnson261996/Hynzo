@@ -18,7 +18,6 @@ class GameService {
     if (response.statusCode != 200) {
       throw "Something went wrong";
     }
-    log(response.body);
     return SuggestedGamesResponseModel.fromJson(
       jsonDecode(response.body),
       response.statusCode,

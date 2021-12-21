@@ -11,26 +11,22 @@ import 'package:hynzo/utils/localStorage.dart';
 import 'package:path/path.dart' as Path;
 
 class ChatService {
-  Future<ChatListModel> getAllChats({int? limit, int? offset}) async {
+  Future<List<ChatListModel>> getAllChats({int? limit, int? offset}) async {
     String url = 'api/v1/chats/?limit=$limit&offset=$offset';
     var response = await ServiceBase.get(url: url, headers: {
       "Content-Type": "application/json",
       "Authorization": 'Bearer ${await getToken()}'
     });
-    if (jsonDecode(response.body)['message'] == 'chat_list is empty') {
-      return ChatListModel(results: []);
-    }
-    return ChatListModel.fromJson(jsonDecode(response.body));
+    return chatListModelFromJson(response.body);
   }
 
   Future<List<ConnectedListModel>> getConnectedChats(
       {int? limit, int? offset}) async {
-    String url = 'api/v1/chats/?limit=$limit&offset=$offset';
+    String url = 'api/v1/chats/connected/users';
     var response = await ServiceBase.get(url: url, headers: {
       "Content-Type": "application/json",
       "Authorization": 'Bearer ${await getToken()}'
     });
-    log(response.body);
     return connectedListModelFromJson(response.body);
   }
 
@@ -72,7 +68,6 @@ class ChatService {
       "Content-Type": "application/json",
       "Authorization": 'Bearer ${await getToken()}'
     });
-    log(response.body);
     if (jsonDecode(response.body)['response'] == '') {
       return RequestedChatsModel(response: []);
     }

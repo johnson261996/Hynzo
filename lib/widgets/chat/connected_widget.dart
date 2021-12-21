@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hynzo/core/models/connected_list_model.dart';
+import 'package:hynzo/core/models/create_channel_model.dart';
+import 'package:hynzo/screens/chat/chat_message_screen.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/localstorage.dart';
 
 class ConnectedWidget extends StatefulWidget {
   final Function getConnectedChats;
-  const ConnectedWidget({Key? key, required this.getConnectedChats})
+  final Function(List<String>, bool)? createChannel;
+  const ConnectedWidget(
+      {Key? key, required this.getConnectedChats, required this.createChannel})
       : super(key: key);
 
   @override
@@ -73,19 +79,36 @@ class _ConnectedWidgetState extends State<ConnectedWidget> {
                             fontWeight: FontWeight.w400,
                           ),
                     ),
-                    trailing: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          primary: AppColors.blueDark,
-                          minimumSize: const Size(90.0, 40.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            side: BorderSide(color: AppColors.blueDark),
-                          ),
-                        ),
-                        child: Icon(
-                          Icons.message,
-                          color: AppColors.white,
+                    trailing: IconButton(
+                        onPressed: () async {
+                          int? uid = await LocalStorage.getUserID();
+                          EasyLoading.show(maskType: EasyLoadingMaskType.black);
+                          CreateChannelModel response =
+                              await widget.createChannel!([
+                            '$uid',
+                            '${connectedListModel[index].userBasicInfo.id}'
+                          ], false);
+                          EasyLoading.dismiss(animation: false);
+                          if (response.participants.isNotEmpty) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChatMessageScreen(
+                                  channelDetails: response,
+                                  status: connectedListModel[index]
+                                      .userBasicInfo
+                                      .isOnline,
+                                  userName:
+                                      connectedListModel[index].channelName,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        icon: Icon(
+                          Icons.message_rounded,
+                          color: AppColors.blueDark,
+                          size: 25,
                         )));
               },
               itemCount: connectedListModel.length,

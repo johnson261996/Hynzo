@@ -203,7 +203,10 @@ class _ChatWidgetState extends State<ChatWidget> with TickerProviderStateMixin {
                     getChatList: widget.getChatList,
                     createChannel: widget.createChannel,
                   ),
-                  ConnectedWidget(getConnectedChats: widget.getConnectedChats,),
+                  ConnectedWidget(
+                    getConnectedChats: widget.getConnectedChats,
+                    createChannel: widget.createChannel,
+                  ),
                   RequestedWidget(getRequestedChats: widget.getRequestedChats,),
                   SuggestedWidget(
                     getSuggestedList: widget.getSuggestedList,

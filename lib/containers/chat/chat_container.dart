@@ -20,7 +20,7 @@ class _ChatContainerState extends State<ChatContainer> {
   late ChatProvider _chatProvider;
   late SuggestionProvider _suggestionProvider;
 
-  Future<ChatListModel> getAllChats(int limit, int offset) {
+  Future<List<ChatListModel>> getAllChats(int limit, int offset) {
     final response = _chatProvider.getChatList(limit, offset);
     return response;
   }
