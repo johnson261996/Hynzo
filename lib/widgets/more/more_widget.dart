@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hynzo/resources/images.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/localstorage.dart';
-import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/common/profile_image/profile_image.dart';
 
 class MoreWidget extends StatefulWidget {
@@ -41,6 +41,7 @@ class _MoreWidgetState extends State<MoreWidget> {
   void initState() {
     super.initState();
     getName();
+    getProfilePic();
   }
 
   @override
@@ -96,7 +97,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                   ProfileImageWidget(
                     backgroundcolor: AppColors.offyellow,
                     valueColor: AppColors.darkyellow,
-                    imageUrl: '',
+                    imageUrl: url,
                     level: 1,
                   ),
                   SizedBox(
@@ -165,7 +166,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              'assets/images/news.png',
+                              Images.NEWS,
                               width: 25,
                               height: 25,
                             ),
@@ -208,7 +209,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              'assets/images/subscription.png',
+                              Images.SUBSCRIPTIONS,
                               width: 25,
                               height: 25,
                             ),
@@ -251,7 +252,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              'assets/images/edit.png',
+                              Images.EDIT,
                               width: 25,
                               height: 25,
                             ),
@@ -294,7 +295,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              'assets/images/wallet.png',
+                              Images.WALLET,
                               width: 25,
                               height: 25,
                             ),
@@ -337,7 +338,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              'assets/images/settings.png',
+                              Images.SETTINGS,
                               width: 25,
                               height: 25,
                             ),
@@ -380,7 +381,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              'assets/images/about.png',
+                              Images.ABOUT,
                               width: 25,
                               height: 25,
                             ),
@@ -423,7 +424,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              'assets/images/help.png',
+                              Images.HELP_IMAGE,
                               width: 25,
                               height: 25,
                             ),
