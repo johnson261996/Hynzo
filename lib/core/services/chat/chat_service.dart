@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:hynzo/core/models/chat_list_model.dart';
@@ -17,6 +18,7 @@ class ChatService {
       "Content-Type": "application/json",
       "Authorization": 'Bearer ${await getToken()}'
     });
+    log(response.body);
     return chatListModelFromJson(response.body);
   }
 

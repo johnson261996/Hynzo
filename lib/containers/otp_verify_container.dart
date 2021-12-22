@@ -1,10 +1,7 @@
 /// Contains service and logic related of otp verification screen.
 ///
 ///
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/core/models/interest_model.dart';
 import 'package:hynzo/providers/auth_provider.dart';
@@ -16,6 +13,7 @@ import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/auth/otp_verify_widget.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
+import 'package:provider/provider.dart';
 
 class OtpVerifyContainer extends StatefulWidget {
   const OtpVerifyContainer({Key? key}) : super(key: key);
@@ -38,7 +36,11 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
         _isLoading = true;
       });
       final LoginModel response = await _authProvider!.verifyOtp(
-          _authProvider!.userMobile, "91", _authProvider!.otpId, otp);
+          _authProvider!.userMobile,
+          _authProvider!.userName,
+          "91",
+          _authProvider!.otpId,
+          otp);
       if (response.statusCode == 200) {
         token = response.token!;
         LocalStorage.setLoginToken(token);
@@ -103,8 +105,8 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
       setState(() {
         _isLoading = true;
       });
-      final GenerateOTPModel response =
-          await _authProvider!.resendOtp(mobile, signature);
+      final GenerateOTPModel response = await _authProvider!
+          .resendOtp(mobile, _authProvider!.userName, signature);
       setState(() {
         _isLoading = false;
       });

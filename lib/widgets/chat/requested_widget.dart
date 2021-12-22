@@ -17,7 +17,7 @@ class RequestedWidget extends StatefulWidget {
 }
 
 class _RequestedWidgetState extends State<RequestedWidget> {
-  late RequestedChatsModel suggestionModel;
+  late RequestedChatsModel requestedModel = RequestedChatsModel(response: []);
   bool loading = true;
 
   @override
@@ -30,7 +30,7 @@ class _RequestedWidgetState extends State<RequestedWidget> {
     final RequestedChatsModel response = await widget.getRequestedChats();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       setState(() {
-        suggestionModel = response;
+        requestedModel = response;
         loading = false;
       });
     });
@@ -42,7 +42,7 @@ class _RequestedWidgetState extends State<RequestedWidget> {
 
     if (response['message'] == 'You accepted request successfully') {
       setState(() {
-        suggestionModel.response.removeAt(index);
+        requestedModel.response.removeAt(index);
       });
     } else {
       ToastUtil().showToast('Something went wrong!');
@@ -55,11 +55,13 @@ class _RequestedWidgetState extends State<RequestedWidget> {
     return Container(
       height: size.height,
       padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-      child: loading
+      child: requestedModel.response.isEmpty || loading
           ? Center(
-              child: CircularProgressIndicator(
-                color: AppColors.blueDark,
-              ),
+              child: loading
+                  ? CircularProgressIndicator(
+                      color: AppColors.blueDark,
+                    )
+                  : const Text('No chats available'),
             )
           : ListView.builder(
               padding: const EdgeInsets.only(
@@ -71,51 +73,51 @@ class _RequestedWidgetState extends State<RequestedWidget> {
               physics: const BouncingScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                    dense: false,
-                    visualDensity: VisualDensity.standard,
-                    leading: suggestionModel.response[index].avatar != ''
-                        ? CircleAvatar(
-                            radius: 22.5,
-                            backgroundImage: NetworkImage(
-                                suggestionModel.response[index].avatar))
-                        : Image.asset(
-                            'assets/images/user.png',
-                            fit: BoxFit.contain,
-                            width: 45,
-                            height: 45,
-                          ),
-                    title: Text(
-                      suggestionModel.response[index].channelName,
-                      style: Theme.of(context).textTheme.caption!.copyWith(
-                            color: AppColors.black,
-                            fontWeight: FontWeight.w400,
-                          ),
-                    ),
-                    trailing: ElevatedButton(
-                      onPressed: () {
-                        acceptRequest(
-                            suggestionModel.response[index].userBasicInfo.id
-                                .toString(),
-                            suggestionModel.response[index].id.toString(),
-                            index);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: AppColors.blueDark,
-                        minimumSize: const Size(70.0, 30.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          side: BorderSide(color: AppColors.blueDark),
+                  dense: false,
+                  visualDensity: VisualDensity.standard,
+                  leading: requestedModel.response[index].avatar != ''
+                      ? CircleAvatar(
+                          radius: 22.5,
+                          backgroundImage: NetworkImage(
+                              requestedModel.response[index].avatar))
+                      : Image.asset(
+                          'assets/images/user.png',
+                          fit: BoxFit.contain,
+                          width: 45,
+                          height: 45,
                         ),
+                  title: Text(
+                    requestedModel.response[index].channelName,
+                    style: Theme.of(context).textTheme.caption!.copyWith(
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
+                  ),
+                  trailing: ElevatedButton(
+                    onPressed: () {
+                      acceptRequest(
+                          requestedModel.response[index].userBasicInfo.id
+                              .toString(),
+                          requestedModel.response[index].id.toString(),
+                          index);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColors.blueDark,
+                      minimumSize: const Size(70.0, 30.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: BorderSide(color: AppColors.blueDark),
                       ),
-                      child: Text(
-                        Strings.ACCEPT,
-                        style: Theme.of(context).textTheme.button!.copyWith(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ));
+                    ),
+                    child: Text(
+                      Strings.ACCEPT,
+                      style: Theme.of(context).textTheme.button!.copyWith(
+                          color: AppColors.white, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                );
               },
-              itemCount: suggestionModel.response.length,
+              itemCount: requestedModel.response.length,
             ),
     );
   }

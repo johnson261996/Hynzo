@@ -71,6 +71,7 @@ class _SuggestionContainerState extends State<SuggestionContainer> {
       });
       await LocalStorage.getUserID().then((value) => userId = value.toString());
       userIds.add(userId);
+      userIds.add(suggestUserId);
       SuggestUserAddResponseModel suggestionModel =
           await _suggestionProvider!.addSuggestUser(userIds);
       if (suggestionModel.statusCode == 201) {

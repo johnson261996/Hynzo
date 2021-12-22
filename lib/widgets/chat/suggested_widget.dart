@@ -19,7 +19,7 @@ class SuggestedWidget extends StatefulWidget {
 }
 
 class _SuggestedWidgetState extends State<SuggestedWidget> {
-  late SuggestionModel suggestionModel;
+  late SuggestionModel suggestionModel = SuggestionModel(resultsList: []);
   bool loading = true;
 
   @override
@@ -44,11 +44,13 @@ class _SuggestedWidgetState extends State<SuggestedWidget> {
     return Container(
       height: size.height,
       padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-      child: loading
+      child: suggestionModel.resultsList.isEmpty || loading
           ? Center(
-              child: CircularProgressIndicator(
-                color: AppColors.blueDark,
-              ),
+              child: loading
+                  ? CircularProgressIndicator(
+                      color: AppColors.blueDark,
+                    )
+                  : const Text('No chats available'),
             )
           : ListView.builder(
               padding: const EdgeInsets.only(

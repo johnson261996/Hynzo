@@ -42,8 +42,11 @@ class Strings {
   static const ACCOUNT = "Don't have an account ?";
   static const LOGIN = 'Login';
   static const LOGIN_SUBTITLE = 'Let\'s get started.';
-  static const LOGIN_TITLE = 'Hi  there!';
+  static const LOGIN_TITLE = 'Welcome back!';
+  static const SIGNUP_TITLE = 'Hi there!';
+  static const SIGNUP_SUBTITLE = 'Let\'s get started.';
   static const LOGIN_BUTTON = 'Continue >';
+  static const SIGNUP_BUTTON = 'Create new account';
   static const LOGIN_TERMS =
       'By continuing, you accept the Terms and Condition';
   static const LOGIN_MOBILE_NOT_REGISTRED =
@@ -169,7 +172,7 @@ class Strings {
   static const PROFILE_HEADING = 'Profile';
   static const LOGOUT = 'Log Out';
   static const REFER_FRIEND = 'Refer a friend';
-  static const ACTIVITIES ='Activities';
+  static const ACTIVITIES = 'Activities';
   static const MY_CHAT = 'My Chat';
   static const MY_ACCOUNT = 'My Account';
   static const FOLLOWING = 'Following';
