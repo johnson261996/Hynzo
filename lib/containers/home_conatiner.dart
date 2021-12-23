@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/providers/game_provider.dart';
+import 'package:hynzo/providers/home_provider.dart';
 import 'package:hynzo/providers/news_provider.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/toast_util.dart';
@@ -30,6 +31,7 @@ class _HomeContainerState extends State<HomeContainer> {
   List<NewsContentDataModel> allNews = [];
   List<GamePlayModel> allSuggestedGames = [];
   bool _isLoading = false;
+  late HomeProvider _homeProvider;
 
   @override
   void initState() {
@@ -107,8 +109,14 @@ class _HomeContainerState extends State<HomeContainer> {
     }
   }
 
+  Future<Map<String,dynamic>> setFcmToken(String token) async{
+    final Map<String,dynamic> response = await _homeProvider.setFcmToken(token);
+    return response;
+  }
+
   @override
   Widget build(BuildContext context) {
+    _homeProvider = Provider.of<HomeProvider>(context);
     return LoadingOverlay(
       isLoading: _isLoading,
       color: AppColors.gray,
@@ -116,6 +124,7 @@ class _HomeContainerState extends State<HomeContainer> {
         onTapped: widget._onTapped,
         allContent: allNews,
         allSuggestedGames: allSuggestedGames,
+        setFcmToken: setFcmToken,
       ),
     );
   }

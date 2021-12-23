@@ -22,11 +22,13 @@ class HomeWidget extends StatefulWidget {
   final Function onTapped;
   final List<NewsContentDataModel>? allContent;
   final List<GamePlayModel>? allSuggestedGames;
+  final Function(String)? setFcmToken;
 
   const HomeWidget(
       {required this.onTapped,
       this.allContent,
       this.allSuggestedGames,
+      this.setFcmToken,
       Key? key})
       : super(key: key);
 
@@ -45,7 +47,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    setFcmToken();
     super.initState();
 
     allGamesCategory.add(
@@ -112,6 +114,11 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   getProfilePic() async {
     url = (await LocalStorage.getProfilePic())!;
+  }
+
+  setFcmToken() async {
+    String? token = await LocalStorage.getFcmToken();
+    widget.setFcmToken!(token!);
   }
 
   String getDate(String time) {

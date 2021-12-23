@@ -50,7 +50,9 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
           unreadCount: element.unreadMessages,
           status: element.userBasicInfo.isOnline ? 'active' : 'inacvtive',
           isRead: false,
-          content: _encrypt.decrypt(element.lastMessage.content),
+          content: element.lastMessage.typeOfContent == 'image'
+              ? 'Image'
+              : _encrypt.decrypt(element.lastMessage.content),
           dateTime: element.lastMessage.timestamp,
         ),
       );
