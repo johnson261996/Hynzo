@@ -92,6 +92,10 @@ class Strings {
   //Home
   static const HOME_SELECT = 'Select School';
 
+  //Edit Home
+  static const Edit_HOME = 'Edit home page';
+  static const NEW_MESSAGES = 'New messages';
+
   static const TITLE = 'Hello school owner,';
   static const DESCRIPTION =
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s';

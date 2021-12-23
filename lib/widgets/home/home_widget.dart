@@ -13,9 +13,9 @@ import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/common/search_bar/search_bar.dart';
 import 'package:intl/intl.dart';
 
-import 'common/no_data/no_data_error.dart';
-import 'common/profile_image/profile_image.dart';
-import 'common/view/event_view_widget.dart';
+import '../common/no_data/no_data_error.dart';
+import '../common/profile_image/profile_image.dart';
+import '../common/view/event_view_widget.dart';
 
 class HomeWidget extends StatefulWidget {
   final Function onTapped;

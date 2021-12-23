@@ -230,7 +230,9 @@ class _MoreWidgetState extends State<MoreWidget> {
                       height: 2.0,
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, Routes.edit_home);
+                      },
                       child: Container(
                         padding: const EdgeInsets.only(
                           left: 15.0,

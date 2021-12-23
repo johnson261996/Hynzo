@@ -9,7 +9,7 @@ import 'package:hynzo/providers/news_provider.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
-import 'package:hynzo/widgets/home_widget.dart';
+import '../widgets/home/home_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
