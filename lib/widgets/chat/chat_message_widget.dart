@@ -45,6 +45,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
   bool isInitLoaded = false;
   bool loading = true;
   bool uploading = false;
+  bool stickerOpen = false;
   late WebSocketChannel channel;
   int? uid;
   String? token;
@@ -84,6 +85,18 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
       uploading = true;
     });
     UploadResponse response = await HomeService().uploadPicService(pickedFile);
+    setState(() {
+      uploading = false;
+    });
+    return response;
+  }
+
+  Future<UploadResponse> uploadSticker(String filePath) async {
+    setState(() {
+      uploading = true;
+    });
+    UploadResponse response =
+        await HomeService().uploadStickerService(filePath);
     setState(() {
       uploading = false;
     });
@@ -189,22 +202,6 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
     if (result != null) {
       UploadResponse uploadJob = await uploadPhoto(result);
       _sendImageToChannel(uploadJob.content, uploadJob.id);
-
-      // final bytes = await result.readAsBytes();
-      // final image = await decodeImageFromList(bytes);
-
-      // final message = types.ImageMessage(
-      //   author: _user,
-      //   createdAt: DateTime.now().millisecondsSinceEpoch,
-      //   height: image.height.toDouble(),
-      //   id: const Uuid().v4(),
-      //   name: result.name,
-      //   size: bytes.length,
-      //   uri: result.path,
-      //   width: image.width.toDouble(),
-      // );
-
-      // _addMessage(message);
     }
   }
 
@@ -228,7 +225,10 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
     });
   }
 
-  void _handEmojiPressed() {}
+  void _handleOnStickerSend(String sticker) async {
+    UploadResponse uploadJob = await uploadSticker(sticker);
+    _sendImageToChannel(uploadJob.content, uploadJob.id);
+  }
 
   void _sendImageToChannel(String imgUrl, int mId) {
     String encText = '';
@@ -432,9 +432,22 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                   customBottomWidget: ChatBottomWidget(
                     onAttachPressed: _handleAtachmentPressed,
                     onSendPressed: _handleSendPressed,
-                    onEmojiPressed: _handEmojiPressed,
+                    onStickerSend: _handleOnStickerSend,
+                    onEmojiPressed: () {
+                      setState(() {
+                        stickerOpen = !stickerOpen;
+                      });
+                    },
                     isLoading: uploading,
+                    stickerOpen: stickerOpen,
                   ),
+                  imageMessageBuilder: (p0, {required messageWidth}) {
+                    return Image.network(
+                      p0.uri,
+                      width: MediaQuery.of(context).size.width / 2,
+                      fit: BoxFit.fitWidth,
+                    );
+                  },
                   hideBackgroundOnEmojiMessages: true,
                   scrollPhysics: const BouncingScrollPhysics(),
                   theme: CustomTheme().theme,
