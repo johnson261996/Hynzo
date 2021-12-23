@@ -25,6 +25,16 @@ class Images {
   static const String TOP_BACK = 'assets/images/top_back.png';
   static const String PROFILE_PIC = 'assets/images/profile_pic.png';
   static const String PROFILE_STAR = 'assets/images/profile_star.png';
+  static const String FLAG = 'assets/images/flag.png';
+  static const String CALENDAR = 'assets/images/calendar.png';
+  static const String CAMERA = 'assets/images/camera.png';
+  static const String NEWS = 'assets/images/news.png';
+  static const String SUBSCRIPTIONS = 'assets/images/subscription.png';
+  static const String EDIT = 'assets/images/edit.png';
+  static const String WALLET = 'assets/images/wallet.png';
+  static const String SETTINGS = 'assets/images/settings.png';
+  static const String ABOUT = 'assets/images/about.png';
+  static const String HELP_IMAGE = 'assets/images/help.png';
 
   static const List CAROUSELIMAGES = ['assets/images/home_rectangle.png','assets/images/home_rectangle.png','assets/images/home_rectangle.png'];
 

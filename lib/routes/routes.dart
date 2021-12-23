@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/layout/base.dart';
+import 'package:hynzo/screens/edit-profile/edit_profile.dart';
 import 'package:hynzo/screens/interest/interest.dart';
 import 'package:hynzo/screens/intro/intro.dart';
 import 'package:hynzo/screens/location/location.dart';
@@ -45,6 +46,7 @@ class Routes {
   static const news="./news";
   static const webview="./webview";
   static const profile = '/profile';
+  static const edit_profile = '/edit-profile';
 
   /// Routing Table needed for the App.
   static Map<String, WidgetBuilder> get buildRoutes {
@@ -75,6 +77,8 @@ class Routes {
           BaseLayout(page: WebViewScreen(), isAppBar: false),
       profile: (BuildContext context) =>
           BaseLayout(page: ProfileScreen(), isAppBar: false),
+      edit_profile: (BuildContext context) =>
+          BaseLayout(page: EditProfile(), isAppBar: false),
     };
   }
 
