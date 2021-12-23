@@ -42,7 +42,6 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
       if (response.statusCode == 200) {
         token = response.token!;
         LocalStorage.setLoginToken(token);
-        LocalStorage.clearMobileNumber();
         LocalStorage.setUserID(response.user!.id!);
         LocalStorage.setUserName(response.user!.username!);
         LocalStorage.setUserFullName(response.user!.fullName!);
