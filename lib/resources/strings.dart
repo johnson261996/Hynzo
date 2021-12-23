@@ -182,6 +182,19 @@ class Strings {
   static const FRIENDS = 'Friends';
   static const FRIENDS_NUMBER = '25';
 
+  //Edit-profile
+  static const BIO = 'Bio';
+  static const UPDATE_PROFILE = 'Update Profile';
+  static const FIRST_NAME = 'What’s your first name?';
+  static const LAST_NAME = 'And your last name?';
+  static const MOBILE = 'Phone number?';
+  static const GENDER = 'Select your gender';
+  static const DOB = 'What is your date of birth?';
+  static const LOCATION = 'Banglore';
+  static const GENDER_LIST = ['Male', 'Female', 'Others'];
+  static const LOCATION_LIST = ['Mumbai', 'Banglore', 'Delhi'];
+
+
   // it will return the dynamic string
   static String demo(amount) {
     return 'Total amount: $amount';

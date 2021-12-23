@@ -119,7 +119,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                       color: AppColors.white,
                                       fontWeight: FontWeight.w700)),
                          IconButton(
-                                onPressed: null,
+                                onPressed:(){
+                                  Navigator.pushNamed(context, Routes.edit_profile);
+                                },
                                 icon: Icon(
                                   Icons.edit_outlined,
                                   color: AppColors.white,
