@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hynzo/resources/images.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
@@ -41,7 +40,6 @@ class _MoreWidgetState extends State<MoreWidget> {
   void initState() {
     super.initState();
     getName();
-    getProfilePic();
   }
 
   @override
@@ -87,61 +85,54 @@ class _MoreWidgetState extends State<MoreWidget> {
             height: MediaQuery.of(context).size.height * 0.01,
           ),
           Padding(
-            padding: const EdgeInsets.only(
-              left: 15.0,
-              right: 15.0,
-            ),
-            child: Expanded(
-              child: Row(
-                children: [
-                  ProfileImageWidget(
-                    backgroundcolor: AppColors.offyellow,
-                    valueColor: AppColors.darkyellow,
-                    imageUrl: url,
-                    level: 1,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.03,
-                  ),
-                  Container(
-                    width: 200,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          name,
-                          style: Theme.of(context).textTheme.headline5!.apply(
-                                color: AppColors.greyBlack,
-                              ),
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            child: Row(
+              children: [
+                ProfileImageWidget(
+                  backgroundcolor: AppColors.offyellow,
+                  valueColor: AppColors.darkyellow,
+                  imageUrl: '',
+                  level: 1,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.03,
+                ),
+                Container(
+                  width: 200,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: Theme.of(context).textTheme.headline5!.apply(
+                              color: AppColors.greyBlack,
+                            ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.profile);
+                        },
+                        child: Row(
+                          children: [
+                            Text(
+                              Strings.VIEW_PROFILE,
+                              style:
+                                  Theme.of(context).textTheme.caption!.copyWith(
+                                        fontSize: 12,
+                                        color: AppColors.greyBlack,
+                                      ),
+                            ),
+                            const Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              size: 10,
+                            ),
+                          ],
                         ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, Routes.profile);
-                          },
-                          child: Row(
-                            children: [
-                              Text(
-                                Strings.VIEW_PROFILE,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .caption!
-                                    .copyWith(
-                                      fontSize: 12,
-                                      color: AppColors.greyBlack,
-                                    ),
-                              ),
-                              const Icon(
-                                Icons.arrow_forward_ios_outlined,
-                                size: 10,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           SizedBox(
@@ -166,7 +157,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              Images.NEWS,
+                              'assets/images/news.png',
                               width: 25,
                               height: 25,
                             ),
@@ -209,7 +200,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              Images.SUBSCRIPTIONS,
+                              'assets/images/subscription.png',
                               width: 25,
                               height: 25,
                             ),
@@ -252,7 +243,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              Images.EDIT,
+                              'assets/images/edit.png',
                               width: 25,
                               height: 25,
                             ),
@@ -295,7 +286,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              Images.WALLET,
+                              'assets/images/wallet.png',
                               width: 25,
                               height: 25,
                             ),
@@ -327,7 +318,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                       height: 2.0,
                     ),
                     InkWell(
-                      onTap:null,
+                      onTap: null,
                       child: Container(
                         padding: const EdgeInsets.only(
                           left: 15.0,
@@ -338,7 +329,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              Images.SETTINGS,
+                              'assets/images/settings.png',
                               width: 25,
                               height: 25,
                             ),
@@ -381,7 +372,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              Images.ABOUT,
+                              'assets/images/about.png',
                               width: 25,
                               height: 25,
                             ),
@@ -424,7 +415,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              Images.HELP_IMAGE,
+                              'assets/images/help.png',
                               width: 25,
                               height: 25,
                             ),

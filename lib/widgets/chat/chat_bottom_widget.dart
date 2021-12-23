@@ -6,11 +6,13 @@ class ChatBottomWidget extends StatefulWidget {
   Function(types.PartialText) onSendPressed;
   Function() onAttachPressed;
   Function() onEmojiPressed;
+  bool isLoading;
   ChatBottomWidget(
       {Key? key,
       required this.onSendPressed,
       required this.onAttachPressed,
-      required this.onEmojiPressed})
+      required this.onEmojiPressed,
+      required this.isLoading})
       : super(key: key);
 
   @override
@@ -71,18 +73,28 @@ class _ChatBottomWidgetState extends State<ChatBottomWidget> {
                       height: 25,
                       width: 25,
                     )),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    widget.onSendPressed(
-                        types.PartialText(text: controller.text));
-                    controller.clear();
-                  },
-                  icon: const Icon(
-                    Icons.send,
-                    color: Colors.indigo,
-                    size: 25,
-                  ),
-                ),
+                suffixIcon: widget.isLoading
+                    ? SizedBox(
+                        height: 15,
+                        width: 15,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.blueDark,
+                          ),
+                        ),
+                      )
+                    : IconButton(
+                        onPressed: () {
+                          widget.onSendPressed(
+                              types.PartialText(text: controller.text));
+                          controller.clear();
+                        },
+                        icon: const Icon(
+                          Icons.send,
+                          color: Colors.indigo,
+                          size: 25,
+                        ),
+                      ),
                 isDense: true,
                 fillColor: Colors.grey[200],
               ),

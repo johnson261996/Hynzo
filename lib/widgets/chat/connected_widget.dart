@@ -18,7 +18,7 @@ class ConnectedWidget extends StatefulWidget {
 }
 
 class _ConnectedWidgetState extends State<ConnectedWidget> {
-  late List<ConnectedListModel> connectedListModel;
+  late List<ConnectedListModel> connectedListModel = [];
   bool loading = true;
 
   @override
@@ -30,10 +30,12 @@ class _ConnectedWidgetState extends State<ConnectedWidget> {
   getRequestedList() async {
     final List<ConnectedListModel> response = await widget.getConnectedChats();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      setState(() {
-        connectedListModel = response;
-        loading = false;
-      });
+      if (mounted) {
+        setState(() {
+          connectedListModel = response;
+          loading = false;
+        });
+      }
     });
   }
 
@@ -43,11 +45,13 @@ class _ConnectedWidgetState extends State<ConnectedWidget> {
     return Container(
       height: size.height,
       padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-      child: loading
+      child: connectedListModel.isEmpty || loading
           ? Center(
-              child: CircularProgressIndicator(
-                color: AppColors.blueDark,
-              ),
+              child: loading
+                  ? CircularProgressIndicator(
+                      color: AppColors.blueDark,
+                    )
+                  : const Text('No chats available'),
             )
           : ListView.builder(
               padding: const EdgeInsets.only(

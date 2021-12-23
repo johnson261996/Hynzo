@@ -16,7 +16,8 @@ class ChatWidget extends StatefulWidget {
       required this.createChannel,
       required this.getSuggestedList,
       required this.getRequestedChats,
-      required this.getConnectedChats})
+      required this.getConnectedChats,
+      required this.acceptRequest})
       : super(key: key);
 
   final Function(int, int)? getChatList;
@@ -24,6 +25,7 @@ class ChatWidget extends StatefulWidget {
   final Function? getSuggestedList;
   final Function getRequestedChats;
   final Function getConnectedChats;
+  final Function(String, String) acceptRequest;
 
   @override
   State<ChatWidget> createState() => _ChatWidgetState();
@@ -207,8 +209,12 @@ class _ChatWidgetState extends State<ChatWidget> with TickerProviderStateMixin {
                     getConnectedChats: widget.getConnectedChats,
                     createChannel: widget.createChannel,
                   ),
-                  RequestedWidget(getRequestedChats: widget.getRequestedChats,),
+                  RequestedWidget(
+                    acceptRequest: widget.acceptRequest,
+                    getRequestedChats: widget.getRequestedChats,
+                  ),
                   SuggestedWidget(
+                    addUser: widget.createChannel,
                     getSuggestedList: widget.getSuggestedList,
                   ),
                 ],
