@@ -3,26 +3,26 @@ import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/core/models/tab_header_model.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/widgets/news/all_news_widget.dart';
-import 'package:hynzo/widgets/news/business_news_widget.dart';
-import 'package:hynzo/widgets/news/entartainment_news_widget.dart';
-import 'package:hynzo/widgets/news/environment_news_widget.dart';
-import 'package:hynzo/widgets/news/food_news_widget.dart';
-import 'package:hynzo/widgets/news/health_news_widget.dart';
-import 'package:hynzo/widgets/news/politics_news_widget.dart';
-import 'package:hynzo/widgets/news/science_news_widget.dart';
+// import 'package:hynzo/widgets/news/business_news_widget.dart';
+// import 'package:hynzo/widgets/news/entartainment_news_widget.dart';
+// import 'package:hynzo/widgets/news/environment_news_widget.dart';
+// import 'package:hynzo/widgets/news/food_news_widget.dart';
+// import 'package:hynzo/widgets/news/health_news_widget.dart';
+// import 'package:hynzo/widgets/news/politics_news_widget.dart';
+// import 'package:hynzo/widgets/news/science_news_widget.dart';
 import 'package:hynzo/widgets/news/sports_news_widget.dart';
 import 'package:hynzo/widgets/news/technology_news_widget.dart';
 import 'package:hynzo/widgets/news/top_news_widget.dart';
 import 'package:hynzo/widgets/news/world_news_widget.dart';
 
 class NewsTabView extends StatefulWidget {
-  final List<NewsContentDataModel>? allContent;
-  final List<NewsDataModel>? allcategoryNews;
+  final List<Article>? allContent;
+  // final List<NewsDataModel>? allcategoryNews;
 
   NewsTabView({
     Key? key,
     this.allContent,
-    this.allcategoryNews,
+    // this.allcategoryNews,
   }) : super(key: key);
 
   @override
@@ -32,17 +32,17 @@ class NewsTabView extends StatefulWidget {
 class _NewsTabViewState extends State<NewsTabView>
     with TickerProviderStateMixin {
   List<TabHeaderModel> allTabHeader = [];
-  List<NewsContentDataModel> allBusinessNews = [];
-  List<NewsContentDataModel> allEntertainmentNews = [];
-  List<NewsContentDataModel> allEnvNews = [];
-  List<NewsContentDataModel> allFoodNews = [];
-  List<NewsContentDataModel> allHealthNews = [];
-  List<NewsContentDataModel> allPoliticsNews = [];
-  List<NewsContentDataModel> allScienceNews = [];
-  List<NewsContentDataModel> allSportsNews = [];
-  List<NewsContentDataModel> allTechnologyNews = [];
-  List<NewsContentDataModel> allTopNews = [];
-  List<NewsContentDataModel> allWorldNews = [];
+  List<Article> allBusinessNews = [];
+  List<Article> allEntertainmentNews = [];
+  List<Article> allEnvNews = [];
+  List<Article> allFoodNews = [];
+  List<Article> allHealthNews = [];
+  List<Article> allPoliticsNews = [];
+  List<Article> allScienceNews = [];
+  List<Article> allSportsNews = [];
+  List<Article> allTechnologyNews = [];
+  List<Article> allTopNews = [];
+  List<Article> allWorldNews = [];
   int selectedIndexValue = 0;
   late TabController tabController;
   late PageController _pageController;
@@ -129,42 +129,42 @@ class _NewsTabViewState extends State<NewsTabView>
   }
 
   void getAllTabNews() {
-    for (int i = 0; i < widget.allcategoryNews!.length; i++) {
-      if (widget.allcategoryNews![i].category!.toLowerCase() == "business") {
-        allBusinessNews = widget.allcategoryNews![i].newsDataContentList!;
-      }
-      if (widget.allcategoryNews![i].category!.toLowerCase() ==
-          "entertainment") {
-        allEntertainmentNews = widget.allcategoryNews![i].newsDataContentList!;
-      }
-      if (widget.allcategoryNews![i].category!.toLowerCase() == "environment") {
-        allEnvNews = widget.allcategoryNews![i].newsDataContentList!;
-      }
-      if (widget.allcategoryNews![i].category!.toLowerCase() == "food") {
-        allFoodNews = widget.allcategoryNews![i].newsDataContentList!;
-      }
-      if (widget.allcategoryNews![i].category!.toLowerCase() == "health") {
-        allHealthNews = widget.allcategoryNews![i].newsDataContentList!;
-      }
-      if (widget.allcategoryNews![i].category!.toLowerCase() == "science") {
-        allScienceNews = widget.allcategoryNews![i].newsDataContentList!;
-      }
-      if (widget.allcategoryNews![i].category!.toLowerCase() == "politics") {
-        allPoliticsNews = widget.allcategoryNews![i].newsDataContentList!;
-      }
-      if (widget.allcategoryNews![i].category!.toLowerCase() == "sports") {
-        allSportsNews = widget.allcategoryNews![i].newsDataContentList!;
-      }
-      if (widget.allcategoryNews![i].category!.toLowerCase() == "technology") {
-        allTechnologyNews = widget.allcategoryNews![i].newsDataContentList!;
-      }
-      if (widget.allcategoryNews![i].category!.toLowerCase() == "top") {
-        allTopNews = widget.allcategoryNews![i].newsDataContentList!;
-      }
-      if (widget.allcategoryNews![i].category!.toLowerCase() == "world") {
-        allWorldNews = widget.allcategoryNews![i].newsDataContentList!;
-      }
-    }
+    // for (int i = 0; i < widget.allcategoryNews!.length; i++) {
+    //   if (widget.allcategoryNews![i].category!.toLowerCase() == "business") {
+    //     allBusinessNews = widget.allcategoryNews![i].newsDataContentList!;
+    //   }
+    //   if (widget.allcategoryNews![i].category!.toLowerCase() ==
+    //       "entertainment") {
+    //     allEntertainmentNews = widget.allcategoryNews![i].newsDataContentList!;
+    //   }
+    //   if (widget.allcategoryNews![i].category!.toLowerCase() == "environment") {
+    //     allEnvNews = widget.allcategoryNews![i].newsDataContentList!;
+    //   }
+    //   if (widget.allcategoryNews![i].category!.toLowerCase() == "food") {
+    //     allFoodNews = widget.allcategoryNews![i].newsDataContentList!;
+    //   }
+    //   if (widget.allcategoryNews![i].category!.toLowerCase() == "health") {
+    //     allHealthNews = widget.allcategoryNews![i].newsDataContentList!;
+    //   }
+    //   if (widget.allcategoryNews![i].category!.toLowerCase() == "science") {
+    //     allScienceNews = widget.allcategoryNews![i].newsDataContentList!;
+    //   }
+    //   if (widget.allcategoryNews![i].category!.toLowerCase() == "politics") {
+    //     allPoliticsNews = widget.allcategoryNews![i].newsDataContentList!;
+    //   }
+    //   if (widget.allcategoryNews![i].category!.toLowerCase() == "sports") {
+    //     allSportsNews = widget.allcategoryNews![i].newsDataContentList!;
+    //   }
+    //   if (widget.allcategoryNews![i].category!.toLowerCase() == "technology") {
+    //     allTechnologyNews = widget.allcategoryNews![i].newsDataContentList!;
+    //   }
+    //   if (widget.allcategoryNews![i].category!.toLowerCase() == "top") {
+    //     allTopNews = widget.allcategoryNews![i].newsDataContentList!;
+    //   }
+    //   if (widget.allcategoryNews![i].category!.toLowerCase() == "world") {
+    //     allWorldNews = widget.allcategoryNews![i].newsDataContentList!;
+    //   }
+    // }
   }
 
   @override
@@ -239,27 +239,27 @@ class _NewsTabViewState extends State<NewsTabView>
                   AllNewsWidget(
                     allContent: widget.allContent,
                   ),
-                  BusinessNewsWidget(
-                    allContent: allBusinessNews,
-                  ),
-                  EntertainmentNewsWidget(
-                    allContent: allEntertainmentNews,
-                  ),
-                  EnvironmentNewsWidget(
-                    allContent: allEnvNews,
-                  ),
-                  FoodNewsWidget(
-                    allContent: allFoodNews,
-                  ),
-                  HealthNewsWidget(
-                    allContent: allHealthNews,
-                  ),
-                  PoliticsNewsWidget(
-                    allContent: allPoliticsNews,
-                  ),
-                  ScienceNewsWidget(
-                    allContent: allScienceNews,
-                  ),
+                  // BusinessNewsWidget(
+                  //   allContent: allBusinessNews,
+                  // ),
+                  // EntertainmentNewsWidget(
+                  //   allContent: allEntertainmentNews,
+                  // ),
+                  // EnvironmentNewsWidget(
+                  //   allContent: allEnvNews,
+                  // ),
+                  // FoodNewsWidget(
+                  //   allContent: allFoodNews,
+                  // ),
+                  // HealthNewsWidget(
+                  //   allContent: allHealthNews,
+                  // ),
+                  // PoliticsNewsWidget(
+                  //   allContent: allPoliticsNews,
+                  // ),
+                  // ScienceNewsWidget(
+                  //   allContent: allScienceNews,
+                  // ),
                   SportsNewsWidget(
                     allContent: allSportsNews,
                   ),

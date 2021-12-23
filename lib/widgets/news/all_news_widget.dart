@@ -6,7 +6,7 @@ import 'package:hynzo/utils/navigations.dart';
 import 'package:intl/intl.dart';
 
 class AllNewsWidget extends StatefulWidget {
-  final List<NewsContentDataModel>? allContent;
+  final List<Article>? allContent;
 
   const AllNewsWidget({Key? key, this.allContent}) : super(key: key);
 
@@ -15,24 +15,22 @@ class AllNewsWidget extends StatefulWidget {
 }
 
 class _AllNewsWidgetState extends State<AllNewsWidget> {
-
   String getDate(String time) {
     var now = DateTime.now();
     var formatter = DateFormat('dd/MM/yyyy');
     String currentDate = formatter.format(now);
-    var newsdate=DateTime.parse(time);
-    String newsDate= formatter.format(newsdate);
-    if(currentDate.split("/")[0] == newsDate.split("/")[0]){
+    var newsdate = DateTime.parse(time);
+    String newsDate = formatter.format(newsdate);
+    if (currentDate.split("/")[0] == newsDate.split("/")[0]) {
       return DateFormat.jm().format(DateTime.parse(time));
     } else {
       var diff = now.difference(newsdate).inDays;
-      if(diff> 1){
+      if (diff > 1) {
         return newsDate;
       } else {
         return 'Yesterday';
       }
     }
-
   }
 
   @override
@@ -55,7 +53,7 @@ class _AllNewsWidgetState extends State<AllNewsWidget> {
             return GestureDetector(
               onTap: () {
                 Navigation.pushNamed(context, Routes.webview,
-                    {'link': widget.allContent![index].link});
+                    {'link': widget.allContent![index].url});
               },
               child: Container(
                 margin: const EdgeInsets.only(
@@ -82,13 +80,20 @@ class _AllNewsWidgetState extends State<AllNewsWidget> {
                         child: ClipRRect(
                           borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(10.0),
-                            bottomLeft: Radius.circular(10.0),),
+                            bottomLeft: Radius.circular(10.0),
+                          ),
                           child: Image.network(
-                            widget.allContent![index].imageUrl!,
+                            widget.allContent![index].urlToImage,
                             fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) => ClipRRect(
-                              borderRadius: const BorderRadius.only(topLeft: Radius.circular(10.0),bottomLeft:  Radius.circular(10.0)),
-                              child: Image.asset('assets/images/no_image.png',fit: BoxFit.cover,),
+                            errorBuilder: (context, error, stackTrace) =>
+                                ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10.0),
+                                  bottomLeft: Radius.circular(10.0)),
+                              child: Image.asset(
+                                'assets/images/no_image.png',
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
@@ -107,7 +112,7 @@ class _AllNewsWidgetState extends State<AllNewsWidget> {
                               children: [
                                 Flexible(
                                   child: Text(
-                                    widget.allContent![index].title!.replaceAll(
+                                    widget.allContent![index].title.replaceAll(
                                         RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -124,7 +129,8 @@ class _AllNewsWidgetState extends State<AllNewsWidget> {
                                 ),
                                 Spacer(),
                                 Text(
-                                  getDate(widget.allContent![index].pubDate!),
+                                  getDate(widget.allContent![index].publishedAt
+                                      .toString()),
                                   style: Theme.of(context)
                                       .textTheme
                                       .subtitle1!
@@ -144,20 +150,19 @@ class _AllNewsWidgetState extends State<AllNewsWidget> {
                           Container(
                             width: 150.0,
                             child: Text(
-                              widget.allContent![index].description!
-                                  .replaceAll(
+                              widget.allContent![index].description.replaceAll(
                                   RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
                               overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 16,
-                                      color: AppColors.blackBlue,
-                                    ),
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1!
+                                  .copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16,
+                                    color: AppColors.blackBlue,
+                                  ),
                             ),
+                          ),
                         ],
                       ),
                     ],

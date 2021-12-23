@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
-import 'package:hynzo/core/models/tab_header_model.dart';
+// import 'package:hynzo/core/models/tab_header_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/news/news_swipe_view.dart';
 import 'package:hynzo/widgets/news/news_tab_view.dart';
+import 'package:hynzo/widgets/news/news_tab_view.dart';
+// import 'package:hynzo/widgets/news/news_swipe_view.dart';
+// import 'package:hynzo/widgets/news/news_tab_view.dart';
 
 class NewsWidget extends StatefulWidget {
-  final List<NewsDataModel>? allNews;
-  const NewsWidget({Key? key,this.allNews}) : super(key: key);
+  final List<Article>? allNews;
+  const NewsWidget({Key? key, this.allNews}) : super(key: key);
 
   @override
   State<NewsWidget> createState() => _NewsWidgetState();
@@ -17,7 +20,7 @@ class NewsWidget extends StatefulWidget {
 
 class _NewsWidgetState extends State<NewsWidget> {
   bool showTabView = false;
-  List<NewsContentDataModel> allContent =[];
+  List<Article> allContent = [];
 
   @override
   void initState() {
@@ -26,11 +29,12 @@ class _NewsWidgetState extends State<NewsWidget> {
     allContent.clear();
     getNews();
   }
+
   void getNews() {
-    for(int i =0; i<widget.allNews!.length;i++){
-      for(int j =0 ; j< widget.allNews![i].newsDataContentList!.length;j++){
-        allContent.add(widget.allNews![i].newsDataContentList![j]);
-      }
+    for (int i = 0; i < widget.allNews!.length; i++) {
+      // for (int j = 0; j < widget.allNews![i].newsDataContentList!.length; j++) {
+      //   allContent.add(widget.allNews![i].newsDataContentList![j]);
+      // }
     }
   }
 
@@ -85,7 +89,9 @@ class _NewsWidgetState extends State<NewsWidget> {
                     });
                   },
                   child: Image.asset(
-                    !showTabView ? 'assets/images/flip.png' : 'assets/images/flip_view.png',
+                    !showTabView
+                        ? 'assets/images/flip.png'
+                        : 'assets/images/flip_view.png',
                     width: 25,
                     height: 25,
                     fit: BoxFit.contain,
@@ -100,7 +106,7 @@ class _NewsWidgetState extends State<NewsWidget> {
           if (showTabView) ...[
             NewsTabView(
               allContent: allContent,
-              allcategoryNews: widget.allNews,
+              // allcategoryNews: widget.allNews,
             ),
           ] else ...[
             NewsSwipeView(

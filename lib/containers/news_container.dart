@@ -14,7 +14,7 @@ class NewsContainer extends StatefulWidget {
 
 class _NewsContainerState extends State<NewsContainer> {
   static NewsProvider? _newsProvider;
-  List<NewsDataModel> allNews = [];
+  List<Article> allNews = [];
   bool _isLoading = false;
 
   @override
@@ -43,9 +43,11 @@ class _NewsContainerState extends State<NewsContainer> {
         _isLoading = false;
       });
       if (newsResponseModel.statusCode == 200) {
-        for (var element in newsResponseModel.newsDataList!) {
-          allNews.add(element);
-        }
+        // print("----------------------------");
+        // print(newsResponseModel.newsDataList);
+        // for (var element in newsResponseModel.newsDataList!) {
+        //   allNews.add(element);
+        // }
       } else {
         ToastUtil().showToast("Something went wrong.");
       }
@@ -59,7 +61,7 @@ class _NewsContainerState extends State<NewsContainer> {
 
   @override
   Widget build(BuildContext context) {
-    if (allNews.length > 0) {
+    if (allNews.isNotEmpty) {
       return LoadingOverlay(
         isLoading: _isLoading,
         color: AppColors.gray,

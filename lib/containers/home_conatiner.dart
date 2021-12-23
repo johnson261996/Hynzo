@@ -27,25 +27,17 @@ class HomeContainer extends StatefulWidget {
 class _HomeContainerState extends State<HomeContainer> {
   static NewsProvider? _newsProvider;
   static GamesProvider? _gamesProvider;
-  List<NewsContentDataModel> allNews = [];
+  List<Article> allNews = [];
   List<SuggestedPlayModel> allSuggestedGames = [];
   bool _isLoading = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _newsProvider = Provider.of<NewsProvider>(context, listen: false);
     _gamesProvider = Provider.of<GamesProvider>(context, listen: false);
     allNews.clear();
-    // ConnectionStaus().check().then((connectionStatus) {
-    //   if (connectionStatus) {
     getSuggestionGames();
-    //   } else {
-    //     ToastUtil().showToast(
-    //         "No internet connection available. Please check your connection or try again later.");
-    //   }
-    // });
   }
 
   bool isToday(String time) {
@@ -70,11 +62,6 @@ class _HomeContainerState extends State<HomeContainer> {
           await _gamesProvider!.getSuggestedGames();
       if (suggestedGamesResponseModel.statusCode == 200) {
         allSuggestedGames = suggestedGamesResponseModel.allSuggestedGames!;
-        // for (var element in suggestedGamesResponseModel.allSuggestedGames!) {
-        //   if (element.activeStatus!) {
-        //     allSuggestedGames.add(element);
-        //   }
-        // }
       } else {
         ToastUtil().showToast("Something went wrong.");
       }
@@ -94,20 +81,20 @@ class _HomeContainerState extends State<HomeContainer> {
         _isLoading = false;
       });
       if (newsResponseModel.statusCode == 200) {
-        for (var element in newsResponseModel.newsDataList!) {
-          for (var newsContent in element.newsDataContentList!) {
-            if (isToday(newsContent.pubDate!)) {
-              if (allNews.length < 2) {
-                allNews.add(newsContent);
-              } else {
-                break;
-              }
-            }
-          }
-          if (allNews.length == 2) {
-            break;
-          }
-        }
+        // for (var element in newsResponseModel.newsDataList) {
+        //   for (var newsContent in element.newsDataContentList!) {
+        //     if (isToday(newsContent.pubDate!)) {
+        //       if (allNews.length < 2) {
+        //         allNews.add(newsContent);
+        //       } else {
+        //         break;
+        //       }
+        //     }
+        //   }
+        //   if (allNews.length == 2) {
+        //     break;
+        //   }
+        // }
       } else {
         ToastUtil().showToast("Something went wrong.");
       }
@@ -126,7 +113,7 @@ class _HomeContainerState extends State<HomeContainer> {
       color: AppColors.gray,
       child: HomeWidget(
         onTapped: widget._onTapped,
-        allContent: allNews,
+        allContent: [],
         allSuggestedGames: allSuggestedGames,
       ),
     );
