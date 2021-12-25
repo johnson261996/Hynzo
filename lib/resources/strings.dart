@@ -9,7 +9,7 @@ class Strings {
 
   // splash screen
   static const SPLASH_TEXT = '"HYPERLOCAL PRIVATE CHATTING"';
-  static const TITLE_NAME = 'HYNZO';
+  static const TITLE_NAME = 'Hynzo';
 
   // intro screen
   static const INTRO_TITLE = 'School Owner App';
@@ -193,7 +193,6 @@ class Strings {
   static const LOCATION = 'Banglore';
   static const GENDER_LIST = ['Male', 'Female', 'Others'];
   static const LOCATION_LIST = ['Mumbai', 'Banglore', 'Delhi'];
-
 
   // it will return the dynamic string
   static String demo(amount) {
