@@ -5,15 +5,19 @@ import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/navigations.dart';
-import 'package:hynzo/widgets/common/game_recent/recently_game_widget.dart';
 import 'package:hynzo/widgets/common/view/game_view_widget.dart';
 
 class AllGames extends StatefulWidget {
-  final List<SuggestedPlayModel>? allSuggestedGames;
+  final List<GamePlayModel>? allSuggestedGames;
+  final List<GamePlayModel>? recentGames;
+  final List<GamePlayModel>? allGames;
 
   const AllGames({
     Key? key,
     this.allSuggestedGames,
+    this.recentGames,
+    this.allGames
+
   }) : super(key: key);
 
   @override
@@ -21,85 +25,10 @@ class AllGames extends StatefulWidget {
 }
 
 class _AllGamesState extends State<AllGames> {
-  List<AllGamesModel> allGames = [];
-  List<RecentPlayed> allRecent = [];
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Cricket",
-        imagePath: "assets/images/cricket.png",
-      ),
-    );
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Chess",
-        imagePath: "assets/images/chess.png",
-      ),
-    );
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Archery",
-        imagePath: "assets/images/archery.png",
-      ),
-    );
-    allRecent.add(
-      RecentPlayed(
-        gameName: "Poker",
-        imagePath: "assets/images/suggested_two.png",
-      ),
-    );
-    allGames.add(
-      AllGamesModel(
-        gameName: "Cricket",
-        imagePath: "assets/images/suggested_one.png",
-      ),
-    );
-    allGames.add(
-      AllGamesModel(
-        gameName: "Chess",
-        imagePath: "assets/images/suggested_two.png",
-      ),
-    );
-    allGames.add(
-      AllGamesModel(
-        gameName: "Archery",
-        imagePath: "assets/images/suggested_three.png",
-      ),
-    );
-    allGames.add(
-      AllGamesModel(
-        gameName: "Poker",
-        imagePath: "assets/images/suggested_one.png",
-      ),
-    );
-    allGames.add(
-      AllGamesModel(
-        gameName: "Cricket",
-        imagePath: "assets/images/suggested_one.png",
-      ),
-    );
-    allGames.add(
-      AllGamesModel(
-        gameName: "Chess",
-        imagePath: "assets/images/suggested_two.png",
-      ),
-    );
-    allGames.add(
-      AllGamesModel(
-        gameName: "Archery",
-        imagePath: "assets/images/suggested_three.png",
-      ),
-    );
-    allGames.add(
-      AllGamesModel(
-        gameName: "Poker",
-        imagePath: "assets/images/suggested_three.png",
-      ),
-    );
   }
 
   @override
@@ -132,15 +61,40 @@ class _AllGamesState extends State<AllGames> {
                     padding: const EdgeInsets.only(
                       right: 12.0,
                     ),
-                    child: RecentGameWidget(
-                      mediaQuery: mediaQuery,
-                      imagePath: allRecent[index].imagePath!,
-                      index: index,
-                      name: allRecent[index].gameName!,
-                    ),
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigation.pushNamed(context, Routes.webview,
+                            {'link': widget.recentGames![index].redirectionUrl});
+                      },
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Image.network(
+                              widget.recentGames![index].image!,
+                              fit: BoxFit.cover,
+                              width: 110.0,
+                              height: 110.0,
+                              errorBuilder: (context, error, stackTrace) => Image.asset('assets/images/no_image.png',fit: BoxFit.cover,),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            widget.recentGames![index].gameName!,
+                            style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.black,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
                   );
                 },
-                itemCount: allRecent.length,
+                itemCount: widget.recentGames!.length,
                 scrollDirection: Axis.horizontal,
               ),
             ),
@@ -217,23 +171,29 @@ class _AllGamesState extends State<AllGames> {
             ),
             Container(
               width: mediaQuery.width,
-              height: 450,
+              height: 455,
               child: GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.only(
-                  right: 15.0,
+                  right: 10,
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   childAspectRatio: 0.85,
                 ),
                 itemBuilder: (BuildContext context, int index) {
-                  return GameContainerWidget(
-                    imagePath: allGames[index].imagePath!,
-                    name: allGames[index].gameName!,
+                  return GestureDetector(
+                    onTap: (){
+                      Navigation.pushNamed(context, Routes.webview,
+                          {'link': widget.allGames![index].redirectionUrl});
+                    },
+                    child: GameContainerWidget(
+                      imagePath: widget.allGames![index].image!,
+                      name: widget.allGames![index].gameName!,
+                    ),
                   );
                 },
-                itemCount: allGames.length,
+                itemCount: widget.allGames!.length,
               ),
             )
           ],

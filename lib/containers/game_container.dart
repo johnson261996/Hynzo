@@ -17,41 +17,42 @@ class GameContainer extends StatefulWidget {
 class _GameContainerState extends State<GameContainer> {
   static GamesProvider? _gamesProvider;
   bool _isLoading = false;
-  List<SuggestedPlayModel> allSuggestedGames = [];
-
+  List<GamePlayModel> allSuggestedGames = [];
+  List<GamePlayModel> recentGames = [];
+  List<GamePlayModel> allGames = [];
+  List<GamePlayModel> popularGames = [];
+  List<GamePlayModel> filteredGames = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _gamesProvider = Provider.of<GamesProvider>(context, listen: false);
     allSuggestedGames.clear();
-    // ConnectionStaus().check().then((connectionStatus) {
-    //   if (connectionStatus) {
-    getSuggestionGames();
-    //   } else {
-    //     ToastUtil().showToast(
-    //         "No internet connection available. Please check your connection or try again later.");
-    //   }
-    // });
+    recentGames.clear();
+    allGames.clear();
+    popularGames.clear();
+    filteredGames.clear();
+
+    //getFilteredGamesGames();
+    getGames();
   }
 
-  Future<void> getSuggestionGames() async {
+  Future<void> getGames() async {
     try {
       setState(() {
         _isLoading = true;
       });
-      SuggestedGamesResponseModel suggestedGamesResponseModel =
-          await _gamesProvider!.getSuggestedGames();
+      GamesResponseModel gamesResponseModel =
+      await _gamesProvider!.getGames();
       setState(() {
         _isLoading = false;
       });
-      if (suggestedGamesResponseModel.statusCode == 200) {
-        allSuggestedGames = suggestedGamesResponseModel.allSuggestedGames!;
-        // for (var element in suggestedGamesResponseModel.allSuggestedGames!) {
-        //   allSuggestedGames.add(element);
-        // }
+      if (gamesResponseModel.statusCode == 200) {
+        recentGames = gamesResponseModel.recentGames!;
+        allGames = gamesResponseModel.allGames!;
+        popularGames = gamesResponseModel.popularGames!;
       } else {
-        ToastUtil().showToast("Something went wrong.");
+        ToastUtil().showToast("Something went wrong.2");
       }
     } catch (e) {
       setState(() {
@@ -61,13 +62,23 @@ class _GameContainerState extends State<GameContainer> {
     }
   }
 
+  Future<FilteredGamesResponseModel> getFilteredGames(String categ)async{
+    FilteredGamesResponseModel filteredResponseModel =
+        await _gamesProvider!.getFilteredGames(categ);
+    return filteredResponseModel;
+  }
+
   @override
   Widget build(BuildContext context) {
     return LoadingOverlay(
       isLoading: _isLoading,
       color: AppColors.gray,
       child: GameWidget(
-        allSuggestedGames: allSuggestedGames,
+        allSuggestedGames: popularGames,
+        recentlyPlayedGames: recentGames,
+        allGames: allGames,
+        popularGames: popularGames,
+        filteredGames: getFilteredGames,
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/layout/base.dart';
+import 'package:hynzo/screens/edit-profile/edit_profile.dart';
 import 'package:hynzo/screens/interest/interest.dart';
 import 'package:hynzo/screens/intro/intro.dart';
 import 'package:hynzo/screens/location/location.dart';
@@ -8,6 +9,7 @@ import 'package:hynzo/screens/login/otp.dart';
 import 'package:hynzo/screens/navigationScreen/navigationScreen.dart';
 import 'package:hynzo/screens/news/news.dart';
 import 'package:hynzo/screens/onboarding/onboarding.dart';
+import 'package:hynzo/screens/profile/profile.dart';
 import 'package:hynzo/screens/splash/splash.dart';
 import 'package:hynzo/screens/about/about.dart';
 import 'package:hynzo/screens/home/home.dart';
@@ -43,6 +45,8 @@ class Routes {
   static const navScreen = '/navScreen';
   static const news="./news";
   static const webview="./webview";
+  static const profile = '/profile';
+  static const edit_profile = '/edit-profile';
 
   /// Routing Table needed for the App.
   static Map<String, WidgetBuilder> get buildRoutes {
@@ -71,6 +75,10 @@ class Routes {
           BaseLayout(page: News(), isAppBar: false),
       webview: (BuildContext context) =>
           BaseLayout(page: WebViewScreen(), isAppBar: false),
+      profile: (BuildContext context) =>
+          BaseLayout(page: ProfileScreen(), isAppBar: false),
+      edit_profile: (BuildContext context) =>
+          BaseLayout(page: EditProfile(), isAppBar: false),
     };
   }
 

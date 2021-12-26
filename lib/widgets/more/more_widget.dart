@@ -3,7 +3,6 @@ import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/localstorage.dart';
-import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/common/profile_image/profile_image.dart';
 
 class MoreWidget extends StatefulWidget {
@@ -11,7 +10,9 @@ class MoreWidget extends StatefulWidget {
   final int level;
 
   const MoreWidget({
-    Key? key,required this.imageUrl, required this.level,
+    Key? key,
+    required this.imageUrl,
+    required this.level,
   }) : super(key: key);
 
   @override
@@ -19,22 +20,21 @@ class MoreWidget extends StatefulWidget {
 }
 
 class _MoreWidgetState extends State<MoreWidget> {
-  late String url= '';
+  late String url = '';
   String name = '';
 
-  getProfilePic()async{
+  getProfilePic() async {
     url = (await LocalStorage.getProfilePic())!;
-    print(url);
   }
 
   getName() async {
     String _name = (await LocalStorage.getUserName())!;
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {setState(()  {
-    name = _name;
-    });});
-
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      setState(() {
+        name = _name;
+      });
+    });
   }
-
 
   @override
   void initState() {
@@ -85,52 +85,54 @@ class _MoreWidgetState extends State<MoreWidget> {
             height: MediaQuery.of(context).size.height * 0.01,
           ),
           Padding(
-            padding: const EdgeInsets.only(
-              left: 15.0,
-              right: 15.0,
-            ),
-            child: Expanded(
-              child: Row(
-                children: [
-                  const ProfileImageWidget(imageUrl: '',level: 1,),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.03,
-                  ),
-                  Container(
-                    width: 200,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          name,
-                          style: Theme.of(context).textTheme.headline5!.apply(
-                                color: AppColors.greyBlack,
-                              ),
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            child: Row(
+              children: [
+                ProfileImageWidget(
+                  backgroundcolor: AppColors.offyellow,
+                  valueColor: AppColors.darkyellow,
+                  imageUrl: '',
+                  level: 1,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.03,
+                ),
+                Container(
+                  width: 200,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: Theme.of(context).textTheme.headline5!.apply(
+                              color: AppColors.greyBlack,
+                            ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.profile);
+                        },
+                        child: Row(
+                          children: [
+                            Text(
+                              Strings.VIEW_PROFILE,
+                              style:
+                                  Theme.of(context).textTheme.caption!.copyWith(
+                                        fontSize: 12,
+                                        color: AppColors.greyBlack,
+                                      ),
+                            ),
+                            const Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              size: 10,
+                            ),
+                          ],
                         ),
-                        InkWell(
-                          onTap: () {},
-                          child: Row(
-                            children: [
-                              Text(
-                                Strings.VIEW_PROFILE,
-                                style:
-                                    Theme.of(context).textTheme.caption!.copyWith(
-                                          fontSize: 12,
-                                          color: AppColors.greyBlack,
-                                        ),
-                              ),
-                              const Icon(
-                                Icons.arrow_forward_ios_outlined,
-                                size: 10,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           SizedBox(
@@ -316,10 +318,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                       height: 2.0,
                     ),
                     InkWell(
-                      onTap: () {
-                        LocalStorage.clearToken();
-                        Navigation.pushReplacementNamed(context, Routes.login);
-                      },
+                      onTap: null,
                       child: Container(
                         padding: const EdgeInsets.only(
                           left: 15.0,

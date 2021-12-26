@@ -7,6 +7,7 @@ import 'package:hynzo/screens/chat/chat_message_screen.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/themes/themes.dart';
 import 'package:hynzo/utils/localstorage.dart';
+import 'package:hynzo/utils/message_encrypt.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -26,6 +27,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
   List<ChatModel> allChats = [];
   bool loading = true;
   DateFormat formatter = DateFormat('dd/MM/yyyy');
+  late MessageEncrypt _encrypt;
 
   @override
   void initState() {
@@ -35,9 +37,11 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
   }
 
   getAllChats(int limit, int offset) async {
-    final ChatListModel response = await widget.getChatList!(limit, offset);
+    final List<ChatListModel> response =
+        await widget.getChatList!(limit, offset);
     allChats.clear();
-    response.results.forEach((element) {
+    response.forEach((element) {
+      _encrypt = MessageEncrypt.initialize(element.encryptionKey);
       allChats.add(
         ChatModel(
           senderId: element.userBasicInfo.id,
@@ -46,14 +50,18 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
           unreadCount: element.unreadMessages,
           status: element.userBasicInfo.isOnline ? 'active' : 'inacvtive',
           isRead: false,
-          content: element.lastMessage.content,
+          content: element.lastMessage.typeOfContent == 'image'
+              ? 'Image'
+              : _encrypt.decrypt(element.lastMessage.content),
           dateTime: element.lastMessage.timestamp,
         ),
       );
     });
-    setState(() {
-      allChats = allChats;
-      loading = false;
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      setState(() {
+        allChats = allChats;
+        loading = false;
+      });
     });
   }
 
@@ -66,7 +74,9 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
       child: allChats.isEmpty || loading
           ? Center(
               child: loading
-                  ? const CircularProgressIndicator()
+                  ? CircularProgressIndicator(
+                      color: AppColors.blueDark,
+                    )
                   : const Text('No chats available'),
             )
           : ListView.builder(

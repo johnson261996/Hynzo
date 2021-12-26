@@ -1,16 +1,23 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:hynzo/resources/images.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileImageWidget extends StatefulWidget {
   final String imageUrl;
   final int level;
-  //final Function UploadImage;
+  final Color backgroundcolor;
+  final Color valueColor;
 
-  //const ProfileImageWidget({Key? key,required this.imageUrl,required this.level,required this.UploadImage}) : super(key: key);
-  const ProfileImageWidget({Key? key,required this.imageUrl,required this.level}) : super(key: key);
+
+  const ProfileImageWidget(
+      {Key? key,
+      required this.imageUrl,
+      required this.level,
+      required this.backgroundcolor,
+        required this.valueColor
+      })
+      : super(key: key);
 
   @override
   State<ProfileImageWidget> createState() => _ProfileImageWidgetState();
@@ -18,18 +25,17 @@ class ProfileImageWidget extends StatefulWidget {
 
 class _ProfileImageWidgetState extends State<ProfileImageWidget> {
   XFile? image;
- // final int level=1;
+
 
   UploadimgFromGallery() async {
-    XFile? image = await ImagePicker().pickImage(
-        source: ImageSource.gallery, imageQuality: 50).whenComplete(() => null);
+    XFile? image = await ImagePicker()
+        .pickImage(source: ImageSource.gallery, imageQuality: 50)
+        .whenComplete(() => null);
 
     setState(() {
       this.image = image;
     });
 
-    /*HomeService h = HomeService();
-    h.postTodProfilePicService(this.image);*/
   }
 
   @override
@@ -39,21 +45,26 @@ class _ProfileImageWidgetState extends State<ProfileImageWidget> {
         Container(
           width: 70.0,
           height: 70.0,
-          child: CircularProgressIndicator(value:0.6,backgroundColor: AppColors.offyellow,valueColor:  AlwaysStoppedAnimation<Color>(AppColors.darkyellow,),),
+          child: CircularProgressIndicator(
+            value: 0.6,
+            backgroundColor: widget.backgroundcolor,
+            valueColor: AlwaysStoppedAnimation<Color>(
+              widget.valueColor,
+            ),
+          ),
         ),
         Positioned(
           top: 1.0,
           bottom: 1.0,
           right: 1.0,
           left: 1.0,
-          /*child:widget.imageUrl == '' ? IconButton(onPressed: (){
-              UploadimgFromGallery();
-              Navigator.of(context).pop();
-
-          }, icon: Icon(Icons.upload_file_rounded)) :*/
-          child:CircleAvatar(
+          child: CircleAvatar(
             radius: 30.0,
-            child:Image.asset('assets/images/profile_pic.png',fit: BoxFit.contain,),
+            // ignore: unnecessary_null_comparison
+            child: widget.imageUrl == '' ? Image.asset(
+             Images.PROFILE_PIC,
+              fit: BoxFit.contain,
+            ) : Image.network(widget.imageUrl),
             backgroundColor: AppColors.white,
           ),
         ),
@@ -66,7 +77,7 @@ class _ProfileImageWidgetState extends State<ProfileImageWidget> {
               width: 12.0,
               height: 12.0,
               child: Image.asset(
-                'assets/images/profile_star.png',
+               Images.PROFILE_STAR,
                 fit: BoxFit.cover,
               ),
             ),

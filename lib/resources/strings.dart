@@ -9,7 +9,7 @@ class Strings {
 
   // splash screen
   static const SPLASH_TEXT = '"HYPERLOCAL PRIVATE CHATTING"';
-  static const TITLE_NAME = 'HYNZO';
+  static const TITLE_NAME = 'Hynzo';
 
   // intro screen
   static const INTRO_TITLE = 'School Owner App';
@@ -42,8 +42,11 @@ class Strings {
   static const ACCOUNT = "Don't have an account ?";
   static const LOGIN = 'Login';
   static const LOGIN_SUBTITLE = 'Let\'s get started.';
-  static const LOGIN_TITLE = 'Hi  there!';
+  static const LOGIN_TITLE = 'Welcome back!';
+  static const SIGNUP_TITLE = 'Hi there!';
+  static const SIGNUP_SUBTITLE = 'Let\'s get started.';
   static const LOGIN_BUTTON = 'Continue >';
+  static const SIGNUP_BUTTON = 'Create new account';
   static const LOGIN_TERMS =
       'By continuing, you accept the Terms and Condition';
   static const LOGIN_MOBILE_NOT_REGISTRED =
@@ -82,6 +85,7 @@ class Strings {
   static const SUGGESTION_TITLE = "Suggested people near you";
   static const ADD = "Add";
   static const ADDED = "Added";
+  static const ACCEPT = "Accept";
 
   //Location
   static const LOCATION_Title = "Allow access to your location";
@@ -106,18 +110,18 @@ class Strings {
   static const LOG_OUT = 'LogOut';
 
   //Home
-  static const HOME_PROFILE_NAME="Welcome Kumar,";
-  static const HOME_PROFILE_SUBTITLE="What would you like to play?";
-  static const AMOUNT="560";
-  static const SPECIAL_EVENTS="Special Events";
-  static const MUST_TRY_GAMES="Must Try Games";
-  static const TODAY_NEWS="Today's News";
-  static const GAMES_BY_CATEGORIES="Games by Categories";
-  static const SEARCH_GAMES="Search Games here";
-  static const SEARCH_CHATS="Search Chats here";
-  static const SEARCH_EVENTS="Search Events here";
-  static const MORE_NEWS="More news";
-  static const ALL_GAMES_HOME="All Games";
+  static const HOME_PROFILE_NAME = "Welcome Kumar,";
+  static const HOME_PROFILE_SUBTITLE = "What would you like to play?";
+  static const AMOUNT = "560";
+  static const SPECIAL_EVENTS = "Special Events";
+  static const MUST_TRY_GAMES = "Must Try Games";
+  static const TODAY_NEWS = "Today's News";
+  static const GAMES_BY_CATEGORIES = "Games by Categories";
+  static const SEARCH_GAMES = "Search Games here";
+  static const SEARCH_CHATS = "Search Chats here";
+  static const SEARCH_EVENTS = "Search Events here";
+  static const MORE_NEWS = "More news";
+  static const ALL_GAMES_HOME = "All Games";
 
   //Events
   static const CATEGORIES_TITLE = "Categories";
@@ -156,12 +160,39 @@ class Strings {
   static const ALL_GAMES = "All games";
   static const SUGGESTED_GAMES = "Suggested for you";
   static const NEW = "New";
+  static const POPULAR_GAMES = "Popular Games";
 
   //chat
   static const USER_NAMES = ['Anusree', 'John', 'Neha'];
 
   static const MESSAGES = ['Welcome', 'Welcome', 'Welcome'];
   static const SEARCH = 'Search New Connection';
+
+  //Profile
+  static const PROFILE_HEADING = 'Profile';
+  static const LOGOUT = 'Log Out';
+  static const REFER_FRIEND = 'Refer a friend';
+  static const ACTIVITIES = 'Activities';
+  static const MY_CHAT = 'My Chat';
+  static const MY_ACCOUNT = 'My Account';
+  static const FOLLOWING = 'Following';
+  static const FOLLOWING_NUMBER = '250';
+  static const FOLLOWERS = 'Followers';
+  static const FOLLLOWERS_NUMBER = '230';
+  static const FRIENDS = 'Friends';
+  static const FRIENDS_NUMBER = '25';
+
+  //Edit-profile
+  static const BIO = 'Bio';
+  static const UPDATE_PROFILE = 'Update Profile';
+  static const FIRST_NAME = 'What’s your first name?';
+  static const LAST_NAME = 'And your last name?';
+  static const MOBILE = 'Phone number?';
+  static const GENDER = 'Select your gender';
+  static const DOB = 'What is your date of birth?';
+  static const LOCATION = 'Banglore';
+  static const GENDER_LIST = ['Male', 'Female', 'Others'];
+  static const LOCATION_LIST = ['Mumbai', 'Banglore', 'Delhi'];
 
   // it will return the dynamic string
   static String demo(amount) {

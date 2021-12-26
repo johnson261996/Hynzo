@@ -49,7 +49,7 @@ class _NewsContainerState extends State<NewsContainer> {
         //   allNews.add(element);
         // }
       } else {
-        ToastUtil().showToast("Something went wrong.");
+        ToastUtil().showToast("Something went wrong.1");
       }
     } catch (e) {
       setState(() {

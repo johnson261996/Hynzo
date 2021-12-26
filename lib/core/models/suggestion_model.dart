@@ -1,6 +1,4 @@
-import 'package:hynzo/resources/strings.dart';
-
-class SuggestionModel{
+class SuggestionModel {
   final int? count;
   final String? next;
   final String? previous;
@@ -15,16 +13,17 @@ class SuggestionModel{
     required this.resultsList,
   });
 
-  factory SuggestionModel.fromJson(Map<String, dynamic> json,int code) {
+  factory SuggestionModel.fromJson(Map<String, dynamic> json, int code) {
     return SuggestionModel(
-      count: json['count'] ?? -1,
+      count: json['count'] ?? 0,
       next: json['next'] ?? '',
       previous: json['previous'] ?? '',
-      resultsList: ((json['results'] as List<dynamic>).map((i) => ResultsModel.fromJson(i)).toList()),
+      resultsList: ((json['results'] as List<dynamic>)
+          .map((i) => ResultsModel.fromJson(i))
+          .toList()),
       statusCode: code,
     );
   }
-
 }
 
 class ResultsModel {
@@ -70,12 +69,15 @@ class SuggestUserAddResponseModel {
     this.statusCode,
   });
 
-  factory SuggestUserAddResponseModel.fromJson(Map<String, dynamic> json, int code) {
+  factory SuggestUserAddResponseModel.fromJson(
+      Map<String, dynamic> json, int code) {
     return SuggestUserAddResponseModel(
-      id: json ['id'],
-      messages: json ['messages'],
-      participants: ((json['participants'] as List<dynamic>).map((i) => i.toString()).toList()),
-      isGroup: json ['is_group'],
+      id: json['id'],
+      messages: json['messages'],
+      participants: ((json['participants'] as List<dynamic>)
+          .map((i) => i.toString())
+          .toList()),
+      isGroup: json['is_group'],
       statusCode: code,
     );
   }

@@ -21,14 +21,16 @@ import 'common/view/event_view_widget.dart';
 class HomeWidget extends StatefulWidget {
   final Function onTapped;
   final List<Article>? allContent;
-  final List<SuggestedPlayModel>? allSuggestedGames;
+  final List<GamePlayModel>? allSuggestedGames;
+  final Function(String)? setFcmToken;
 
-  const HomeWidget({
-    required this.onTapped,
-    this.allContent,
-    this.allSuggestedGames,
-    Key? key,
-  }) : super(key: key);
+  const HomeWidget(
+      {required this.onTapped,
+      this.allContent,
+      this.allSuggestedGames,
+      this.setFcmToken,
+      Key? key})
+      : super(key: key);
 
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
@@ -45,8 +47,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   void initState() {
-    print("---------------<<<<<<<>>>>>>>>");
-    print(widget.allContent);
+    setFcmToken();
     super.initState();
 
     allGamesCategory.add(
@@ -113,7 +114,11 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   getProfilePic() async {
     url = (await LocalStorage.getProfilePic())!;
-    print(url);
+  }
+
+  setFcmToken() async {
+    String? token = await LocalStorage.getFcmToken();
+    widget.setFcmToken!(token!);
   }
 
   String getDate(String time) {
@@ -168,6 +173,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   ProfileImageWidget(
+                    backgroundcolor: AppColors.offyellow,
+                    valueColor: AppColors.darkyellow,
                     imageUrl: url,
                     level: 1,
                   ),

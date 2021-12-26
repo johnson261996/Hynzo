@@ -5,19 +5,24 @@ import 'package:hynzo/core/models/tab_header_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/widgets/common/search_bar/search_bar.dart';
-import 'package:hynzo/widgets/game/action.dart';
-import 'package:hynzo/widgets/game/adventure.dart';
 import 'package:hynzo/widgets/game/all_games.dart';
-import 'package:hynzo/widgets/game/card.dart';
-import 'package:hynzo/widgets/game/top_charts.dart';
+import 'package:hynzo/widgets/game/fitered_games.dart';
 
 class GameWidget extends StatefulWidget {
-  final List<SuggestedPlayModel>? allSuggestedGames;
+  final List<GamePlayModel>? allSuggestedGames;
+  final List<GamePlayModel>? recentlyPlayedGames;
+  final List<GamePlayModel>? allGames;
+  final List<GamePlayModel>? popularGames;
+  final Function(String)? filteredGames;
 
-  const GameWidget({
-    Key? key,
-    this.allSuggestedGames,
-  }) : super(key: key);
+  const GameWidget(
+      {Key? key,
+      this.allSuggestedGames,
+      this.recentlyPlayedGames,
+      this.allGames,
+      this.popularGames,
+      this.filteredGames})
+      : super(key: key);
 
   @override
   State<GameWidget> createState() => _GameWidgetState();
@@ -25,11 +30,15 @@ class GameWidget extends StatefulWidget {
 
 class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
   List<TabHeaderModel> allTabHeader = [];
+  late String text = '';
   int selectedIndexValue = 0;
   late TabController tabController;
   late PageController _pageController;
   String search = '';
   bool showSearchBar = false;
+  String category = '';
+  String selectedItemName = '';
+  List<GamePlayModel> filteredLIst = [];
 
   @override
   void dispose() {
@@ -37,6 +46,13 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
     super.dispose();
     _pageController.dispose();
     tabController.dispose();
+  }
+
+  getFilteredGames(String s) async {
+    FilteredGamesResponseModel response = await widget.filteredGames!(s);
+    setState(() {
+      filteredLIst = response.filteredGames!;
+    });
   }
 
   @override
@@ -51,22 +67,37 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
     );
     allTabHeader.add(
       TabHeaderModel(
-        tabName: 'Top charts',
+        tabName: 'Shooting',
       ),
     );
     allTabHeader.add(
       TabHeaderModel(
-        tabName: 'Actions',
+        tabName: 'Sports',
       ),
     );
     allTabHeader.add(
       TabHeaderModel(
-        tabName: 'Cards',
+        tabName: 'Casual',
       ),
     );
     allTabHeader.add(
       TabHeaderModel(
-        tabName: 'Adventure',
+        tabName: 'Action',
+      ),
+    );
+    allTabHeader.add(
+      TabHeaderModel(
+        tabName: 'Racing',
+      ),
+    );
+    allTabHeader.add(
+      TabHeaderModel(
+        tabName: 'Arcade',
+      ),
+    );
+    allTabHeader.add(
+      TabHeaderModel(
+        tabName: 'All',
       ),
     );
     tabController = TabController(
@@ -137,51 +168,50 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
               ),
             ),
           ],
-          SizedBox(
-            height: mediaQuery.height * 0.02,
+          const SizedBox(
+            height: 10,
           ),
-          Container(
-            height: 25.0,
-            child: TabBar(
-              padding: EdgeInsets.zero,
-              onTap: (index) {
-                setState(() {
-                  selectedIndexValue = index;
-                  _pageController.animateToPage(selectedIndexValue,
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.fastLinearToSlowEaseIn);
-                });
-              },
-              controller: tabController,
-              indicatorColor: Colors.transparent,
-              tabs: List<Widget>.generate(allTabHeader.length, (int index) {
-                return Container(
-                  padding: const EdgeInsets.only(
-                    left: 5.0,
-                    right: 5.0,
+          TabBar(
+            padding: EdgeInsets.zero,
+            onTap: (index) {
+              setState(() {
+                selectedItemName = allTabHeader[index].tabName!;
+                selectedIndexValue = index;
+                getFilteredGames(selectedItemName);
+                _pageController.animateToPage(selectedIndexValue,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.fastLinearToSlowEaseIn);
+              });
+            },
+            controller: tabController,
+            indicatorColor: Colors.transparent,
+            tabs: List<Widget>.generate(allTabHeader.length, (int index) {
+              return Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.0),
+                  color: index == selectedIndexValue
+                      ? AppColors.blueDark
+                      : AppColors.white,
+                ),
+                child: Center(
+                  child: Text(
+                    allTabHeader[index].tabName!,
+                    style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                          fontSize: 12,
+                          color: index == selectedIndexValue
+                              ? AppColors.white
+                              : AppColors.greyBlack,
+                          fontWeight: FontWeight.w400,
+                        ),
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    color: index == selectedIndexValue
-                        ? AppColors.blueDark
-                        : AppColors.white,
-                  ),
-                  child: Center(
-                    child: Text(
-                      allTabHeader[index].tabName!,
-                      style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                            fontSize: 12,
-                            color: index == selectedIndexValue
-                                ? AppColors.white
-                                : AppColors.greyBlack,
-                            fontWeight: FontWeight.w400,
-                          ),
-                    ),
-                  ),
-                );
-              }),
-              isScrollable: true,
-            ),
+                ),
+              );
+            }),
+            isScrollable: true,
           ),
           SizedBox(
             height: mediaQuery.height * 0.015,
@@ -200,19 +230,33 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
                 onPageChanged: (page) {
                   setState(() {
                     selectedIndexValue = page;
+                    selectedItemName = allTabHeader[page].tabName!;
+                    getFilteredGames(selectedItemName);
                     tabController.animateTo(selectedIndexValue,
-                        duration: const Duration(milliseconds: 500),
+                        duration: const Duration(milliseconds: 300),
                         curve: Curves.fastLinearToSlowEaseIn);
                   });
                 },
                 children: [
                   AllGames(
                     allSuggestedGames: widget.allSuggestedGames,
+                    recentGames: widget.recentlyPlayedGames,
+                    allGames: widget.allGames,
                   ),
-                  TopCharts(),
-                  ActionGames(),
-                  CardGames(),
-                  AdventureGames(),
+                  FilteredGamesWidget(
+                      title: 'Shooting Games', filteredGames: filteredLIst),
+                  FilteredGamesWidget(
+                      title: 'Sports Games', filteredGames: filteredLIst),
+                  FilteredGamesWidget(
+                      title: 'Casual Games', filteredGames: filteredLIst),
+                  FilteredGamesWidget(
+                      title: 'Action Games', filteredGames: filteredLIst),
+                  FilteredGamesWidget(
+                      title: 'Racing Games', filteredGames: filteredLIst),
+                  FilteredGamesWidget(
+                      title: 'Arcade Games', filteredGames: filteredLIst),
+                  FilteredGamesWidget(
+                      title: 'All', filteredGames: filteredLIst),
                 ],
               ),
             ),
