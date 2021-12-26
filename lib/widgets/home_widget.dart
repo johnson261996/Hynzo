@@ -23,12 +23,12 @@ class HomeWidget extends StatefulWidget {
   final List<Article>? allContent;
   final List<SuggestedPlayModel>? allSuggestedGames;
 
-  const HomeWidget(
-      {required this.onTapped,
-      this.allContent,
-      this.allSuggestedGames,
-      Key? key})
-      : super(key: key);
+  const HomeWidget({
+    required this.onTapped,
+    this.allContent,
+    this.allSuggestedGames,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
@@ -45,7 +45,8 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    print("---------------<<<<<<<>>>>>>>>");
+    print(widget.allContent);
     super.initState();
 
     allGamesCategory.add(

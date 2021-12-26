@@ -1,6 +1,8 @@
 /// Contains service and logic related of home screen.
 ///
 ///
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
@@ -38,6 +40,7 @@ class _HomeContainerState extends State<HomeContainer> {
     _gamesProvider = Provider.of<GamesProvider>(context, listen: false);
     allNews.clear();
     getSuggestionGames();
+    getAllNews();
   }
 
   bool isToday(String time) {
@@ -65,7 +68,6 @@ class _HomeContainerState extends State<HomeContainer> {
       } else {
         ToastUtil().showToast("Something went wrong.");
       }
-      getAllNews();
     } catch (e) {
       setState(() {
         _isLoading = false;
@@ -80,21 +82,28 @@ class _HomeContainerState extends State<HomeContainer> {
       setState(() {
         _isLoading = false;
       });
+      print("newsResponseModel >>>>>>>><<<<<<<<<<");
+      print(newsResponseModel.statusCode);
       if (newsResponseModel.statusCode == 200) {
-        // for (var element in newsResponseModel.newsDataList) {
-        //   for (var newsContent in element.newsDataContentList!) {
-        //     if (isToday(newsContent.pubDate!)) {
-        //       if (allNews.length < 2) {
-        //         allNews.add(newsContent);
-        //       } else {
-        //         break;
-        //       }
-        //     }
-        //   }
-        //   if (allNews.length == 2) {
-        //     break;
-        //   }
-        // }
+        print(newsResponseModel);
+
+        for (var element in newsResponseModel.results) {
+          print(element.news.articles);
+          // for (var newsContent in element.news) {
+          //   if (isToday(newsContent.pubDate!)) {
+          //     if (allNews.length < 2) {
+          //       allNews.add(newsContent);
+          //     } else {
+          //       break;
+          //     }
+          //   }
+          // }
+          if (allNews.length > 1) {
+            setState(() {
+              allNews = element.news.articles;
+            });
+          }
+        }
       } else {
         ToastUtil().showToast("Something went wrong.");
       }
@@ -113,7 +122,7 @@ class _HomeContainerState extends State<HomeContainer> {
       color: AppColors.gray,
       child: HomeWidget(
         onTapped: widget._onTapped,
-        allContent: [],
+        allContent: allNews,
         allSuggestedGames: allSuggestedGames,
       ),
     );
