@@ -8,17 +8,14 @@ class NewsService {
   static Future<NewsResponseModel> getAllNews() async {
     String token = "";
     await LocalStorage.getLoginToken().then((value) => token = value!);
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> 2");
-
-    String url = 'api/v1/news/fetch/news?category=all&country=in&language=en';
-
+    String url = 'api/v1/news/articles?category=all&country=in&language=en';
     var response = await ServiceBase.get(url: url, headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer $token"
     });
     print("----------------------->>>>>>>>>>>>>>>> 3");
     print(response.statusCode);
-    print(response.body);
+    print(json.decode(json.encode(response.body))['articles']);
     if (response.statusCode != 200) {
       throw "Something went wrong";
     }

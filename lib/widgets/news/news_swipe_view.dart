@@ -33,7 +33,6 @@ class _NewsSwipeViewState extends State<NewsSwipeView> {
               ? DismissDirection.vertical
               : DismissDirection.up,
           onDismissed: (direction) {
-            //print(direction == DismissDirection.up);
             if (direction == DismissDirection.down) {
               if (selectedIndex > 0) {
                 setState(() {

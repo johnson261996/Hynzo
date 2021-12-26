@@ -5,7 +5,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
+import 'package:hynzo/core/models/game_suggestion.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
+import 'package:hynzo/core/models/suggestion_model.dart';
 import 'package:hynzo/providers/game_provider.dart';
 import 'package:hynzo/providers/home_provider.dart';
 import 'package:hynzo/providers/news_provider.dart';
@@ -31,7 +33,7 @@ class _HomeContainerState extends State<HomeContainer> {
   static NewsProvider? _newsProvider;
   static GamesProvider? _gamesProvider;
   List<Article> allNews = [];
-  List<GamePlayModel> allSuggestedGames = [];
+  List<GameSuggestion> allSuggestedGames = [];
   bool _isLoading = false;
   late HomeProvider _homeProvider;
 
@@ -63,10 +65,12 @@ class _HomeContainerState extends State<HomeContainer> {
       setState(() {
         _isLoading = true;
       });
-      SuggestedGamesResponseModel suggestedGamesResponseModel =
+      GameSuggestionModel suggestedGamesResponseModel =
           await _gamesProvider!.getSuggestedGames();
       if (suggestedGamesResponseModel.statusCode == 200) {
-        allSuggestedGames = suggestedGamesResponseModel.allSuggestedGames!;
+        setState(() {
+          allSuggestedGames = suggestedGamesResponseModel.results;
+        });
       } else {
         ToastUtil().showToast("Something went wrong.3");
       }
@@ -80,6 +84,7 @@ class _HomeContainerState extends State<HomeContainer> {
 
   Future<void> getAllNews() async {
     try {
+      print(" >>>>>>>><<<<<<<<<<");
       NewsResponseModel newsResponseModel = await _newsProvider!.getNewsList();
       setState(() {
         _isLoading = false;
