@@ -5,6 +5,7 @@ import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/analytics_events.dart';
 import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/common/view/game_view_widget.dart';
 
@@ -179,11 +180,11 @@ class _AllGamesState extends State<AllGames> {
           const SizedBox(
             height: 10,
           ),
-          Container(
+          SizedBox(
             width: mediaQuery.width,
             height: 455,
             child: GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.only(
                 right: 10,
               ),

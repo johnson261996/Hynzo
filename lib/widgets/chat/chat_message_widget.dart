@@ -201,7 +201,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
 
     if (result != null) {
       UploadResponse uploadJob = await uploadPhoto(result);
-      _sendImageToChannel(uploadJob.content, uploadJob.id);
+      _sendImageToChannel(uploadJob.content, uploadJob.id, 'image');
     }
   }
 
@@ -209,6 +209,11 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
     if (message is types.FileMessage) {
       await OpenFile.open(message.uri);
     }
+  }
+
+  void _handleMessageRead() {
+    channel.sink.add(
+        '{"command": "read_message", "username": "", "user_id": $uid, "chatId": ${widget.channelDetails.id}}');
   }
 
   void _handlePreviewDataFetched(
@@ -227,14 +232,17 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
 
   void _handleOnStickerSend(String sticker) async {
     UploadResponse uploadJob = await uploadSticker(sticker);
-    _sendImageToChannel(uploadJob.content, uploadJob.id);
+    _sendImageToChannel(uploadJob.content, uploadJob.id, 'sticker');
   }
 
-  void _sendImageToChannel(String imgUrl, int mId) {
+  void _sendImageToChannel(String imgUrl, int mId, String type) {
     String encText = '';
     encText = _encrypt.encrypt(imgUrl);
     channel.sink.add(
-        '{"command": "new_message",  "from": $uid, "message": "$encText", "chatId": ${widget.channelDetails.id}, "type_of_content": "image", "media_id": "$mId", "offline_locator":""}');
+        '{"command": "new_message",  "from": $uid, "message": "$encText", "chatId": ${widget.channelDetails.id}, "type_of_content": "$type", "media_id": "$mId", "offline_locator":""}');
+    setState(() {
+      stickerOpen = false;
+    });
   }
 
   void _handleSendPressed(types.PartialText message) {
@@ -257,6 +265,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
     setState(() {
       loading = false;
     });
+    _handleMessageRead();
     setUserStatus(true);
   }
 
@@ -345,7 +354,9 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                                     "createdAt": element
                                         .timestamp.millisecondsSinceEpoch,
                                     "id": element.id.toString(),
-                                    "status": "seen",
+                                    "status": element.seenBy.isEmpty
+                                        ? "delivered"
+                                        : "seen",
                                     "text": _encrypt.decrypt(element.content),
                                     "type": element.typeOfContent
                                   }));
@@ -362,7 +373,9 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                                     "createdAt": element
                                         .timestamp.millisecondsSinceEpoch,
                                     "id": element.id.toString(),
-                                    "status": "seen",
+                                    "status": element.seenBy.isEmpty
+                                        ? "delivered"
+                                        : "seen",
                                     "text": _encrypt.decrypt(element.content),
                                     "type": element.typeOfContent,
                                     "name": 'Image',
@@ -370,6 +383,32 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                                         MediaQuery.of(context).size.width / 2,
                                     "uri": _encrypt.decrypt(element.content)
                                   }));
+                              break;
+                            case 'sticker':
+                              _messages.insert(
+                                  _messages.length,
+                                  types.CustomMessage.fromJson({
+                                    "author": {
+                                      "firstName": element.author.username,
+                                      "id": element.author.id.toString(),
+                                      "imageUrl": element.author.avatar
+                                    },
+                                    "createdAt": element
+                                        .timestamp.millisecondsSinceEpoch,
+                                    "id": element.id.toString(),
+                                    "status": element.seenBy.isEmpty
+                                        ? "delivered"
+                                        : "seen",
+                                    "text": _encrypt.decrypt(element.content),
+                                    "type": 'custom',
+                                    "name": 'Sticker',
+                                    "size":
+                                        MediaQuery.of(context).size.width / 3,
+                                    "metadata": {
+                                      'uri': _encrypt.decrypt(element.content)
+                                    }
+                                  }));
+                              break;
                           }
                         });
                         WidgetsBinding.instance!
@@ -397,7 +436,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                               "createdAt":
                                   msg.message.timestamp.millisecondsSinceEpoch,
                               "id": msg.message.id.toString(),
-                              "status": "seen",
+                              "status": "delivered",
                               "text": _encrypt.decrypt(msg.message.content),
                               "type": msg.message.typeOfContent
                             }));
@@ -414,13 +453,36 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                               "createdAt":
                                   msg.message.timestamp.millisecondsSinceEpoch,
                               "id": msg.message.id.toString(),
-                              "status": "seen",
+                              "status": "delivered",
                               "text": _encrypt.decrypt(msg.message.content),
                               "type": msg.message.typeOfContent,
                               "name": 'Image',
                               "size": MediaQuery.of(context).size.width / 2,
                               "uri": _encrypt.decrypt(msg.message.content)
                             }));
+                        break;
+                      case 'sticker':
+                        _messages.insert(
+                            0,
+                            types.CustomMessage.fromJson({
+                              "author": {
+                                "firstName": msg.message.author.username,
+                                "id": msg.message.author.id.toString(),
+                                "imageUrl": msg.message.author.avatar
+                              },
+                              "createdAt":
+                                  msg.message.timestamp.millisecondsSinceEpoch,
+                              "id": msg.message.id.toString(),
+                              "status": "delivered",
+                              "text": _encrypt.decrypt(msg.message.content),
+                              "type": 'custom',
+                              "name": 'Sticker',
+                              "size": MediaQuery.of(context).size.width / 3,
+                              "metadata": {
+                                'uri': _encrypt.decrypt(msg.message.content)
+                              }
+                            }));
+                        break;
                     }
                   }
                 }
@@ -441,21 +503,81 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                     isLoading: uploading,
                     stickerOpen: stickerOpen,
                   ),
-                  imageMessageBuilder: (p0, {required messageWidth}) {
+                  imageMessageBuilder: (p0, {required messageWidth}) =>
+                      Image.network(
+                    p0.uri,
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+                      return Container(
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.all(20),
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null,
+                          color: Colors.grey,
+                          valueColor:
+                              const AlwaysStoppedAnimation(Colors.indigo),
+                        ),
+                      );
+                    },
+                    width: MediaQuery.of(context).size.width / 2,
+                    fit: BoxFit.fitWidth,
+                  ),
+                  customMessageBuilder: (p0, {required messageWidth}) {
                     return Image.network(
-                      p0.uri,
-                      width: MediaQuery.of(context).size.width / 2,
+                      p0.metadata!['uri'],
+                      width: MediaQuery.of(context).size.width / 3,
                       fit: BoxFit.fitWidth,
                     );
                   },
+                  bubbleBuilder: (child,
+                      {required message, required nextMessageInGroup}) {
+                    switch (message.type) {
+                      case types.MessageType.custom:
+                        return Container(
+                          child: child,
+                        );
+                      case types.MessageType.file:
+                        return Container(
+                          child: child,
+                        );
+                      case types.MessageType.image:
+                        return ClipRRect(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                          child: child,
+                        );
+                      case types.MessageType.text:
+                        return Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20)),
+                              color: message.author.id == uid.toString()
+                                  ? Colors.indigo
+                                  : Colors.grey[200]),
+                          child: child,
+                        );
+                      case types.MessageType.unsupported:
+                        return Container(
+                          child: child,
+                        );
+                    }
+                  },
                   hideBackgroundOnEmojiMessages: true,
+                  emojiEnlargementBehavior: EmojiEnlargementBehavior.multi,
                   scrollPhysics: const BouncingScrollPhysics(),
                   theme: CustomTheme().theme,
                   messages: _messages,
                   onAttachmentPressed: _handleAtachmentPressed,
                   onMessageTap: _handleMessageTap,
                   onPreviewDataFetched: _handlePreviewDataFetched,
-                  onSendPressed: _handleSendPressed,
+                  onSendPressed: (value) {},
                   user: _user,
                 );
               }),

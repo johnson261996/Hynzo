@@ -111,16 +111,19 @@ class UserBasicInfo {
   UserBasicInfo({
     required this.id,
     required this.isOnline,
+    required this.fullname,
     required this.contactBlockedStatus,
   });
 
   int id;
   bool isOnline;
+  String fullname;
   ContactBlockedStatus contactBlockedStatus;
 
   factory UserBasicInfo.fromJson(Map<String, dynamic> json) => UserBasicInfo(
         id: json["id"],
         isOnline: json["is_online"],
+        fullname: json["fullname"],
         contactBlockedStatus:
             ContactBlockedStatus.fromJson(json["contact_blocked_status"]),
       );

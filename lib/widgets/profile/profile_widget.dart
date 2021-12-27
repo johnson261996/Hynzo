@@ -7,8 +7,6 @@ import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/widgets/common/profile_image/profile_image.dart';
 
 class ProfileWidget extends StatefulWidget {
-  const ProfileWidget({Key? key}) : super(key: key);
-
   @override
   _ProfileWidgetState createState() => _ProfileWidgetState();
 }
@@ -53,6 +51,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               padding: const EdgeInsets.only(left: 15.0, right: 15),
               child: Row(
                 children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.03,
+                  ),
                   InkWell(
                     onTap: () {
                       Navigator.pop(context);

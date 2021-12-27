@@ -7,6 +7,9 @@ import 'package:hynzo/providers/home_provider.dart';
 import 'package:hynzo/providers/interest_provider.dart';
 import 'package:hynzo/providers/news_provider.dart';
 import 'package:hynzo/providers/suggestion_provider.dart';
+import 'package:hynzo/providers/update_profile_provider.dart';
+import 'package:hynzo/providers/upload_avatar_provider.dart';
+import 'package:hynzo/providers/user_profile_provider.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/themes.dart';
 import 'package:provider/provider.dart';
@@ -41,8 +44,18 @@ class MyApp extends StatelessWidget {
           create: (_) => ChatProvider(),
         ),
         ChangeNotifierProvider(
+          create: (_) => UploadAvatarProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => UserProfileProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => UpdateProfileProvider(),
+        ),
+        ChangeNotifierProvider(
           create: (_) => HomeProvider(),
         ),
+
       ],
       child: MaterialApp(
         title: 'Hynzo',
