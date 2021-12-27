@@ -9,8 +9,6 @@ import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/widgets/common/profile_image/profile_image.dart';
 
 class ProfileWidget extends StatefulWidget {
-  const ProfileWidget({Key? key}) : super(key: key);
-
   @override
   _ProfileWidgetState createState() => _ProfileWidgetState();
 }
@@ -55,6 +53,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               padding: const EdgeInsets.only(left: 15.0, right: 15),
               child: Row(
                 children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.03,
+                  ),
                   InkWell(
                     onTap: () {
                       Navigator.pop(context);
@@ -118,14 +119,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   .copyWith(
                                       color: AppColors.white,
                                       fontWeight: FontWeight.w700)),
-                         IconButton(
-                                onPressed:(){
-                                  Navigator.pushNamed(context, Routes.edit_profile);
-                                },
-                                icon: Icon(
-                                  Icons.edit_outlined,
-                                  color: AppColors.white,
-                                ),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, Routes.edit_profile);
+                            },
+                            icon: Icon(
+                              Icons.edit_outlined,
+                              color: AppColors.white,
+                            ),
                           )
                         ],
                       ),
@@ -206,7 +207,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.01,
           ),
-          Expanded(child: SingleChildScrollView(
+          Expanded(
+              child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -230,14 +232,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           width: 20.0,
                         ),
                         Text(
-                         Strings.MY_ACCOUNT,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.offgrey,
-                          ),
+                          Strings.MY_ACCOUNT,
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offgrey,
+                                  ),
                         ),
                         const Spacer(),
                         Icon(
@@ -265,7 +265,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                         Images.MY_CHAT,
+                          Images.MY_CHAT,
                           width: 25,
                           height: 25,
                         ),
@@ -273,14 +273,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           width: 20.0,
                         ),
                         Text(
-                         Strings.MY_CHAT,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.offgrey,
-                          ),
+                          Strings.MY_CHAT,
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offgrey,
+                                  ),
                         ),
                         const Spacer(),
                         Icon(
@@ -316,14 +314,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           width: 20.0,
                         ),
                         Text(
-                         Strings.ACTIVITIES,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.offgrey,
-                          ),
+                          Strings.ACTIVITIES,
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offgrey,
+                                  ),
                         ),
                         const Spacer(),
                         Icon(
@@ -359,14 +355,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           width: 20.0,
                         ),
                         Text(
-                         Strings.HELP_SUPPORT,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.offgrey,
-                          ),
+                          Strings.HELP_SUPPORT,
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offgrey,
+                                  ),
                         ),
                         const Spacer(),
                         Icon(
@@ -403,13 +397,11 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         ),
                         Text(
                           Strings.REFER_FRIEND,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.offgrey,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offgrey,
+                                  ),
                         ),
                         const Spacer(),
                         Icon(
@@ -426,10 +418,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   height: 2.0,
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     LocalStorage.clearToken();
                     Navigator.pushReplacementNamed(context, Routes.login);
-                },
+                  },
                   child: Container(
                     padding: const EdgeInsets.only(
                       left: 30.0,
@@ -449,13 +441,11 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         ),
                         Text(
                           Strings.LOG_OUT,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.offgrey,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offgrey,
+                                  ),
                         ),
                         const Spacer(),
                         Icon(
@@ -470,7 +460,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               ],
             ),
           ))
-
         ],
       ),
     );

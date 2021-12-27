@@ -1,14 +1,25 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hynzo/core/models/upload_avatar_model.dart';
+import 'package:hynzo/core/models/user_profile_model.dart';
+import 'package:hynzo/core/services/upload_avatar_service.dart';
 import 'package:hynzo/resources/images.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/widgets/common/buttons/primary_button.dart';
 import 'package:hynzo/widgets/common/textField/textField.dart';
 import 'package:hynzo/widgets/common/textFieldContainer/textFiledContainer.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class EditProfileWidget extends StatefulWidget {
-  const EditProfileWidget({Key? key}) : super(key: key);
+  final UserProfileModel userDetails;
+
+  final Function updateProfile;
+
+  const EditProfileWidget(
+      {Key? key, required this.userDetails, required this.updateProfile})
+      : super(key: key);
 
   @override
   _EditProfileWidgetState createState() => _EditProfileWidgetState();
@@ -19,20 +30,24 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
   String fullName = '';
   String userName = '';
   String mobile = '';
+  String genderDetail = '';
   String gender = '';
   String location = '';
+  bool uploading = false;
 
   String dateString = '';
   final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
   final mobileController = TextEditingController();
   final dateController = TextEditingController();
+  final genderDetailController = TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getData();
+    url = widget.userDetails.avatar ?? Images.PROFILE_PIC;
+    dateString = widget.userDetails.dob ?? Strings.DOB;
+    print(dateString);
   }
 
   datepick() async {
@@ -42,24 +57,63 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
         initialDate: DateTime.now(),
         firstDate: DateTime(1900),
         lastDate: DateTime(2100));
-    dateController.text = date.toString().substring(0, 10);
-    dateString = dateController.text;
+    setState(() {
+      String dateStr = date.toString().substring(0, 10);
+      var inputFormat = DateFormat('yyyy-MM-dd');
+      var inputDate = inputFormat.parse(dateStr); // <-- dd/MM 24H format
+
+      var outputFormat = DateFormat('yyyy-MM-dd');
+      var outputDate = outputFormat.format(inputDate);
+      dateString = outputDate;
+      dateController.text = dateString;
+    });
   }
 
   getData() async {
-    String _fullName = (await LocalStorage.getUserFullName())!;
-    String _userName = (await LocalStorage.getUserName())!;
-    String _avatar = (await LocalStorage.getProfilePic())!;
-    LocalStorage.getMobileNumber().then((value) => mobile = value!);
+    fullName = widget.userDetails.full_name ?? Strings.NAME;
+    mobile = widget.userDetails.contact_number ?? Strings.MOBILE;
+    genderDetail = widget.userDetails.gender_detail ?? Strings.GENDER;
+    gender = widget.userDetails.gender ?? '';
+    userName = widget.userDetails.username ?? '';
+    dateString = widget.userDetails.dob ?? Strings.DOB;
+  }
+
+  update() {
+    widget.updateProfile(firstNameController.text, mobileController.text,
+        gender, genderDetail, dateController.text, url);
+  }
+
+  Future<UploadAvatarResponse> uploadPhoto(XFile pickedFile) async {
     setState(() {
-      fullName = _fullName;
-      userName = _userName;
-      url = _avatar;
+      uploading = true;
     });
+    UploadAvatarResponse response =
+        await AvatarUploadService().uploadPicService(pickedFile);
+    setState(() {
+      uploading = false;
+    });
+    return response;
+  }
+
+  void _handleImageSelection() async {
+    final result = await ImagePicker().pickImage(
+      imageQuality: 70,
+      maxWidth: 1440,
+      maxHeight: 2560,
+      source: ImageSource.gallery,
+    );
+
+    if (result != null) {
+      UploadAvatarResponse uploadJob = await uploadPhoto(result);
+      setState(() {
+        url = uploadJob.avatar;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    getData();
     TextStyle style = Theme.of(context).textTheme.bodyText2!.copyWith(
         color: AppColors.grey_primary,
         fontWeight: FontWeight.w400,
@@ -108,16 +162,17 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
           ),
           Center(
             child: Stack(children: [
-              CircleAvatar(
-                radius: 50.0,
-                child: url == ''
-                    ? Image.asset(
-                        Images.PROFILE_PIC,
-                        fit: BoxFit.contain,
-                      )
-                    : Image.network(url),
-                backgroundColor: AppColors.white,
-              ),
+              url == ''
+                  ? CircleAvatar(
+                      radius: 50.0,
+                      backgroundImage: AssetImage(Images.PROFILE_PIC),
+                      backgroundColor: AppColors.white,
+                    )
+                  : CircleAvatar(
+                      radius: 50,
+                      backgroundImage: NetworkImage(url),
+                      backgroundColor: AppColors.white,
+                    ),
               Positioned(
                   right: 0,
                   bottom: 2,
@@ -129,20 +184,10 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                       borderRadius: BorderRadius.circular(60.0),
                     ),
                     child: GestureDetector(
-                      onTap: null,
+                        onTap: _handleImageSelection,
                         child: Image.asset(Images.CAMERA)),
                   ))
             ]),
-            // child: CircleAvatar(
-            //   radius: 50.0,
-            //   child: url == ''
-            //       ? Image.asset(
-            //           Images.PROFILE_PIC,
-            //           fit: BoxFit.contain,
-            //         )
-            //       : Image.network(url),
-            //   backgroundColor: AppColors.white,
-            // ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20.0),
@@ -179,12 +224,12 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   widget: Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: TextFieldWidget(
+                        text: fullName,
                         controller: firstNameController,
-                        hintText: fullName,
                         keyboard: TextInputType.text,
                         onchangeFunc: (val) {
                           setState(() {
-                            fullName = firstNameController.text;
+                            firstNameController.text = val;
                           });
                         }),
                   ),
@@ -196,8 +241,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   widget: Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: TextFieldWidget(
+                        text: mobile,
                         controller: mobileController,
-                        hintText: '(+91) $mobile',
                         leading: Image.asset(
                           Images.FLAG,
                           width: 25,
@@ -205,8 +250,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         ),
                         keyboard: TextInputType.text,
                         onchangeFunc: (val) {
+                          print(val);
                           setState(() {
-                            mobile = mobileController.text;
+                            mobileController.text = val;
                           });
                         }),
                   ),
@@ -215,43 +261,42 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   height: size.height * 0.03,
                 ),
                 TextFieldContainer(
-                    widget: Padding(
+                  widget: Row(
+                    children: <Widget>[
+                      Expanded(
+                          child: Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: DropdownButton(
-                            icon: Padding(
-                              padding: const EdgeInsets.only(right: 15.0),
-                              child: Icon(
-                                Icons.keyboard_arrow_down,
-                                color: AppColors.gray_arrow,
-                              ),
-                            ),
-                            hint: gender == ''
-                                ? Text(Strings.GENDER, style: style)
-                                : Text(gender, style: style),
-                            isExpanded: true,
-                            underline: SizedBox(),
-                            items: Strings.GENDER_LIST.map(
-                              (val) {
-                                return DropdownMenuItem<String>(
-                                  value: val,
-                                  child: Text(val,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText2!
-                                          .copyWith(
-                                              color: AppColors.grey_primary,
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 13)),
-                                );
-                              },
-                            ).toList(),
-                            onChanged: (val) {
-                              setState(
-                                () {
-                                  gender = val as String;
-                                },
-                              );
-                            }))),
+                        child: TextField(
+                            style: style,
+                            controller: genderDetailController,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: genderDetail,
+                              hintStyle: style,
+                            )),
+                      )),
+                      PopupMenuButton<String>(
+                        icon: const Icon(Icons.arrow_drop_down),
+                        onSelected: (String value) {
+                          genderDetail = value;
+                          genderDetailController.text = genderDetail;
+                          if (value == 'Male') {
+                            gender = 'M';
+                          } else {
+                            gender = 'F';
+                          }
+                        },
+                        itemBuilder: (BuildContext context) {
+                          return Strings.GENDER_LIST
+                              .map<PopupMenuItem<String>>((String value) {
+                            return new PopupMenuItem(
+                                child: Text(value), value: value);
+                          }).toList();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
                 SizedBox(
                   height: size.height * 0.03,
                 ),
@@ -259,69 +304,34 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   widget: Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 0.5,
-                          ),
-                          Expanded(
-                            child: Container(
-                              width: size.width * 0.60,
-                              child: TextFieldWidget(
-                                controller: dateController,
-                                hintText: Strings.DOB,
-                                leading: null,
-                                keyboard: TextInputType.none,
-                                onchangeFunc: (val) {
-                                  datepick();
-                                },
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () async {
-                              datepick();
-                            },
+                      children: <Widget>[
+                        Expanded(
                             child: Padding(
-                                padding: const EdgeInsets.only(right: 15.0),
-                                child:
-                                    Image(image: AssetImage(Images.CALENDAR))),
-                          ),
-                        ]),
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: TextField(
+                              style: style,
+                              controller: dateController,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: dateString,
+                                hintStyle: style,
+                              )),
+                        )),
+                        GestureDetector(
+                          onTap: () async {
+                            datepick();
+                          },
+                          child: Padding(
+                              padding: const EdgeInsets.only(right: 15.0),
+                              child: Image(image: AssetImage(Images.CALENDAR))),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: size.height * 0.03,
                 ),
-                TextFieldContainer(
-                    widget: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: DropdownButton(
-                            icon: Padding(
-                              padding: const EdgeInsets.only(right: 15.0),
-                              child: Icon(
-                                Icons.keyboard_arrow_down,
-                                color: AppColors.gray_arrow,
-                              ),
-                            ),
-                            hint: location == ''
-                                ? Text(Strings.LOCATION, style: style)
-                                : Text(location, style: style),
-                            isExpanded: true,
-                            underline: SizedBox(),
-                            items: Strings.LOCATION_LIST.map(
-                              (val) {
-                                return DropdownMenuItem<String>(
-                                    value: val, child: Text(val, style: style));
-                              },
-                            ).toList(),
-                            onChanged: (val) {
-                              setState(
-                                () {
-                                  location = val as String;
-                                },
-                              );
-                            }))),
                 SizedBox(
                   height: size.height * 0.03,
                 ),
@@ -332,7 +342,18 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   ),
                   child: PrimaryButton(
                     text: const Text(Strings.UPDATE_PROFILE),
-                    onPressed: () {},
+                    onPressed: () {
+                      if (firstNameController.text == '') {
+                        firstNameController.text = fullName;
+                      }
+                      if (mobileController.text == '') {
+                        mobileController.text = mobile;
+                      }
+                      if (dateController.text == '') {
+                        dateController.text = dateString;
+                      }
+                      update();
+                    },
                   ),
                 ),
                 SizedBox(

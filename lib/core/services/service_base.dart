@@ -36,6 +36,19 @@ class ServiceBase {
             .post(Uri.parse(apiUrl), body: jsonEncode(data), headers: headers);
     return response;
   }
+  static Future<http.Response> patch({
+    String? url,
+    required Map data,
+    String baseUrl = '',
+    required Map<String, String> headers,
+  }) async {
+    checkConnectionStaus();
+    String apiUrl = apiBaseUrl + url!;
+    final response =
+    await InterceptedHttp.build(interceptors: [AuthInterceptorHeader()])
+        .patch(Uri.parse(apiUrl), body: jsonEncode(data), headers: headers);
+    return response;
+  }
 
   static String getApiBaseUrl(){
     return apiBaseUrl;
