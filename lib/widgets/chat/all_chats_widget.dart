@@ -52,7 +52,9 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
           isRead: false,
           content: element.lastMessage.typeOfContent == 'image'
               ? 'Image'
-              : _encrypt.decrypt(element.lastMessage.content),
+              : element.lastMessage.typeOfContent == 'sticker'
+                  ? 'Sticker'
+                  : _encrypt.decrypt(element.lastMessage.content),
           dateTime: element.lastMessage.timestamp,
         ),
       );

@@ -8,6 +8,7 @@ import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/analytics_events.dart';
 import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/carouselSlider/carousel_slider.dart';
@@ -467,7 +468,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 child: GestureDetector(
                                   onTap: () {
                                     check().then((internet) {
-                                      if (internet != null && internet) {
+                                      if (internet) {
+                                        FireAnalytics().log('game', widget.allSuggestedGames![index].gameName!);
                                         Navigation.pushNamed(
                                             context, Routes.webview, {
                                           'link': widget

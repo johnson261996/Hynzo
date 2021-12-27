@@ -1,22 +1,17 @@
-
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/analytics_events.dart';
 import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/common/view/game_view_widget.dart';
 
-class FilteredGamesWidget extends StatefulWidget{
-
-  final String title ;
+class FilteredGamesWidget extends StatefulWidget {
+  final String title;
   final List<GamePlayModel>? filteredGames;
 
-  const FilteredGamesWidget({
-    Key? key,
-    required this.title,
-    this.filteredGames
-
-  }) : super(key: key);
+  const FilteredGamesWidget({Key? key, required this.title, this.filteredGames})
+      : super(key: key);
   @override
   State<FilteredGamesWidget> createState() => _FilteredGamesWidgetState();
 }
@@ -27,7 +22,7 @@ class _FilteredGamesWidgetState extends State<FilteredGamesWidget> {
     Size mediaQuery = MediaQuery.of(context).size;
     return Container(
         height: MediaQuery.of(context).size.height,
-        child:SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -39,9 +34,9 @@ class _FilteredGamesWidgetState extends State<FilteredGamesWidget> {
                 child: Text(
                   widget.title,
                   style: Theme.of(context).textTheme.headline6!.copyWith(
-                    color: AppColors.black,
-                    fontWeight: FontWeight.w600,
-                  ),
+                        color: AppColors.black,
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
               ),
               const SizedBox(
@@ -61,9 +56,12 @@ class _FilteredGamesWidgetState extends State<FilteredGamesWidget> {
                   ),
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                      onTap: (){
-                        Navigation.pushNamed(context, Routes.webview,
-                            {'link': widget.filteredGames![index].redirectionUrl});
+                      onTap: () {
+                        FireAnalytics().log(
+                            'game', widget.filteredGames![index].gameName!);
+                        Navigation.pushNamed(context, Routes.webview, {
+                          'link': widget.filteredGames![index].redirectionUrl
+                        });
                       },
                       child: GameContainerWidget(
                         imagePath: widget.filteredGames![index].image!,
@@ -76,8 +74,6 @@ class _FilteredGamesWidgetState extends State<FilteredGamesWidget> {
               )
             ],
           ),
-        )
-
-    );
+        ));
   }
 }
