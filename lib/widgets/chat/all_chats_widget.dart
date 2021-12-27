@@ -46,7 +46,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
         ChatModel(
           senderId: element.userBasicInfo.id,
           imagePath: element.avatar,
-          name: element.channelName,
+          name: element.userBasicInfo.fullname,
           unreadCount: element.unreadMessages,
           status: element.userBasicInfo.isOnline ? 'active' : 'inacvtive',
           isRead: false,
