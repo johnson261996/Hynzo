@@ -53,6 +53,7 @@ dependencies:
   encrypt: ^5.0.1
   path: ^1.8.0
   carousel_slider: ^4.0.0
+  firebase_analytics: ^9.0.4
 
 
   # The following adds the Cupertino Icons font to your application.
