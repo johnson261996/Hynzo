@@ -3,9 +3,12 @@
 ///
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
+import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
+import 'package:hynzo/core/models/user_profile_model.dart';
 import 'package:hynzo/providers/game_provider.dart';
 import 'package:hynzo/providers/news_provider.dart';
+import 'package:hynzo/providers/user_profile_provider.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
@@ -27,8 +30,10 @@ class HomeContainer extends StatefulWidget {
 class _HomeContainerState extends State<HomeContainer> {
   static NewsProvider? _newsProvider;
   static GamesProvider? _gamesProvider;
+  static UserProfileProvider? _userProvider;
   List<NewsContentDataModel> allNews = [];
   List<GamePlayModel> allSuggestedGames = [];
+  UserProfileModel userDatas = UserProfileModel();
   bool _isLoading = false;
 
   @override
@@ -37,8 +42,11 @@ class _HomeContainerState extends State<HomeContainer> {
     super.initState();
     _newsProvider = Provider.of<NewsProvider>(context, listen: false);
     _gamesProvider = Provider.of<GamesProvider>(context, listen: false);
+    _userProvider = Provider.of<UserProfileProvider>(context, listen: false);
+
     allNews.clear();
     getSuggestionGames();
+    getUserData();
   }
 
   bool isToday(String time) {
@@ -107,8 +115,30 @@ class _HomeContainerState extends State<HomeContainer> {
     }
   }
 
+  Future<void> getUserData() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      UserProfileModel userProfileModel = await _userProvider!.getUser();
+      if (userProfileModel.statusCode == 200) {
+        setState(() {
+          userDatas = userProfileModel;
+        });
+      } else {
+        ToastUtil().showToast("Something went wrong.3");
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ToastUtil().showToast(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    _userProvider = Provider.of<UserProfileProvider>(context, listen: false);
     return LoadingOverlay(
       isLoading: _isLoading,
       color: AppColors.gray,
@@ -116,6 +146,7 @@ class _HomeContainerState extends State<HomeContainer> {
         onTapped: widget._onTapped,
         allContent: allNews,
         allSuggestedGames: allSuggestedGames,
+        userDetails: _userProvider!.userProfileModel,
       ),
     );
   }

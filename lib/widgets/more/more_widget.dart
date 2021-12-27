@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:hynzo/core/models/user_profile_model.dart';
 import 'package:hynzo/resources/images.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/widgets/common/profile_image/profile_image.dart';
 
 class MoreWidget extends StatefulWidget {
   final String imageUrl;
   final int level;
+  final UserProfileModel userDetails;
 
   const MoreWidget({
     Key? key,
     required this.imageUrl,
     required this.level,
+    required this.userDetails
   }) : super(key: key);
 
   @override
@@ -24,28 +26,15 @@ class _MoreWidgetState extends State<MoreWidget> {
   late String url = '';
   String name = '';
 
-  getProfilePic() async {
-    url = (await LocalStorage.getProfilePic())!;
-  }
-
-  getName() async {
-    String _name = (await LocalStorage.getUserName())!;
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      setState(() {
-        name = _name;
-      });
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    getName();
-    getProfilePic();
   }
 
   @override
   Widget build(BuildContext context) {
+    name = widget.userDetails.full_name ?? '';
+    url = widget.userDetails.avatar ?? '';
     return Container(
       color: AppColors.white,
       width: MediaQuery.of(context).size.width,
@@ -114,6 +103,9 @@ class _MoreWidgetState extends State<MoreWidget> {
                                 color: AppColors.greyBlack,
                               ),
                         ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01,
+                        ),
                         InkWell(
                           onTap: () {
                             Navigator.pushNamed(context, Routes.profile);
@@ -126,7 +118,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                                     .textTheme
                                     .caption!
                                     .copyWith(
-                                      fontSize: 12,
+                                      fontSize: 14,
                                       color: AppColors.greyBlack,
                                     ),
                               ),
@@ -218,49 +210,6 @@ class _MoreWidgetState extends State<MoreWidget> {
                             ),
                             Text(
                               Strings.SUBSCRIPTION,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.offgrey,
-                                  ),
-                            ),
-                            const Spacer(),
-                            Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              size: 18,
-                              color: AppColors.graylight,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Divider(
-                      color: AppColors.lightergray,
-                      height: 2.0,
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        padding: const EdgeInsets.only(
-                          left: 15.0,
-                          right: 15.0,
-                        ),
-                        height: 70.0,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              Images.EDIT,
-                              width: 25,
-                              height: 25,
-                            ),
-                            const SizedBox(
-                              width: 20.0,
-                            ),
-                            Text(
-                              Strings.EDIT_HOME_SCREEN,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!

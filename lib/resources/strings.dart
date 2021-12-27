@@ -182,13 +182,12 @@ class Strings {
   //Edit-profile
   static const BIO = 'Bio';
   static const UPDATE_PROFILE = 'Update Profile';
-  static const FIRST_NAME = 'What’s your first name?';
-  static const LAST_NAME = 'And your last name?';
+  static const NAME = 'What’s your name?';
   static const MOBILE = 'Phone number?';
   static const GENDER = 'Select your gender';
   static const DOB = 'What is your date of birth?';
   static const LOCATION = 'Banglore';
-  static const GENDER_LIST = ['Male', 'Female', 'Others'];
+  static const GENDER_LIST = ['Male', 'Female'];
   static const LOCATION_LIST = ['Mumbai', 'Banglore', 'Delhi'];
 
 

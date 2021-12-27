@@ -58,15 +58,16 @@ class _ProfileImageWidgetState extends State<ProfileImageWidget> {
           bottom: 1.0,
           right: 1.0,
           left: 1.0,
-          child: CircleAvatar(
+          child: widget.imageUrl == '' ?
+          CircleAvatar(
             radius: 30.0,
-            // ignore: unnecessary_null_comparison
-            child: widget.imageUrl == '' ? Image.asset(
-             Images.PROFILE_PIC,
-              fit: BoxFit.contain,
-            ) : Image.network(widget.imageUrl),
+            backgroundImage: AssetImage(Images.PROFILE_PIC),
             backgroundColor: AppColors.white,
-          ),
+          ): CircleAvatar(
+            radius: 30.0,
+            backgroundImage: NetworkImage(widget.imageUrl),
+            backgroundColor: AppColors.white,
+          )
         ),
         Positioned.fill(
           bottom: 10.0,

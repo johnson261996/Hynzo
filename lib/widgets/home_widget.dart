@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/models/events_model.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
+import 'package:hynzo/core/models/user_profile_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
@@ -21,12 +22,14 @@ import 'common/view/event_view_widget.dart';
 class HomeWidget extends StatefulWidget {
   final Function onTapped;
   final List<NewsContentDataModel>? allContent;
+  final UserProfileModel userDetails;
   final List<GamePlayModel>? allSuggestedGames;
 
   const HomeWidget(
       {required this.onTapped,
       this.allContent,
       this.allSuggestedGames,
+        required this.userDetails,
       Key? key})
       : super(key: key);
 
@@ -102,18 +105,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         dateTime: 'Thu, 11 Nov',
       ),
     );
-    getName();
-    getProfilePic();
   }
-
-  getName() async {
-    name = (await LocalStorage.getUserName())!;
-  }
-
-  getProfilePic() async {
-    url = (await LocalStorage.getProfilePic())!;
-  }
-
   String getDate(String time) {
     var now = DateTime.now();
     var formatter = DateFormat('dd/MM/yyyy');
@@ -146,6 +138,8 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
+    name = widget.userDetails.full_name ?? '';
+    url = widget.userDetails.avatar ?? '';
     return SafeArea(
       child: Container(
         width: mediaQuery.width,
@@ -202,47 +196,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       ],
                     ),
                   ),
-                  /* Container(
-                    width: 75.0,
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                      color: AppColors.blueDark,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 20.0,
-                          height: 20.0,
-                          decoration: BoxDecoration(
-                            color: AppColors.yellowLight,
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Center(
-                            child: Image.asset(
-                              'assets/images/coin.png',
-                              width: 15.0,
-                              height: 15.0,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: mediaQuery.width * 0.01,
-                        ),
-                        Text(
-                          "$coin",
-                          style:
-                              Theme.of(context).textTheme.subtitle1!.copyWith(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 13,
-                                    color: AppColors.white,
-                                  ),
-                        )
-                      ],
-                    ),
-                  ),*/
+
                 ],
               ),
             ),
