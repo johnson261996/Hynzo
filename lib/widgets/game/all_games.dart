@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/resources/strings.dart';
@@ -12,13 +13,9 @@ class AllGames extends StatefulWidget {
   final List<GamePlayModel>? recentGames;
   final List<GamePlayModel>? allGames;
 
-  const AllGames({
-    Key? key,
-    this.allSuggestedGames,
-    this.recentGames,
-    this.allGames
-
-  }) : super(key: key);
+  const AllGames(
+      {Key? key, this.allSuggestedGames, this.recentGames, this.allGames})
+      : super(key: key);
 
   @override
   State<AllGames> createState() => _AllGamesState();
@@ -27,7 +24,6 @@ class AllGames extends StatefulWidget {
 class _AllGamesState extends State<AllGames> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -35,36 +31,39 @@ class _AllGamesState extends State<AllGames> {
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
     return SingleChildScrollView(
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 35,
-            ),
-            Text(
-              Strings.RECENTLY_PLAYED,
-              style: Theme.of(context).textTheme.headline6!.copyWith(
-                    color: AppColors.black,
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              width: mediaQuery.width,
-              height: 140,
-              child: ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 35,
+          ),
+          Text(
+            Strings.RECENTLY_PLAYED,
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                  color: AppColors.black,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            width: mediaQuery.width,
+            height: 140,
+            child: ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
                     padding: const EdgeInsets.only(
                       right: 12.0,
                     ),
                     child: GestureDetector(
-                      onTap: (){
-                        Navigation.pushNamed(context, Routes.webview,
-                            {'link': widget.recentGames![index].redirectionUrl});
+                      onTap: () {
+                        print(">>>>>>>>>>>>>>>");
+                        print(json
+                            .decode(json.encode(widget.recentGames![index])));
+                        Navigation.pushNamed(context, Routes.webview, {
+                          'link': widget.recentGames![index].redirectionUrl
+                        });
                       },
                       child: Column(
                         children: [
@@ -75,7 +74,11 @@ class _AllGamesState extends State<AllGames> {
                               fit: BoxFit.cover,
                               width: 110.0,
                               height: 110.0,
-                              errorBuilder: (context, error, stackTrace) => Image.asset('assets/images/no_image.png',fit: BoxFit.cover,),
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Image.asset(
+                                'assets/images/no_image.png',
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -83,121 +86,127 @@ class _AllGamesState extends State<AllGames> {
                           ),
                           Text(
                             widget.recentGames![index].gameName!,
-                            style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.black,
-                            ),
+                            style:
+                                Theme.of(context).textTheme.subtitle2!.copyWith(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.black,
+                                    ),
                           )
                         ],
                       ),
-                    )
-                  );
-                },
-                itemCount: widget.recentGames!.length,
-                scrollDirection: Axis.horizontal,
-              ),
+                    ));
+              },
+              itemCount: widget.recentGames!.length,
+              scrollDirection: Axis.horizontal,
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              Strings.SUGGESTED_GAMES,
-              style: Theme.of(context).textTheme.headline6!.copyWith(
-                    color: AppColors.black,
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              width: mediaQuery.width,
-              height: 140,
-              child: ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                      padding: const EdgeInsets.only(
-                        right: 12.0,
-                      ),
-                      child: GestureDetector(
-                        onTap: (){
-                          Navigation.pushNamed(context, Routes.webview,
-                              {'link': widget.allSuggestedGames![index].redirectionUrl});
-                        },
-                        child: Column(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10.0),
-                              child: Image.network(
-                                widget.allSuggestedGames![index].image!,
-                                fit: BoxFit.cover,
-                                width: 110.0,
-                                height: 110.0,
-                                errorBuilder: (context, error, stackTrace) => Image.asset('assets/images/no_image.png',fit: BoxFit.cover,),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              widget.allSuggestedGames![index].gameName!,
-                              style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.black,
-                              ),
-                            )
-                          ],
-                        ),
-                      ));
-                },
-                itemCount: widget.allSuggestedGames!.length,
-                scrollDirection: Axis.horizontal,
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              Strings.ALL_GAMES,
-              style: Theme.of(context).textTheme.headline6!.copyWith(
-                    color: AppColors.black,
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              width: mediaQuery.width,
-              height: 455,
-              child: GridView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.only(
-                  right: 10,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            Strings.SUGGESTED_GAMES,
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                  color: AppColors.black,
+                  fontWeight: FontWeight.w600,
                 ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  childAspectRatio: 0.85,
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: (){
-                      Navigation.pushNamed(context, Routes.webview,
-                          {'link': widget.allGames![index].redirectionUrl});
-                    },
-                    child: GameContainerWidget(
-                      imagePath: widget.allGames![index].image!,
-                      name: widget.allGames![index].gameName!,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Container(
+            width: mediaQuery.width,
+            height: 140,
+            child: ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                    padding: const EdgeInsets.only(
+                      right: 12.0,
                     ),
-                  );
-                },
-                itemCount: widget.allGames!.length,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigation.pushNamed(context, Routes.webview, {
+                          'link':
+                              widget.allSuggestedGames![index].redirectionUrl
+                        });
+                      },
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Image.network(
+                              widget.allSuggestedGames![index].image!,
+                              fit: BoxFit.cover,
+                              width: 110.0,
+                              height: 110.0,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Image.asset(
+                                'assets/images/no_image.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            widget.allSuggestedGames![index].gameName!,
+                            style:
+                                Theme.of(context).textTheme.subtitle2!.copyWith(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.black,
+                                    ),
+                          )
+                        ],
+                      ),
+                    ));
+              },
+              itemCount: widget.allSuggestedGames!.length,
+              scrollDirection: Axis.horizontal,
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            Strings.ALL_GAMES,
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                  color: AppColors.black,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Container(
+            width: mediaQuery.width,
+            height: 455,
+            child: GridView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.only(
+                right: 10,
               ),
-            )
-          ],
-        ),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 0.85,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () {
+                    Navigation.pushNamed(context, Routes.webview,
+                        {'link': widget.allGames![index].redirectionUrl});
+                  },
+                  child: GameContainerWidget(
+                    imagePath: widget.allGames![index].image!,
+                    name: widget.allGames![index].gameName!,
+                  ),
+                );
+              },
+              itemCount: widget.allGames!.length,
+            ),
+          )
+        ],
       ),
     );
   }
