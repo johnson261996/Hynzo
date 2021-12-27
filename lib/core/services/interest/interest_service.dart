@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:hynzo/core/models/interest_model.dart';
 import 'package:hynzo/core/services/service_base.dart';
@@ -17,6 +18,7 @@ class InterestService {
     if (response.statusCode != 200) {
       throw "Something went wrong";
     }
+    log(response.body);
     return InterestResponseModel.fromJson(
       jsonDecode(response.body),
       response.statusCode,

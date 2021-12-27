@@ -19,9 +19,6 @@ class InterestContainer extends StatefulWidget {
 
 class _InterestContainerState extends State<InterestContainer> {
   List<ResultsModel> allResults = [];
-  bool _isLoading = false;
-  bool _isNextPageIsEmpty = false;
-  int _totalCount = 1;
   int limit = 10;
   static InterestProvider? _interestProvider;
   late InterestResponseModel interestResponseModel;
@@ -33,30 +30,13 @@ class _InterestContainerState extends State<InterestContainer> {
     allResults.clear();
   }
 
-  Future<void> getInitalInterestList(String limit, String offset) async {
-    try {
-      _interestProvider!.isLoading = true;
-      interestResponseModel =
-          await _interestProvider!.getInterestList(limit, offset);
-
-      _interestProvider!.isLoading = false;
-      if (interestResponseModel.statusCode == 200) {
-        _totalCount = interestResponseModel.count!;
-        for (var element in interestResponseModel.resultsList) {
-          allResults.add(element);
-        }
-        if (interestResponseModel.next != '') {
-          _isNextPageIsEmpty = false;
-        } else {
-          _isNextPageIsEmpty = true;
-        }
-      } else {
-        ToastUtil().showToast("Something went wrong.");
-      }
-    } catch (e) {
-      _interestProvider!.isLoading = false;
-      ToastUtil().showToast(e.toString());
-    }
+  Future<InterestResponseModel> getInitialInterestList(
+      String limit, String offset) async {
+    _interestProvider!.changeLoadingStatus(true);
+    interestResponseModel =
+        await _interestProvider!.getInterestList(limit, offset);
+    _interestProvider!.changeLoadingStatus(false);
+    return interestResponseModel;
   }
 
   Future<void> addInterests(String interestIds) async {
@@ -71,8 +51,6 @@ class _InterestContainerState extends State<InterestContainer> {
         } else {
           Navigation.pushReplacementNamed(context, Routes.suggetion);
         }
-
-
       } else {
         ToastUtil().showToast("Something went wrong.");
       }
@@ -89,11 +67,8 @@ class _InterestContainerState extends State<InterestContainer> {
       isLoading: _interestProvider!.isLoading,
       color: AppColors.gray,
       child: InterestWidget(
-        allResults: allResults,
-        fetchInterest: getInitalInterestList,
         addInterest: addInterests,
-        isNextValueEmpty: _isNextPageIsEmpty,
-        totalCount: _totalCount,
+        fetchInterest: getInitialInterestList,
       ),
     );
   }

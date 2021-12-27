@@ -100,4 +100,14 @@ class LocalStorage {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('fullname');
   }
+
+  static void setFcmToken(String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('fcm_token', token);
+  }
+
+  static Future<String?> getFcmToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('fcm_token') ?? '';
+  }
 }

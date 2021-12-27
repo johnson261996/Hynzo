@@ -7,6 +7,7 @@ import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/core/models/user_profile_model.dart';
 import 'package:hynzo/providers/game_provider.dart';
+import 'package:hynzo/providers/home_provider.dart';
 import 'package:hynzo/providers/news_provider.dart';
 import 'package:hynzo/providers/user_profile_provider.dart';
 import 'package:hynzo/themes/colors.dart';
@@ -35,6 +36,7 @@ class _HomeContainerState extends State<HomeContainer> {
   List<GamePlayModel> allSuggestedGames = [];
   UserProfileModel userDatas = UserProfileModel();
   bool _isLoading = false;
+  late HomeProvider _homeProvider;
 
   @override
   void initState() {
@@ -134,11 +136,17 @@ class _HomeContainerState extends State<HomeContainer> {
       });
       ToastUtil().showToast(e.toString());
     }
+}
+  
+  Future<Map<String,dynamic>> setFcmToken(String token) async{
+    final Map<String,dynamic> response = await _homeProvider.setFcmToken(token);
+    return response;
   }
 
   @override
   Widget build(BuildContext context) {
     _userProvider = Provider.of<UserProfileProvider>(context, listen: false);
+    _homeProvider = Provider.of<HomeProvider>(context);
     return LoadingOverlay(
       isLoading: _isLoading,
       color: AppColors.gray,
@@ -147,6 +155,7 @@ class _HomeContainerState extends State<HomeContainer> {
         allContent: allNews,
         allSuggestedGames: allSuggestedGames,
         userDetails: _userProvider!.userProfileModel,
+        setFcmToken: setFcmToken,
       ),
     );
   }

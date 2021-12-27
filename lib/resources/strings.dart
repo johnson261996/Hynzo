@@ -9,7 +9,7 @@ class Strings {
 
   // splash screen
   static const SPLASH_TEXT = '"HYPERLOCAL PRIVATE CHATTING"';
-  static const TITLE_NAME = 'HYNZO';
+  static const TITLE_NAME = 'Hynzo';
 
   // intro screen
   static const INTRO_TITLE = 'School Owner App';
@@ -42,8 +42,11 @@ class Strings {
   static const ACCOUNT = "Don't have an account ?";
   static const LOGIN = 'Login';
   static const LOGIN_SUBTITLE = 'Let\'s get started.';
-  static const LOGIN_TITLE = 'Hi  there!';
+  static const LOGIN_TITLE = 'Welcome back!';
+  static const SIGNUP_TITLE = 'Hi there!';
+  static const SIGNUP_SUBTITLE = 'Let\'s get started.';
   static const LOGIN_BUTTON = 'Continue >';
+  static const SIGNUP_BUTTON = 'Create new account';
   static const LOGIN_TERMS =
       'By continuing, you accept the Terms and Condition';
   static const LOGIN_MOBILE_NOT_REGISTRED =
@@ -169,7 +172,7 @@ class Strings {
   static const PROFILE_HEADING = 'Profile';
   static const LOGOUT = 'Log Out';
   static const REFER_FRIEND = 'Refer a friend';
-  static const ACTIVITIES ='Activities';
+  static const ACTIVITIES = 'Activities';
   static const MY_CHAT = 'My Chat';
   static const MY_ACCOUNT = 'My Account';
   static const FOLLOWING = 'Following';
@@ -189,7 +192,6 @@ class Strings {
   static const LOCATION = 'Banglore';
   static const GENDER_LIST = ['Male', 'Female'];
   static const LOCATION_LIST = ['Mumbai', 'Banglore', 'Delhi'];
-
 
   // it will return the dynamic string
   static String demo(amount) {

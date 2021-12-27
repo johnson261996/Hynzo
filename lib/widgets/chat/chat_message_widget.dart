@@ -8,6 +8,8 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:hynzo/core/models/chat_socket_model.dart';
 import 'package:hynzo/core/models/create_channel_model.dart';
 import 'package:hynzo/core/models/new_message_model.dart';
+import 'package:hynzo/core/models/upload_content_model.dart';
+import 'package:hynzo/core/services/home/home_service.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/themes/themes.dart';
 import 'package:hynzo/utils/localStorage.dart';
@@ -42,6 +44,8 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
   List<types.Message> _messages = [];
   bool isInitLoaded = false;
   bool loading = true;
+  bool uploading = false;
+  bool stickerOpen = false;
   late WebSocketChannel channel;
   int? uid;
   String? token;
@@ -74,6 +78,29 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
     setState(() {
       _messages.insert(0, message);
     });
+  }
+
+  Future<UploadResponse> uploadPhoto(XFile pickedFile) async {
+    setState(() {
+      uploading = true;
+    });
+    UploadResponse response = await HomeService().uploadPicService(pickedFile);
+    setState(() {
+      uploading = false;
+    });
+    return response;
+  }
+
+  Future<UploadResponse> uploadSticker(String filePath) async {
+    setState(() {
+      uploading = true;
+    });
+    UploadResponse response =
+        await HomeService().uploadStickerService(filePath);
+    setState(() {
+      uploading = false;
+    });
+    return response;
   }
 
   void _handleAtachmentPressed() {
@@ -173,21 +200,8 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
     );
 
     if (result != null) {
-      final bytes = await result.readAsBytes();
-      final image = await decodeImageFromList(bytes);
-
-      final message = types.ImageMessage(
-        author: _user,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-        height: image.height.toDouble(),
-        id: const Uuid().v4(),
-        name: result.name,
-        size: bytes.length,
-        uri: result.path,
-        width: image.width.toDouble(),
-      );
-
-      _addMessage(message);
+      UploadResponse uploadJob = await uploadPhoto(result);
+      _sendImageToChannel(uploadJob.content, uploadJob.id);
     }
   }
 
@@ -211,7 +225,17 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
     });
   }
 
-  void _handEmojiPressed() {}
+  void _handleOnStickerSend(String sticker) async {
+    UploadResponse uploadJob = await uploadSticker(sticker);
+    _sendImageToChannel(uploadJob.content, uploadJob.id);
+  }
+
+  void _sendImageToChannel(String imgUrl, int mId) {
+    String encText = '';
+    encText = _encrypt.encrypt(imgUrl);
+    channel.sink.add(
+        '{"command": "new_message",  "from": $uid, "message": "$encText", "chatId": ${widget.channelDetails.id}, "type_of_content": "image", "media_id": "$mId", "offline_locator":""}');
+  }
 
   void _handleSendPressed(types.PartialText message) {
     String encText = '';
@@ -254,24 +278,25 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
           height: kToolbarHeight,
           child: Row(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    _user.firstName!,
-                    style: Themes.baseTheme.textTheme.bodyText1!
-                        .copyWith(color: AppColors.blackBlue, fontSize: 16),
-                  ),
-                  Text(
-                    widget.status ? 'online' : 'offline',
-                    style: Themes.baseTheme.textTheme.bodyText1!.copyWith(
-                      color: AppColors.offgreylight,
-                      fontSize: 12,
+              if (_user.firstName != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      _user.firstName!,
+                      style: Themes.baseTheme.textTheme.bodyText1!
+                          .copyWith(color: AppColors.blackBlue, fontSize: 16),
                     ),
-                  ),
-                ],
-              ),
+                    Text(
+                      widget.status ? 'online' : 'offline',
+                      style: Themes.baseTheme.textTheme.bodyText1!.copyWith(
+                        color: AppColors.offgreylight,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
             ],
           ),
         ),
@@ -307,21 +332,45 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                           ChatSocketModel.fromJson(jsonDecode(snapshot.data));
                       if (chats.messages.isNotEmpty) {
                         chats.messages.forEach((element) {
-                          _messages.insert(
-                              _messages.length,
-                              types.Message.fromJson({
-                                "author": {
-                                  "firstName": element.author.username,
-                                  "id": element.author.id.toString(),
-                                  "imageUrl": element.author.avatar,
-                                },
-                                "createdAt":
-                                    element.timestamp.millisecondsSinceEpoch,
-                                "id": element.id.toString(),
-                                "status": "seen",
-                                "text": _encrypt.decrypt(element.content),
-                                "type": "text",
-                              }));
+                          switch (element.typeOfContent) {
+                            case 'text':
+                              _messages.insert(
+                                  _messages.length,
+                                  types.Message.fromJson({
+                                    "author": {
+                                      "firstName": element.author.username,
+                                      "id": element.author.id.toString(),
+                                      "imageUrl": element.author.avatar
+                                    },
+                                    "createdAt": element
+                                        .timestamp.millisecondsSinceEpoch,
+                                    "id": element.id.toString(),
+                                    "status": "seen",
+                                    "text": _encrypt.decrypt(element.content),
+                                    "type": element.typeOfContent
+                                  }));
+                              break;
+                            case 'image':
+                              _messages.insert(
+                                  _messages.length,
+                                  types.Message.fromJson({
+                                    "author": {
+                                      "firstName": element.author.username,
+                                      "id": element.author.id.toString(),
+                                      "imageUrl": element.author.avatar
+                                    },
+                                    "createdAt": element
+                                        .timestamp.millisecondsSinceEpoch,
+                                    "id": element.id.toString(),
+                                    "status": "seen",
+                                    "text": _encrypt.decrypt(element.content),
+                                    "type": element.typeOfContent,
+                                    "name": 'Image',
+                                    "size":
+                                        MediaQuery.of(context).size.width / 2,
+                                    "uri": _encrypt.decrypt(element.content)
+                                  }));
+                          }
                         });
                         WidgetsBinding.instance!
                             .addPostFrameCallback((timeStamp) {
@@ -335,21 +384,44 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                       'new_message') {
                     NewMessageModel msg =
                         NewMessageModel.fromJson(jsonDecode(snapshot.data));
-                    _messages.insert(
-                        0,
-                        types.Message.fromJson({
-                          "author": {
-                            "firstName": msg.message.author.username,
-                            "id": msg.message.author.id.toString(),
-                            "imageUrl": msg.message.author.avatar
-                          },
-                          "createdAt":
-                              msg.message.timestamp.millisecondsSinceEpoch,
-                          "id": msg.message.id.toString(),
-                          "status": "seen",
-                          "text": _encrypt.decrypt(msg.message.content),
-                          "type": "text"
-                        }));
+                    switch (msg.message.typeOfContent) {
+                      case 'text':
+                        _messages.insert(
+                            0,
+                            types.Message.fromJson({
+                              "author": {
+                                "firstName": msg.message.author.username,
+                                "id": msg.message.author.id.toString(),
+                                "imageUrl": msg.message.author.avatar
+                              },
+                              "createdAt":
+                                  msg.message.timestamp.millisecondsSinceEpoch,
+                              "id": msg.message.id.toString(),
+                              "status": "seen",
+                              "text": _encrypt.decrypt(msg.message.content),
+                              "type": msg.message.typeOfContent
+                            }));
+                        break;
+                      case 'image':
+                        _messages.insert(
+                            0,
+                            types.Message.fromJson({
+                              "author": {
+                                "firstName": msg.message.author.username,
+                                "id": msg.message.author.id.toString(),
+                                "imageUrl": msg.message.author.avatar
+                              },
+                              "createdAt":
+                                  msg.message.timestamp.millisecondsSinceEpoch,
+                              "id": msg.message.id.toString(),
+                              "status": "seen",
+                              "text": _encrypt.decrypt(msg.message.content),
+                              "type": msg.message.typeOfContent,
+                              "name": 'Image',
+                              "size": MediaQuery.of(context).size.width / 2,
+                              "uri": _encrypt.decrypt(msg.message.content)
+                            }));
+                    }
                   }
                 }
 
@@ -360,8 +432,22 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                   customBottomWidget: ChatBottomWidget(
                     onAttachPressed: _handleAtachmentPressed,
                     onSendPressed: _handleSendPressed,
-                    onEmojiPressed: _handEmojiPressed,
+                    onStickerSend: _handleOnStickerSend,
+                    onEmojiPressed: () {
+                      setState(() {
+                        stickerOpen = !stickerOpen;
+                      });
+                    },
+                    isLoading: uploading,
+                    stickerOpen: stickerOpen,
                   ),
+                  imageMessageBuilder: (p0, {required messageWidth}) {
+                    return Image.network(
+                      p0.uri,
+                      width: MediaQuery.of(context).size.width / 2,
+                      fit: BoxFit.fitWidth,
+                    );
+                  },
                   hideBackgroundOnEmojiMessages: true,
                   scrollPhysics: const BouncingScrollPhysics(),
                   theme: CustomTheme().theme,

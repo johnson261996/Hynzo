@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:hynzo/core/models/create_channel_model.dart';
 import 'package:hynzo/core/models/suggestion_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/localstorage.dart';
 
 class SuggestedWidget extends StatefulWidget {
   final Function? getSuggestedList;
+  final Function? addUser;
 
-  const SuggestedWidget({Key? key, required this.getSuggestedList})
+  const SuggestedWidget(
+      {Key? key, required this.getSuggestedList, required this.addUser})
       : super(key: key);
 
   @override
@@ -14,7 +19,7 @@ class SuggestedWidget extends StatefulWidget {
 }
 
 class _SuggestedWidgetState extends State<SuggestedWidget> {
-  late SuggestionModel suggestionModel;
+  late SuggestionModel suggestionModel = SuggestionModel(resultsList: []);
   bool loading = true;
 
   @override
@@ -39,11 +44,13 @@ class _SuggestedWidgetState extends State<SuggestedWidget> {
     return Container(
       height: size.height,
       padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-      child: loading
+      child: suggestionModel.resultsList.isEmpty || loading
           ? Center(
-              child: CircularProgressIndicator(
-                color: AppColors.blueDark,
-              ),
+              child: loading
+                  ? CircularProgressIndicator(
+                      color: AppColors.blueDark,
+                    )
+                  : const Text('No chats available'),
             )
           : ListView.builder(
               padding: const EdgeInsets.only(
@@ -94,9 +101,20 @@ class _SuggestedWidgetState extends State<SuggestedWidget> {
                           ),
                         )
                       : ElevatedButton(
-                          onPressed: () {
-                            // widget.addUser!(
-                            //     widget.allResults[index].pk.toString(), index);
+                          onPressed: () async {
+                            EasyLoading.show(
+                                maskType: EasyLoadingMaskType.black);
+                            int? uid = await LocalStorage.getUserID();
+                            CreateChannelModel response = await widget.addUser!(
+                                [
+                                  '$uid',
+                                  '${suggestionModel.resultsList[index].pk}'
+                                ],
+                                false);
+                            EasyLoading.dismiss(animation: false);
+                            if (response.participants.isNotEmpty) {
+                              getSuggestedList();
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             primary: AppColors.blueDark,

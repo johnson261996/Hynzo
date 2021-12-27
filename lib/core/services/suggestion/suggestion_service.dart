@@ -30,6 +30,8 @@ class SuggestionService {
 
     String url = 'api/v1/chats/create';
 
+    log(userId.toString());
+
     Map data = {
       'participants': userId,
       'is_group': false,
@@ -38,9 +40,7 @@ class SuggestionService {
       "Content-Type": "application/json",
       "Authorization": "Bearer $token"
     });
-    if (response.statusCode != 201) {
-      throw "Something went wrong";
-    }
+    log(response.body);
     return SuggestUserAddResponseModel.fromJson(
       jsonDecode(response.body),
       response.statusCode,

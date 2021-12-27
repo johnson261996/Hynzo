@@ -8,7 +8,6 @@ import 'package:hynzo/widgets/common/search_bar/search_bar.dart';
 import 'package:hynzo/widgets/game/all_games.dart';
 import 'package:hynzo/widgets/game/fitered_games.dart';
 
-
 class GameWidget extends StatefulWidget {
   final List<GamePlayModel>? allSuggestedGames;
   final List<GamePlayModel>? recentlyPlayedGames;
@@ -106,7 +105,6 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
       length: allTabHeader.length,
       vsync: this,
     );
-
   }
 
   @override
@@ -170,53 +168,50 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
               ),
             ),
           ],
-          SizedBox(
-            height: mediaQuery.height * 0.02,
+          const SizedBox(
+            height: 10,
           ),
-          Container(
-            height: 25.0,
-            child: TabBar(
-              padding: EdgeInsets.zero,
-              onTap: (index) {
-                setState(() {
-                  selectedItemName  = allTabHeader[index].tabName!;
-                  selectedIndexValue = index;
-                  getFilteredGames(selectedItemName);
-                  _pageController.animateToPage(selectedIndexValue,
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.fastLinearToSlowEaseIn);
-                });
-              },
-              controller: tabController,
-              indicatorColor: Colors.transparent,
-              tabs: List<Widget>.generate(allTabHeader.length, (int index) {
-                return Container(
-                  padding: const EdgeInsets.only(
-                    left: 5.0,
-                    right: 5.0,
+          TabBar(
+            padding: EdgeInsets.zero,
+            onTap: (index) {
+              setState(() {
+                selectedItemName = allTabHeader[index].tabName!;
+                selectedIndexValue = index;
+                getFilteredGames(selectedItemName);
+                _pageController.animateToPage(selectedIndexValue,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.fastLinearToSlowEaseIn);
+              });
+            },
+            controller: tabController,
+            indicatorColor: Colors.transparent,
+            tabs: List<Widget>.generate(allTabHeader.length, (int index) {
+              return Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.0),
+                  color: index == selectedIndexValue
+                      ? AppColors.blueDark
+                      : AppColors.white,
+                ),
+                child: Center(
+                  child: Text(
+                    allTabHeader[index].tabName!,
+                    style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                          fontSize: 12,
+                          color: index == selectedIndexValue
+                              ? AppColors.white
+                              : AppColors.greyBlack,
+                          fontWeight: FontWeight.w400,
+                        ),
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    color: index == selectedIndexValue
-                        ? AppColors.blueDark
-                        : AppColors.white,
-                  ),
-                  child: Center(
-                    child: Text(
-                      allTabHeader[index].tabName!,
-                      style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                            fontSize: 12,
-                            color: index == selectedIndexValue
-                                ? AppColors.white
-                                : AppColors.greyBlack,
-                            fontWeight: FontWeight.w400,
-                          ),
-                    ),
-                  ),
-                );
-              }),
-              isScrollable: true,
-            ),
+                ),
+              );
+            }),
+            isScrollable: true,
           ),
           SizedBox(
             height: mediaQuery.height * 0.015,
@@ -235,8 +230,10 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
                 onPageChanged: (page) {
                   setState(() {
                     selectedIndexValue = page;
+                    selectedItemName = allTabHeader[page].tabName!;
+                    getFilteredGames(selectedItemName);
                     tabController.animateTo(selectedIndexValue,
-                        duration: const Duration(milliseconds: 500),
+                        duration: const Duration(milliseconds: 300),
                         curve: Curves.fastLinearToSlowEaseIn);
                   });
                 },
@@ -247,26 +244,19 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
                     allGames: widget.allGames,
                   ),
                   FilteredGamesWidget(
-                      title: 'Shooting Games',
-                      filteredGames: filteredLIst),
+                      title: 'Shooting Games', filteredGames: filteredLIst),
                   FilteredGamesWidget(
-                      title: 'Sports Games',
-                      filteredGames: filteredLIst),
+                      title: 'Sports Games', filteredGames: filteredLIst),
                   FilteredGamesWidget(
-                      title: 'Casual Games',
-                      filteredGames: filteredLIst),
+                      title: 'Casual Games', filteredGames: filteredLIst),
                   FilteredGamesWidget(
-                      title: 'Action Games',
-                      filteredGames: filteredLIst),
+                      title: 'Action Games', filteredGames: filteredLIst),
                   FilteredGamesWidget(
-                      title: 'Racing Games',
-                      filteredGames: filteredLIst),
+                      title: 'Racing Games', filteredGames: filteredLIst),
                   FilteredGamesWidget(
-                      title: 'Arcade Games',
-                      filteredGames: filteredLIst),
+                      title: 'Arcade Games', filteredGames: filteredLIst),
                   FilteredGamesWidget(
-                      title: 'All',
-                      filteredGames: filteredLIst),
+                      title: 'All', filteredGames: filteredLIst),
                 ],
               ),
             ),
