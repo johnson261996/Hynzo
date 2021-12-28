@@ -19,7 +19,7 @@ class GameContainerWidget extends StatelessWidget {
         SquareViewWidget(
           imagePath: imagePath,
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Text(

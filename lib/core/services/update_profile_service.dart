@@ -26,12 +26,9 @@ class UpdateProfileService {
       'dob': dob,
       'avatar': avatar
     });
-    print('data ${request.fields}');
     request.headers.addAll(headers);
-
     var streamResponse = await request.send();
     var res = await http.Response.fromStream(streamResponse);
-    print(res.body);
     return UserProfileModel.fromJson(jsonDecode(res.body), res.statusCode);
   }
 }

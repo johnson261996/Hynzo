@@ -11,7 +11,6 @@ class ErrorText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('---------------------$errorMgs');
     return errorMgs != ""
         ? Container(
             margin: const EdgeInsets.only(top: 10),

@@ -16,29 +16,30 @@ class _WebViewScreenState extends State<WebViewScreen> {
     var data = ModalRoute.of(context)!.settings.arguments as Map;
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: AppColors.white,
-            leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: AppColors.black,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                })),
+          backgroundColor: AppColors.white,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: AppColors.black,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
         body: WebView(
           javascriptMode: JavascriptMode.unrestricted,
           initialUrl: data["link"],
-          zoomEnabled: true,
+          zoomEnabled: false,
           allowsInlineMediaPlayback: true,
-          navigationDelegate: (NavigationRequest request) {
-            return data["link"];
-          },
+          // navigationDelegate: (NavigationRequest request) {
+          //   return data["link"];
+          // },
         ));
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

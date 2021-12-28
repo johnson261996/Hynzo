@@ -20,7 +20,7 @@ class _FilteredGamesWidgetState extends State<FilteredGamesWidget> {
   @override
   Widget build(BuildContext context) {
     Size mediaQuery = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
         height: MediaQuery.of(context).size.height,
         child: SingleChildScrollView(
           child: Column(
@@ -42,36 +42,29 @@ class _FilteredGamesWidgetState extends State<FilteredGamesWidget> {
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                width: mediaQuery.width,
-                height: 450,
-                child: GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.only(
-                    right: 10.0,
-                  ),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 0.85,
-                  ),
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () {
-                        FireAnalytics().log(
-                            'game', widget.filteredGames![index].gameName!);
-                        Navigation.pushNamed(context, Routes.webview, {
-                          'link': widget.filteredGames![index].redirectionUrl
-                        });
-                      },
-                      child: GameContainerWidget(
-                        imagePath: widget.filteredGames![index].image!,
-                        name: widget.filteredGames![index].gameName!,
+              Wrap(
+                direction: Axis.horizontal,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                spacing: 30,
+                runSpacing: 20,
+                children: widget.filteredGames!
+                    .map(
+                      (game) => SizedBox(
+                        width: mediaQuery.width / 3 - 30,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigation.pushNamed(context, Routes.webview,
+                                {'link': game.redirectionUrl});
+                          },
+                          child: GameContainerWidget(
+                            imagePath: game.image!,
+                            name: game.gameName!,
+                          ),
+                        ),
                       ),
-                    );
-                  },
-                  itemCount: widget.filteredGames!.length,
-                ),
-              )
+                    )
+                    .toList(),
+              ),
             ],
           ),
         ));
