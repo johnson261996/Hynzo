@@ -43,7 +43,7 @@ class _HomeContainerState extends State<HomeContainer> {
   static UserProfileProvider? _userProvider;
   List<Article> allNews = [];
   CovidData? covidData;
-  List<GameSuggestion> allSuggestedGames = [];
+  List<GamePlayModel> allSuggestedGames = [];
   UserProfileModel userDatas = UserProfileModel();
   bool _isLoading = false;
   late HomeProvider _homeProvider;

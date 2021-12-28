@@ -157,9 +157,13 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    int? activeCase = (widget.covidData!.summary!.total! -
-        (widget.covidData!.summary!.discharged! +
-            widget.covidData!.summary!.deaths!));
+    int? activeCase = 0;
+    if (widget.covidData != null) {
+      activeCase = (widget.covidData!.summary!.total! -
+          (widget.covidData!.summary!.discharged! +
+              widget.covidData!.summary!.deaths!));
+    }
+
     var mediaQuery = MediaQuery.of(context).size;
     name = widget.userDetails.full_name ?? '';
     url = widget.userDetails.avatar ?? '';
@@ -345,9 +349,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               ),
                                         ),
                                         Text(
-                                          Utils.NumberFormater(widget
-                                                  .covidData!.summary!.total ??
-                                              0),
+                                          Utils.NumberFormater(
+                                              widget.covidData != null
+                                                  ? widget.covidData!.summary!
+                                                      .total!
+                                                  : 0),
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2!
@@ -404,11 +410,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                   ),
                                             ),
                                             Text(
-                                              Utils.NumberFormater(widget
-                                                      .covidData!
-                                                      .summary!
-                                                      .discharged ??
-                                                  0),
+                                              Utils.NumberFormater(
+                                                  widget.covidData != null
+                                                      ? widget.covidData!
+                                                          .summary!.discharged!
+                                                      : 0),
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle2!
@@ -432,11 +438,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                   ),
                                             ),
                                             Text(
-                                              Utils.NumberFormater(widget
-                                                      .covidData!
-                                                      .summary!
-                                                      .deaths ??
-                                                  0),
+                                              Utils.NumberFormater(
+                                                  widget.covidData != null
+                                                      ? widget.covidData!
+                                                          .summary!.deaths!
+                                                      : 0),
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle2!

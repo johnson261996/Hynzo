@@ -17,8 +17,6 @@ class ServiceBase {
   }) async {
     checkConnectionStaus();
     String apiUrl = (baseUrl!.isEmpty ? apiBaseUrl : baseUrl) + url!;
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-    print(apiUrl);
     final response =
         await InterceptedHttp.build(interceptors: [AuthInterceptorHeader()])
             .get(Uri.parse(apiUrl), headers: headers);
