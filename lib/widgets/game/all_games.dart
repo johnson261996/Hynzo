@@ -1,11 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
+import 'package:hynzo/core/services/game/game_service.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/utils/analytics_events.dart';
+import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/common/view/game_view_widget.dart';
 
@@ -58,9 +57,13 @@ class _AllGamesState extends State<AllGames> {
                       right: 12.0,
                     ),
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        int? uid = await LocalStorage.getUserID();
+                        GameService()
+                            .getLeaderboard(widget.recentGames![index].id!);
                         Navigation.pushNamed(context, Routes.webview, {
-                          'link': widget.recentGames![index].redirectionUrl
+                          'link': widget.recentGames![index].redirectionUrl! +
+                              '&user_id=$uid'
                         });
                       },
                       child: Column(
@@ -79,7 +82,7 @@ class _AllGamesState extends State<AllGames> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
@@ -112,7 +115,7 @@ class _AllGamesState extends State<AllGames> {
           const SizedBox(
             height: 10,
           ),
-          Container(
+          SizedBox(
             width: mediaQuery.width,
             height: 140,
             child: ListView.builder(
@@ -122,10 +125,14 @@ class _AllGamesState extends State<AllGames> {
                       right: 12.0,
                     ),
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        int? uid = await LocalStorage.getUserID();
+                        GameService().getLeaderboard(
+                            widget.allSuggestedGames![index].id!);
                         Navigation.pushNamed(context, Routes.webview, {
                           'link':
-                              widget.allSuggestedGames![index].redirectionUrl
+                              widget.allSuggestedGames![index].redirectionUrl! +
+                                  '&user_id=$uid'
                         });
                       },
                       child: Column(
@@ -144,7 +151,7 @@ class _AllGamesState extends State<AllGames> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
@@ -179,11 +186,12 @@ class _AllGamesState extends State<AllGames> {
           ),
           SizedBox(
             width: mediaQuery.width,
-            height: 455,
             child: GridView.builder(
+              shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.only(
                 right: 10,
+                bottom: 100,
               ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
@@ -191,9 +199,13 @@ class _AllGamesState extends State<AllGames> {
               ),
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
-                  onTap: () {
-                    Navigation.pushNamed(context, Routes.webview,
-                        {'link': widget.allGames![index].redirectionUrl});
+                  onTap: () async {
+                    int? uid = await LocalStorage.getUserID();
+                    GameService().getLeaderboard(widget.allGames![index].id!);
+                    Navigation.pushNamed(context, Routes.webview, {
+                      'link': widget.allGames![index].redirectionUrl! +
+                          '&user_id=$uid'
+                    });
                   },
                   child: GameContainerWidget(
                     imagePath: widget.allGames![index].image!,
