@@ -6,6 +6,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProfileContainer();
+    Map args = ModalRoute.of(context)!.settings.arguments as Map;
+    return ProfileContainer(args: args,);
   }
 }
