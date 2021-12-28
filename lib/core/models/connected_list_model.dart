@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-List<ConnectedListModel> connectedListModelFromJson(String str) => List<ConnectedListModel>.from(json.decode(str).map((x) => ConnectedListModel.fromJson(x)));
+List<ConnectedListModel> connectedListModelFromJson(String str) =>
+    List<ConnectedListModel>.from(
+        json.decode(str).map((x) => ConnectedListModel.fromJson(x)));
 
 class ConnectedListModel {
   ConnectedListModel({
@@ -21,16 +23,16 @@ class ConnectedListModel {
   int unreadMessages;
   bool isGroup;
 
-  factory ConnectedListModel.fromJson(Map<String, dynamic> json) => ConnectedListModel(
-    id: json["id"],
-    lastMessage: LastMessage.fromJson(json["last_message"]),
-    channelName: json["channel_name"],
-    avatar: json["avatar"] ?? '',
-    userBasicInfo: UserBasicInfo.fromJson(json["user_basic_info"]),
-    unreadMessages: json["unread_messages"],
-    isGroup: json["is_group"],
-  );
-
+  factory ConnectedListModel.fromJson(Map<String, dynamic> json) =>
+      ConnectedListModel(
+        id: json["id"],
+        lastMessage: LastMessage.fromJson(json["last_message"]),
+        channelName: json["channel_name"],
+        avatar: json["avatar"] ?? '',
+        userBasicInfo: UserBasicInfo.fromJson(json["user_basic_info"]),
+        unreadMessages: json["unread_messages"],
+        isGroup: json["is_group"],
+      );
 }
 
 class LastMessage {
@@ -51,19 +53,20 @@ class LastMessage {
   DateTime timestamp;
 
   factory LastMessage.fromJson(Map<String, dynamic> json) => LastMessage(
-    id: int.parse(
+        id: int.parse(
             json["id"].toString() == '' ? '0' : json["id"].toString()),
-    author: json["author"] == null ? Author(username: '', id: 0) : Author.fromJson(json["author"]),
-    userId: int.parse(json["user_id"].toString() == ''
+        author: json["author"] == null
+            ? Author(username: '', id: 0)
+            : Author.fromJson(json["author"]),
+        userId: int.parse(json["user_id"].toString() == ''
             ? '0'
             : json["user_id"].toString()),
-    content: json["content"] ?? '',
-    typeOfContent: json["type_of_content"] ?? 'text',
-    timestamp: json["timestamp"] == ''
+        content: json["content"] ?? '',
+        typeOfContent: json["type_of_content"] ?? 'text',
+        timestamp: json["timestamp"] == ''
             ? DateTime.now()
             : DateTime.parse(json["timestamp"]),
-  );
-
+      );
 }
 
 class Author {
@@ -76,39 +79,43 @@ class Author {
   int id;
 
   factory Author.fromJson(Map<String, dynamic> json) => Author(
-    username: json["username"] ?? '',
+        username: json["username"] ?? '',
         id: int.parse(
             json["id"].toString() == '' ? '0' : json["id"].toString()),
-  );
+      );
 
   Map<String, dynamic> toJson() => {
-    "username": username,
-    "id": id,
-  };
+        "username": username,
+        "id": id,
+      };
 }
 
 class UserBasicInfo {
   UserBasicInfo({
     required this.id,
     required this.isOnline,
+    required this.fullname,
     required this.contactBlockedStatus,
   });
 
   int id;
   bool isOnline;
+  String fullname;
   ContactBlockedStatus contactBlockedStatus;
 
   factory UserBasicInfo.fromJson(Map<String, dynamic> json) => UserBasicInfo(
-    id: json["id"],
-    isOnline: json["is_online"],
-    contactBlockedStatus: ContactBlockedStatus.fromJson(json["contact_blocked_status"]),
-  );
+        id: json["id"],
+        isOnline: json["is_online"],
+        fullname: json["fullname"],
+        contactBlockedStatus:
+            ContactBlockedStatus.fromJson(json["contact_blocked_status"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "is_online": isOnline,
-    "contact_blocked_status": contactBlockedStatus.toJson(),
-  };
+        "id": id,
+        "is_online": isOnline,
+        "contact_blocked_status": contactBlockedStatus.toJson(),
+      };
 }
 
 class ContactBlockedStatus {
@@ -120,13 +127,14 @@ class ContactBlockedStatus {
   bool chatBlocked;
   bool isBlockedByYou;
 
-  factory ContactBlockedStatus.fromJson(Map<String, dynamic> json) => ContactBlockedStatus(
-    chatBlocked: json["chat_blocked"],
-    isBlockedByYou: json["is_blocked_by_you"],
-  );
+  factory ContactBlockedStatus.fromJson(Map<String, dynamic> json) =>
+      ContactBlockedStatus(
+        chatBlocked: json["chat_blocked"],
+        isBlockedByYou: json["is_blocked_by_you"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "chat_blocked": chatBlocked,
-    "is_blocked_by_you": isBlockedByYou,
-  };
+        "chat_blocked": chatBlocked,
+        "is_blocked_by_you": isBlockedByYou,
+      };
 }

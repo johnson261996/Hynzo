@@ -1,5 +1,3 @@
-///Profile page widget
-
 import 'package:flutter/material.dart';
 import 'package:hynzo/resources/images.dart';
 import 'package:hynzo/resources/strings.dart';
@@ -121,7 +119,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                       fontWeight: FontWeight.w700)),
                           IconButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, Routes.edit_profile);
+                              Navigator.pushNamed(context, Routes.editProfile);
                             },
                             icon: Icon(
                               Icons.edit_outlined,

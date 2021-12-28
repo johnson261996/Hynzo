@@ -24,7 +24,6 @@ class _GameContainerState extends State<GameContainer> {
   List<GamePlayModel> filteredGames = [];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _gamesProvider = Provider.of<GamesProvider>(context, listen: false);
     allSuggestedGames.clear();
@@ -32,8 +31,6 @@ class _GameContainerState extends State<GameContainer> {
     allGames.clear();
     popularGames.clear();
     filteredGames.clear();
-
-    //getFilteredGamesGames();
     getGames();
   }
 
@@ -42,8 +39,7 @@ class _GameContainerState extends State<GameContainer> {
       setState(() {
         _isLoading = true;
       });
-      GamesResponseModel gamesResponseModel =
-      await _gamesProvider!.getGames();
+      GamesResponseModel gamesResponseModel = await _gamesProvider!.getGames();
       setState(() {
         _isLoading = false;
       });
@@ -62,7 +58,7 @@ class _GameContainerState extends State<GameContainer> {
     }
   }
 
-  Future<FilteredGamesResponseModel> getFilteredGames(String categ)async{
+  Future<FilteredGamesResponseModel> getFilteredGames(String categ) async {
     FilteredGamesResponseModel filteredResponseModel =
         await _gamesProvider!.getFilteredGames(categ);
     return filteredResponseModel;

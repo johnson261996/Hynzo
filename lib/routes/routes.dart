@@ -44,11 +44,12 @@ class Routes {
   static const suggetion = '/suggetion';
   static const onboarding = '/onboarding';
   static const navScreen = '/navScreen';
-  static const news="./news";
-  static const webview="./webview";
+  static const news = "./news";
+  static const webview = "./webview";
   static const profile = '/profile';
   static const edit_profile = '/edit-profile';
   static const settings = '/settings';
+
 
   /// Routing Table needed for the App.
   static Map<String, WidgetBuilder> get buildRoutes {
@@ -56,15 +57,15 @@ class Routes {
       splashScreen: (BuildContext context) =>
           const BaseLayout(page: SplashScreen(), isAppBar: false),
       login: (BuildContext context) =>
-          BaseLayout(page: Login(), isAppBar: false),
+          const BaseLayout(page: Login(), isAppBar: false),
       intro: (BuildContext context) =>
-          BaseLayout(page: Intro(), isAppBar: false),
+          const BaseLayout(page: Intro(), isAppBar: false),
       interest: (BuildContext context) =>
-          BaseLayout(page: Interest(), isAppBar: false),
+          const BaseLayout(page: Interest(), isAppBar: false),
       location: (BuildContext context) =>
-          BaseLayout(page: Location(), isAppBar: false),
+          const BaseLayout(page: Location(), isAppBar: false),
       suggetion: (BuildContext context) =>
-          BaseLayout(page: Suggetion(), isAppBar: false),
+          const BaseLayout(page: Suggetion(), isAppBar: false),
       otp: (BuildContext context) =>
           const BaseLayout(page: Otpverify(), isAppBar: false),
       about: (BuildContext context) =>
@@ -73,10 +74,9 @@ class Routes {
           BaseLayout(page: Onbarding(), isAppBar: false),
       navScreen: (BuildContext context) =>
           BaseLayout(page: NavigationScreen(), isAppBar: false),
-      news: (BuildContext context) =>
-          BaseLayout(page: News(), isAppBar: false),
+      news: (BuildContext context) => BaseLayout(page: News(), isAppBar: false),
       webview: (BuildContext context) =>
-          BaseLayout(page: WebViewScreen(), isAppBar: false),
+          const BaseLayout(page: WebViewScreen(), isAppBar: false),
       profile: (BuildContext context) =>
           BaseLayout(page: ProfileScreen(), isAppBar: false),
       edit_profile: (BuildContext context) =>

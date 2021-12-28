@@ -43,11 +43,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     url = widget.userDetails.avatar ?? Images.PROFILE_PIC;
     dateString = widget.userDetails.dob ?? Strings.DOB;
-    print(dateString);
   }
 
   datepick() async {
@@ -250,7 +248,6 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         ),
                         keyboard: TextInputType.text,
                         onchangeFunc: (val) {
-                          print(val);
                           setState(() {
                             mobileController.text = val;
                           });

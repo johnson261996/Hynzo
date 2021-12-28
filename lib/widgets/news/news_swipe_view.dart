@@ -6,7 +6,7 @@ import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/navigations.dart';
 
 class NewsSwipeView extends StatefulWidget {
-  final List<NewsContentDataModel>? allContent;
+  final List<Article>? allContent;
 
   const NewsSwipeView({
     Key? key,
@@ -33,7 +33,6 @@ class _NewsSwipeViewState extends State<NewsSwipeView> {
               ? DismissDirection.vertical
               : DismissDirection.up,
           onDismissed: (direction) {
-            //print(direction == DismissDirection.up);
             if (direction == DismissDirection.down) {
               if (selectedIndex > 0) {
                 setState(() {
@@ -59,7 +58,7 @@ class _NewsSwipeViewState extends State<NewsSwipeView> {
               child: GestureDetector(
                 onTap: () {
                   Navigation.pushNamed(context, Routes.webview,
-                      {'link': widget.allContent![selectedIndex].link});
+                      {'link': widget.allContent![selectedIndex].url});
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -74,26 +73,24 @@ class _NewsSwipeViewState extends State<NewsSwipeView> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       child: Image.network(
-                        widget.allContent![selectedIndex].imageUrl!,
+                        widget.allContent![selectedIndex].urlToImage.toString(),
                         fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>  ClipRRect(
+                        errorBuilder: (context, error, stackTrace) => ClipRRect(
                           borderRadius: BorderRadius.circular(10.0),
-                          child: Image.asset('assets/images/no_image.png',fit: BoxFit.cover,),
+                          child: Image.asset(
+                            'assets/images/no_image.png',
+                            fit: BoxFit.cover,
                           ),
+                        ),
                       ),
                     ),
                     SizedBox(
                       height: mediaQuery.height * 0.03,
                     ),
                     Text(
-                      widget.allContent![selectedIndex].title!.replaceAll(
-                          RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 27,
-                            color: AppColors.black,
-                          ),
-                    ),
+                        widget.allContent![selectedIndex].title!
+                            .replaceAll(RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
+                        style: Theme.of(context).textTheme.headline5!),
                     SizedBox(
                       height: mediaQuery.height * 0.02,
                     ),
@@ -101,25 +98,17 @@ class _NewsSwipeViewState extends State<NewsSwipeView> {
                       direction: Axis.horizontal,
                       children: [
                         Text(
-                          widget.allContent![selectedIndex].fullDescription! !=
-                                  ''
-                              ? widget
-                                  .allContent![selectedIndex].fullDescription!
-                                  .replaceAll(
-                                      RegExp(r'[^A-Za-z0-9().,;?]'), ' ')
-                              : widget.allContent![selectedIndex].description!
-                                  .replaceAll(
-                                      RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: false,
-                          maxLines: 15,
-                          style:
-                              Theme.of(context).textTheme.subtitle1!.copyWith(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 16,
-                                    color: AppColors.offblack,
-                                  ),
-                        ),
+                            widget.allContent![selectedIndex].description != ''
+                                ? widget.allContent![selectedIndex].description!
+                                    .replaceAll(
+                                        RegExp(r'[^A-Za-z0-9().,;?]'), ' ')
+                                : widget.allContent![selectedIndex].description!
+                                    .replaceAll(
+                                        RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                            maxLines: 15,
+                            style: Theme.of(context).textTheme.bodyText2!),
                       ],
                     ),
                   ],
