@@ -29,6 +29,9 @@ class GameContainerWidget extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 color: AppColors.black,
               ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
         ),
       ],
     );
