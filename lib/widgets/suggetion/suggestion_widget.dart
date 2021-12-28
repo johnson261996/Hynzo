@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/suggestion_model.dart';
+import 'package:hynzo/resources/images.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
@@ -79,17 +80,20 @@ class _SuggestionWidgetState extends State<SuggestionWidget> {
               ),
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  leading: widget.allResults[index].avatar != ''
-                      ? CircleAvatar(
+                  leading: GestureDetector(onTap:() async{
+                  int? id  = widget.allResults[index].pk!;
+                  Navigator.pushNamed(context, Routes.profile,arguments: {'id':id,'logged' : false});
+                },child: widget.allResults[index].avatar!= ''
+                ? CircleAvatar(
                           radius: 22.5,
                           backgroundImage:
                               NetworkImage(widget.allResults[index].avatar!))
                       : Image.asset(
-                          'assets/images/user.png',
+                          Images.USER_IMAGE,
                           fit: BoxFit.contain,
                           width: 45,
                           height: 45,
-                        ),
+                        )),
                   title: Text(
                     widget.allResults[index].username!,
                     style: Theme.of(context).textTheme.caption!.copyWith(
@@ -171,7 +175,7 @@ class _SuggestionWidgetState extends State<SuggestionWidget> {
                     Container(
                       padding: const EdgeInsets.all(8.0),
                       child: Image.asset(
-                        'assets/images/next_button.png',
+                        Images.NEXT_BUTTON,
                         fit: BoxFit.cover,
                       ),
                     ),

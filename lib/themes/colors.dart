@@ -51,6 +51,8 @@ class AppColors {
   static final Color blueDark = Pigment.fromString("#414BA5");
   static final Color green = Pigment.fromString("#4CE417");
   static final Color pink = Pigment.fromString("#E39494");
+  static final Color button_red = Pigment.fromString("#E83C3B");
+  static final Color grey_light_secondary = Pigment.fromString("#ECECED");
 
   static final Color primary = Pigment.fromString('#4232B0');
   static final Color primaryDark = Pigment.fromString('#414BA5');

@@ -169,7 +169,7 @@ class Strings {
   static const SEARCH = 'Search New Connection';
 
   //Profile
-  static const PROFILE_HEADING = 'Profile';
+  static const PROFILE_HEADING = 'MyProfile';
   static const LOGOUT = 'Log Out';
   static const REFER_FRIEND = 'Refer a friend';
   static const ACTIVITIES = 'Activities';
@@ -179,19 +179,33 @@ class Strings {
   static const FOLLOWING_NUMBER = '250';
   static const FOLLOWERS = 'Followers';
   static const FOLLLOWERS_NUMBER = '230';
-  static const FRIENDS = 'Friends';
-  static const FRIENDS_NUMBER = '25';
+  static const FRIENDS = 'My Friends';
+  static const FRIENDS_NUMBER = '797';
+  static const COINS = 'My Coins';
+  static const COINS_NUMBER = '25.7K';
+  static const ABOUT_HEADING = 'About';
+  static const ADD_USER = 'Add User';
+  static const USER_ADDED = 'Add User';
+  static const ABOUT = 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.';
 
   //Edit-profile
   static const BIO = 'Bio';
   static const UPDATE_PROFILE = 'Update Profile';
+  static const EDIT_PROFILE = 'Edit Profile';
   static const NAME = 'What’s your name?';
   static const MOBILE = 'Phone number?';
   static const GENDER = 'Select your gender';
   static const DOB = 'What is your date of birth?';
-  static const LOCATION = 'Banglore';
+  static const LOCATION = 'Bangalore,India';
   static const GENDER_LIST = ['Male', 'Female'];
   static const LOCATION_LIST = ['Mumbai', 'Banglore', 'Delhi'];
+
+  //wallet
+  static const REDEEM_NOW = 'Reedem Now';
+  static const ACCOUNT_BALANCE = 'Account balance';
+  static const COIN_NUMBERS = ' 54,000.00';
+
+
 
   // it will return the dynamic string
   static String demo(amount) {

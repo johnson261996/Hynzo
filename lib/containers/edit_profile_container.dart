@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/user_profile_model.dart';
 import 'package:hynzo/providers/update_profile_provider.dart';
 import 'package:hynzo/providers/user_profile_provider.dart';
+import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/edit-profile/edit_profile_widget.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +36,8 @@ class _EditProfileContainerState extends State<EditProfileContainer> {
       setState(() {
         isLoading = true;
       });
-      UserProfileModel userProfileModel = await _userProvider!.getUser();
+      int? id  = await LocalStorage.getUserID();
+      UserProfileModel userProfileModel = await _userProvider!.getUser(id!);
       if (userProfileModel.statusCode == 200) {
         setState(() {
           userDatas = userProfileModel;
@@ -63,6 +65,7 @@ class _EditProfileContainerState extends State<EditProfileContainer> {
         setState(() {
           userDetails = userProfile;
         });
+        _userProvider!.setUserProfileDetails(userDetails);
       } else {
         ToastUtil().showToast("Something went wrong.3");
       }
@@ -76,9 +79,10 @@ class _EditProfileContainerState extends State<EditProfileContainer> {
 
   @override
   Widget build(BuildContext context) {
-    _userProvider = Provider.of<UserProfileProvider>(context, listen: false);
+    _userProvider = Provider.of<UserProfileProvider>(context);
 
     return EditProfileWidget(
-        userDetails: _userProvider!.userProfileModel, updateProfile: _update);
+        userDetails: _userProvider!.userProfileModel,
+        updateProfile: _update);
   }
 }

@@ -24,7 +24,9 @@ class Images {
   static const String LOG_OUT = 'assets/images/log_out.png';
   static const String TOP_BACK = 'assets/images/top_back.png';
   static const String PROFILE_PIC = 'assets/images/profile_pic.png';
+  static const String USER_IMAGE = 'assets/images/user.png';
   static const String PROFILE_STAR = 'assets/images/profile_star.png';
+  static const String NEXT_BUTTON = 'assets/images/next_button.png';
   static const String FLAG = 'assets/images/flag.png';
   static const String CALENDAR = 'assets/images/calendar.png';
   static const String CAMERA = 'assets/images/camera.png';
@@ -35,6 +37,9 @@ class Images {
   static const String SETTINGS = 'assets/images/settings.png';
   static const String ABOUT = 'assets/images/about.png';
   static const String HELP_IMAGE = 'assets/images/help.png';
+  static const String PROFILE_BANNER = 'assets/images/profile_banner.png';
+  static const String COIN_IMAGE = 'assets/images/coin.png';
+
 
   static const List CAROUSELIMAGES = ['assets/images/home_rectangle.png','assets/images/home_rectangle.png','assets/images/home_rectangle.png'];
 
