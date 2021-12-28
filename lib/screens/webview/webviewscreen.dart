@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hynzo/themes/colors.dart';
@@ -14,6 +16,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
   @override
   Widget build(BuildContext context) {
     var data = ModalRoute.of(context)!.settings.arguments as Map;
+    log('Webview URL :' + data["link"]);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.white,
