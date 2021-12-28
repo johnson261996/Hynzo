@@ -29,6 +29,7 @@ class SuggestionModel {
 class ResultsModel {
   final int? pk;
   final String? username;
+  final String? full_name;
   final String? avatar;
   final bool? isGroup;
   final int? noOfParticipants;
@@ -37,6 +38,7 @@ class ResultsModel {
   ResultsModel({
     this.pk,
     this.username,
+    this.full_name,
     this.avatar,
     this.isGroup,
     this.noOfParticipants,
@@ -47,6 +49,7 @@ class ResultsModel {
     return ResultsModel(
       pk: json['pk'] ?? -1,
       username: json['username'] ?? '',
+      full_name: json["full_name"] ?? '',
       avatar: json['avatar'] ?? '',
       isGroup: json['is_group'] ?? false,
       noOfParticipants: json['no_of_participants'] ?? -1,

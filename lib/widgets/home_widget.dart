@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/models/events_model.dart';
-import 'package:hynzo/core/models/game_suggestion.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/core/models/user_profile_model.dart';
 import 'package:hynzo/resources/strings.dart';
@@ -25,7 +24,7 @@ class HomeWidget extends StatefulWidget {
   final Function onTapped;
   final List<Article>? allContent;
   final UserProfileModel userDetails;
-  final List<GameSuggestion>? allSuggestedGames;
+  final List<GamePlayModel>? allSuggestedGames;
   final Function(String)? setFcmToken;
 
   const HomeWidget(
@@ -435,7 +434,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         FireAnalytics().log(
                                             'game',
                                             widget.allSuggestedGames![index]
-                                                .gameName);
+                                                .gameName!);
                                         Navigation.pushNamed(
                                             context, Routes.webview, {
                                           'link': widget
@@ -457,7 +456,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             BorderRadius.circular(10.0),
                                         child: Image.network(
                                           widget
-                                              .allSuggestedGames![index].image,
+                                              .allSuggestedGames![index].image!,
                                           fit: BoxFit.cover,
                                           width: 110.0,
                                           height: 110.0,
@@ -473,8 +472,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         height: 10,
                                       ),
                                       Text(
-                                        widget
-                                            .allSuggestedGames![index].gameName,
+                                        widget.allSuggestedGames![index]
+                                            .gameName!,
                                         style: Theme.of(context)
                                             .textTheme
                                             .subtitle2!

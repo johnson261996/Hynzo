@@ -38,7 +38,7 @@ class _HomeContainerState extends State<HomeContainer> {
   static GamesProvider? _gamesProvider;
   static UserProfileProvider? _userProvider;
   List<Article> allNews = [];
-  List<GameSuggestion> allSuggestedGames = [];
+  List<GamePlayModel> allSuggestedGames = [];
   UserProfileModel userDatas = UserProfileModel();
   bool _isLoading = false;
   late HomeProvider _homeProvider;
@@ -73,11 +73,11 @@ class _HomeContainerState extends State<HomeContainer> {
       setState(() {
         _isLoading = true;
       });
-      GameSuggestionModel suggestedGamesResponseModel =
+      SuggestedGamesResponseModel suggestedGamesResponseModel =
           await _gamesProvider!.getSuggestedGames();
       if (suggestedGamesResponseModel.statusCode == 200) {
         setState(() {
-          allSuggestedGames = suggestedGamesResponseModel.results;
+          allSuggestedGames = suggestedGamesResponseModel.allSuggestedGames!;
         });
       } else {
         ToastUtil().showToast("Something went wrong.3");

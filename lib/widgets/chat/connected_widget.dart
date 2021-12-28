@@ -77,7 +77,7 @@ class _ConnectedWidgetState extends State<ConnectedWidget> {
                             height: 45,
                           ),
                     title: Text(
-                      connectedListModel[index].channelName,
+                      connectedListModel[index].userBasicInfo.fullname,
                       style: Theme.of(context).textTheme.caption!.copyWith(
                             color: AppColors.black,
                             fontWeight: FontWeight.w400,
