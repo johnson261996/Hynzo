@@ -59,9 +59,6 @@ class _AllGamesState extends State<AllGames> {
                     ),
                     child: GestureDetector(
                       onTap: () {
-                        print(">>>>>>>>>>>>>>>");
-                        print(json
-                            .decode(json.encode(widget.recentGames![index])));
                         Navigation.pushNamed(context, Routes.webview, {
                           'link': widget.recentGames![index].redirectionUrl
                         });

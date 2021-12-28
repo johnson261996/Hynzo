@@ -73,7 +73,7 @@ class _NewsSwipeViewState extends State<NewsSwipeView> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       child: Image.network(
-                        widget.allContent![selectedIndex].urlToImage,
+                        widget.allContent![selectedIndex].urlToImage.toString(),
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) => ClipRRect(
                           borderRadius: BorderRadius.circular(10.0),
@@ -88,14 +88,9 @@ class _NewsSwipeViewState extends State<NewsSwipeView> {
                       height: mediaQuery.height * 0.03,
                     ),
                     Text(
-                      widget.allContent![selectedIndex].title
-                          .replaceAll(RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 27,
-                            color: AppColors.black,
-                          ),
-                    ),
+                        widget.allContent![selectedIndex].title!
+                            .replaceAll(RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
+                        style: Theme.of(context).textTheme.headline5!),
                     SizedBox(
                       height: mediaQuery.height * 0.02,
                     ),
@@ -103,23 +98,17 @@ class _NewsSwipeViewState extends State<NewsSwipeView> {
                       direction: Axis.horizontal,
                       children: [
                         Text(
-                          widget.allContent![selectedIndex].description != ''
-                              ? widget.allContent![selectedIndex].description
-                                  .replaceAll(
-                                      RegExp(r'[^A-Za-z0-9().,;?]'), ' ')
-                              : widget.allContent![selectedIndex].description
-                                  .replaceAll(
-                                      RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: false,
-                          maxLines: 15,
-                          style:
-                              Theme.of(context).textTheme.subtitle1!.copyWith(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 16,
-                                    color: AppColors.offblack,
-                                  ),
-                        ),
+                            widget.allContent![selectedIndex].description != ''
+                                ? widget.allContent![selectedIndex].description!
+                                    .replaceAll(
+                                        RegExp(r'[^A-Za-z0-9().,;?]'), ' ')
+                                : widget.allContent![selectedIndex].description!
+                                    .replaceAll(
+                                        RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                            maxLines: 15,
+                            style: Theme.of(context).textTheme.bodyText2!),
                       ],
                     ),
                   ],

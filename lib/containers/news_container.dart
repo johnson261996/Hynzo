@@ -8,6 +8,8 @@ import 'package:hynzo/widgets/news/news_widget.dart';
 import 'package:provider/provider.dart';
 
 class NewsContainer extends StatefulWidget {
+  const NewsContainer({Key? key}) : super(key: key);
+
   @override
   State<NewsContainer> createState() => _NewsContainerState();
 }
@@ -19,7 +21,6 @@ class _NewsContainerState extends State<NewsContainer> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _newsProvider = Provider.of<NewsProvider>(context, listen: false);
     allNews.clear();
@@ -43,11 +44,13 @@ class _NewsContainerState extends State<NewsContainer> {
         _isLoading = false;
       });
       if (newsResponseModel.statusCode == 200) {
-        // print("----------------------------");
-        // print(newsResponseModel.newsDataList);
-        // for (var element in newsResponseModel.newsDataList!) {
-        //   allNews.add(element);
-        // }
+        for (var element in newsResponseModel.results) {
+          if (element.news.articles.isNotEmpty) {
+            setState(() {
+              allNews = element.news.articles;
+            });
+          }
+        }
       } else {
         ToastUtil().showToast("Something went wrong.1");
       }

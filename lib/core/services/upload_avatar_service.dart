@@ -20,7 +20,6 @@ class AvatarUploadService {
     request.files.add(await http.MultipartFile.fromPath('avatar', file.path));
     var streamResponse = await request.send();
     var res = await http.Response.fromStream(streamResponse);
-    print(res.body);
     return UploadAvatarResponse.fromJson(jsonDecode(res.body));
   }
 

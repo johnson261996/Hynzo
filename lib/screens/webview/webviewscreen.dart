@@ -30,11 +30,11 @@ class _WebViewScreenState extends State<WebViewScreen> {
         body: WebView(
           javascriptMode: JavascriptMode.unrestricted,
           initialUrl: data["link"],
-          zoomEnabled: true,
+          zoomEnabled: false,
           allowsInlineMediaPlayback: true,
-          navigationDelegate: (NavigationRequest request) {
-            return data["link"];
-          },
+          // navigationDelegate: (NavigationRequest request) {
+          //   return data["link"];
+          // },
         ));
   }
 

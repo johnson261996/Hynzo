@@ -18,7 +18,6 @@ class UserProfileService {
     if (response.statusCode != 200) {
       throw "Something went wrong";
     }
-    print(response.body);
     return UserProfileModel.fromJson(
         jsonDecode(response.body), response.statusCode);
   }

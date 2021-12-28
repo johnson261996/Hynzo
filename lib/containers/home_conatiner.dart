@@ -49,7 +49,6 @@ class _HomeContainerState extends State<HomeContainer> {
     _newsProvider = Provider.of<NewsProvider>(context, listen: false);
     _gamesProvider = Provider.of<GamesProvider>(context, listen: false);
     _userProvider = Provider.of<UserProfileProvider>(context, listen: false);
-
     allNews.clear();
     getSuggestionGames();
     getAllNews();
@@ -93,28 +92,13 @@ class _HomeContainerState extends State<HomeContainer> {
 
   Future<void> getAllNews() async {
     try {
-      print(" >>>>>>>><<<<<<<<<<");
       NewsResponseModel newsResponseModel = await _newsProvider!.getNewsList();
       setState(() {
         _isLoading = false;
       });
-      print("newsResponseModel >>>>>>>><<<<<<<<<<");
-      print(newsResponseModel.statusCode);
       if (newsResponseModel.statusCode == 200) {
-        print(newsResponseModel);
-
         for (var element in newsResponseModel.results) {
-          print(element.news.articles);
-          // for (var newsContent in element.news) {
-          //   if (isToday(newsContent.pubDate!)) {
-          //     if (allNews.length < 2) {
-          //       allNews.add(newsContent);
-          //     } else {
-          //       break;
-          //     }
-          //   }
-          // }
-          if (allNews.length > 1) {
+          if (element.news.articles.isNotEmpty) {
             setState(() {
               allNews = element.news.articles;
             });

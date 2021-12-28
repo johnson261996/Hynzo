@@ -435,7 +435,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         FireAnalytics().log(
                                             'game',
                                             widget.allSuggestedGames![index]
-                                                .gameName!);
+                                                .gameName);
                                         Navigation.pushNamed(
                                             context, Routes.webview, {
                                           'link': widget
@@ -591,7 +591,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             ),
                                             child: Image.network(
                                               widget.allContent![index]
-                                                  .urlToImage,
+                                                  .urlToImage!,
                                               fit: BoxFit.cover,
                                               errorBuilder: (context, error,
                                                       stackTrace) =>
@@ -627,7 +627,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                   Flexible(
                                                     child: Text(
                                                       widget.allContent![index]
-                                                          .title
+                                                          .title!
                                                           .replaceAll(
                                                               RegExp(
                                                                   r'[^A-Za-z0-9().,;?]'),
@@ -674,11 +674,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             SizedBox(
                                               height: mediaQuery.height * 0.01,
                                             ),
-                                            Container(
+                                            SizedBox(
                                               width: 150.0,
                                               child: Text(
                                                 widget.allContent![index]
-                                                    .description
+                                                    .description!
                                                     .replaceAll(
                                                         RegExp(
                                                             r'[^A-Za-z0-9().,;?]'),
