@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
-import 'package:hynzo/core/models/game_suggestion.dart';
 import 'package:hynzo/core/services/game/game_service.dart';
 
 class GamesProvider extends ChangeNotifier {
-  Future<GameSuggestionModel> getSuggestedGames() async {
-    final GameSuggestionModel response = await GameService.getSuggestedGames();
+  Future<SuggestedGamesResponseModel> getSuggestedGames() async {
+    final SuggestedGamesResponseModel response =
+        await GameService.getSuggestedGames();
     notifyListeners();
     return response;
   }
