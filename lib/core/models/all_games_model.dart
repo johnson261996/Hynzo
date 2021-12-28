@@ -1,5 +1,3 @@
-
-
 class GamesResponseModel {
   final List<GamePlayModel>? recentGames;
   final List<GamePlayModel>? popularGames;
@@ -12,23 +10,22 @@ class GamesResponseModel {
     this.allGames,
     this.statusCode,
   });
-  factory GamesResponseModel.fromJson(
-      Map<String, dynamic> json, int code) {
+  factory GamesResponseModel.fromJson(Map<String, dynamic> json, int code) {
     return GamesResponseModel(
       recentGames: json['recent_games'] != null
           ? ((json['recent_games'] as List<dynamic>)
-          .map((i) => GamePlayModel.fromJson(i))
-          .toList())
+              .map((i) => GamePlayModel.fromJson(i))
+              .toList())
           : [],
       popularGames: json['popular_games'] != null
           ? ((json['popular_games'] as List<dynamic>)
-          .map((i) => GamePlayModel.fromJson(i))
-          .toList())
+              .map((i) => GamePlayModel.fromJson(i))
+              .toList())
           : [],
       allGames: json['all_games'] != null
           ? ((json['all_games'] as List<dynamic>)
-          .map((i) => GamePlayModel.fromJson(i))
-          .toList())
+              .map((i) => GamePlayModel.fromJson(i))
+              .toList())
           : [],
       statusCode: code,
     );
@@ -56,6 +53,7 @@ class SuggestedGamesResponseModel {
     );
   }
 }
+
 class FilteredGamesResponseModel {
   final List<GamePlayModel>? filteredGames;
   final int? statusCode;
@@ -70,16 +68,16 @@ class FilteredGamesResponseModel {
     return FilteredGamesResponseModel(
       filteredGames: json['results'] != null
           ? ((json['results'] as List<dynamic>)
-          .map((i) => GamePlayModel.fromJson(i))
-          .toList())
+              .map((i) => GamePlayModel.fromJson(i))
+              .toList())
           : [],
       statusCode: code,
     );
   }
 }
 
-
 class GamePlayModel {
+  final int? id;
   final String? gameName;
   final String? category;
   final String? image;
@@ -91,6 +89,7 @@ class GamePlayModel {
   final String? upDatedAt;
 
   GamePlayModel({
+    this.id,
     this.gameName,
     this.category,
     this.image,
@@ -104,6 +103,7 @@ class GamePlayModel {
 
   factory GamePlayModel.fromJson(Map<String, dynamic> json) {
     return GamePlayModel(
+      id: json["id"] ?? 0,
       gameName: json['game_name'] ?? '',
       category: json['category'] ?? '',
       image: json['image'] ?? '',
@@ -116,7 +116,6 @@ class GamePlayModel {
     );
   }
 }
-
 
 class GamesCategoryModel {
   final String? imagePath;

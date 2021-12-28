@@ -60,4 +60,20 @@ class GameService {
       response.statusCode,
     );
   }
+
+  Future<Map<String, dynamic>> getLeaderboard(int gameId) async {
+    String token = "";
+    await LocalStorage.getLoginToken().then((value) => token = value!);
+    String url = 'api/v1/games/score/board/$gameId';
+
+    var response = await ServiceBase.get(url: url, headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $token"
+    });
+    if (response.statusCode != 200) {
+      throw "Something went wrong";
+    }
+    log(response.body);
+    return jsonDecode(response.body);
+  }
 }

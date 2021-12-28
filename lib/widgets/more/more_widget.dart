@@ -11,12 +11,12 @@ class MoreWidget extends StatefulWidget {
   final int level;
   final UserProfileModel userDetails;
 
-  const MoreWidget({
-    Key? key,
-    required this.imageUrl,
-    required this.level,
-    required this.userDetails
-  }) : super(key: key);
+  const MoreWidget(
+      {Key? key,
+      required this.imageUrl,
+      required this.level,
+      required this.userDetails})
+      : super(key: key);
 
   @override
   State<MoreWidget> createState() => _MoreWidgetState();
@@ -80,60 +80,56 @@ class _MoreWidgetState extends State<MoreWidget> {
               left: 15.0,
               right: 15.0,
             ),
-            child: Expanded(
-              child: Row(
-                children: [
-                  ProfileImageWidget(
-                    backgroundcolor: AppColors.offyellow,
-                    valueColor: AppColors.darkyellow,
-                    imageUrl: url,
-                    level: 1,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.03,
-                  ),
-                  Container(
-                    width: 200,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          name,
-                          style: Theme.of(context).textTheme.headline5!.apply(
-                                color: AppColors.greyBlack,
-                              ),
+            child: Row(
+              children: [
+                ProfileImageWidget(
+                  backgroundcolor: AppColors.offyellow,
+                  valueColor: AppColors.darkyellow,
+                  imageUrl: url,
+                  level: 1,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.03,
+                ),
+                Container(
+                  width: 200,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: Theme.of(context).textTheme.headline5!.apply(
+                              color: AppColors.greyBlack,
+                            ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.01,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.profile);
+                        },
+                        child: Row(
+                          children: [
+                            Text(
+                              Strings.VIEW_PROFILE,
+                              style:
+                                  Theme.of(context).textTheme.caption!.copyWith(
+                                        fontSize: 14,
+                                        color: AppColors.greyBlack,
+                                      ),
+                            ),
+                            const Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              size: 10,
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.01,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, Routes.profile);
-                          },
-                          child: Row(
-                            children: [
-                              Text(
-                                Strings.VIEW_PROFILE,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .caption!
-                                    .copyWith(
-                                      fontSize: 14,
-                                      color: AppColors.greyBlack,
-                                    ),
-                              ),
-                              const Icon(
-                                Icons.arrow_forward_ios_outlined,
-                                size: 10,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           SizedBox(
@@ -276,7 +272,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                       height: 2.0,
                     ),
                     InkWell(
-                      onTap:null,
+                      onTap: null,
                       child: Container(
                         padding: const EdgeInsets.only(
                           left: 15.0,
