@@ -1,20 +1,21 @@
 ///Widget created for home screen.
 import 'package:connectivity/connectivity.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
+import 'package:hynzo/core/models/covid_model.dart';
 import 'package:hynzo/core/models/events_model.dart';
 import 'package:hynzo/core/models/game_suggestion.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/core/models/user_profile_model.dart';
+import 'package:hynzo/resources/images.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/analytics_events.dart';
 import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/navigations.dart';
+import 'package:hynzo/utils/utils.dart';
 import 'package:hynzo/widgets/carouselSlider/carousel_slider.dart';
-import 'package:hynzo/widgets/common/search_bar/search_bar.dart';
 import 'package:intl/intl.dart';
 
 import 'common/no_data/no_data_error.dart';
@@ -24,6 +25,7 @@ import 'common/view/event_view_widget.dart';
 class HomeWidget extends StatefulWidget {
   final Function onTapped;
   final List<Article>? allContent;
+  final CovidData? covidData;
   final UserProfileModel userDetails;
   final List<GameSuggestion>? allSuggestedGames;
   final Function(String)? setFcmToken;
@@ -31,6 +33,7 @@ class HomeWidget extends StatefulWidget {
   const HomeWidget(
       {required this.onTapped,
       this.allContent,
+      this.covidData,
       this.allSuggestedGames,
       required this.userDetails,
       this.setFcmToken,
@@ -155,6 +158,9 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    int? activeCase = (widget.covidData!.summary!.total! -
+        (widget.covidData!.summary!.discharged! +
+            widget.covidData!.summary!.deaths!));
     var mediaQuery = MediaQuery.of(context).size;
     name = widget.userDetails.full_name ?? '';
     url = widget.userDetails.avatar ?? '';
@@ -220,18 +226,18 @@ class _HomeWidgetState extends State<HomeWidget> {
             const SizedBox(
               height: 20,
             ),
-            SearchBar(
-              hintText: Strings.SEARCH_GAMES,
-              onchangeFunc: (val) {
-                setState(() {
-                  search = val;
-                });
-              },
-              padding: const EdgeInsets.only(
-                left: 20.0,
-                right: 20.0,
-              ),
-            ),
+            // SearchBar(
+            //   hintText: Strings.SEARCH_GAMES,
+            //   onchangeFunc: (val) {
+            //     setState(() {
+            //       search = val;
+            //     });
+            //   },
+            //   padding: const EdgeInsets.only(
+            //     left: 20.0,
+            //     right: 20.0,
+            //   ),
+            // ),
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
@@ -248,7 +254,209 @@ class _HomeWidgetState extends State<HomeWidget> {
                       Container(
                           padding: const EdgeInsets.only(right: 10),
                           height: 130.0,
-                          child: CarouselSliderWidget()),
+                          child: const CarouselSliderWidget()),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            Strings.COVID,
+                            style:
+                                Theme.of(context).textTheme.headline6!.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                          ),
+                          SizedBox(
+                            width: mediaQuery.width * 0.02,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 15, bottom: 20),
+                            child: GestureDetector(
+                              onTap: () {
+                                //TODO
+                                print("Inner screen");
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.only(top: 15),
+                                padding: const EdgeInsets.all(12.0),
+                                decoration: BoxDecoration(
+                                  image: const DecorationImage(
+                                    image: AssetImage(Images.COVID),
+                                    alignment: Alignment.topRight,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(8.0),
+                                    topRight: Radius.circular(8.0),
+                                    bottomLeft: Radius.circular(8.0),
+                                    bottomRight: Radius.circular(8.0),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.lightSliver,
+                                      offset: const Offset(
+                                        2.0,
+                                        2.0,
+                                      ),
+                                      blurRadius: 5.0,
+                                      spreadRadius: 0.1,
+                                    ), //BoxShadow
+                                    const BoxShadow(
+                                      color: Colors.white,
+                                      offset: Offset(0.0, 0.0),
+                                      blurRadius: 0.0,
+                                      spreadRadius: 0.0,
+                                    ), //BoxShadow
+                                  ],
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          Strings.ACROSS_INDIA,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline6!
+                                              .copyWith(
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          Strings.TOTAL,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2!
+                                              .copyWith(
+                                                color: AppColors.primaryDark,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                        ),
+                                        Text(
+                                          Utils.NumberFormater(widget
+                                                  .covidData!.summary!.total ??
+                                              0),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2!
+                                              .copyWith(
+                                                color: AppColors.primaryDark,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Text(
+                                              Strings.ACTIVE,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2!
+                                                  .copyWith(
+                                                    color: AppColors.red,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                            ),
+                                            Text(
+                                              Utils.NumberFormater(activeCase),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2!
+                                                  .copyWith(
+                                                    color: AppColors.red,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Text(
+                                              Strings.RECOVERED,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2!
+                                                  .copyWith(
+                                                    color: AppColors.success,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                            ),
+                                            Text(
+                                              Utils.NumberFormater(widget
+                                                      .covidData!
+                                                      .summary!
+                                                      .discharged ??
+                                                  0),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2!
+                                                  .copyWith(
+                                                    color: AppColors.success,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Text(
+                                              Strings.DEATHS,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2!
+                                                  .copyWith(
+                                                    color: AppColors.whitegrey,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                            ),
+                                            Text(
+                                              Utils.NumberFormater(widget
+                                                      .covidData!
+                                                      .summary!
+                                                      .deaths ??
+                                                  0),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2!
+                                                  .copyWith(
+                                                    color: AppColors.whitegrey,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -322,7 +530,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Container(
+                      SizedBox(
                         width: mediaQuery.width,
                         height: 230,
                         child: ListView.builder(

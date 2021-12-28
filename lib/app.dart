@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hynzo/providers/auth_provider.dart';
 import 'package:hynzo/providers/chat_provider.dart';
+import 'package:hynzo/providers/covid_provider.dart';
 import 'package:hynzo/providers/game_provider.dart';
 import 'package:hynzo/providers/home_provider.dart';
 import 'package:hynzo/providers/interest_provider.dart';
@@ -55,7 +56,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => HomeProvider(),
         ),
-
+        ChangeNotifierProvider(
+          create: (_) => CovidProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'Hynzo',

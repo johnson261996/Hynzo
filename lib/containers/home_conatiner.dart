@@ -5,12 +5,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
+import 'package:hynzo/core/models/covid_model.dart';
 import 'package:hynzo/core/models/game_suggestion.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/core/models/suggestion_model.dart';
 import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/core/models/user_profile_model.dart';
+import 'package:hynzo/providers/covid_provider.dart';
 import 'package:hynzo/providers/game_provider.dart';
 import 'package:hynzo/providers/home_provider.dart';
 import 'package:hynzo/providers/news_provider.dart';
@@ -34,10 +36,12 @@ class HomeContainer extends StatefulWidget {
 }
 
 class _HomeContainerState extends State<HomeContainer> {
+  static CovidProvider? _covidProvider;
   static NewsProvider? _newsProvider;
   static GamesProvider? _gamesProvider;
   static UserProfileProvider? _userProvider;
   List<Article> allNews = [];
+  CovidData? covidData;
   List<GameSuggestion> allSuggestedGames = [];
   UserProfileModel userDatas = UserProfileModel();
   bool _isLoading = false;
@@ -46,10 +50,12 @@ class _HomeContainerState extends State<HomeContainer> {
   @override
   void initState() {
     super.initState();
+    _covidProvider = Provider.of<CovidProvider>(context, listen: false);
     _newsProvider = Provider.of<NewsProvider>(context, listen: false);
     _gamesProvider = Provider.of<GamesProvider>(context, listen: false);
     _userProvider = Provider.of<UserProfileProvider>(context, listen: false);
     allNews.clear();
+    getCovid();
     getSuggestionGames();
     getAllNews();
     getUserData();
@@ -65,6 +71,29 @@ class _HomeContainerState extends State<HomeContainer> {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future<void> getCovid() async {
+    try {
+      CovidModel covidDataModel = await _covidProvider!.getCovidData();
+      setState(() {
+        _isLoading = false;
+      });
+      if (covidDataModel.success) {
+        print("covidData >>><<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>");
+        print(covidDataModel.data);
+        setState(() {
+          covidData = covidDataModel.data;
+        });
+      } else {
+        ToastUtil().showToast("Something went wrong.");
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ToastUtil().showToast(e.toString());
     }
   }
 
@@ -152,6 +181,7 @@ class _HomeContainerState extends State<HomeContainer> {
       child: HomeWidget(
         onTapped: widget._onTapped,
         allContent: allNews,
+        covidData: covidData,
         allSuggestedGames: allSuggestedGames,
         userDetails: _userProvider!.userProfileModel,
         setFcmToken: setFcmToken,

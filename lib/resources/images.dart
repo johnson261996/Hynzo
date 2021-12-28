@@ -35,9 +35,17 @@ class Images {
   static const String SETTINGS = 'assets/images/settings.png';
   static const String ABOUT = 'assets/images/about.png';
   static const String HELP_IMAGE = 'assets/images/help.png';
+  static const String COVID = 'assets/images/covid.png';
 
-  static const List CAROUSELIMAGES = ['assets/images/home_rectangle.png','assets/images/home_rectangle.png','assets/images/home_rectangle.png'];
+  static const List CAROUSELIMAGES = [
+    'assets/images/home_rectangle.png',
+    'assets/images/home_rectangle.png',
+    'assets/images/home_rectangle.png'
+  ];
 
-
-  static const  List UsersImages = ['https://picsum.photos/200/300','https://picsum.photos/200/300','https://picsum.photos/200/300'];
+  static const List UsersImages = [
+    'https://picsum.photos/200/300',
+    'https://picsum.photos/200/300',
+    'https://picsum.photos/200/300'
+  ];
 }

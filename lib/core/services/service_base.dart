@@ -16,7 +16,9 @@ class ServiceBase {
     required Map<String, String> headers,
   }) async {
     checkConnectionStaus();
-    String apiUrl = apiBaseUrl + url!;
+    String apiUrl = (baseUrl!.isEmpty ? apiBaseUrl : baseUrl) + url!;
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    print(apiUrl);
     final response =
         await InterceptedHttp.build(interceptors: [AuthInterceptorHeader()])
             .get(Uri.parse(apiUrl), headers: headers);
@@ -36,6 +38,7 @@ class ServiceBase {
             .post(Uri.parse(apiUrl), body: jsonEncode(data), headers: headers);
     return response;
   }
+
   static Future<http.Response> patch({
     String? url,
     required Map data,
@@ -45,15 +48,14 @@ class ServiceBase {
     checkConnectionStaus();
     String apiUrl = apiBaseUrl + url!;
     final response =
-    await InterceptedHttp.build(interceptors: [AuthInterceptorHeader()])
-        .patch(Uri.parse(apiUrl), body: jsonEncode(data), headers: headers);
+        await InterceptedHttp.build(interceptors: [AuthInterceptorHeader()])
+            .patch(Uri.parse(apiUrl), body: jsonEncode(data), headers: headers);
     return response;
   }
 
-  static String getApiBaseUrl(){
+  static String getApiBaseUrl() {
     return apiBaseUrl;
   }
-
 }
 
 checkConnectionStaus() {

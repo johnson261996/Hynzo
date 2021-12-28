@@ -5,7 +5,7 @@ class HomeProvider extends ChangeNotifier {
   bool isLoading = false;
 
   void changeLoadingStatus(bool loading) {
-    Future.delayed(Duration(milliseconds: 300), () {
+    Future.delayed(const Duration(milliseconds: 300), () {
       isLoading = loading;
       notifyListeners();
     });

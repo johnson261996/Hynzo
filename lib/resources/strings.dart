@@ -114,6 +114,7 @@ class Strings {
   static const HOME_PROFILE_SUBTITLE = "What would you like to play?";
   static const AMOUNT = "560";
   static const SPECIAL_EVENTS = "Special Events";
+  static const COVID = "Covid19 Updates";
   static const MUST_TRY_GAMES = "Must Try Games";
   static const TODAY_NEWS = "Today's News";
   static const GAMES_BY_CATEGORIES = "Games by Categories";
@@ -122,6 +123,15 @@ class Strings {
   static const SEARCH_EVENTS = "Search Events here";
   static const MORE_NEWS = "More news";
   static const ALL_GAMES_HOME = "All Games";
+
+  //Covid19
+  static const ACROSS_INDIA = "Across India";
+  static const TOTAL = "Total";
+  static const ACTIVE = "Active";
+  static const RECOVERED = "Recovered";
+  static const CONFIRMED = "Confirmed";
+  static const DEATHS = "Deaths";
+  static const DISCHARGED = "discharged";
 
   //Events
   static const CATEGORIES_TITLE = "Categories";
