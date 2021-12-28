@@ -63,7 +63,7 @@ class _AllGamesState extends State<AllGames> {
                             .getLeaderboard(widget.recentGames![index].id!);
                         Navigation.pushNamed(context, Routes.webview, {
                           'link': widget.recentGames![index].redirectionUrl! +
-                              '&user_id=$uid'
+                              '&userid=$uid'
                         });
                       },
                       child: Column(
@@ -132,7 +132,7 @@ class _AllGamesState extends State<AllGames> {
                         Navigation.pushNamed(context, Routes.webview, {
                           'link':
                               widget.allSuggestedGames![index].redirectionUrl! +
-                                  '&user_id=$uid'
+                                  '&userid=$uid'
                         });
                       },
                       child: Column(
@@ -204,7 +204,7 @@ class _AllGamesState extends State<AllGames> {
                     GameService().getLeaderboard(widget.allGames![index].id!);
                     Navigation.pushNamed(context, Routes.webview, {
                       'link': widget.allGames![index].redirectionUrl! +
-                          '&user_id=$uid'
+                          '&userid=$uid'
                     });
                   },
                   child: GameContainerWidget(
