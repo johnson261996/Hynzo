@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hynzo/containers/Profile_container.dart';
+import 'package:hynzo/containers/profile_container.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
