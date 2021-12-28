@@ -9,10 +9,45 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hynzo/app.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/localstorage.dart';
+import 'package:hynzo/utils/message_encrypt.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  log("Handling a background message: ${message.messageId}");
+  log("Handling a background message: ${message.data}");
+  showNotification(
+      message.data["title"].toString(),
+      message.data["message"].toString(),
+      message.data["encryption_key"].toString());
+}
+
+void showNotification(String title, String body, String key) async {
+  MessageEncrypt _encrypt = MessageEncrypt.initialize(key);
+  body = _encrypt.decrypt(body);
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+  final IOSInitializationSettings initializationSettingsIOS =
+      IOSInitializationSettings(
+    onDidReceiveLocalNotification: (id, title, body, payload) {},
+  );
+  final InitializationSettings initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+  flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+    onSelectNotification: (payload) {},
+  );
+  const AndroidNotificationDetails androidPlatformChannelSpecifics =
+      AndroidNotificationDetails('hynzo', 'message',
+          channelDescription: 'new messages',
+          importance: Importance.max,
+          priority: Priority.high,
+          ticker: 'ticker');
+  const NotificationDetails platformChannelSpecifics =
+      NotificationDetails(android: androidPlatformChannelSpecifics);
+  await flutterLocalNotificationsPlugin
+      .show(0, title, body, platformChannelSpecifics, payload: body);
 }
 
 void main() async {
@@ -27,17 +62,6 @@ void main() async {
       statusBarColor: AppColors.white, // this one for android
       statusBarBrightness: Brightness.light // this one for iOS
       ));
-  const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    importance: Importance.max,
-  );
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
   runZoned(() {
     runApp(const MyApp());
   });

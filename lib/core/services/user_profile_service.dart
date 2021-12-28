@@ -4,10 +4,10 @@ import 'dart:convert';
 import 'package:hynzo/core/models/user_profile_model.dart';
 import 'package:hynzo/core/services/service_base.dart';
 import 'package:hynzo/utils/localstorage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfileService {
-  static Future<UserProfileModel> getUser() async {
-    int? id = await LocalStorage.getUserID();
+  static Future<UserProfileModel> getUser(int id) async {
     String? token = await LocalStorage.getLoginToken();
     String url = 'api/v1/users/profiles/$id';
 

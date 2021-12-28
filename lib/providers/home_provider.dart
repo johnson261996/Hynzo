@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/services/home/home_service.dart';
 
@@ -14,6 +16,7 @@ class HomeProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> setFcmToken(String token) async {
     final Map<String, dynamic> response =
         await HomeService().setFcmToken(token);
+    log("FCM TOKEN : " + token);
     notifyListeners();
     return response;
   }

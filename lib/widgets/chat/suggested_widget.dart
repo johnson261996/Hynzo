@@ -3,8 +3,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hynzo/core/models/create_channel_model.dart';
 import 'package:hynzo/core/models/suggestion_model.dart';
 import 'package:hynzo/resources/strings.dart';
+import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/localstorage.dart';
+
 
 class SuggestedWidget extends StatefulWidget {
   final Function? getSuggestedList;
@@ -61,22 +63,29 @@ class _SuggestedWidgetState extends State<SuggestedWidget> {
               shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
+
                 return ListTile(
                   dense: false,
                   visualDensity: VisualDensity.standard,
-                  leading: suggestionModel.resultsList[index].avatar != ''
-                      ? CircleAvatar(
-                          radius: 22.5,
-                          backgroundImage: NetworkImage(
-                              suggestionModel.resultsList[index].avatar!))
+                  leading: GestureDetector(onTap:() async{
+                    int? id  = suggestionModel.resultsList[index].pk!;
+                    Navigator.pushNamed(context, Routes.profile,arguments: {'id':id});
+                  },child: suggestionModel.resultsList[index].avatar!= ''
+                      ?
+                  CircleAvatar(
+                      radius: 22.5,
+                      backgroundImage: NetworkImage(
+                          suggestionModel.resultsList[index].avatar!))
+
                       : Image.asset(
-                          'assets/images/user.png',
-                          fit: BoxFit.contain,
-                          width: 45,
-                          height: 45,
-                        ),
+                    'assets/images/user.png',
+                    fit: BoxFit.contain,
+                    width: 45,
+                    height: 45,
+                  ), ),
+
                   title: Text(
-                    suggestionModel.resultsList[index].username!,
+                    suggestionModel.resultsList[index].full_name!,
                     style: Theme.of(context).textTheme.caption!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400,
@@ -137,3 +146,4 @@ class _SuggestedWidgetState extends State<SuggestedWidget> {
     );
   }
 }
+

@@ -24,7 +24,9 @@ class Images {
   static const String LOG_OUT = 'assets/images/log_out.png';
   static const String TOP_BACK = 'assets/images/top_back.png';
   static const String PROFILE_PIC = 'assets/images/profile_pic.png';
+  static const String USER_IMAGE = 'assets/images/user.png';
   static const String PROFILE_STAR = 'assets/images/profile_star.png';
+  static const String NEXT_BUTTON = 'assets/images/next_button.png';
   static const String FLAG = 'assets/images/flag.png';
   static const String CALENDAR = 'assets/images/calendar.png';
   static const String CAMERA = 'assets/images/camera.png';
@@ -36,6 +38,16 @@ class Images {
   static const String ABOUT = 'assets/images/about.png';
   static const String HELP_IMAGE = 'assets/images/help.png';
   static const String COVID = 'assets/images/covid.png';
+  static const String PROFILE_BANNER = 'assets/images/profile_banner.png';
+  static const String COIN_IMAGE = 'assets/images/coin.png';
+  static const String GHOST_MODE = "assets/images/ghost_mode.png";
+  static const String NOTIFICATION = "assets/images/notification.png";
+  static const String NIGHT_MODE = "assets/images/night_mode.png";
+  static const String READ_RECIEPTS = "assets/images/read_reciepts.png";
+  static const String LAST_SEEN = "assets/images/last_seen.png";
+  static const String PRIVACY_SETTINGS = "assets/images/privacy_settings.png";
+  static const String STORAGE_DATA = "assets/images/storage_data.png";
+  static const String LANGUAGES = "assets/images/languages.png";
 
   static const List CAROUSELIMAGES = [
     'assets/images/home_rectangle.png',

@@ -10,6 +10,7 @@ import 'package:hynzo/screens/navigationScreen/navigationScreen.dart';
 import 'package:hynzo/screens/news/news.dart';
 import 'package:hynzo/screens/onboarding/onboarding.dart';
 import 'package:hynzo/screens/profile/profile.dart';
+import 'package:hynzo/screens/settings/settings.dart';
 import 'package:hynzo/screens/splash/splash.dart';
 import 'package:hynzo/screens/about/about.dart';
 import 'package:hynzo/screens/home/home.dart';
@@ -46,7 +47,9 @@ class Routes {
   static const news = "./news";
   static const webview = "./webview";
   static const profile = '/profile';
-  static const editProfile = '/edit-profile';
+  static const edit_profile = '/edit-profile';
+  static const settings = '/settings';
+
 
   /// Routing Table needed for the App.
   static Map<String, WidgetBuilder> get buildRoutes {
@@ -75,9 +78,11 @@ class Routes {
       webview: (BuildContext context) =>
           const BaseLayout(page: WebViewScreen(), isAppBar: false),
       profile: (BuildContext context) =>
-          const BaseLayout(page: ProfileScreen(), isAppBar: false),
-      editProfile: (BuildContext context) =>
-          const BaseLayout(page: EditProfile(), isAppBar: false),
+          BaseLayout(page: ProfileScreen(), isAppBar: false),
+      edit_profile: (BuildContext context) =>
+          BaseLayout(page: EditProfile(), isAppBar: false),
+              settings: (BuildContext context) =>
+          BaseLayout(page: SettingsScreen(), isAppBar: false),
     };
   }
 

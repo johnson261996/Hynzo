@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/user_profile_model.dart';
 import 'package:hynzo/providers/user_profile_provider.dart';
-import 'package:hynzo/utils/toast_util.dart';
+import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/widgets/more/more_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -25,25 +25,10 @@ class _MoreContainerState extends State<MoreContainer> {
     getUserData();
   }
 
-  Future<void> getUserData() async {
-    try {
-      setState(() {
-        isLoading = true;
-      });
-      UserProfileModel userProfileModel = await _userProvider!.getUser();
-      if (userProfileModel.statusCode == 200) {
-        setState(() {
-          userDatas = userProfileModel;
-        });
-      } else {
-        ToastUtil().showToast("Something went wrong.3");
-      }
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-      ToastUtil().showToast(e.toString());
-    }
+  Future<UserProfileModel> getUserData() async {
+    int? id  = await LocalStorage.getUserID();
+    UserProfileModel userResponse = await _userProvider!.getUser(id!);
+    return userResponse;
   }
 
   @override
@@ -52,7 +37,7 @@ class _MoreContainerState extends State<MoreContainer> {
     return MoreWidget(
       imageUrl: '',
       level: 0,
-      userDetails: _userProvider!.userProfileModel,
+      getUserDetails: getUserData,
     );
   }
 }

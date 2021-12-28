@@ -7,6 +7,7 @@ import 'package:hynzo/providers/game_provider.dart';
 import 'package:hynzo/providers/home_provider.dart';
 import 'package:hynzo/providers/interest_provider.dart';
 import 'package:hynzo/providers/news_provider.dart';
+import 'package:hynzo/providers/settings_provider.dart';
 import 'package:hynzo/providers/suggestion_provider.dart';
 import 'package:hynzo/providers/update_profile_provider.dart';
 import 'package:hynzo/providers/upload_avatar_provider.dart';
@@ -52,6 +53,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => UpdateProfileProvider(),
+        ),
+         ChangeNotifierProvider(
+          create: (_) => SettingsProvider(),
         ),
         ChangeNotifierProvider(
           create: (_) => HomeProvider(),

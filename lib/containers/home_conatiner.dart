@@ -18,6 +18,7 @@ import 'package:hynzo/providers/home_provider.dart';
 import 'package:hynzo/providers/news_provider.dart';
 import 'package:hynzo/providers/user_profile_provider.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
 import 'package:hynzo/widgets/home_widget.dart';
@@ -81,8 +82,6 @@ class _HomeContainerState extends State<HomeContainer> {
         _isLoading = false;
       });
       if (covidDataModel.success) {
-        print("covidData >>><<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>");
-        print(covidDataModel.data);
         setState(() {
           covidData = covidDataModel.data;
         });
@@ -102,11 +101,11 @@ class _HomeContainerState extends State<HomeContainer> {
       setState(() {
         _isLoading = true;
       });
-      GameSuggestionModel suggestedGamesResponseModel =
+      SuggestedGamesResponseModel suggestedGamesResponseModel =
           await _gamesProvider!.getSuggestedGames();
       if (suggestedGamesResponseModel.statusCode == 200) {
         setState(() {
-          allSuggestedGames = suggestedGamesResponseModel.results;
+          allSuggestedGames = suggestedGamesResponseModel.allSuggestedGames!;
         });
       } else {
         ToastUtil().showToast("Something went wrong.3");
@@ -149,7 +148,8 @@ class _HomeContainerState extends State<HomeContainer> {
       setState(() {
         _isLoading = true;
       });
-      UserProfileModel userProfileModel = await _userProvider!.getUser();
+      int? id = await LocalStorage.getUserID();
+      UserProfileModel userProfileModel = await _userProvider!.getUser(id!);
       if (userProfileModel.statusCode == 200) {
         setState(() {
           userDatas = userProfileModel;

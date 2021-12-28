@@ -14,7 +14,6 @@ import 'package:intl/intl.dart';
 
 class EditProfileWidget extends StatefulWidget {
   final UserProfileModel userDetails;
-
   final Function updateProfile;
 
   const EditProfileWidget(
@@ -40,14 +39,13 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
   final mobileController = TextEditingController();
   final dateController = TextEditingController();
   final genderDetailController = TextEditingController();
-
+  UserProfileModel userDetails = UserProfileModel();
   @override
   void initState() {
     super.initState();
     url = widget.userDetails.avatar ?? Images.PROFILE_PIC;
     dateString = widget.userDetails.dob ?? Strings.DOB;
   }
-
   datepick() async {
     var date = await showDatePicker(
         helpText: "",
@@ -66,7 +64,6 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
       dateController.text = dateString;
     });
   }
-
   getData() async {
     fullName = widget.userDetails.full_name ?? Strings.NAME;
     mobile = widget.userDetails.contact_number ?? Strings.MOBILE;
@@ -134,6 +131,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   InkWell(
                     onTap: () {
                       Navigator.pop(context);
+
                     },
                     child: Image.asset(
                       Images.TOP_BACK,
@@ -339,7 +337,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   ),
                   child: PrimaryButton(
                     text: const Text(Strings.UPDATE_PROFILE),
-                    onPressed: () {
+                    onPressed: () async {
                       if (firstNameController.text == '') {
                         firstNameController.text = fullName;
                       }
@@ -349,7 +347,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                       if (dateController.text == '') {
                         dateController.text = dateString;
                       }
-                      update();
+                       update();
                     },
                   ),
                 ),
