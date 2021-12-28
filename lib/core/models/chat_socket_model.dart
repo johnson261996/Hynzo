@@ -47,7 +47,7 @@ class Message {
   String typeOfContent;
   Media media;
   DateTime timestamp;
-  List<int> seenBy;
+  List<Map<String, dynamic>> seenBy;
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
       id: json["id"],
