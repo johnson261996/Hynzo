@@ -32,7 +32,6 @@ class _BaseLayoutState extends State<BaseLayout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: widget.isAppBar!
           ? CustomAppBar(
               title: Text(widget.text),
