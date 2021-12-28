@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hynzo/core/models/chat_list_model.dart';
@@ -34,6 +35,9 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
     super.initState();
     timeago.setLocaleMessages('en_short', timeago.EnShortMessages());
     getAllChats(10, 0);
+    FirebaseMessaging.onMessage.listen((event) {
+      getAllChats(10, 0);
+    });
   }
 
   getAllChats(int limit, int offset) async {
