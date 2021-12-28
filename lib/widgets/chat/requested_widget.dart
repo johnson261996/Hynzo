@@ -87,7 +87,7 @@ class _RequestedWidgetState extends State<RequestedWidget> {
                           height: 45,
                         ),
                   title: Text(
-                    requestedModel.response[index].channelName,
+                    requestedModel.response[index].userBasicInfo.fullname,
                     style: Theme.of(context).textTheme.caption!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400,

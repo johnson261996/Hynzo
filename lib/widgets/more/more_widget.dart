@@ -293,7 +293,9 @@ class _MoreWidgetState extends State<MoreWidget> {
                       height: 2.0,
                     ),
                     InkWell(
-                      onTap:null,
+                      onTap: () {
+                        Navigator.pushNamed(context, Routes.settings);
+                      },
                       child: Container(
                         padding: const EdgeInsets.only(
                           left: 15.0,
@@ -312,7 +314,7 @@ class _MoreWidgetState extends State<MoreWidget> {
                               width: 20.0,
                             ),
                             Text(
-                              Strings.SEETINGS,
+                              Strings.SETTINGS,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!

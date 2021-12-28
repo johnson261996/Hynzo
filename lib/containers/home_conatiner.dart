@@ -1,8 +1,13 @@
 /// Contains service and logic related of home screen.
 ///
 ///
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
+import 'package:hynzo/core/models/game_suggestion.dart';
+import 'package:hynzo/core/models/news_home_model.dart';
+import 'package:hynzo/core/models/suggestion_model.dart';
 import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/core/models/user_profile_model.dart';
@@ -33,7 +38,7 @@ class _HomeContainerState extends State<HomeContainer> {
   static NewsProvider? _newsProvider;
   static GamesProvider? _gamesProvider;
   static UserProfileProvider? _userProvider;
-  List<NewsContentDataModel> allNews = [];
+  List<Article> allNews = [];
   List<GamePlayModel> allSuggestedGames = [];
   UserProfileModel userDatas = UserProfileModel();
   bool _isLoading = false;
@@ -41,14 +46,13 @@ class _HomeContainerState extends State<HomeContainer> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _newsProvider = Provider.of<NewsProvider>(context, listen: false);
     _gamesProvider = Provider.of<GamesProvider>(context, listen: false);
     _userProvider = Provider.of<UserProfileProvider>(context, listen: false);
-
     allNews.clear();
     getSuggestionGames();
+    getAllNews();
     getUserData();
   }
 
@@ -73,11 +77,12 @@ class _HomeContainerState extends State<HomeContainer> {
       SuggestedGamesResponseModel suggestedGamesResponseModel =
           await _gamesProvider!.getSuggestedGames();
       if (suggestedGamesResponseModel.statusCode == 200) {
-        allSuggestedGames = suggestedGamesResponseModel.allSuggestedGames!;
+        setState(() {
+          allSuggestedGames = suggestedGamesResponseModel.allSuggestedGames!;
+        });
       } else {
         ToastUtil().showToast("Something went wrong.3");
       }
-      getAllNews();
     } catch (e) {
       setState(() {
         _isLoading = false;
@@ -93,18 +98,11 @@ class _HomeContainerState extends State<HomeContainer> {
         _isLoading = false;
       });
       if (newsResponseModel.statusCode == 200) {
-        for (var element in newsResponseModel.newsDataList!) {
-          for (var newsContent in element.newsDataContentList!) {
-            if (isToday(newsContent.pubDate!)) {
-              if (allNews.length < 2) {
-                allNews.add(newsContent);
-              } else {
-                break;
-              }
-            }
-          }
-          if (allNews.length == 2) {
-            break;
+        for (var element in newsResponseModel.results) {
+          if (element.news.articles.isNotEmpty) {
+            setState(() {
+              allNews = element.news.articles;
+            });
           }
         }
       } else {
@@ -138,10 +136,11 @@ class _HomeContainerState extends State<HomeContainer> {
       });
       ToastUtil().showToast(e.toString());
     }
-}
-  
-  Future<Map<String,dynamic>> setFcmToken(String token) async{
-    final Map<String,dynamic> response = await _homeProvider.setFcmToken(token);
+  }
+
+  Future<Map<String, dynamic>> setFcmToken(String token) async {
+    final Map<String, dynamic> response =
+        await _homeProvider.setFcmToken(token);
     return response;
   }
 

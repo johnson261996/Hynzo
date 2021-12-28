@@ -8,16 +8,11 @@ class NewsService {
   static Future<NewsResponseModel> getAllNews() async {
     String token = "";
     await LocalStorage.getLoginToken().then((value) => token = value!);
-
-    String url = 'api/v1/news/fetch/news';
-    Map data = {
-      "category": "all",
-    };
-    var response = await ServiceBase.post(url: url, data: data, headers: {
+    String url = 'api/v1/news/fetch/news?category=all&country=in&language=en';
+    var response = await ServiceBase.get(url: url, headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer $token"
     });
-
     if (response.statusCode != 200) {
       throw "Something went wrong";
     }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/models/tab_header_model.dart';
@@ -42,14 +41,13 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _pageController.dispose();
     tabController.dispose();
   }
 
-  getFilteredGames(String s) async {
-    FilteredGamesResponseModel response = await widget.filteredGames!(s);
+  getFilteredGames(String tag) async {
+    FilteredGamesResponseModel response = await widget.filteredGames!(tag);
     setState(() {
       filteredLIst = response.filteredGames!;
     });
@@ -57,7 +55,6 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _pageController = PageController();
     allTabHeader.add(
@@ -67,12 +64,12 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
     );
     allTabHeader.add(
       TabHeaderModel(
-        tabName: 'Shooting',
+        tabName: 'Action',
       ),
     );
     allTabHeader.add(
       TabHeaderModel(
-        tabName: 'Sports',
+        tabName: 'Arcade',
       ),
     );
     allTabHeader.add(
@@ -82,17 +79,7 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
     );
     allTabHeader.add(
       TabHeaderModel(
-        tabName: 'Action',
-      ),
-    );
-    allTabHeader.add(
-      TabHeaderModel(
-        tabName: 'Racing',
-      ),
-    );
-    allTabHeader.add(
-      TabHeaderModel(
-        tabName: 'Arcade',
+        tabName: 'Sports',
       ),
     );
     allTabHeader.add(
@@ -244,17 +231,13 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
                     allGames: widget.allGames,
                   ),
                   FilteredGamesWidget(
-                      title: 'Shooting Games', filteredGames: filteredLIst),
+                      title: 'Action Games', filteredGames: filteredLIst),
                   FilteredGamesWidget(
-                      title: 'Sports Games', filteredGames: filteredLIst),
+                      title: 'Arcade Games', filteredGames: filteredLIst),
                   FilteredGamesWidget(
                       title: 'Casual Games', filteredGames: filteredLIst),
                   FilteredGamesWidget(
-                      title: 'Action Games', filteredGames: filteredLIst),
-                  FilteredGamesWidget(
-                      title: 'Racing Games', filteredGames: filteredLIst),
-                  FilteredGamesWidget(
-                      title: 'Arcade Games', filteredGames: filteredLIst),
+                      title: 'Sports Games', filteredGames: filteredLIst),
                   FilteredGamesWidget(
                       title: 'All', filteredGames: filteredLIst),
                 ],

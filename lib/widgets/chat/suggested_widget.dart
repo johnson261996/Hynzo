@@ -85,7 +85,7 @@ class _SuggestedWidgetState extends State<SuggestedWidget> {
                   ), ),
 
                   title: Text(
-                    suggestionModel.resultsList[index].username!,
+                    suggestionModel.resultsList[index].full_name!,
                     style: Theme.of(context).textTheme.caption!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400,

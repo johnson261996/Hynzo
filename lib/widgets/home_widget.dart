@@ -9,6 +9,7 @@ import 'package:hynzo/core/models/user_profile_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/analytics_events.dart';
 import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/carouselSlider/carousel_slider.dart';
@@ -21,7 +22,7 @@ import 'common/view/event_view_widget.dart';
 
 class HomeWidget extends StatefulWidget {
   final Function onTapped;
-  final List<NewsContentDataModel>? allContent;
+  final List<Article>? allContent;
   final UserProfileModel userDetails;
   final List<GamePlayModel>? allSuggestedGames;
   final Function(String)? setFcmToken;
@@ -110,7 +111,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   }
 
   getName() async {
-    name = (await LocalStorage.getUserName())!;
+    name = (await LocalStorage.getUserFullName())!;
   }
 
   getProfilePic() async {
@@ -212,7 +213,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                       ],
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -430,7 +430,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 child: GestureDetector(
                                   onTap: () {
                                     check().then((internet) {
-                                      if (internet != null && internet) {
+                                      if (internet) {
+                                        FireAnalytics().log(
+                                            'game',
+                                            widget.allSuggestedGames![index]
+                                                .gameName!);
                                         Navigation.pushNamed(
                                             context, Routes.webview, {
                                           'link': widget
@@ -464,7 +468,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10,
                                       ),
                                       Text(
@@ -544,16 +548,16 @@ class _HomeWidgetState extends State<HomeWidget> {
                             )
                           ],
                         ),
-                        Container(
+                        SizedBox(
                           width: mediaQuery.width,
                           height: 250,
                           child: ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
                                 onTap: () {
                                   Navigation.pushNamed(context, Routes.webview,
-                                      {'link': widget.allContent![index].link});
+                                      {'link': widget.allContent![index].url});
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.only(
@@ -585,8 +589,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               bottomLeft: Radius.circular(10.0),
                                             ),
                                             child: Image.network(
-                                              widget
-                                                  .allContent![index].imageUrl!,
+                                              widget.allContent![index]
+                                                  .urlToImage!,
                                               fit: BoxFit.cover,
                                               errorBuilder: (context, error,
                                                       stackTrace) =>
@@ -648,7 +652,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                   Text(
                                                     getDate(widget
                                                         .allContent![index]
-                                                        .pubDate!),
+                                                        .publishedAt
+                                                        .toString()),
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .subtitle1!
@@ -668,7 +673,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             SizedBox(
                                               height: mediaQuery.height * 0.01,
                                             ),
-                                            Container(
+                                            SizedBox(
                                               width: 150.0,
                                               child: Text(
                                                 widget.allContent![index]
