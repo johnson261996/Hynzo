@@ -139,7 +139,7 @@ class Strings {
   static const SUBSCRIPTION = "Subscription";
   static const EDIT_HOME_SCREEN = "Edit home screen";
   static const WALLET = "Wallet";
-  static const SEETINGS = "Settings";
+  static const SETTINGS = "Settings";
   static const ABOUT_US = "About us";
   static const HELP_SUPPORT = "Help & Support";
 
@@ -192,6 +192,16 @@ class Strings {
   static const LOCATION = 'Banglore';
   static const GENDER_LIST = ['Male', 'Female'];
   static const LOCATION_LIST = ['Mumbai', 'Banglore', 'Delhi'];
+
+  //Settings
+  static const GHOST_MODE = "Ghost Mode";
+  static const NOTIFICATION = "Notification";
+  static const NIGHT_MODE = "Night mode";
+  static const READ_RECIEPTS = "Read Receipts";
+  static const LAST_SEEN = "Last Seen";
+  static const PRIVACY_SETTINGS = "Privacy Settings";
+  static const STORAGE_DATA = "Storage and data";
+  static const LANGUAGES = "Languages";
 
   // it will return the dynamic string
   static String demo(amount) {

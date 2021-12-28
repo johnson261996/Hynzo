@@ -35,6 +35,14 @@ class Images {
   static const String SETTINGS = 'assets/images/settings.png';
   static const String ABOUT = 'assets/images/about.png';
   static const String HELP_IMAGE = 'assets/images/help.png';
+  static const String GHOST_MODE = "assets/images/ghost_mode.png";
+  static const String NOTIFICATION = "assets/images/notification.png";
+  static const String NIGHT_MODE = "assets/images/night_mode.png";
+  static const String READ_RECIEPTS = "assets/images/read_reciepts.png";
+  static const String LAST_SEEN = "assets/images/last_seen.png";
+  static const String PRIVACY_SETTINGS = "assets/images/privacy_settings.png";
+  static const String STORAGE_DATA = "assets/images/storage_data.png";
+  static const String LANGUAGES = "assets/images/languages.png";
 
   static const List CAROUSELIMAGES = ['assets/images/home_rectangle.png','assets/images/home_rectangle.png','assets/images/home_rectangle.png'];
 
