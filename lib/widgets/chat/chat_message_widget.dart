@@ -50,7 +50,14 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
   int? uid;
   String? token;
   String? name;
-  late types.User _user;
+  late types.User _user = const types.User(
+    id: '',
+    firstName: '',
+    lastName: '',
+    imageUrl:
+        'https://i.picsum.photos/id/1075/200/300.jpg?hmac=pffU5_mFDClpUhsTVng81yHXXvdsGGKHi1jCz2pRsaU',
+    role: types.Role.user,
+  );
   late MessageEncrypt _encrypt;
 
   @override

@@ -60,4 +60,11 @@ class Images {
     'https://picsum.photos/200/300',
     'https://picsum.photos/200/300'
   ];
+
+  static const List<String> GAME_CATEGORIES = [
+    'assets/images/action.png',
+    'assets/images/arcade.png',
+    'assets/images/casual.png',
+    'assets/images/sports.png',
+  ];
 }

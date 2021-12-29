@@ -13,14 +13,13 @@ import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/analytics_events.dart';
 import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/navigations.dart';
-import 'package:hynzo/utils/utils.dart';
 import 'package:hynzo/widgets/carouselSlider/carousel_slider.dart';
 import 'package:hynzo/widgets/covid/covid_top_widget.dart';
 import 'package:intl/intl.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'common/no_data/no_data_error.dart';
 import 'common/profile_image/profile_image.dart';
-import 'common/view/event_view_widget.dart';
 
 class HomeWidget extends StatefulWidget {
   final Function onTapped;
@@ -50,7 +49,6 @@ class _HomeWidgetState extends State<HomeWidget> {
   String url = "";
 
   String search = '';
-  List<GamesCategoryModel> allGamesCategory = [];
   List<EventsModel> allEvents = [];
 
   @override
@@ -58,36 +56,6 @@ class _HomeWidgetState extends State<HomeWidget> {
     setFcmToken();
     super.initState();
 
-    allGamesCategory.add(
-      GamesCategoryModel(
-        imagePath: 'assets/images/category_rectangle_one.png',
-      ),
-    );
-    allGamesCategory.add(
-      GamesCategoryModel(
-        imagePath: 'assets/images/category_rectangle_two.png',
-      ),
-    );
-    allGamesCategory.add(
-      GamesCategoryModel(
-        imagePath: 'assets/images/category_rectangle_three.png',
-      ),
-    );
-    allGamesCategory.add(
-      GamesCategoryModel(
-        imagePath: 'assets/images/category_rectangle_four.png',
-      ),
-    );
-    allGamesCategory.add(
-      GamesCategoryModel(
-        imagePath: 'assets/images/category_rectangle_five.png',
-      ),
-    );
-    allGamesCategory.add(
-      GamesCategoryModel(
-        imagePath: 'assets/images/category_rectangle_six.png',
-      ),
-    );
     allEvents.add(
       EventsModel(
         imagePath: 'assets/images/events_dummy_one.png',
@@ -804,8 +772,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                           right: 20.0,
                         ),
                         width: mediaQuery.width,
-                        height: 200,
+                        //height: 200,
                         child: GridView.builder(
+                          shrinkWrap: true,
                           padding: EdgeInsets.zero,
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
@@ -815,17 +784,26 @@ class _HomeWidgetState extends State<HomeWidget> {
                             childAspectRatio: 3.1,
                           ),
                           itemBuilder: (BuildContext context, int index) {
-                            return Image.asset(
-                                allGamesCategory[index].imagePath!);
+                            return GestureDetector(
+                              onTap: () {
+                                final get = GetStorage();
+                                get.writeInMemory('game', index);
+                                widget.onTapped(3);
+                              },
+                              child: Image.asset(Images.GAME_CATEGORIES[index]),
+                            );
                           },
-                          itemCount: allGamesCategory.length,
+                          itemCount: Images.GAME_CATEGORIES.length,
                         ),
+                      ),
+                      const SizedBox(
+                        height: 50,
                       )
                     ],
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

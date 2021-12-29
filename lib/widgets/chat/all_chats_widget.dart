@@ -12,6 +12,15 @@ import 'package:hynzo/utils/message_encrypt.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+extension StringCasingExtension on String {
+  String toCapitalized() =>
+      length > 0 ? '${this[0].toUpperCase()}${substring(1)}' : '';
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ')
+      .split(' ')
+      .map((str) => str.toCapitalized())
+      .join(' ');
+}
+
 class AllChatsWidget extends StatefulWidget {
   const AllChatsWidget(
       {Key? key, required this.getChatList, required this.createChannel})
@@ -148,9 +157,14 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                 fontWeight: FontWeight.bold),
                                       ),
                                     ),
-                                    decoration: const BoxDecoration(
+                                    decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: Colors.white),
+                                        color: Colors.white,
+                                        border: allChats[index].unreadCount! > 0
+                                            ? null
+                                            : Border.all(
+                                                width: 1,
+                                                color: AppColors.blackBlue)),
                                   )
                                 : Image.network(
                                     allChats[index].imagePath!,
@@ -225,7 +239,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                         ],
                       ),
                       title: Text(
-                        allChats[index].name!,
+                        allChats[index].name!.toTitleCase(),
                         style: Theme.of(context).textTheme.headline6!.apply(
                               color: AppColors.greyBlack,
                             ),
@@ -279,12 +293,12 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                             style:
                                 Theme.of(context).textTheme.subtitle2!.copyWith(
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 13,
+                                      fontSize: 12,
                                       color: AppColors.greishBlack,
                                     ),
                           ),
                           const SizedBox(
-                            height: 5.0,
+                            height: 10.0,
                           ),
                           if (allChats[index].unreadCount! > 0)
                             Container(
