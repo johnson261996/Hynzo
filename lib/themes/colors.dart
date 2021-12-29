@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pigment/pigment.dart';
 
 /// Define all the colors to be used in application in this file
@@ -12,6 +11,7 @@ class AppColors {
   AppColors._();
 
   static final Color black = Pigment.fromString('#000000');
+  static final Color black_secondary = Pigment.fromString('#181D27');
   static final Color red = Pigment.fromString('#D34242');
   static final Color offblack = Pigment.fromString('#646161');
   static final Color greyBlack = Pigment.fromString('#1B1A57');
@@ -21,7 +21,11 @@ class AppColors {
   static final Color grayDark = Pigment.fromString('#7A7A7A');
   static final Color greishBlack = Pigment.fromString('#333333');
   static final Color gray = Pigment.fromString('#606060');
+  static final Color gray_arrow = Pigment.fromString('#B5B5BE');
+  static final Color gray_circle = Pigment.fromString('#ECECEC');
   static final Color graylight = Pigment.fromString('#B0B0B2');
+  static final Color grayLight_secondary = Pigment.fromString('#D7D7D7');
+  static final Color grey_primary = Pigment.fromString('#555555');
   static final Color lightgray = Pigment.fromString('#C4C4C4');
   static final Color offgrey = Pigment.fromString('#7B7B7B');
   static final Color offwhite = Pigment.fromString('#ACACAC');
@@ -30,6 +34,7 @@ class AppColors {
   static final Color lightSliver = Pigment.fromString('#E8E8E8');
   static final Color white = Pigment.fromString("#FFFFFF");
   static final Color whitegrey = Pigment.fromString("#908A8A");
+  static final Color grey_secondary = Pigment.fromString("#8F8F8F");
   static final Color yellow = Pigment.fromString("#FAFF00");
   static final Color yellowLight = Pigment.fromString("#FFF176");
   static final Color yellowDark = Pigment.fromString("#B5680E");
@@ -45,6 +50,8 @@ class AppColors {
   static final Color blueDark = Pigment.fromString("#414BA5");
   static final Color green = Pigment.fromString("#4CE417");
   static final Color pink = Pigment.fromString("#E39494");
+  static final Color button_red = Pigment.fromString("#E83C3B");
+  static final Color grey_light_secondary = Pigment.fromString("#ECECED");
 
   static final Color primary = Pigment.fromString('#4232B0');
   static final Color primaryDark = Pigment.fromString('#414BA5');

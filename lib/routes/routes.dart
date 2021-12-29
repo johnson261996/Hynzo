@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/layout/base.dart';
-import 'package:hynzo/screens/home/edit_home.dart';
+import 'package:hynzo/screens/covid/covid.dart';
+import 'package:hynzo/screens/edit-profile/edit_profile.dart';
 import 'package:hynzo/screens/interest/interest.dart';
 import 'package:hynzo/screens/intro/intro.dart';
-import 'package:hynzo/screens/leaderboard/leaderboard.dart';
 import 'package:hynzo/screens/location/location.dart';
 import 'package:hynzo/screens/login/login.dart';
 import 'package:hynzo/screens/login/otp.dart';
 import 'package:hynzo/screens/navigationScreen/navigationScreen.dart';
 import 'package:hynzo/screens/news/news.dart';
 import 'package:hynzo/screens/onboarding/onboarding.dart';
+import 'package:hynzo/screens/profile/profile.dart';
+import 'package:hynzo/screens/settings/settings.dart';
 import 'package:hynzo/screens/splash/splash.dart';
 import 'package:hynzo/screens/about/about.dart';
 import 'package:hynzo/screens/home/home.dart';
@@ -43,10 +45,12 @@ class Routes {
   static const suggetion = '/suggetion';
   static const onboarding = '/onboarding';
   static const navScreen = '/navScreen';
-  static const news="./news";
-  static const webview="./webview";
-  static const edit_home = "./edithome";
-  static const leaderboard = "./leaderboard";
+  static const news = "./news";
+  static const webview = "./webview";
+  static const profile = '/profile';
+  static const edit_profile = '/edit-profile';
+  static const settings = '/settings';
+  static const covid = '/covid';
 
   /// Routing Table needed for the App.
   static Map<String, WidgetBuilder> get buildRoutes {
@@ -54,15 +58,15 @@ class Routes {
       splashScreen: (BuildContext context) =>
           const BaseLayout(page: SplashScreen(), isAppBar: false),
       login: (BuildContext context) =>
-          BaseLayout(page: Login(), isAppBar: false),
+          const BaseLayout(page: Login(), isAppBar: false),
       intro: (BuildContext context) =>
-          BaseLayout(page: Intro(), isAppBar: false),
+      const BaseLayout(page: Intro(), isAppBar: false),
       interest: (BuildContext context) =>
-          BaseLayout(page: Interest(), isAppBar: false),
+      const BaseLayout(page: Interest(), isAppBar: false),
       location: (BuildContext context) =>
-          BaseLayout(page: Location(), isAppBar: false),
+      const BaseLayout(page: Location(), isAppBar: false),
       suggetion: (BuildContext context) =>
-          BaseLayout(page: Suggetion(), isAppBar: false),
+      const BaseLayout(page: Suggetion(), isAppBar: false),
       otp: (BuildContext context) =>
           const BaseLayout(page: Otpverify(), isAppBar: false),
       about: (BuildContext context) =>
@@ -71,14 +75,17 @@ class Routes {
           BaseLayout(page: Onbarding(), isAppBar: false),
       navScreen: (BuildContext context) =>
           BaseLayout(page: NavigationScreen(), isAppBar: false),
-      news: (BuildContext context) =>
-          BaseLayout(page: News(), isAppBar: false),
+      news: (BuildContext context) => BaseLayout(page: News(), isAppBar: false),
       webview: (BuildContext context) =>
-          BaseLayout(page: WebViewScreen(), isAppBar: false),
-      edit_home: (BuildContext context) =>
-          BaseLayout(page: EditHome(), isAppBar: false),
-      leaderboard: (BuildContext context) =>
-          BaseLayout(page: LeaderboardScreen(), isAppBar: false),
+      const BaseLayout(page: WebViewScreen(), isAppBar: false),
+      profile: (BuildContext context) =>
+          BaseLayout(page: ProfileScreen(), isAppBar: false),
+      edit_profile: (BuildContext context) =>
+          BaseLayout(page: EditProfile(), isAppBar: false),
+      settings: (BuildContext context) =>
+          BaseLayout(page: SettingsScreen(), isAppBar: false),
+      covid: (BuildContext context) =>
+          BaseLayout(page: CovidScreen(), isAppBar: false),
     };
   }
 

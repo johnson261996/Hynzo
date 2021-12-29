@@ -8,6 +8,7 @@ class Input extends StatelessWidget {
   final Function onchangeFunc;
   final bool obscure;
   final TextInputType? keyboard;
+  final TextEditingController? controller;
 
   const Input({
     Key? key,
@@ -17,6 +18,7 @@ class Input extends StatelessWidget {
     this.obscure = true,
     this.keyboard,
     required this.onchangeFunc,
+    this.controller,
   }) : super(key: key);
 
   @override
@@ -34,14 +36,18 @@ class Input extends StatelessWidget {
         textInputAction: textInputAction,
         onChanged: (val) => onchangeFunc(val),
         keyboardType: keyboard,
+        controller: controller,
         onSubmitted: (value) {},
         autofocus: false,
         obscureText: obscure,
         decoration: InputDecoration(
-            icon: leading,
-            border: InputBorder.none,
-            hintText: hintText,
-            hintStyle: Theme.of(context).textTheme.bodyText2!.apply(color: AppColors.lightgray,),),
+          icon: leading,
+          border: InputBorder.none,
+          hintText: hintText,
+          hintStyle: Theme.of(context).textTheme.bodyText2!.apply(
+                color: AppColors.lightgray,
+              ),
+        ),
       ),
     );
   }

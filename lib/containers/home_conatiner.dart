@@ -1,12 +1,24 @@
 /// Contains service and logic related of home screen.
 ///
 ///
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
+import 'package:hynzo/core/models/covid_model.dart';
+import 'package:hynzo/core/models/game_suggestion.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
+import 'package:hynzo/core/models/suggestion_model.dart';
+import 'package:hynzo/core/models/auth_model.dart';
+import 'package:hynzo/core/models/news_home_model.dart';
+import 'package:hynzo/core/models/user_profile_model.dart';
+import 'package:hynzo/providers/covid_provider.dart';
 import 'package:hynzo/providers/game_provider.dart';
+import 'package:hynzo/providers/home_provider.dart';
 import 'package:hynzo/providers/news_provider.dart';
+import 'package:hynzo/providers/user_profile_provider.dart';
 import 'package:hynzo/themes/colors.dart';
+import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/toast_util.dart';
 import 'package:hynzo/widgets/common/loading_overlay/loading_overlay.dart';
 import '../widgets/home/home_widget.dart';
@@ -25,27 +37,29 @@ class HomeContainer extends StatefulWidget {
 }
 
 class _HomeContainerState extends State<HomeContainer> {
+  static CovidProvider? _covidProvider;
   static NewsProvider? _newsProvider;
   static GamesProvider? _gamesProvider;
-  List<NewsContentDataModel> allNews = [];
-  List<SuggestedPlayModel> allSuggestedGames = [];
+  static UserProfileProvider? _userProvider;
+  List<Article> allNews = [];
+  CovidData? covidData;
+  List<GamePlayModel> allSuggestedGames = [];
+  UserProfileModel userDatas = UserProfileModel();
   bool _isLoading = false;
+  late HomeProvider _homeProvider;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _covidProvider = Provider.of<CovidProvider>(context, listen: false);
     _newsProvider = Provider.of<NewsProvider>(context, listen: false);
     _gamesProvider = Provider.of<GamesProvider>(context, listen: false);
+    _userProvider = Provider.of<UserProfileProvider>(context, listen: false);
     allNews.clear();
-    // ConnectionStaus().check().then((connectionStatus) {
-    //   if (connectionStatus) {
+    getCovid();
     getSuggestionGames();
-    //   } else {
-    //     ToastUtil().showToast(
-    //         "No internet connection available. Please check your connection or try again later.");
-    //   }
-    // });
+    getAllNews();
+    getUserData();
   }
 
   bool isToday(String time) {
@@ -61,24 +75,41 @@ class _HomeContainerState extends State<HomeContainer> {
     }
   }
 
+  Future<void> getCovid() async {
+    try {
+      CovidModel covidDataModel = await _covidProvider!.getCovidData();
+      setState(() {
+        _isLoading = false;
+      });
+      if (covidDataModel.success) {
+        setState(() {
+          covidData = covidDataModel.data;
+        });
+      } else {
+        ToastUtil().showToast("Something went wrong.");
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ToastUtil().showToast(e.toString());
+    }
+  }
+
   Future<void> getSuggestionGames() async {
     try {
       setState(() {
         _isLoading = true;
       });
       SuggestedGamesResponseModel suggestedGamesResponseModel =
-          await _gamesProvider!.getSuggestedGames();
+      await _gamesProvider!.getSuggestedGames();
       if (suggestedGamesResponseModel.statusCode == 200) {
-        allSuggestedGames = suggestedGamesResponseModel.allSuggestedGames!;
-        // for (var element in suggestedGamesResponseModel.allSuggestedGames!) {
-        //   if (element.activeStatus!) {
-        //     allSuggestedGames.add(element);
-        //   }
-        // }
+        setState(() {
+          allSuggestedGames = suggestedGamesResponseModel.allSuggestedGames!;
+        });
       } else {
-        ToastUtil().showToast("Something went wrong.");
+        ToastUtil().showToast("Something went wrong.3");
       }
-      getAllNews();
     } catch (e) {
       setState(() {
         _isLoading = false;
@@ -94,18 +125,11 @@ class _HomeContainerState extends State<HomeContainer> {
         _isLoading = false;
       });
       if (newsResponseModel.statusCode == 200) {
-        for (var element in newsResponseModel.newsDataList!) {
-          for (var newsContent in element.newsDataContentList!) {
-            if (isToday(newsContent.pubDate!)) {
-              if (allNews.length < 2) {
-                allNews.add(newsContent);
-              } else {
-                break;
-              }
-            }
-          }
-          if (allNews.length == 2) {
-            break;
+        for (var element in newsResponseModel.results) {
+          if (element.news.articles.isNotEmpty) {
+            setState(() {
+              allNews = element.news.articles;
+            });
           }
         }
       } else {
@@ -119,15 +143,48 @@ class _HomeContainerState extends State<HomeContainer> {
     }
   }
 
+  Future<void> getUserData() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      int? id = await LocalStorage.getUserID();
+      UserProfileModel userProfileModel = await _userProvider!.getUser(id!);
+      if (userProfileModel.statusCode == 200) {
+        setState(() {
+          userDatas = userProfileModel;
+        });
+      } else {
+        ToastUtil().showToast("Something went wrong.3");
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ToastUtil().showToast(e.toString());
+    }
+  }
+
+  Future<Map<String, dynamic>> setFcmToken(String token) async {
+    final Map<String, dynamic> response =
+        await _homeProvider.setFcmToken(token);
+    return response;
+  }
+
   @override
   Widget build(BuildContext context) {
+    _userProvider = Provider.of<UserProfileProvider>(context, listen: false);
+    _homeProvider = Provider.of<HomeProvider>(context);
     return LoadingOverlay(
       isLoading: _isLoading,
       color: AppColors.gray,
       child: HomeWidget(
         onTapped: widget._onTapped,
         allContent: allNews,
+        covidData: covidData,
         allSuggestedGames: allSuggestedGames,
+        userDetails: _userProvider!.userProfileModel,
+        setFcmToken: setFcmToken,
       ),
     );
   }

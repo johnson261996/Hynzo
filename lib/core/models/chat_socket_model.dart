@@ -37,6 +37,7 @@ class Message {
     required this.typeOfContent,
     required this.media,
     required this.timestamp,
+    required this.seenBy,
   });
 
   int id;
@@ -46,16 +47,17 @@ class Message {
   String typeOfContent;
   Media media;
   DateTime timestamp;
+  List<Map<String, dynamic>> seenBy;
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
-        id: json["id"],
-        author: Author.fromJson(json["author"]),
-        userId: json["user_id"],
-        content: json["content"],
-        typeOfContent: json["type_of_content"],
-        media: Media.fromJson(json["media"]),
-        timestamp: DateTime.parse(json["timestamp"]),
-      );
+      id: json["id"],
+      author: Author.fromJson(json["author"]),
+      userId: json["user_id"],
+      content: json["content"],
+      typeOfContent: json["type_of_content"],
+      media: Media.fromJson(json["media"]),
+      timestamp: DateTime.parse(json["timestamp"]),
+      seenBy: List.from(json["seen_by"]));
 
   Map<String, dynamic> toJson() => {
         "id": id,

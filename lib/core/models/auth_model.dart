@@ -16,7 +16,7 @@ class GenerateOTPModel {
   factory GenerateOTPModel.fromJson(Map<String, dynamic> json, int code) {
     return GenerateOTPModel(
       message: json['message'],
-      otpVerificationId: json['otp_verification_id'],
+      otpVerificationId: json['otp_verification_id'] ?? 0,
       statusCode: code,
     );
   }

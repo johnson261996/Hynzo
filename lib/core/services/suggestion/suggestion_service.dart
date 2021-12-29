@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:hynzo/core/models/suggestion_model.dart';
 import 'package:hynzo/core/services/service_base.dart';
@@ -8,7 +9,6 @@ class SuggestionService {
   static Future<SuggestionModel> getAllSuggestion() async {
     String token = "";
     await LocalStorage.getLoginToken().then((value) => token = value!);
-
     String url = 'api/v1/users/suggestions';
     var response = await ServiceBase.get(url: url, headers: {
       "Content-Type": "application/json",
@@ -30,6 +30,8 @@ class SuggestionService {
 
     String url = 'api/v1/chats/create';
 
+    log(userId.toString());
+
     Map data = {
       'participants': userId,
       'is_group': false,
@@ -38,9 +40,7 @@ class SuggestionService {
       "Content-Type": "application/json",
       "Authorization": "Bearer $token"
     });
-    if (response.statusCode != 201) {
-      throw "Something went wrong";
-    }
+    log(response.body);
     return SuggestUserAddResponseModel.fromJson(
       jsonDecode(response.body),
       response.statusCode,

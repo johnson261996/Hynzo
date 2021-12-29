@@ -1,7 +1,3 @@
-import 'package:hynzo/resources/strings.dart';
-
-class SuggestionModel{
-  final int? count;
   final String? next;
   final String? previous;
   final int? statusCode;
@@ -15,21 +11,27 @@ class SuggestionModel{
     required this.resultsList,
   });
 
-  factory SuggestionModel.fromJson(Map<String, dynamic> json,int code) {
+  factory
+  SuggestionModel.fromJson(
+
+  Map<String, dynamic> json, int
+  code) {
     return SuggestionModel(
-      count: json['count'] ?? -1,
+    count: json['count'] ?? 0,
       next: json['next'] ?? '',
       previous: json['previous'] ?? '',
-      resultsList: ((json['results'] as List<dynamic>).map((i) => ResultsModel.fromJson(i)).toList()),
+  resultsList: ((json['results'] as List<dynamic>)
+      .map((i) => ResultsModel.fromJson(i))
+      .toList()),
       statusCode: code,
     );
   }
-
 }
 
 class ResultsModel {
   final int? pk;
   final String? username;
+  final String? full_name;
   final String? avatar;
   final bool? isGroup;
   final int? noOfParticipants;
@@ -38,6 +40,7 @@ class ResultsModel {
   ResultsModel({
     this.pk,
     this.username,
+    this.full_name,
     this.avatar,
     this.isGroup,
     this.noOfParticipants,
@@ -48,6 +51,7 @@ class ResultsModel {
     return ResultsModel(
       pk: json['pk'] ?? -1,
       username: json['username'] ?? '',
+      full_name: json["full_name"] ?? '',
       avatar: json['avatar'] ?? '',
       isGroup: json['is_group'] ?? false,
       noOfParticipants: json['no_of_participants'] ?? -1,
@@ -70,12 +74,15 @@ class SuggestUserAddResponseModel {
     this.statusCode,
   });
 
-  factory SuggestUserAddResponseModel.fromJson(Map<String, dynamic> json, int code) {
+  factory SuggestUserAddResponseModel.fromJson(Map<String, dynamic> json,
+      int code) {
     return SuggestUserAddResponseModel(
-      id: json ['id'],
-      messages: json ['messages'],
-      participants: ((json['participants'] as List<dynamic>).map((i) => i.toString()).toList()),
-      isGroup: json ['is_group'],
+      id: json['id'],
+      messages: json['messages'],
+      participants: ((json['participants'] as List<dynamic>)
+          .map((i) => i.toString())
+          .toList()),
+      isGroup: json['is_group'],
       statusCode: code,
     );
   }

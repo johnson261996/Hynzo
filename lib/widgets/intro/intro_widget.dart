@@ -20,25 +20,6 @@ class _IntroWidgetState extends State<IntroWidget> {
     return double.parse(progressValue);
   }
 
-  Widget _getContinueButtonWidget(int state) {
-    if (state == 0) {
-      return Image.asset(
-        'assets/images/first_button.png',
-        fit: BoxFit.contain,
-      );
-    } else if (state == 1) {
-      return Image.asset(
-        'assets/images/second_button.png',
-        fit: BoxFit.contain,
-      );
-    } else {
-      return Image.asset(
-        'assets/images/third_button.png',
-        fit: BoxFit.contain,
-      );
-    }
-  }
-
   Widget _getImage(int state) {
     if (state == 0) {
       return Image.asset(
@@ -70,27 +51,20 @@ class _IntroWidgetState extends State<IntroWidget> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
       color: AppColors.white,
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
-      height: MediaQuery
-          .of(context)
-          .size
-          .height,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(
-            height: 100,
+          SizedBox(
+            height: size.height * 0.1,
           ),
           AnimatedContainer(
             duration: const Duration(seconds: 1),
             curve: Curves.fastOutSlowIn,
-            width: 300,
-            height: 300,
+            width: size.height * 0.3,
+            height: size.height * 0.3,
             child: _getImage(state),
           ),
           const SizedBox(
@@ -98,8 +72,7 @@ class _IntroWidgetState extends State<IntroWidget> {
           ),
           AnimatedSwitcher(
             duration: const Duration(seconds: 2),
-            transitionBuilder:
-                (Widget child, Animation<double> animation) {
+            transitionBuilder: (Widget child, Animation<double> animation) {
               return SlideTransition(
                 child: child,
                 position: Tween<Offset>(
@@ -118,14 +91,12 @@ class _IntroWidgetState extends State<IntroWidget> {
               textAlign: TextAlign.center,
             ),
           ),
-
           const SizedBox(
             height: 20,
           ),
           AnimatedSwitcher(
             duration: const Duration(seconds: 2),
-            transitionBuilder:
-                (Widget child, Animation<double> animation) {
+            transitionBuilder: (Widget child, Animation<double> animation) {
               return SlideTransition(
                 child: child,
                 position: Tween<Offset>(
@@ -149,10 +120,7 @@ class _IntroWidgetState extends State<IntroWidget> {
               ),
             ),
           ),
-
-          const SizedBox(
-            height: 35,
-          ),
+          const Spacer(),
           GestureDetector(
             onTap: () {
               setState(() {
@@ -200,6 +168,9 @@ class _IntroWidgetState extends State<IntroWidget> {
                 ],
               ),
             ),
+          ),
+          SizedBox(
+            height: size.height * 0.05,
           ),
         ],
       ),

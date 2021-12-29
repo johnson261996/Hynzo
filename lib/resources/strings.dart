@@ -9,7 +9,7 @@ class Strings {
 
   // splash screen
   static const SPLASH_TEXT = '"HYPERLOCAL PRIVATE CHATTING"';
-  static const TITLE_NAME = 'HYNZO';
+  static const TITLE_NAME = 'Hynzo';
 
   // intro screen
   static const INTRO_TITLE = 'School Owner App';
@@ -19,7 +19,6 @@ class Strings {
     'Manage your school’s social media accounts',
     'Track your school’s LEAD orders'
   ];
-  static const SCHOOL_NEWS = 'School News';
   static const VIEW_ALL = 'View all';
   static const SOCIAL_MEDIA = 'SOCIAL MEDIA';
   static const MANAGE_SCHOOL = 'Manage school from your fingertips';
@@ -42,8 +41,11 @@ class Strings {
   static const ACCOUNT = "Don't have an account ?";
   static const LOGIN = 'Login';
   static const LOGIN_SUBTITLE = 'Let\'s get started.';
-  static const LOGIN_TITLE = 'Hi  there!';
+  static const LOGIN_TITLE = 'Welcome back!';
+  static const SIGNUP_TITLE = 'Hi there!';
+  static const SIGNUP_SUBTITLE = 'Let\'s get started.';
   static const LOGIN_BUTTON = 'Continue >';
+  static const SIGNUP_BUTTON = 'Create new account';
   static const LOGIN_TERMS =
       'By continuing, you accept the Terms and Condition';
   static const LOGIN_MOBILE_NOT_REGISTRED =
@@ -82,6 +84,7 @@ class Strings {
   static const SUGGESTION_TITLE = "Suggested people near you";
   static const ADD = "Add";
   static const ADDED = "Added";
+  static const ACCEPT = "Accept";
 
   //Location
   static const LOCATION_Title = "Allow access to your location";
@@ -103,25 +106,36 @@ class Strings {
   //Nav Bar
   static const GAMES = "Games";
   static const PROFILE_SETTINGS = "Profile & Settings";
-  static const PROFILE = 'More';
+  static const PROFILE = 'My Profile';
+  static const MORE = 'More';
   static const HOME = "Home";
   static const CHAT = "Messages";
   static const EVENTS = "Events";
   static const LOG_OUT = 'LogOut';
 
   //Home
-  static const HOME_PROFILE_NAME="Welcome Kumar,";
-  static const HOME_PROFILE_SUBTITLE="What would you like to play?";
-  static const AMOUNT="560";
-  static const SPECIAL_EVENTS="Special Events";
-  static const MUST_TRY_GAMES="Must Try Games";
-  static const TODAY_NEWS="Today's News";
-  static const GAMES_BY_CATEGORIES="Games by Categories";
-  static const SEARCH_GAMES="Search Games here";
-  static const SEARCH_CHATS="Search Chats here";
-  static const SEARCH_EVENTS="Search Events here";
-  static const MORE_NEWS="More news";
-  static const ALL_GAMES_HOME="All Games";
+  static const HOME_PROFILE_NAME = "Welcome Kumar,";
+  static const HOME_PROFILE_SUBTITLE = "What would you like to play?";
+  static const AMOUNT = "560";
+  static const SPECIAL_EVENTS = "Special Events";
+  static const COVID = "Covid19 Updates";
+  static const MUST_TRY_GAMES = "Must Try Games";
+  static const TODAY_NEWS = "Today's News";
+  static const GAMES_BY_CATEGORIES = "Games by Categories";
+  static const SEARCH_GAMES = "Search Games here";
+  static const SEARCH_CHATS = "Search Chats here";
+  static const SEARCH_EVENTS = "Search Events here";
+  static const MORE_NEWS = "More news";
+  static const ALL_GAMES_HOME = "All Games";
+
+  //Covid19
+  static const ACROSS_INDIA = "Across India";
+  static const TOTAL = "Total";
+  static const ACTIVE = "Active";
+  static const RECOVERED = "Recovered";
+  static const CONFIRMED = "Confirmed";
+  static const DEATHS = "Deaths";
+  static const DISCHARGED = "discharged";
 
   //Events
   static const CATEGORIES_TITLE = "Categories";
@@ -132,14 +146,14 @@ class Strings {
   static const FIT = "Stay fit";
 
   //More
-  static const Menu = "Menu";
+  static const MENU = "Menu";
   static const DUMMY_PROFILE_NAME = "Kumar KD";
   static const VIEW_PROFILE = "view profile";
   static const NEWS = "News";
-  static const SUBSCRIPTION = "Subscription";
+  static const REFER = "Refer a friend";
   static const EDIT_HOME_SCREEN = "Edit home screen";
   static const WALLET = "Wallet";
-  static const SEETINGS = "Settings";
+  static const SETTINGS = "Settings";
   static const ABOUT_US = "About us";
   static const HELP_SUPPORT = "Help & Support";
 
@@ -160,12 +174,61 @@ class Strings {
   static const ALL_GAMES = "All games";
   static const SUGGESTED_GAMES = "Suggested for you";
   static const NEW = "New";
+  static const POPULAR_GAMES = "Popular Games";
 
   //chat
   static const USER_NAMES = ['Anusree', 'John', 'Neha'];
 
   static const MESSAGES = ['Welcome', 'Welcome', 'Welcome'];
   static const SEARCH = 'Search New Connection';
+
+  //Profile
+  static const PROFILE_HEADING = 'MyProfile';
+  static const LOGOUT = 'Log Out';
+  static const REFER_FRIEND = 'Refer a friend';
+  static const ACTIVITIES = 'Activities';
+  static const MY_CHAT = 'My Chat';
+  static const MY_ACCOUNT = 'My Account';
+  static const FOLLOWING = 'Following';
+  static const FOLLOWING_NUMBER = '250';
+  static const FOLLOWERS = 'Followers';
+  static const FOLLLOWERS_NUMBER = '230';
+  static const FRIENDS = 'My Friends';
+  static const FRIENDS_NUMBER = '797';
+  static const COINS = 'My Coins';
+  static const COINS_NUMBER = '25.7K';
+  static const ABOUT_HEADING = 'About';
+  static const ADD_USER = 'Add User';
+  static const USER_ADDED = 'Add User';
+  static const ABOUT =
+      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.';
+
+  //Edit-profile
+  static const BIO = 'Bio';
+  static const UPDATE_PROFILE = 'Update Profile';
+  static const EDIT_PROFILE = 'Edit Profile';
+  static const NAME = 'What’s your name?';
+  static const MOBILE = 'Phone number?';
+  static const GENDER = 'Select your gender';
+  static const DOB = 'What is your date of birth?';
+  static const LOCATION = 'Bangalore,India';
+  static const GENDER_LIST = ['Male', 'Female'];
+  static const LOCATION_LIST = ['Mumbai', 'Banglore', 'Delhi'];
+
+  //wallet
+  static const REDEEM_NOW = 'Reedem Now';
+  static const ACCOUNT_BALANCE = 'Account balance';
+  static const COIN_NUMBERS = ' 54,000.00';
+
+  //Settings
+  static const GHOST_MODE = "Ghost Mode";
+  static const NOTIFICATION = "Notification";
+  static const NIGHT_MODE = "Night mode";
+  static const READ_RECIEPTS = "Read Receipts";
+  static const LAST_SEEN = "Last Seen";
+  static const PRIVACY_SETTINGS = "Privacy Settings";
+  static const STORAGE_DATA = "Storage and data";
+  static const LANGUAGES = "Languages";
 
   // it will return the dynamic string
   static String demo(amount) {

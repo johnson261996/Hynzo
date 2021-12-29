@@ -1,10 +1,7 @@
 /// Contains service and logic related of otp verification screen.
 ///
 ///
-import 'dart:developer' as devlog;
-
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:hynzo/core/models/auth_model.dart';
 import 'package:hynzo/core/models/interest_model.dart';
 import 'package:hynzo/providers/auth_provider.dart';
@@ -33,24 +30,24 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
   static AuthProvider? _authProvider;
   static InterestProvider? _interestProvider;
 
-
-  Future<void> _verifyOtp(otp) async {
+  Future<void> _verifyOtp(String otp) async {
     try {
       setState(() {
         _isLoading = true;
       });
       final LoginModel response = await _authProvider!.verifyOtp(
-          _authProvider!.userMobile, "91", _authProvider!.otpId, otp);
-      devlog.log("$response", name: 'MyLog');
+          _authProvider!.userMobile,
+          _authProvider!.userName,
+          "91",
+          _authProvider!.otpId,
+          otp);
       if (response.statusCode == 200) {
         token = response.token!;
         LocalStorage.setLoginToken(token);
-        LocalStorage.setProfilePic(response.user!.avatar!);
-        print("response:" + response.user!.avatar!);
-        LocalStorage.clearMobileNumber();
         LocalStorage.setUserID(response.user!.id!);
         LocalStorage.setUserName(response.user!.username!);
         LocalStorage.setUserFullName(response.user!.fullName!);
+        LocalStorage.setProfilePic(response.user!.avatar!);
         _getInterestForSpecificUser("10", offSet.toString());
       } else {
         ToastUtil().showToast('Invalid Otp');
@@ -78,13 +75,8 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
           setState(() {
             _isLoading = false;
           });
-          LocationPermission permission = await Geolocator.checkPermission();
-          if (permission == LocationPermission.denied) {
-            Navigation.pushReplacementNamed(context, Routes.location);
-          } else {
-            Navigation.pushReplacementNamed(context, Routes.navScreen);
-          }
 
+          Navigation.pushReplacementNamed(context, Routes.navScreen);
         } else {
           if (interestResponseModel.next! != '') {
             offSet = offSet + 10;
@@ -112,8 +104,8 @@ class _OtpVerifyContainerState extends State<OtpVerifyContainer> {
       setState(() {
         _isLoading = true;
       });
-      final GenerateOTPModel response =
-      await _authProvider!.resendOtp(mobile, signature);
+      final GenerateOTPModel response = await _authProvider!
+          .resendOtp(mobile, _authProvider!.userName, signature);
       setState(() {
         _isLoading = false;
       });

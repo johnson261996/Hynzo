@@ -19,7 +19,7 @@ class GameContainerWidget extends StatelessWidget {
         SquareViewWidget(
           imagePath: imagePath,
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Text(
@@ -29,7 +29,10 @@ class GameContainerWidget extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 color: AppColors.black,
               ),
-        )
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+        ),
       ],
     );
   }

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/widgets/common/image/rectangle_image_view.dart';
-import 'package:hynzo/widgets/common/image/square_image_widget.dart';
-
-class EventContainerWidget extends StatelessWidget {
-  final String imagePath;
+import 'package:hynzo/widgets/common/image/rectangle_image_viewl String imagePath;
   final String title;
   final String subTitle;
   final bool showDate;
@@ -23,7 +19,9 @@ class EventContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var mediaQuery=MediaQuery.of(context).size;
+    var mediaQuery = MediaQuery
+        .of(context)
+        .size;
     return Column(
       children: [
         Stack(

@@ -1,6 +1,4 @@
-///Login screen for Authentication.
-
-import 'package:flutter/material.dart';
+///Login screen for Authentication.import 'package:flutter/material.dart';
 import 'package:hynzo/containers/login_container.dart';
 
 class Login extends StatelessWidget {
