@@ -8,7 +8,11 @@ import 'package:hynzo/widgets/news/news_widget.dart';
 import 'package:provider/provider.dart';
 
 class NewsContainer extends StatefulWidget {
-  const NewsContainer({Key? key}) : super(key: key);
+  final bool? isBackEnable;
+  const NewsContainer({
+    Key? key,
+    this.isBackEnable,
+  }) : super(key: key);
 
   @override
   State<NewsContainer> createState() => _NewsContainerState();
@@ -69,6 +73,7 @@ class _NewsContainerState extends State<NewsContainer> {
         isLoading: _isLoading,
         color: AppColors.gray,
         child: NewsWidget(
+          isBackEnable: widget.isBackEnable!,
           allNews: allNews,
         ),
       );

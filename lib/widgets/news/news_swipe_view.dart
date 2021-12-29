@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/routes/routes.dart';

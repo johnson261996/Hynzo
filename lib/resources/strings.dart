@@ -102,7 +102,8 @@ class Strings {
   //Nav Bar
   static const GAMES = "Games";
   static const PROFILE_SETTINGS = "Profile & Settings";
-  static const PROFILE = 'More';
+  static const PROFILE = 'My Profile';
+  static const MORE = 'More';
   static const HOME = "Home";
   static const CHAT = "Messages";
   static const EVENTS = "Events";
@@ -141,11 +142,11 @@ class Strings {
   static const FIT = "Stay fit";
 
   //More
-  static const Menu = "Menu";
+  static const MENU = "Menu";
   static const DUMMY_PROFILE_NAME = "Kumar KD";
   static const VIEW_PROFILE = "view profile";
   static const NEWS = "News";
-  static const SUBSCRIPTION = "Subscription";
+  static const REFER = "Refer a friend";
   static const EDIT_HOME_SCREEN = "Edit home screen";
   static const WALLET = "Wallet";
   static const SETTINGS = "Settings";

@@ -7,8 +7,13 @@ import 'package:hynzo/widgets/news/news_swipe_view.dart';
 import 'package:hynzo/widgets/news/news_tab_view.dart';
 
 class NewsWidget extends StatefulWidget {
+  final bool isBackEnable;
   final List<Article>? allNews;
-  const NewsWidget({Key? key, this.allNews}) : super(key: key);
+  const NewsWidget({
+    Key? key,
+    this.allNews,
+    this.isBackEnable = true,
+  }) : super(key: key);
 
   @override
   State<NewsWidget> createState() => _NewsWidgetState();
@@ -44,17 +49,18 @@ class _NewsWidgetState extends State<NewsWidget> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                InkWell(
-                  onTap: () {
-                    Navigation.pop(context);
-                  },
-                  child: Image.asset(
-                    'assets/images/top_back.png',
-                    width: 15,
-                    height: 15,
-                    fit: BoxFit.contain,
+                if (widget.isBackEnable)
+                  InkWell(
+                    onTap: () {
+                      Navigation.pop(context);
+                    },
+                    child: Image.asset(
+                      'assets/images/top_back.png',
+                      width: 15,
+                      height: 15,
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
                 SizedBox(
                   width: mediaQuery.width * 0.02,
                 ),

@@ -104,15 +104,15 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     ),
                   ],
                 ),
-                const Spacer(),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.search,
-                    size: 28,
-                    color: AppColors.offBlack,
-                  ),
-                ),
+                // const Spacer(),
+                // IconButton(
+                //   onPressed: () {},
+                //   icon: Icon(
+                //     Icons.search,
+                //     size: 28,
+                //     color: AppColors.offBlack,
+                //   ),
+                // ),
               ],
             ),
           ),

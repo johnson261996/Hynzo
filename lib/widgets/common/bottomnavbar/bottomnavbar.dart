@@ -31,12 +31,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         children: <Widget>[
           HomeScreen(onTapped),
           const ChatScreen(),
-          News(),
+          const News(isBackEnable: false),
           const GameScreen(),
           const MoreScreen(),
         ],
@@ -108,7 +108,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             ),
           ),
           BottomNavigationBarItem(
-            label: Strings.PROFILE,
+            label: Strings.MORE,
             icon: Image.asset(
               'assets/images/more_inactive.png',
               width: 20,

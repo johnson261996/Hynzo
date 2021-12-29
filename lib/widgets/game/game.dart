@@ -122,19 +122,19 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
                         fontWeight: FontWeight.w500,
                       ),
                 ),
-                const Spacer(),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      showSearchBar = !showSearchBar;
-                    });
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    size: 20,
-                    color: AppColors.offBlack,
-                  ),
-                ),
+                // const Spacer(),
+                // IconButton(
+                //   onPressed: () {
+                //     setState(() {
+                //       showSearchBar = !showSearchBar;
+                //     });
+                //   },
+                //   icon: Icon(
+                //     Icons.search,
+                //     size: 20,
+                //     color: AppColors.offBlack,
+                //   ),
+                // ),
               ],
             ),
           ),
