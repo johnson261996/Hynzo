@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:hynzo/screens/chat/chat_screen.dart';
-import 'package:hynzo/screens/events/events.dart';
 import 'package:hynzo/screens/games/games.dart';
 import 'package:hynzo/screens/home/home.dart';
 import 'package:hynzo/screens/more/more.dart';
+import 'package:hynzo/screens/news/news.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/resources/strings.dart';
 
@@ -35,10 +35,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
         controller: pageController,
         children: <Widget>[
           HomeScreen(onTapped),
-          ChatScreen(),
-          EventsScreen(),
-          GameScreen(),
-          MoreScreen(),
+          const ChatScreen(),
+          News(),
+          const GameScreen(),
+          const MoreScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -78,7 +78,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             ),
           ),
           BottomNavigationBarItem(
-            label: Strings.EVENTS,
+            label: Strings.NEWS,
             icon: Image.asset(
               'assets/images/events_inactive.png',
               width: 20,

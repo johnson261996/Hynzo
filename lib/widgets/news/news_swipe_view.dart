@@ -69,6 +69,7 @@ class _NewsSwipeViewState extends State<NewsSwipeView> {
                       height: mediaQuery.height * 0.01,
                     ),
                     Container(
+                      height: mediaQuery.width * 0.55,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
@@ -107,8 +108,11 @@ class _NewsSwipeViewState extends State<NewsSwipeView> {
                                         RegExp(r'[^A-Za-z0-9().,;?]'), ' '),
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
-                            maxLines: 15,
-                            style: Theme.of(context).textTheme.bodyText2!),
+                            maxLines: 10,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(fontSize: 16, height: 1.5)),
                       ],
                     ),
                   ],
