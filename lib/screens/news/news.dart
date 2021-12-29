@@ -6,7 +6,7 @@ class News extends StatelessWidget {
 
   const News({
     Key? key,
-    this.isBackEnable,
+    this.isBackEnable = true,
   }) : super(key: key);
 
   @override

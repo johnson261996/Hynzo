@@ -553,7 +553,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                         SizedBox(
                           width: mediaQuery.width,
-                          height: 250,
+                          height: 380,
                           child: ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (BuildContext context, int index) {
@@ -567,7 +567,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     right: 15.0,
                                     top: 5.0,
                                   ),
-                                  height: 120.0,
+                                  height: 90.0,
                                   decoration: BoxDecoration(
                                     color: AppColors.white,
                                     borderRadius: BorderRadius.circular(15.0),
@@ -582,9 +582,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        Container(
-                                          width: 120.0,
-                                          height: 120.0,
+                                        SizedBox(
+                                          width: 80.0,
+                                          height: 90.0,
                                           child: ClipRRect(
                                             borderRadius:
                                                 const BorderRadius.only(
@@ -620,8 +620,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               CrossAxisAlignment.start,
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            Container(
-                                              width: mediaQuery.width * 0.50,
+                                            SizedBox(
+                                              width: mediaQuery.width * 0.65,
                                               child: Row(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.center,
@@ -634,7 +634,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                               RegExp(
                                                                   r'[^A-Za-z0-9().,;?]'),
                                                               ' '),
-                                                      maxLines: 1,
+                                                      maxLines: 4,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       style: Theme.of(context)
@@ -646,58 +646,56 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                             fontSize: 14,
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontFamily:
-                                                                'open_sans',
                                                           ),
                                                     ),
                                                   ),
-                                                  Spacer(),
-                                                  Text(
-                                                    getDate(widget
-                                                        .allContent![index]
-                                                        .publishedAt
-                                                        .toString()),
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .subtitle1!
-                                                        .copyWith(
-                                                          fontSize: 10.33,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'open_sans',
-                                                          color: AppColors
-                                                              .greyBlue,
-                                                        ),
-                                                  ),
+                                                  // Spacer(),
+                                                  // Text(
+                                                  //   getDate(widget
+                                                  //       .allContent![index]
+                                                  //       .publishedAt
+                                                  //       .toString()),
+                                                  //   style: Theme.of(context)
+                                                  //       .textTheme
+                                                  //       .subtitle1!
+                                                  //       .copyWith(
+                                                  //         fontSize: 10.33,
+                                                  //         fontWeight:
+                                                  //             FontWeight.w400,
+                                                  //         fontFamily:
+                                                  //             'open_sans',
+                                                  //         color: AppColors
+                                                  //             .greyBlue,
+                                                  //       ),
+                                                  // ),
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(
-                                              height: mediaQuery.height * 0.01,
-                                            ),
-                                            SizedBox(
-                                              width: 150.0,
-                                              child: Text(
-                                                widget.allContent![index]
-                                                    .description!
-                                                    .replaceAll(
-                                                        RegExp(
-                                                            r'[^A-Za-z0-9().,;?]'),
-                                                        ' '),
-                                                overflow: TextOverflow.ellipsis,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .subtitle1!
-                                                    .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 16,
-                                                      color:
-                                                          AppColors.blackBlue,
-                                                    ),
-                                              ),
-                                            ),
+                                            // SizedBox(
+                                            //   height: mediaQuery.height * 0.01,
+                                            // ),
+                                            // SizedBox(
+                                            //   width: 150.0,
+                                            //   child: Text(
+                                            //     widget.allContent![index]
+                                            //         .description!
+                                            //         .replaceAll(
+                                            //             RegExp(
+                                            //                 r'[^A-Za-z0-9().,;?]'),
+                                            //             ' '),
+                                            //     overflow: TextOverflow.ellipsis,
+                                            //     style: Theme.of(context)
+                                            //         .textTheme
+                                            //         .subtitle1!
+                                            //         .copyWith(
+                                            //           fontWeight:
+                                            //               FontWeight.w400,
+                                            //           fontSize: 16,
+                                            //           color:
+                                            //               AppColors.blackBlue,
+                                            //         ),
+                                            //   ),
+                                            // ),
                                           ],
                                         ),
                                       ],
