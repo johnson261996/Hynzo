@@ -221,7 +221,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             // SearchBar(
             //   hintText: Strings.SEARCH_GAMES,
@@ -245,9 +245,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
                       Container(
                           padding: const EdgeInsets.only(right: 10),
                           height: 130.0,
@@ -283,123 +283,123 @@ class _HomeWidgetState extends State<HomeWidget> {
                             )
                         ],
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            Strings.SPECIAL_EVENTS,
-                            style:
-                                Theme.of(context).textTheme.headline6!.copyWith(
-                                      color: AppColors.black,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                          ),
-                          SizedBox(
-                            width: mediaQuery.width * 0.02,
-                          ),
-                          Container(
-                            height: 25.0,
-                            width: 35.0,
-                            color: AppColors.red,
-                            child: Center(
-                              child: Text(
-                                Strings.NEW,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle2!
-                                    .copyWith(
-                                        color: AppColors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400),
-                              ),
-                            ),
-                          ),
-                          const Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              widget.onTapped(2);
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.only(
-                                right: 20.0,
-                                top: 5.0,
-                                bottom: 5.0,
-                                left: 10.0,
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    Strings.VIEW_ALL,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle2!
-                                        .copyWith(
-                                          color: AppColors.whitegrey,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                  ),
-                                  SizedBox(
-                                    width: mediaQuery.width * 0.005,
-                                  ),
-                                  Image.asset('assets/images/right_arrow.png'),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        width: mediaQuery.width,
-                        height: 230,
-                        child: ListView.builder(
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                                padding: const EdgeInsets.only(
-                                  right: 15.0,
-                                ),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    check().then((internet) {
-                                      if (internet != null && internet) {
-                                        /* Navigation.pushNamed(context, Routes.webview,
-                                  {
-                                  'link': widget
-                                      .allSuggestedGames![index]
-                                      .redirectionUrl
-                                  });*/
-                                      } else {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const NoDataError()));
-                                      }
-                                    });
-                                  },
-                                  child: EventContainerWidget(
-                                    imagePath: allEvents[index].imagePath!,
-                                    title: allEvents[index].title!,
-                                    subTitle: allEvents[index].subTitle!,
-                                    dateTime: allEvents[index].dateTime!,
-                                    showDate: true,
-                                    showSubTitle: true,
-                                  ),
-                                ));
-                          },
-                          itemCount: allEvents.length,
-                          scrollDirection: Axis.horizontal,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      //   children: [
+                      //     Text(
+                      //       Strings.SPECIAL_EVENTS,
+                      //       style:
+                      //           Theme.of(context).textTheme.headline6!.copyWith(
+                      //                 color: AppColors.black,
+                      //                 fontWeight: FontWeight.w600,
+                      //               ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: mediaQuery.width * 0.02,
+                      //     ),
+                      //     Container(
+                      //       height: 25.0,
+                      //       width: 35.0,
+                      //       color: AppColors.red,
+                      //       child: Center(
+                      //         child: Text(
+                      //           Strings.NEW,
+                      //           style: Theme.of(context)
+                      //               .textTheme
+                      //               .subtitle2!
+                      //               .copyWith(
+                      //                   color: AppColors.white,
+                      //                   fontSize: 12,
+                      //                   fontWeight: FontWeight.w400),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     const Spacer(),
+                      //     GestureDetector(
+                      //       onTap: () {
+                      //         widget.onTapped(2);
+                      //       },
+                      //       child: Container(
+                      //         padding: const EdgeInsets.only(
+                      //           right: 20.0,
+                      //           top: 5.0,
+                      //           bottom: 5.0,
+                      //           left: 10.0,
+                      //         ),
+                      //         child: Row(
+                      //           crossAxisAlignment: CrossAxisAlignment.center,
+                      //           children: [
+                      //             Text(
+                      //               Strings.VIEW_ALL,
+                      //               style: Theme.of(context)
+                      //                   .textTheme
+                      //                   .subtitle2!
+                      //                   .copyWith(
+                      //                     color: AppColors.whitegrey,
+                      //                     fontSize: 12,
+                      //                     fontWeight: FontWeight.w400,
+                      //                   ),
+                      //             ),
+                      //             SizedBox(
+                      //               width: mediaQuery.width * 0.005,
+                      //             ),
+                      //             Image.asset('assets/images/right_arrow.png'),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     )
+                      //   ],
+                      // ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      // SizedBox(
+                      //   width: mediaQuery.width,
+                      //   height: 230,
+                      //   child: ListView.builder(
+                      //     itemBuilder: (BuildContext context, int index) {
+                      //       return Container(
+                      //           padding: const EdgeInsets.only(
+                      //             right: 15.0,
+                      //           ),
+                      //           child: GestureDetector(
+                      //             onTap: () {
+                      //               check().then((internet) {
+                      //                 if (internet != null && internet) {
+                      //                   /* Navigation.pushNamed(context, Routes.webview,
+                      //             {
+                      //             'link': widget
+                      //                 .allSuggestedGames![index]
+                      //                 .redirectionUrl
+                      //             });*/
+                      //                 } else {
+                      //                   Navigator.of(context).push(
+                      //                       MaterialPageRoute(
+                      //                           builder: (context) =>
+                      //                               const NoDataError()));
+                      //                 }
+                      //               });
+                      //             },
+                      //             child: EventContainerWidget(
+                      //               imagePath: allEvents[index].imagePath!,
+                      //               title: allEvents[index].title!,
+                      //               subTitle: allEvents[index].subTitle!,
+                      //               dateTime: allEvents[index].dateTime!,
+                      //               showDate: true,
+                      //               showSubTitle: true,
+                      //             ),
+                      //           ));
+                      //     },
+                      //     itemCount: allEvents.length,
+                      //     scrollDirection: Axis.horizontal,
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   height: 30,
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
