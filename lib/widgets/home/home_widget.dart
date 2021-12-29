@@ -7,6 +7,7 @@ import 'package:hynzo/core/models/events_model.dart';
 import 'package:hynzo/core/models/news_home_model.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/screens/leaderboard/leaderboard.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/navigations.dart';
@@ -288,10 +289,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                           height: 130.0,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset(
-                              'assets/images/home_rectangle.png',
-                              fit: BoxFit.contain,
-                              height: 130.0,
+                            child: GestureDetector(
+                              onTap:() {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => LeaderboardScreen()),);
+                              },
+                              child: Image.asset(
+                                'assets/images/home_rectangle.png',
+                                fit: BoxFit.contain,
+                                height: 130.0,
+                              ),
                             ),
                           ),
                         ),

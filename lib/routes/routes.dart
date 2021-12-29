@@ -3,6 +3,7 @@ import 'package:hynzo/layout/base.dart';
 import 'package:hynzo/screens/home/edit_home.dart';
 import 'package:hynzo/screens/interest/interest.dart';
 import 'package:hynzo/screens/intro/intro.dart';
+import 'package:hynzo/screens/leaderboard/leaderboard.dart';
 import 'package:hynzo/screens/location/location.dart';
 import 'package:hynzo/screens/login/login.dart';
 import 'package:hynzo/screens/login/otp.dart';
@@ -45,6 +46,7 @@ class Routes {
   static const news="./news";
   static const webview="./webview";
   static const edit_home = "./edithome";
+  static const leaderboard = "./leaderboard";
 
   /// Routing Table needed for the App.
   static Map<String, WidgetBuilder> get buildRoutes {
@@ -75,6 +77,8 @@ class Routes {
           BaseLayout(page: WebViewScreen(), isAppBar: false),
       edit_home: (BuildContext context) =>
           BaseLayout(page: EditHome(), isAppBar: false),
+      leaderboard: (BuildContext context) =>
+          BaseLayout(page: LeaderboardScreen(), isAppBar: false),
     };
   }
 
