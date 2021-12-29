@@ -27,7 +27,8 @@ class MoreWidget extends StatefulWidget {
 class _MoreWidgetState extends State<MoreWidget> {
   late String url = '';
   String name = '';
-  UserProfileModel userDetails = UserProfileModel();
+  int? id;
+  UserProfileModel userDetails = const UserProfileModel();
 
   @override
   void initState() {
@@ -36,6 +37,8 @@ class _MoreWidgetState extends State<MoreWidget> {
   }
 
   getUserDatas() async {
+    id = await LocalStorage.getUserID();
+
     UserProfileModel response = await widget.getUserDetails();
     setState(() {
       name = response.full_name!;
@@ -117,7 +120,6 @@ class _MoreWidgetState extends State<MoreWidget> {
                       ),
                       InkWell(
                         onTap: () async {
-                          int? id = await LocalStorage.getUserID();
                           Navigator.pushNamed(context, Routes.profile,
                                   arguments: {'id': id, 'logged': true})
                               .then((value) {
@@ -157,7 +159,11 @@ class _MoreWidgetState extends State<MoreWidget> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, Routes.profile);
+                      Navigator.pushNamed(context, Routes.profile,
+                          arguments: {'id': id, 'logged': true}).then((value) {
+                        getUserDatas();
+                        setState(() {});
+                      });
                     },
                     child: Container(
                       padding: const EdgeInsets.only(
@@ -173,11 +179,6 @@ class _MoreWidgetState extends State<MoreWidget> {
                             color: AppColors.lightgray,
                             size: 26,
                           ),
-                          // Image.asset(
-                          //   Images.NEWS,
-                          //   width: 25,
-                          //   height: 25,
-                          // ),
                           const SizedBox(
                             width: 20.0,
                           ),
