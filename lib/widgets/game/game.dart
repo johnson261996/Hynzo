@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
 import 'package:hynzo/core/models/tab_header_model.dart';
 import 'package:hynzo/resources/strings.dart';
@@ -92,6 +93,24 @@ class _GameWidgetState extends State<GameWidget> with TickerProviderStateMixin {
       length: allTabHeader.length,
       vsync: this,
     );
+    final get = GetStorage();
+    if (get.hasData('game')) {
+      int i = get.read('game');
+      i++;
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+        setState(() {
+          selectedIndexValue = i;
+          selectedItemName = allTabHeader[i].tabName!;
+          getFilteredGames(selectedItemName);
+          tabController.animateTo(selectedIndexValue,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.fastLinearToSlowEaseIn);
+          _pageController.animateToPage(selectedIndexValue,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.fastLinearToSlowEaseIn);
+        });
+      });
+    }
   }
 
   @override

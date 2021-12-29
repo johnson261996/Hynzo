@@ -65,47 +65,6 @@ class _LoginWidgetState extends State<LoginWidget> {
     var mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
       extendBody: true,
-      resizeToAvoidBottomInset: false,
-      bottomNavigationBar: IntrinsicHeight(
-        child: Container(
-          color: Colors.transparent,
-          padding: const EdgeInsets.only(bottom: 20, top: 5),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                !signIn
-                    ? 'Already have an account?'
-                    : 'Don\'t have an account?',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(color: Colors.white),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    signIn = !signIn;
-                    nameC.text = fullName;
-                    numberC.text = mobile;
-                  });
-                },
-                child: Text(
-                  !signIn ? 'Login' : 'Sign Up',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(color: AppColors.blueDark),
-                ),
-              ),
-            ],
-          ),
-          alignment: Alignment.center,
-        ),
-      ),
       body: SingleChildScrollView(
         child: Container(
           color: AppColors.white,
@@ -148,8 +107,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                       colors: [AppColors.blue, AppColors.lightblue],
                     ),
                     borderRadius: const BorderRadius.only(
@@ -250,6 +209,44 @@ class _LoginWidgetState extends State<LoginWidget> {
                           },
                         ),
                       ),
+                      const Spacer(),
+                      Container(
+                        padding: const EdgeInsets.only(bottom: 20, top: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              !signIn
+                                  ? 'Already have an account?'
+                                  : 'Don\'t have an account?',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(color: Colors.white),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  signIn = !signIn;
+                                  nameC.text = fullName;
+                                  numberC.text = mobile;
+                                });
+                              },
+                              child: Text(
+                                !signIn ? 'Login' : 'Sign Up',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(color: AppColors.blueDark),
+                              ),
+                            ),
+                          ],
+                        ),
+                        alignment: Alignment.center,
+                      )
                     ],
                   ),
                 ),
