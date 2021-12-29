@@ -19,7 +19,6 @@ class Strings {
     'Manage your school’s social media accounts',
     'Track your school’s LEAD orders'
   ];
-  static const SCHOOL_NEWS = 'School News';
   static const VIEW_ALL = 'View all';
   static const SOCIAL_MEDIA = 'SOCIAL MEDIA';
   static const MANAGE_SCHOOL = 'Manage school from your fingertips';

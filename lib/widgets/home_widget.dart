@@ -15,6 +15,7 @@ import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/utils/utils.dart';
 import 'package:hynzo/widgets/carouselSlider/carousel_slider.dart';
+import 'package:hynzo/widgets/covid/covid_top_widget.dart';
 import 'package:intl/intl.dart';
 
 import 'common/no_data/no_data_error.dart';
@@ -157,13 +158,6 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    int? activeCase = 0;
-    if (widget.covidData != null) {
-      activeCase = (widget.covidData!.summary!.total! -
-          (widget.covidData!.summary!.discharged! +
-              widget.covidData!.summary!.deaths!));
-    }
-
     var mediaQuery = MediaQuery.of(context).size;
     name = widget.userDetails.full_name ?? '';
     url = widget.userDetails.avatar ?? '';
@@ -275,191 +269,18 @@ class _HomeWidgetState extends State<HomeWidget> {
                           SizedBox(
                             width: mediaQuery.width * 0.02,
                           ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 15, bottom: 20),
-                            child: GestureDetector(
-                              onTap: () {
-                                //TODO
-                                print("Inner screen");
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.only(top: 15),
-                                padding: const EdgeInsets.all(12.0),
-                                decoration: BoxDecoration(
-                                  image: const DecorationImage(
-                                    image: AssetImage(Images.COVID),
-                                    alignment: Alignment.topRight,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(8.0),
-                                    topRight: Radius.circular(8.0),
-                                    bottomLeft: Radius.circular(8.0),
-                                    bottomRight: Radius.circular(8.0),
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: AppColors.lightSliver,
-                                      offset: const Offset(
-                                        2.0,
-                                        2.0,
-                                      ),
-                                      blurRadius: 5.0,
-                                      spreadRadius: 0.1,
-                                    ), //BoxShadow
-                                    const BoxShadow(
-                                      color: Colors.white,
-                                      offset: Offset(0.0, 0.0),
-                                      blurRadius: 0.0,
-                                      spreadRadius: 0.0,
-                                    ), //BoxShadow
-                                  ],
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          Strings.ACROSS_INDIA,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline6!
-                                              .copyWith(
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          Strings.TOTAL,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2!
-                                              .copyWith(
-                                                color: AppColors.primaryDark,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                        ),
-                                        Text(
-                                          Utils.NumberFormater(
-                                              widget.covidData != null
-                                                  ? widget.covidData!.summary!
-                                                      .total!
-                                                  : 0),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2!
-                                              .copyWith(
-                                                color: AppColors.primaryDark,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          children: [
-                                            Text(
-                                              Strings.ACTIVE,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2!
-                                                  .copyWith(
-                                                    color: AppColors.red,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                            ),
-                                            Text(
-                                              Utils.NumberFormater(activeCase),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2!
-                                                  .copyWith(
-                                                    color: AppColors.red,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text(
-                                              Strings.RECOVERED,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2!
-                                                  .copyWith(
-                                                    color: AppColors.success,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                            ),
-                                            Text(
-                                              Utils.NumberFormater(
-                                                  widget.covidData != null
-                                                      ? widget.covidData!
-                                                          .summary!.discharged!
-                                                      : 0),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2!
-                                                  .copyWith(
-                                                    color: AppColors.success,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text(
-                                              Strings.DEATHS,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2!
-                                                  .copyWith(
-                                                    color: AppColors.whitegrey,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                            ),
-                                            Text(
-                                              Utils.NumberFormater(
-                                                  widget.covidData != null
-                                                      ? widget.covidData!
-                                                          .summary!.deaths!
-                                                      : 0),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2!
-                                                  .copyWith(
-                                                    color: AppColors.whitegrey,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                          if (widget.covidData != null)
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 15, bottom: 20),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigation.pushNamed(context, Routes.covid);
+                                },
+                                child:
+                                    CovidHeading(covidData: widget.covidData!),
                               ),
-                            ),
-                          )
+                            )
                         ],
                       ),
                       const SizedBox(

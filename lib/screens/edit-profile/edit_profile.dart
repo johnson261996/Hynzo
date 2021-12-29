@@ -6,6 +6,6 @@ class EditProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return EditProfileContainer();
+    return const EditProfileContainer();
   }
 }

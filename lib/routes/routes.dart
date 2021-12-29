@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/layout/base.dart';
+import 'package:hynzo/screens/covid/covid.dart';
 import 'package:hynzo/screens/edit-profile/edit_profile.dart';
 import 'package:hynzo/screens/interest/interest.dart';
 import 'package:hynzo/screens/intro/intro.dart';
@@ -49,7 +50,7 @@ class Routes {
   static const profile = '/profile';
   static const edit_profile = '/edit-profile';
   static const settings = '/settings';
-
+  static const covid = '/covid';
 
   /// Routing Table needed for the App.
   static Map<String, WidgetBuilder> get buildRoutes {
@@ -81,8 +82,10 @@ class Routes {
           BaseLayout(page: ProfileScreen(), isAppBar: false),
       edit_profile: (BuildContext context) =>
           BaseLayout(page: EditProfile(), isAppBar: false),
-              settings: (BuildContext context) =>
+      settings: (BuildContext context) =>
           BaseLayout(page: SettingsScreen(), isAppBar: false),
+      covid: (BuildContext context) =>
+          BaseLayout(page: CovidScreen(), isAppBar: false),
     };
   }
 
