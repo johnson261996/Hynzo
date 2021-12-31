@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/themes/colors.dart';
-import 'package:hynzo/widgets/common/image/rectangle_image_viewl String imagePath;
+import 'package:hynzo/widgets/common/image/rectangle_image_view.dart';
+
+
+
+class EventContainerWidget extends StatelessWidget {
+  final String imagePath;
   final String title;
   final String subTitle;
   final bool showDate;

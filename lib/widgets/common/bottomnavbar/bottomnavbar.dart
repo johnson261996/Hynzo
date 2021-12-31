@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/screens/chat/chat_screen.dart';
-import 'package:hynzo/screens/events/events.dart';
 import 'package:hynzo/screens/games/games.dart';
 import 'package:hynzo/screens/home/home.dart';
 import 'package:hynzo/screens/more/more.dart';
-import 'package:hynzo/themes/colorrt';
+import 'package:hynzo/screens/news/news.dart';
+import 'package:hynzo/themes/colors.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -35,7 +35,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         children: <Widget>[
           HomeScreen(onTapped),
           const ChatScreen(),
-          const News(isBackEnable: false),
+          News(isBackEnable: false),
           const GameScreen(),
           const MoreScreen(),
         ],

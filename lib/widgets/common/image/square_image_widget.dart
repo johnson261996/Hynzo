@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hynzo/resources/images.dart';
 
 class SquareViewWidget extends StatelessWidget{
 
@@ -10,7 +11,7 @@ class SquareViewWidget extends StatelessWidget{
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10.0),
-      child: Image.network(
+      child:Image.asset(
         imagePath,
         fit: BoxFit.cover,
         width: 105.0,

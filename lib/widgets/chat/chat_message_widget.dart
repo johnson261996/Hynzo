@@ -28,11 +28,12 @@ class ChatMessageWidget extends StatefulWidget {
   final String userName;
   final Function setUserStatus;
 
-  const ChatMessageWidget({Key? key,
-    required this.channelDetails,
-    required this.status,
-    required this.userName,
-    required this.setUserStatus})
+  const ChatMessageWidget(
+      {Key? key,
+        required this.channelDetails,
+        required this.status,
+        required this.userName,
+        required this.setUserStatus})
       : super(key: key);
 
   @override
@@ -54,7 +55,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
     firstName: '',
     lastName: '',
     imageUrl:
-        'https://i.picsum.photos/id/1075/200/300.jpg?hmac=pffU5_mFDClpUhsTVng81yHXXvdsGGKHi1jCz2pRsaU',
+    'https://i.picsum.photos/id/1075/200/300.jpg?hmac=pffU5_mFDClpUhsTVng81yHXXvdsGGKHi1jCz2pRsaU',
     role: types.Role.user,
   );
   late MessageEncrypt _encrypt;
@@ -74,7 +75,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
       firstName: widget.userName,
       lastName: '',
       imageUrl:
-          'https://i.picsum.photos/id/1075/200/300.jpg?hmac=pffU5_mFDClpUhsTVng81yHXXvdsGGKHi1jCz2pRsaU',
+      'https://i.picsum.photos/id/1075/200/300.jpg?hmac=pffU5_mFDClpUhsTVng81yHXXvdsGGKHi1jCz2pRsaU',
       role: types.Role.user,
     );
     return true;
@@ -219,12 +220,13 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
 
   void _handleMessageRead() {
     channel.sink.add(
-        '{"command": "read_message", "username": "", "user_id": $uid, "chatId": ${widget
-            .channelDetails.id}}');
+        '{"command": "read_message", "username": "", "user_id": $uid, "chatId": ${widget.channelDetails.id}}');
   }
 
-  void _handlePreviewDataFetched(types.TextMessage message,
-      types.PreviewData previewData,) {
+  void _handlePreviewDataFetched(
+      types.TextMessage message,
+      types.PreviewData previewData,
+      ) {
     final index = _messages.indexWhere((element) => element.id == message.id);
     final updatedMessage = _messages[index].copyWith(previewData: previewData);
 
@@ -244,9 +246,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
     String encText = '';
     encText = _encrypt.encrypt(imgUrl);
     channel.sink.add(
-        '{"command": "new_message",  "from": $uid, "message": "$encText", "chatId": ${widget
-            .channelDetails
-            .id}, "type_of_content": "$type", "media_id": "$mId", "offline_locator":""}');
+        '{"command": "new_message",  "from": $uid, "message": "$encText", "chatId": ${widget.channelDetails.id}, "type_of_content": "$type", "media_id": "$mId", "offline_locator":""}');
     setState(() {
       stickerOpen = false;
     });
@@ -256,25 +256,19 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
     String encText = '';
     encText = _encrypt.encrypt(message.text);
     channel.sink.add(
-        '{"command": "new_message",  "from": $uid, "message": "$encText", "chatId": ${widget
-            .channelDetails
-            .id}, "type_of_content": "text", "media_id": "", "offline_locator":""}');
+        '{"command": "new_message",  "from": $uid, "message": "$encText", "chatId": ${widget.channelDetails.id}, "type_of_content": "text", "media_id": "", "offline_locator":""}');
   }
 
   void _loadMessages() async {
     await assignUser();
     channel = WebSocketChannel.connect(Uri.parse(
-        'ws://35.154.69.40:9000/api/v1/ws/chat/${widget.channelDetails
-            .id}?token=$token'));
+        'ws://35.154.69.40:9000/api/v1/ws/chat/${widget.channelDetails.id}?token=$token'));
     log(Uri.parse(
-        'ws://35.154.69.40:9000/api/v1/ws/chat/${widget.channelDetails
-            .id}?token=$token')
+        'ws://35.154.69.40:9000/api/v1/ws/chat/${widget.channelDetails.id}?token=$token')
         .toString());
     Future.delayed(const Duration(microseconds: 500)).whenComplete(() =>
         channel.sink.add(
-            '{"command": "fetch_messages", "username": "${widget.channelDetails
-                .participants[1]}", "user_id": $uid, "chatId": ${widget
-                .channelDetails.id}}'));
+            '{"command": "fetch_messages", "username": "${widget.channelDetails.participants[1]}", "user_id": $uid, "chatId": ${widget.channelDetails.id}}'));
     setState(() {
       loading = false;
     });
@@ -393,10 +387,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                                 "type": element.typeOfContent,
                                 "name": 'Image',
                                 "size":
-                                MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width / 2,
+                                MediaQuery.of(context).size.width / 2,
                                 "uri": _encrypt.decrypt(element.content)
                               }));
                           break;
@@ -419,10 +410,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                                 "type": 'custom',
                                 "name": 'Sticker',
                                 "size":
-                                MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width / 3,
+                                MediaQuery.of(context).size.width / 3,
                                 "metadata": {
                                   'uri': _encrypt.decrypt(element.content)
                                 }
@@ -476,10 +464,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                           "text": _encrypt.decrypt(msg.message.content),
                           "type": msg.message.typeOfContent,
                           "name": 'Image',
-                          "size": MediaQuery
-                              .of(context)
-                              .size
-                              .width / 2,
+                          "size": MediaQuery.of(context).size.width / 2,
                           "uri": _encrypt.decrypt(msg.message.content)
                         }));
                     break;
@@ -499,10 +484,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                           "text": _encrypt.decrypt(msg.message.content),
                           "type": 'custom',
                           "name": 'Sticker',
-                          "size": MediaQuery
-                              .of(context)
-                              .size
-                              .width / 3,
+                          "size": MediaQuery.of(context).size.width / 3,
                           "metadata": {
                             'uri': _encrypt.decrypt(msg.message.content)
                           }
@@ -550,19 +532,13 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                         ),
                       );
                     },
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width / 2,
+                    width: MediaQuery.of(context).size.width / 2,
                     fit: BoxFit.fitWidth,
                   ),
               customMessageBuilder: (p0, {required messageWidth}) {
                 return Image.network(
                   p0.metadata!['uri'],
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width / 3,
+                  width: MediaQuery.of(context).size.width / 3,
                   fit: BoxFit.fitWidth,
                 );
               },

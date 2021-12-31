@@ -1,3 +1,5 @@
+class SuggestionModel {
+  final int? count;
   final String? next;
   final String? previous;
   final int? statusCode;

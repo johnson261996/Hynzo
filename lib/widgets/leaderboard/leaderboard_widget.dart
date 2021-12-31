@@ -1,10 +1,10 @@
 import 'dart:ui';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/leaderboard_model.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/widgets/common/image/square_image_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LeaderboardWidget extends StatefulWidget {
   @override
@@ -47,11 +47,11 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget> {
               ),
             ),
             Positioned(
-              right: 30,
+              top: 20,
+              right: 20,
               child: Container(
-                width: 75.0,
                 height: 40.0,
-                margin: EdgeInsets.only(top: 20),
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(10.0),
@@ -60,14 +60,8 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      width: 50.0,
-                      height: 50.0,
-                      margin: EdgeInsets.only(top: 5),
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 3),
                       child: Image.asset(
                         'assets/images/coin.png',
                         width: 50.0,
@@ -87,26 +81,47 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget> {
                 ),
               ),
             ),
-            Container(
-                margin: EdgeInsets.fromLTRB(10, 60, 20, 10),
-                child: Image.asset(
-                  'assets/images/Game_txt.png',
-                  height: 100,
-                  width: mediaQuery.width,
-                )),
-            Container(
-                height: 100,
-                width: 100,
-                margin: EdgeInsets.only(top: 150, left: 120),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black,
-                    ),
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: SquareViewWidget(
-                  imagePath: 'assets/images/chess_home.png',
-                )),
+            Positioned(
+              top: mediaQuery.width * 0.2,
+              left: 0,
+              right: 0,
+              child: Text(
+                "Game Name",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.breeSerif().copyWith(
+                  fontSize: 30,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  shadows: [
+                    BoxShadow(
+                      color: AppColors.blueDark,
+                      blurRadius: 5,
+                      spreadRadius: 2,
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              top: mediaQuery.width * 0.35,
+              right: mediaQuery.width * 0.35,
+              left: mediaQuery.width * 0.35,
+              bottom: mediaQuery.width * 0.35,
+              child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 3,
+                      ),
+                      color: Colors.white,
+                      borderRadius:
+                      const BorderRadius.all(Radius.circular(10))),
+                  child: SquareViewWidget(
+                    imagePath:
+                    'assets/images/chess.png',
+                  )),
+            ),
             Container(
                 margin: EdgeInsets.fromLTRB(
                     50.0, mediaQuery.height * 0.4, 50.0, 10),

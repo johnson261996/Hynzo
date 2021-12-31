@@ -1,3 +1,6 @@
+import 'dart:collection';
+
+import 'package:hynzo/resources/strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorage {
@@ -9,6 +12,16 @@ class LocalStorage {
   static Future<bool?> getIntroStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool('introStatus') ?? true;
+  }
+
+  static Future<String?> getPinnedStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('PinnedStatus') ??"";
+  }
+
+  static void setPinnedStatus(String status) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('PinnedStatus', status);
   }
 
   static void setProfilePic(String url) async {

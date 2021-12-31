@@ -14,12 +14,12 @@ import 'package:hynzo/utils/analytics_events.dart';
 import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/carouselSlider/carousel_slider.dart';
+import 'package:hynzo/widgets/common/no_data/no_data_error.dart';
+import 'package:hynzo/widgets/common/profile_image/profile_image.dart';
 import 'package:hynzo/widgets/covid/covid_top_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'common/no_data/no_data_error.dart';
-import 'common/profile_image/profile_image.dart';
 
 class HomeWidget extends StatefulWidget {
   final Function onTapped;

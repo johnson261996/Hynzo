@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hynzo/layout/base.dart';
 import 'package:hynzo/screens/covid/covid.dart';
 import 'package:hynzo/screens/edit-profile/edit_profile.dart';
+import 'package:hynzo/screens/home/edit_home.dart';
 import 'package:hynzo/screens/interest/interest.dart';
 import 'package:hynzo/screens/intro/intro.dart';
+import 'package:hynzo/screens/leaderboard/leaderboard.dart';
 import 'package:hynzo/screens/location/location.dart';
 import 'package:hynzo/screens/login/login.dart';
 import 'package:hynzo/screens/login/otp.dart';
@@ -51,6 +53,8 @@ class Routes {
   static const edit_profile = '/edit-profile';
   static const settings = '/settings';
   static const covid = '/covid';
+  static const edit_home = "./edithome";
+  static const leaderboard = "./leaderboard";
 
   /// Routing Table needed for the App.
   static Map<String, WidgetBuilder> get buildRoutes {
@@ -86,6 +90,10 @@ class Routes {
           BaseLayout(page: SettingsScreen(), isAppBar: false),
       covid: (BuildContext context) =>
           BaseLayout(page: CovidScreen(), isAppBar: false),
+      edit_home: (BuildContext context) =>
+          BaseLayout(page: EditHome(), isAppBar: false),
+      leaderboard: (BuildContext context) =>
+          BaseLayout(page: LeaderboardScreen(), isAppBar: false),
     };
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hynzo/core/models/news_home';
+import 'package:hynzo/core/models/news_home_model.dart';
+import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/navigations.dart';
 import 'package:hynzo/widgets/news/news_swipe_view.dart';

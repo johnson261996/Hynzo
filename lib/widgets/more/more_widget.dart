@@ -276,6 +276,58 @@ class _MoreWidgetState extends State<MoreWidget> {
                     height: 2.0,
                   ),
                   InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, Routes.edit_home);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                        left: 15.0,
+                        right: 15.0,
+                      ),
+                      height: 70.0,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.manage_accounts,
+                            color: AppColors.lightgray,
+                            size: 26,
+                          ),
+                          // Image.asset(
+                          //   Images.NEWS,
+                          //   width: 25,
+                          //   height: 25,
+                          // ),
+                          const SizedBox(
+                            width: 20.0,
+                          ),
+                          Text(
+                            Strings.EDIT_HOME_SCREEN,
+                            style:
+                            Theme
+                                .of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.offgrey,
+                            ),
+                          ),
+                          const Spacer(),
+                          Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            size: 18,
+                            color: AppColors.graylight,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    color: AppColors.lightergray,
+                    height: 2.0,
+                  ),
+                  InkWell(
                     onTap: () {},
                     child: Container(
                       padding: const EdgeInsets.only(
