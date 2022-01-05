@@ -24,7 +24,6 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
   String pinned_items='';
   List<EditHomeModel> _items = [];
   List<EditHomeModel> display_items = [];
-  List<EditHomeModel> cache_items = [];
 
   //check the internet connection
   Future<bool> check() async {
@@ -111,11 +110,15 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
                 buildDefaultDragHandles: true,
                 onReorder:(oldIndex, newIndex) {
                   setState(() {
+                    //display_items[newIndex].isSelected ? Image.asset("assets/images/push_pin_on.png") : Image.asset("assets/images/push_pin_off.png");
+                    display_items[oldIndex].isSelected = ! display_items[oldIndex].isSelected;
                     if (newIndex > oldIndex) {
                       newIndex = newIndex - 1;
                     }
                     final element = display_items.removeAt(oldIndex);
                     display_items.insert(newIndex, element);
+                    log("newIndex:$newIndex\noldIndex:$oldIndex");
+                    StorePinnedItemsInLocaStorage();
                   });
                 },
               //physics: const ClampingScrollPhysics(),
@@ -180,7 +183,8 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
 
                                 log("index:$index");
 
-                                //display_items.sort((a,b)=>compare(a.isSelected,b.isSelected));
+
+                                display_items.sort((a,b)=>compare(a.isSelected,b.isSelected));
 
                               });
                             },)
@@ -247,15 +251,29 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
       display_items.clear();
 
         PinnedMapItems.forEach((key, value) {
+
           if(value) {
-            _items[int.parse(key)].isSelected = true;
-            display_items.add(_items[int.parse(key)]);
+            for(int i=0;i<_items.length;i++){
+            if(_items[i].title == key) {
+              _items[i].isSelected = true;
+              display_items.add(_items[i]);
+            }
+
+          }
+
+
+
           }
         });
 
         PinnedMapItems.forEach((key, value) {
-          if(!value)
-            display_items.add(_items[int.parse(key)]);
+          if(!value) {
+            for(int i=0;i<_items.length;i++) {
+              if (_items[i].title == key) {
+                display_items.add(_items[i]);
+              }
+            }
+          }
         });
 
         if(display_items.isEmpty){
@@ -273,10 +291,15 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
     _getListData();
   }
 
+  Future<bool> StoreDragAndDropInLocalStorage(){
+
+    return Future.value(true);
+  }
+
   Future<bool> StorePinnedItemsInLocaStorage() {
     PinnedMapItems.clear();
     for(int i=0;i<display_items.length;i++){
-      PinnedMapItems[i.toString()] = display_items[i].isSelected;
+      PinnedMapItems[display_items[i].title] = display_items[i].isSelected;
       print('items store in map:${display_items[i].title}');
     }
     log("map storing :" + PinnedMapItems.toString());

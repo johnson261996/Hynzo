@@ -1,5 +1,4 @@
 
-import 'dart:io' show Platform;
 import 'package:share/share.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/cupertino.dart';
@@ -187,7 +186,6 @@ class _ReferralWidgetState extends State<ReferralWidget> {
                    child: ElevatedButton.icon(
                    onPressed: (){
                      launchWhatsApp();
-                     //openwhatsapp(context);
                    },
                    label: Text('Whatsapp'),
                    icon: Image.asset('assets/images/whatsapp.png',width: 20,height: 20,),
@@ -226,35 +224,15 @@ class _ReferralWidgetState extends State<ReferralWidget> {
       ),
     );
   }
-}
 
-openwhatsapp(BuildContext context) async{
-  var whatsapp ="+918861438231";
-  var whatsappURl_android = "whatsapp://send?phone="+whatsapp+"&text=hello";
-  var whatappURL_ios ="https://wa.me/$whatsapp?text=${Uri.parse("hello")}";
-  if(Platform.isIOS){
-    // for iOS phone only
-    if( await canLaunch(whatappURL_ios)){
-      await launch(whatappURL_ios, forceSafariVC: false);
-    }else{
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: new Text("whatsapp no installed")));
-    }
-  }else{
-    // android , web
-    if( await canLaunch(whatsappURl_android)){
-      await launch(whatsappURl_android);
-    }else{
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: new Text("whatsapp no installed")));
-    }
+
+
+
+  launchWhatsApp() async {
+    final link = WhatsAppUnilink(
+      text: text + subject,
+    );
+    await launch('$link');
   }
 }
 
-launchWhatsApp() async {
-  final link = WhatsAppUnilink(
-    phoneNumber: '+001-(555)1234567',
-    text: "Hey! I'm inquiring about the apartment listing",
-  );
-  await launch('$link');
-}
