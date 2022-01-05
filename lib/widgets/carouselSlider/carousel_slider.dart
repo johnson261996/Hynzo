@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:hynzo/resources/images.dart';
 import 'package:hynzo/screens/leaderboard/leaderboard.dart';
+import 'package:hynzo/screens/referral/referral.dart';
 
 class CarouselSliderWidget extends StatefulWidget {
   const CarouselSliderWidget({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                     decoration: BoxDecoration(color: Colors.white),
                     child: GestureDetector(
                         child: Image.asset(image), onTap: (){
-                     Navigator.push(context, MaterialPageRoute(builder: (context) => LeaderboardScreen()),);
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => ReferralScreen()),);
                     }));
               },
             );
