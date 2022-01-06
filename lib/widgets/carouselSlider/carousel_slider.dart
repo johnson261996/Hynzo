@@ -25,7 +25,7 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                     decoration: BoxDecoration(color: Colors.white),
                     child: GestureDetector(
                         child: Image.asset(image), onTap: (){
-                     Navigator.push(context, MaterialPageRoute(builder: (context) => ReferralScreen()),);
+
                     }));
               },
             );

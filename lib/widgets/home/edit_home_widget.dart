@@ -77,7 +77,7 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
                 left: 10.0,
               ),
               child: Text(
-                Strings.EDIT_PROFILE,
+                Strings.EDIT_HOME_SCREEN,
                 style: Theme.of(context).textTheme.headline1!.copyWith(
                       color: AppColors.greyBlack,
                       fontSize: 25,
@@ -103,116 +103,121 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
           ),
               ),
               const SizedBox(
-          height: 10,
+                  height: 10,
               ),
             Expanded(
-              child: ReorderableListView.builder(
-                buildDefaultDragHandles: true,
-                onReorder:(oldIndex, newIndex) {
-                  setState(() {
-                    //display_items[newIndex].isSelected ? Image.asset("assets/images/push_pin_on.png") : Image.asset("assets/images/push_pin_off.png");
-                    display_items[oldIndex].isSelected = ! display_items[oldIndex].isSelected;
-                    if (newIndex > oldIndex) {
-                      newIndex = newIndex - 1;
-                    }
-                    final element = display_items.removeAt(oldIndex);
-                    display_items.insert(newIndex, element);
-                    log("newIndex:$newIndex\noldIndex:$oldIndex");
-                    StorePinnedItemsInLocaStorage();
-                  });
-                },
-              //physics: const ClampingScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: display_items.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  key: ValueKey(display_items[index].title),
-                  semanticContainer: true,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-
-                  elevation: 5,
-                  margin: EdgeInsets.all(10),
-                  child: Column(children: [
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10.0, top: 10.0),
-                            child: Text(
-                              display_items[index].title,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6!
-                                  .copyWith(
-                                    color: AppColors.black,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: mediaQuery.width * 0.02,
-                          ),
-
-                           const Spacer(),
-
-                          Container(
-                            padding: const EdgeInsets.only(
-                              right: 20.0,
-                              top: 5.0,
-                              bottom: 5.0,
-                              left: 10.0,
-                            ),
-                            child: Row(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: mediaQuery.width * 0.005,
-                                ),
-                            GestureDetector(
-                              child:
-                              display_items[index].isSelected ? Image.asset("assets/images/push_pin_on.png") : Image.asset("assets/images/push_pin_off.png"),
-                              onTap: () {
-                              setState(() {
-                                display_items[index].isSelected = ! display_items[index].isSelected;
-
-                                log("index:$index");
-
-
-                                display_items.sort((a,b)=>compare(a.isSelected,b.isSelected));
-
-                              });
-                            },)
-                              ],
-                            ),
-                          )
-                        ]),
-                    const SizedBox(
-                      height: 10,
+              child: Theme(
+                data: Theme.of(context).copyWith(canvasColor: Colors.transparent,shadowColor: Colors.transparent,),
+                child: ReorderableListView.builder(
+                  buildDefaultDragHandles: true,
+                  onReorder:(oldIndex, newIndex) {
+                    setState(() {
+                      //display_items[newIndex].isSelected ? Image.asset("assets/images/push_pin_on.png") : Image.asset("assets/images/push_pin_off.png");
+                      display_items[oldIndex].isSelected = ! display_items[oldIndex].isSelected;
+                      if (newIndex > oldIndex) {
+                        newIndex = newIndex - 1;
+                      }
+                      final element = display_items.removeAt(oldIndex);
+                      display_items.insert(newIndex, element);
+                      log("newIndex:$newIndex\noldIndex:$oldIndex");
+                      StorePinnedItemsInLocaStorage();
+                    });
+                  },
+                //physics: const ClampingScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: display_items.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    key: ValueKey(display_items[index].title),
+                    semanticContainer: true,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    shadowColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(
+                        color: Colors.grey.withOpacity(0.5),
+                        width: 1,
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                         Padding(
-                              padding: const EdgeInsets.only(left:20, bottom: 20,top: 10),
-                              child: Image.asset(display_items[index].img,width: mediaQuery.width * 0.7,fit: BoxFit.fitWidth,),
+
+                    elevation: 5,
+                    //color: Colors.grey[200],
+                    margin: EdgeInsets.all(10),
+                    child: Column(children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, top: 10.0),
+                              child: Text(
+                                display_items[index].title,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6!
+                                    .copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: mediaQuery.width * 0.02,
                             ),
 
-                        Padding(
-                          padding: const EdgeInsets.only(right: 20),
-                          child: Image.asset('assets/images/more_dot.png',height: 25,width: 12,),
-                        ),
-                      ],
-                    )
-                  ]),
-                );
-              }),
+                             const Spacer(),
+
+                            Container(
+                              padding: const EdgeInsets.only(
+                                right: 20.0,
+                                top: 5.0,
+                                bottom: 5.0,
+                                left: 10.0,
+                              ),
+                              child: Row(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: mediaQuery.width * 0.005,
+                                  ),
+                              GestureDetector(
+                                child:
+                                display_items[index].isSelected ? Image.asset("assets/images/push_pin_on.png") : Image.asset("assets/images/push_pin_off.png"),
+                                onTap: () {
+                                setState(() {
+                                  display_items[index].isSelected = ! display_items[index].isSelected;
+                                  log("index:$index");
+                                  display_items.sort((a,b)=>compare(a.isSelected,b.isSelected));
+                                });
+                              },)
+                                ],
+                              ),
+                            )
+                          ]),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                           Padding(
+                                padding: const EdgeInsets.only(left:20, bottom: 20,top: 10),
+                                child: Image.asset(display_items[index].img,width: mediaQuery.width * 0.7,fit: BoxFit.fitWidth,),
+                              ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(right: 20),
+                            child: Image.asset('assets/images/more_dot.png',height: 25,width: 12,),
+                          ),
+                        ],
+                      )
+                    ]),
+                  );
+                }),
+              ),
             )
 
             ]),
@@ -242,6 +247,7 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
     setState(() {
       _items.add(EditHomeModel("New Messages","assets/images/new_message_img.PNG", false));
       _items.add(EditHomeModel("Special Events","assets/images/event_img.PNG", false));
+      _items.add(EditHomeModel("Covid 19","assets/images/covid_19_img.PNG", false));
       _items.add(EditHomeModel("Games","assets/images/games_img.PNG", false));
       _items.add(EditHomeModel("Todays News","assets/images/news_img.PNG", false));
       _items.add(EditHomeModel("Games by Categories","assets/images/games_categories.PNG", false));
@@ -260,9 +266,6 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
             }
 
           }
-
-
-
           }
         });
 
@@ -291,10 +294,7 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
     _getListData();
   }
 
-  Future<bool> StoreDragAndDropInLocalStorage(){
 
-    return Future.value(true);
-  }
 
   Future<bool> StorePinnedItemsInLocaStorage() {
     PinnedMapItems.clear();

@@ -210,13 +210,13 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget> {
     //  Create dynamic list
     Future.delayed(Duration(milliseconds: 500));
     setState(() {
-      _items.add(LeaderboardModel("1","assets/images/profile_pic1.png","Ralph Edwards","2590 pts." ));
-      _items.add(LeaderboardModel("2","assets/images/profile_pic1.png","Savannah Nguyen", "590 pts."));
-      _items.add(LeaderboardModel("3","assets/images/profile_pic1.png","Ralph Edwards","2590 pts." ));
-      _items.add(LeaderboardModel("4","assets/images/profile_pic1.png", "Savannah Nguyen", "590 pts."));
-      _items.add(LeaderboardModel("5","assets/images/profile_pic1.png", "Savannah Nguyen", "590 pts."));
-      _items.add(LeaderboardModel("6","assets/images/profile_pic1.png", "Ralph Edwards","2590 pts." ));
-      _items.add(LeaderboardModel("7","assets/images/profile_pic1.png", "Ralph Edwards","2590 pts." ));
+      _items.add(LeaderboardModel("1","assets/images/profile_pic.png","Ralph Edwards","2590 pts." ));
+      _items.add(LeaderboardModel("2","assets/images/profile_pic.png","Savannah Nguyen", "590 pts."));
+      _items.add(LeaderboardModel("3","assets/images/profile_pic.png","Ralph Edwards","2590 pts." ));
+      _items.add(LeaderboardModel("4","assets/images/profile_pic.png", "Savannah Nguyen", "590 pts."));
+      _items.add(LeaderboardModel("5","assets/images/profile_pic.png", "Savannah Nguyen", "590 pts."));
+      _items.add(LeaderboardModel("6","assets/images/profile_pic.png", "Ralph Edwards","2590 pts." ));
+      _items.add(LeaderboardModel("7","assets/images/profile_pic.png", "Ralph Edwards","2590 pts." ));
       _isLoading = false;
     });
   }

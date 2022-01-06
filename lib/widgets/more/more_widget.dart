@@ -3,6 +3,7 @@ import 'package:hynzo/core/models/user_profile_model.dart';
 import 'package:hynzo/resources/images.dart';
 import 'package:hynzo/resources/strings.dart';
 import 'package:hynzo/routes/routes.dart';
+import 'package:hynzo/screens/referral/referral.dart';
 import 'package:hynzo/themes/colors.dart';
 import 'package:hynzo/utils/localstorage.dart';
 import 'package:hynzo/widgets/common/profile_image/profile_image.dart';
@@ -373,7 +374,9 @@ class _MoreWidgetState extends State<MoreWidget> {
                     height: 2.0,
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ReferralScreen()),);
+                    },
                     child: Container(
                       padding: const EdgeInsets.only(
                         left: 15.0,

@@ -176,7 +176,6 @@ class _ReferralWidgetState extends State<ReferralWidget> {
             Container(
               height: mediaQuery.height * 0.2,
               width: mediaQuery.width * 1,
-
                child:Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children:[
