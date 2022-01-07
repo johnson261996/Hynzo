@@ -225,8 +225,6 @@ class _ReferralWidgetState extends State<ReferralWidget> {
   }
 
 
-
-
   launchWhatsApp() async {
     final link = WhatsAppUnilink(
       text: text + subject,

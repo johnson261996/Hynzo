@@ -8,7 +8,7 @@ import 'package:hynzo/utils/connectivity.dart';
 import 'package:hynzo/utils/toast_util.dart';
 
 class ServiceBase {
-  static String apiBaseUrl = 'http://api.hynzo.com/';
+  static String apiBaseUrl = 'http://qa.hynzo.com/';
 
   static Future<http.Response> get({
     String? url,

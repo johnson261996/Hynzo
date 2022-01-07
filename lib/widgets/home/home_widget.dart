@@ -1,4 +1,7 @@
 ///Widget created for home screen.
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:hynzo/core/models/all_games_model.dart';
@@ -28,6 +31,8 @@ class HomeWidget extends StatefulWidget {
   final UserProfileModel userDetails;
   final List<GamePlayModel>? allSuggestedGames;
   final Function(String)? setFcmToken;
+   //String? pinnedLocalstoragevalue =  LocalStorage.getTotalPinnedItems() as String?;
+
 
   const HomeWidget(
       {required this.onTapped,
@@ -45,15 +50,18 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget> {
   String name = '';
+  String today_news = "Today's News";
   int coin = 0;
   String url = "";
-
   String search = '';
   List<EventsModel> allEvents = [];
+  String pinned_items='';
+  Map<String,dynamic> PinnedMapItems ={};
 
   @override
   void initState() {
     setFcmToken();
+    _getListData();
     super.initState();
 
     allEvents.add(
@@ -80,6 +88,15 @@ class _HomeWidgetState extends State<HomeWidget> {
         dateTime: 'Thu, 11 Nov',
       ),
     );
+  }
+
+  _getListData() async{
+    await LocalStorage.getPinnedStatus().then((value) =>  pinned_items=value! );
+    if(pinned_items!='') {
+      PinnedMapItems = json.decode(pinned_items);
+    }
+    log("Home map" + PinnedMapItems.toString(),);
+    for (var key in PinnedMapItems.keys) log(key);
   }
 
   getName() async {
@@ -224,6 +241,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       // const SizedBox(
                       //   height: 10,
                       // ),
+
                       Container(
                           padding: const EdgeInsets.only(right: 10),
                           height: 130.0,
@@ -231,7 +249,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Column(
+
+                     if(PinnedMapItems['Covid 19']??true) Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -376,134 +395,138 @@ class _HomeWidgetState extends State<HomeWidget> {
                       // const SizedBox(
                       //   height: 30,
                       // ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      if(PinnedMapItems['Games']??true)Column(
                         children: [
-                          Text(
-                            Strings.MUST_TRY_GAMES,
-                            style:
+                       Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                Strings.MUST_TRY_GAMES,
+                                style:
                                 Theme.of(context).textTheme.headline6!.copyWith(
-                                      color: AppColors.black,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                          ),
-                          SizedBox(
-                            width: mediaQuery.width * 0.02,
-                          ),
-                          const Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              widget.onTapped(3);
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.only(
-                                right: 20.0,
-                                top: 5.0,
-                                bottom: 5.0,
-                                left: 10.0,
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    Strings.VIEW_ALL,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle2!
-                                        .copyWith(
+                              SizedBox(
+                                width: mediaQuery.width * 0.02,
+                              ),
+                              const Spacer(),
+                              GestureDetector(
+                                onTap: () {
+                                  widget.onTapped(3);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.only(
+                                    right: 20.0,
+                                    top: 5.0,
+                                    bottom: 5.0,
+                                    left: 10.0,
+                                  ),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        Strings.VIEW_ALL,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle2!
+                                            .copyWith(
                                           color: AppColors.whitegrey,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                         ),
-                                  ),
-                                  SizedBox(
-                                    width: mediaQuery.width * 0.005,
-                                  ),
-                                  Image.asset('assets/images/right_arrow.png'),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        width: mediaQuery.width,
-                        height: 140,
-                        child: ListView.builder(
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                                padding: const EdgeInsets.only(
-                                  right: 12.0,
-                                ),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    check().then((internet) {
-                                      if (internet) {
-                                        FireAnalytics().log(
-                                            'game',
-                                            widget.allSuggestedGames![index]
-                                                .gameName!);
-                                        Navigation.pushNamed(
-                                            context, Routes.webview, {
-                                          'link': widget
-                                              .allSuggestedGames![index]
-                                              .redirectionUrl
-                                        });
-                                      } else {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    NoDataError()));
-                                      }
-                                    });
-                                  },
-                                  child: Column(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius:
-                                        BorderRadius.circular(10.0),
-                                        child: Image.network(
-                                          widget
-                                              .allSuggestedGames![index].image!,
-                                          fit: BoxFit.cover,
-                                          width: 110.0,
-                                          height: 110.0,
-                                          errorBuilder:
-                                              (context, error, stackTrace) =>
-                                              Image.asset(
-                                                'assets/images/no_image.png',
-                                                fit: BoxFit.cover,
-                                              ),
-                                        ),
                                       ),
-                                      const SizedBox(
-                                        height: 10,
+                                      SizedBox(
+                                        width: mediaQuery.width * 0.005,
                                       ),
-                                      Text(
-                                        widget.allSuggestedGames![index]
-                                            .gameName!,
-                                        style: Theme
-                                            .of(context)
-                                            .textTheme
-                                            .subtitle2!
-                                            .copyWith(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600,
-                                          color: AppColors.black,
-                                        ),
-                                      )
+                                      Image.asset('assets/images/right_arrow.png'),
                                     ],
                                   ),
-                                ));
-                          },
-                          itemCount: widget.allSuggestedGames!.length,
-                          scrollDirection: Axis.horizontal,
-                        ),
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            width: mediaQuery.width,
+                            height: 140,
+                            child: ListView.builder(
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                    padding: const EdgeInsets.only(
+                                      right: 12.0,
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        check().then((internet) {
+                                          if (internet) {
+                                            FireAnalytics().log(
+                                                'game',
+                                                widget.allSuggestedGames![index]
+                                                    .gameName!);
+                                            Navigation.pushNamed(
+                                                context, Routes.webview, {
+                                              'link': widget
+                                                  .allSuggestedGames![index]
+                                                  .redirectionUrl
+                                            });
+                                          } else {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        NoDataError()));
+                                          }
+                                        });
+                                      },
+                                      child: Column(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                            BorderRadius.circular(10.0),
+                                            child: Image.network(
+                                              widget
+                                                  .allSuggestedGames![index].image!,
+                                              fit: BoxFit.cover,
+                                              width: 110.0,
+                                              height: 110.0,
+                                              errorBuilder:
+                                                  (context, error, stackTrace) =>
+                                                  Image.asset(
+                                                    'assets/images/no_image.png',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            widget.allSuggestedGames![index]
+                                                .gameName!,
+                                            style: Theme
+                                                .of(context)
+                                                .textTheme
+                                                .subtitle2!
+                                                .copyWith(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.black,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ));
+                              },
+                              itemCount: widget.allSuggestedGames!.length,
+                              scrollDirection: Axis.horizontal,
+                            ),
+                          ),
+                        ],
                       ),
-                      if (widget.allContent!.isNotEmpty) ...[
+                      if (widget.allContent!.isNotEmpty && ( PinnedMapItems['Todays News']??true)) ...[
                         const SizedBox(
                           height: 30,
                         ),
@@ -625,88 +648,90 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         SizedBox(
                                           width: mediaQuery.width * 0.03,
                                         ),
-                                        Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            SizedBox(
-                                              width: mediaQuery.width * 0.65,
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                                children: [
-                                                  Flexible(
-                                                    child: Text(
-                                                      widget.allContent![index]
-                                                          .title!
-                                                          .replaceAll(
-                                                          RegExp(
-                                                              r'[^A-Za-z0-9().,;?]'),
-                                                          ' '),
-                                                      maxLines: 4,
-                                                      overflow:
-                                                      TextOverflow.ellipsis,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline6!
-                                                          .copyWith(
-                                                        color: AppColors
-                                                            .greyBlue,
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                        FontWeight.w600,
+                                        Flexible(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              SizedBox(
+                                                width: mediaQuery.width * 0.65,
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Text(
+                                                        widget.allContent![index]
+                                                            .title!
+                                                            .replaceAll(
+                                                            RegExp(
+                                                                r'[^A-Za-z0-9().,;?]'),
+                                                            ' '),
+                                                        maxLines: 4,
+                                                        overflow:
+                                                        TextOverflow.ellipsis,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline6!
+                                                            .copyWith(
+                                                          color: AppColors
+                                                              .greyBlue,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                          FontWeight.w600,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  // Spacer(),
-                                                  // Text(
-                                                  //   getDate(widget
-                                                  //       .allContent![index]
-                                                  //       .publishedAt
-                                                  //       .toString()),
-                                                  //   style: Theme.of(context)
-                                                  //       .textTheme
-                                                  //       .subtitle1!
-                                                  //       .copyWith(
-                                                  //         fontSize: 10.33,
-                                                  //         fontWeight:
-                                                  //             FontWeight.w400,
-                                                  //         fontFamily:
-                                                  //             'open_sans',
-                                                  //         color: AppColors
-                                                  //             .greyBlue,
-                                                  //       ),
-                                                  // ),
-                                                ],
+                                                    // Spacer(),
+                                                    // Text(
+                                                    //   getDate(widget
+                                                    //       .allContent![index]
+                                                    //       .publishedAt
+                                                    //       .toString()),
+                                                    //   style: Theme.of(context)
+                                                    //       .textTheme
+                                                    //       .subtitle1!
+                                                    //       .copyWith(
+                                                    //         fontSize: 10.33,
+                                                    //         fontWeight:
+                                                    //             FontWeight.w400,
+                                                    //         fontFamily:
+                                                    //             'open_sans',
+                                                    //         color: AppColors
+                                                    //             .greyBlue,
+                                                    //       ),
+                                                    // ),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            // SizedBox(
-                                            //   height: mediaQuery.height * 0.01,
-                                            // ),
-                                            // SizedBox(
-                                            //   width: 150.0,
-                                            //   child: Text(
-                                            //     widget.allContent![index]
-                                            //         .description!
-                                            //         .replaceAll(
-                                            //             RegExp(
-                                            //                 r'[^A-Za-z0-9().,;?]'),
-                                            //             ' '),
-                                            //     overflow: TextOverflow.ellipsis,
-                                            //     style: Theme.of(context)
-                                            //         .textTheme
-                                            //         .subtitle1!
-                                            //         .copyWith(
-                                            //           fontWeight:
-                                            //               FontWeight.w400,
-                                            //           fontSize: 16,
-                                            //           color:
-                                            //               AppColors.blackBlue,
-                                            //         ),
-                                            //   ),
-                                            // ),
-                                          ],
+                                              // SizedBox(
+                                              //   height: mediaQuery.height * 0.01,
+                                              // ),
+                                              // SizedBox(
+                                              //   width: 150.0,
+                                              //   child: Text(
+                                              //     widget.allContent![index]
+                                              //         .description!
+                                              //         .replaceAll(
+                                              //             RegExp(
+                                              //                 r'[^A-Za-z0-9().,;?]'),
+                                              //             ' '),
+                                              //     overflow: TextOverflow.ellipsis,
+                                              //     style: Theme.of(context)
+                                              //         .textTheme
+                                              //         .subtitle1!
+                                              //         .copyWith(
+                                              //           fontWeight:
+                                              //               FontWeight.w400,
+                                              //           fontSize: 16,
+                                              //           color:
+                                              //               AppColors.blackBlue,
+                                              //         ),
+                                              //   ),
+                                              // ),
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -722,88 +747,96 @@ class _HomeWidgetState extends State<HomeWidget> {
                       const SizedBox(
                         height: 30,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      if(PinnedMapItems['Games by Categories']??true)Column(
                         children: [
-                          Text(
-                            Strings.GAMES_BY_CATEGORIES,
-                            style:
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                Strings.GAMES_BY_CATEGORIES,
+                                style:
                                 Theme.of(context).textTheme.headline6!.copyWith(
-                                      color: AppColors.black,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                          ),
-                          SizedBox(
-                            width: mediaQuery.width * 0.02,
-                          ),
-                          const Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              widget.onTapped(3);
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.only(
-                                right: 20.0,
-                                top: 5.0,
-                                bottom: 5.0,
-                                left: 10.0,
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    Strings.ALL_GAMES_HOME,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle2!
-                                        .copyWith(
+                              SizedBox(
+                                width: mediaQuery.width * 0.02,
+                              ),
+                              const Spacer(),
+                              GestureDetector(
+                                onTap: () {
+                                  widget.onTapped(3);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.only(
+                                    right: 20.0,
+                                    top: 5.0,
+                                    bottom: 5.0,
+                                    left: 10.0,
+                                  ),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        Strings.ALL_GAMES_HOME,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle2!
+                                            .copyWith(
                                           color: AppColors.whitegrey,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                         ),
+                                      ),
+                                      SizedBox(
+                                        width: mediaQuery.width * 0.005,
+                                      ),
+                                      Image.asset('assets/images/right_arrow.png'),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    width: mediaQuery.width * 0.005,
-                                  ),
-                                  Image.asset('assets/images/right_arrow.png'),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(
-                          right: 20.0,
-                        ),
-                        width: mediaQuery.width,
-                        //height: 200,
-                        child: GridView.builder(
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10.0,
-                            childAspectRatio: 3.1,
+                                ),
+                              )
+                            ],
                           ),
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(
-                              onTap: () {
-                                final get = GetStorage();
-                                get.writeInMemory('game', index);
-                                widget.onTapped(3);
+                          const SizedBox(
+                            height: 10,
+                          ),
+
+                          Container(
+                            margin: const EdgeInsets.only(
+                              right: 20.0,
+                            ),
+                            width: mediaQuery.width,
+                            //height: 200,
+                            child: GridView.builder(
+                              shrinkWrap: true,
+                              padding: EdgeInsets.zero,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 10.0,
+                                childAspectRatio: 3.1,
+                              ),
+                              itemBuilder: (BuildContext context, int index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    final get = GetStorage();
+                                    get.writeInMemory('game', index);
+                                    widget.onTapped(3);
+                                  },
+                                  child: Image.asset(Images.GAME_CATEGORIES[index]),
+                                );
                               },
-                              child: Image.asset(Images.GAME_CATEGORIES[index]),
-                            );
-                          },
-                          itemCount: Images.GAME_CATEGORIES.length,
-                        ),
+                              itemCount: Images.GAME_CATEGORIES.length,
+                            ),
+                          ),
+                        ],
+
                       ),
+
+
                       const SizedBox(
                         height: 50,
                       )

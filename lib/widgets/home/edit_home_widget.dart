@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:developer';
 import 'package:connectivity/connectivity.dart';
@@ -52,7 +53,6 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
             InkWell(
               onTap: ()async {
                 StorePinnedItemsInLocaStorage();
-
                 Navigation.pop(context);
               },
               child: Container(
@@ -117,12 +117,18 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
                       if (newIndex > oldIndex) {
                         newIndex = newIndex - 1;
                       }
+
+//                      if(display_items[newIndex].isSelected){
+//                        display_items.sort((a,b)=>compare(a.isSelected,b.isSelected));
+//                      }
                       final element = display_items.removeAt(oldIndex);
                       display_items.insert(newIndex, element);
                       log("newIndex:$newIndex\noldIndex:$oldIndex");
                       StorePinnedItemsInLocaStorage();
                     });
                   },
+
+
                 //physics: const ClampingScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
@@ -254,6 +260,8 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
       _items.add(EditHomeModel("Recent games","assets/images/games_img.PNG", false));
       _items.add(EditHomeModel("Top News","assets/images/news_img.PNG", false));
 
+
+
       display_items.clear();
 
         PinnedMapItems.forEach((key, value) {
@@ -279,10 +287,16 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
           }
         });
 
-        if(display_items.isEmpty){
+
+
+
+      if(display_items.isEmpty){
           display_items = _items;
         }
 
+      for(int i=0;i<display_items.length;i++){
+        log("items:" +  display_items[i].title);
+      }
       _isLoading = false;
     });
 
@@ -307,6 +321,8 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
     LocalStorage.setPinnedStatus(pinned_items);
     return Future.value(true);
   }
+
+
 
 
 }
