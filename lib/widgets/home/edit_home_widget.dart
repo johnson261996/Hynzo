@@ -94,7 +94,7 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
           hintText: Strings.SEARCH_GAMES,
           onchangeFunc: (val) {
             setState(() {
-              search = val;
+              search = val.toString().toLowerCase();
             });
           },
           padding: const EdgeInsets.only(
@@ -134,8 +134,11 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
                 shrinkWrap: true,
                 itemCount: display_items.length,
                 itemBuilder: (context, index) {
-                  return Card(
-                    key: ValueKey(display_items[index].title),
+                  return display_items[index].title
+                      .toLowerCase()
+                      .contains(search)?
+                  Card(
+                    key: ValueKey(index),
                     semanticContainer: true,
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     shadowColor: Colors.black,
@@ -221,11 +224,15 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
                         ],
                       )
                     ]),
-                  );
-                }),
-              ),
-            )
+                  ):
+                  Container(decoration: BoxDecoration(color: Colors.white),
+                    key: ValueKey(index),);
+                },
 
+                ),
+
+                ),
+              ),
             ]),
         ),
       ),
@@ -260,8 +267,6 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
       _items.add(EditHomeModel("Recent games","assets/images/games_img.PNG", false));
       _items.add(EditHomeModel("Top News","assets/images/news_img.PNG", false));
 
-
-
       display_items.clear();
 
         PinnedMapItems.forEach((key, value) {
@@ -286,8 +291,6 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
             }
           }
         });
-
-
 
 
       if(display_items.isEmpty){
@@ -323,6 +326,5 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
   }
 
 
-
-
 }
+

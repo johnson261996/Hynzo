@@ -67,7 +67,7 @@ dependencies:
   share: ^2.0.4
   url_launcher: ^6.0.9
   whatsapp_unilink: ^2.0.1+1
-
+  clipboard: ^0.1.3
 
 dev_dependencies:
   flutter_test:

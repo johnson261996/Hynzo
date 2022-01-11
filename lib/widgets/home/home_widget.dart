@@ -31,7 +31,6 @@ class HomeWidget extends StatefulWidget {
   final UserProfileModel userDetails;
   final List<GamePlayModel>? allSuggestedGames;
   final Function(String)? setFcmToken;
-   //String? pinnedLocalstoragevalue =  LocalStorage.getTotalPinnedItems() as String?;
 
 
   const HomeWidget(

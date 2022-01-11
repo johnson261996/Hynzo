@@ -1,4 +1,6 @@
-
+import 'package:clipboard/clipboard.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:share/share.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +18,7 @@ class ReferralWidget extends StatefulWidget {
 class _ReferralWidgetState extends State<ReferralWidget> {
   String text = 'Install hynzo its have games and chatting feauture helps you to connect with friends and families.';
   String subject = 'http://hynzo.com/invite/';
+  String coupon_code = 'N5ALMDU5';
 
   @override
   Widget build(BuildContext context) {
@@ -150,24 +153,36 @@ class _ReferralWidgetState extends State<ReferralWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children:[
                   Text(
-                    "N5ALMDU5",
+                    coupon_code,
                     style: Theme.of(context).textTheme.headline5!.copyWith(
                       color: AppColors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Spacer(),
-                  Icon(
+                IconButton(
+                  padding: new EdgeInsets.only(left: 15.0),
+                  onPressed: (){
+                    CopyCouponcodeToClipBoard();
+                  },
+                  icon:Icon(
                     Icons.content_copy,
                     size: 24.0,
                     semanticLabel: 'Text to announce in accessibility modes',
                   ),
-                  Text(
-                    "CopyCode",
-                    style: Theme.of(context).textTheme.headline6!.copyWith(
-                      color: AppColors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
+                ),
+                  GestureDetector (
+                    onTap: (){
+                      CopyCouponcodeToClipBoard();
+                    },
+                    child: Text(
+                      "CopyCode",
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
+                        color: AppColors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+
                     ),
                   ),
                 ]
@@ -224,6 +239,14 @@ class _ReferralWidgetState extends State<ReferralWidget> {
     );
   }
 
+  void CopyCouponcodeToClipBoard(){
+    FlutterClipboard.copy(coupon_code).then(( value ) =>Fluttertoast.showToast(
+        msg: "Copied $coupon_code",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1
+    ));
+  }
 
   launchWhatsApp() async {
     final link = WhatsAppUnilink(
