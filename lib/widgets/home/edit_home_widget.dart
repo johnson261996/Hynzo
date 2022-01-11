@@ -95,6 +95,7 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
           onchangeFunc: (val) {
             setState(() {
               search = val.toString().toLowerCase();
+              log("search text:" + search + "\nval:" + val + "");
             });
           },
           padding: const EdgeInsets.only(
@@ -225,7 +226,7 @@ class _EditHomeWidgetState extends State<EditHomeWidget> {
                       )
                     ]),
                   ):
-                  Container(decoration: BoxDecoration(color: Colors.white),
+                  Container(decoration: BoxDecoration(color: Colors.grey),
                     key: ValueKey(index),);
                 },
 

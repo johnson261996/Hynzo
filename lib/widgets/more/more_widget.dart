@@ -289,16 +289,10 @@ class _MoreWidgetState extends State<MoreWidget> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.manage_accounts,
+                          ImageIcon(
+                            AssetImage("assets/images/edit.png"),
                             color: AppColors.lightgray,
-                            size: 26,
                           ),
-                          // Image.asset(
-                          //   Images.NEWS,
-                          //   width: 25,
-                          //   height: 25,
-                          // ),
                           const SizedBox(
                             width: 20.0,
                           ),
